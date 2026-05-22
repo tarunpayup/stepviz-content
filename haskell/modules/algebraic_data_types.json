@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_algebraic_data_types",
+  "topicId": "haskell_algebraic_data_types",
+  "language": "haskell",
+  "title": "Algebraic Data Types",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "ADTs model valid domain states explicitly.",
+    "explanation": "Use data constructors and pattern matching to represent and consume states.",
+    "syntax": "data Status = Pending | Done",
+    "keyPoints": ["Custom types with constructors", "Pattern matching for logic", "Improves domain safety"]
+  },
+  "demo": {
+    "intro": "Define a status ADT and map it to labels.",
+    "code": "data Status = Pending | Done\n\nlabel :: Status -> String\nlabel Pending = \"pending\"\nlabel Done = \"done\"\n\nmain :: IO ()\nmain = putStrLn (label Pending)",
+    "focusLine": 1,
+    "expectedHighlights": ["data type declared", "constructor matched", "prints pending"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "Status", "value": "Pending|Done", "dataType": "ADT", "explanation": {"what": "Declare ADT", "why": "Restrict states", "change": "Status constructors created", "intent": "Domain modeling", "misconception": "Only listed constructors valid"}},
+      {"type": "condition_check", "line": 4, "expression": "label Pending", "result": true, "branch": "Pending", "explanation": {"what": "Match constructor", "why": "Input is Pending", "change": "returns 'pending'", "intent": "Constructor-based branching", "misconception": "Pattern matching exhaustive for known states"}},
+      {"type": "print", "line": 8, "value": "pending", "explanation": {"what": "Print label", "why": "Verify match", "change": "output emitted", "intent": "Confirm ADT usage", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What creates a Status value?", "options": ["type signature", "constructor like Pending", "module import", "class instance"], "correctIndex": 1, "explanation": "Constructors create ADT values."},
+  "explanation": {"afterDemo": "ADTs make illegal states unrepresentable.", "keyTakeaways": ["Explicit domain states", "Safe branching with patterns", "Readable model definitions"]},
+  "practice": {
+    "prompt": "Create data Light = Red | Green; define showLight Red='R', Green='G'; print showLight Green.",
+    "starterCode": "main :: IO ()\nmain = putStrLn \"\"",
+    "solutionCode": "data Light = Red | Green\n\nshowLight :: Light -> String\nshowLight Red = \"R\"\nshowLight Green = \"G\"\n\nmain :: IO ()\nmain = putStrLn (showLight Green)",
+    "hint": "Match each constructor in separate equations.",
+    "validation": {"type": "output", "expectedOutput": ["G"]}
+  },
+  "feedback": {"successMessage": "ADT definition and matching are correct.", "retryHints": ["Define constructors with data", "Pattern match each case"]},
+  "summary": {"title": "Algebraic Data Types - Complete", "takeaways": ["Strong domain modeling", "Constructor-driven logic", "Safer code"] , "nextTopicId": "haskell_maybe_either"}
+}

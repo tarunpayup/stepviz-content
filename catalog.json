@@ -175,7 +175,7 @@
           "bgColor": "rgba(139,111,174,0.08)",
           "description": "Purely functional programming with strong static types",
           "difficulty": "advanced",
-          "status": "coming-soon"
+           "status": "available"
         },
         {
           "id": "crystal",

@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_functors_monads",
+  "topicId": "haskell_functors_monads",
+  "language": "haskell",
+  "title": "Functors & Monads",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Functors map in context; monads chain contextual steps.",
+    "explanation": "They provide reusable structure for effectful computation.",
+    "syntax": "fmap (+1) (Just 3)",
+    "keyPoints": ["Functor uses fmap", "Monad uses >>=", "Maybe and IO are common examples"]
+  },
+  "demo": {
+    "intro": "Apply fmap inside Maybe context.",
+    "code": "main :: IO ()\nmain = do\n  let x = Just 3\n  print (fmap (+1) x)",
+    "focusLine": 4,
+    "expectedHighlights": ["Just value wrapped", "fmap transforms to Just 4"],
+    "steps": [
+      {"type": "declare", "line": 3, "var": "x", "value": "Just 3", "dataType": "Maybe Int", "explanation": {"what": "Create contextual value", "why": "Demonstrate mapping in context", "change": "x bound", "intent": "Functor setup", "misconception": "Maybe wraps value"}},
+      {"type": "call", "line": 4, "name": "fmap (+1)", "args": ["x"], "returnVar": "y", "explanation": {"what": "Map function over context", "why": "Increment inside Maybe", "change": "y=Just 4", "intent": "Functor behavior", "misconception": "Structure preserved"}},
+      {"type": "print", "line": 4, "value": "Just 4", "explanation": {"what": "Print mapped value", "why": "Verify result", "change": "output emitted", "intent": "Observe functor mapping", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does fmap do?", "options": ["unwrap value", "map function in context", "sort list", "print result"], "correctIndex": 1, "explanation": "fmap applies function while preserving context shape."},
+  "explanation": {"afterDemo": "These abstractions unify many effectful programming patterns.", "keyTakeaways": ["Map inside containers", "Chain contextual operations", "Reuse generic abstractions"]},
+  "practice": {
+    "prompt": "Set v = Just 10 and print fmap (*2) v.",
+    "starterCode": "main :: IO ()\nmain = do\n  -- write code",
+    "solutionCode": "main :: IO ()\nmain = do\n  let v = Just 10\n  print (fmap (*2) v)",
+    "hint": "Use fmap with multiplication function.",
+    "validation": {"type": "output", "expectedOutput": ["Just 20"]}
+  },
+  "feedback": {"successMessage": "Functor mapping is correct.", "retryHints": ["Create Just value", "Apply fmap (*2)"]},
+  "summary": {"title": "Functors & Monads - Complete", "takeaways": ["Context-aware mapping", "Composable effect handling", "Core FP abstractions"], "nextTopicId": null}
+}

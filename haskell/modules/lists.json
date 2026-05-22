@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_lists",
+  "topicId": "haskell_lists",
+  "language": "haskell",
+  "title": "Lists",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Lists are immutable sequences with rich functions.",
+    "explanation": "Use list literals and higher-order functions for transformation.",
+    "syntax": "nums = [1,2,3,4]\nfilter even nums",
+    "keyPoints": ["Homogeneous element type", "Immutable structure", "map/filter/fold are core"]
+  },
+  "demo": {
+    "intro": "Filter list to even numbers.",
+    "code": "main :: IO ()\nmain = do\n  let nums = [1,2,3,4]\n  print (filter even nums)",
+    "focusLine": 4,
+    "expectedHighlights": ["nums defined", "prints [2,4]"],
+    "steps": [
+      {"type": "declare", "line": 3, "var": "nums", "value": "[1,2,3,4]", "dataType": "[Int]", "explanation": {"what": "Define list", "why": "Sequence input", "change": "nums bound", "intent": "List basics", "misconception": "List remains unchanged"}},
+      {"type": "call", "line": 4, "name": "filter even", "args": ["nums"], "returnVar": "evens", "explanation": {"what": "Filter values", "why": "Keep even elements", "change": "evens=[2,4]", "intent": "Functional transform", "misconception": "filter returns new list"}},
+      {"type": "print", "line": 4, "value": "[2,4]", "explanation": {"what": "Print result", "why": "Verify filtering", "change": "output emitted", "intent": "Observe list operation", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does head [1,2,3] return?", "options": ["[1]", "1", "2", "error"], "correctIndex": 1, "explanation": "head returns first element."},
+  "explanation": {"afterDemo": "List processing is foundational in Haskell.", "keyTakeaways": ["Prefer declarative transforms", "Reuse standard list functions", "Avoid manual mutation"]},
+  "practice": {
+    "prompt": "Create list [2,3,4] and print map (*2) over it.",
+    "starterCode": "main :: IO ()\nmain = do\n  -- write code",
+    "solutionCode": "main :: IO ()\nmain = do\n  let nums = [2,3,4]\n  print (map (*2) nums)",
+    "hint": "map applies function to each element.",
+    "validation": {"type": "output", "expectedOutput": ["[4,6,8]"]}
+  },
+  "feedback": {"successMessage": "List transformation is correct.", "retryHints": ["Use map (*2)", "Print transformed list"]},
+  "summary": {"title": "Lists - Complete", "takeaways": ["Immutable sequences", "Functional list APIs", "Concise transformations"], "nextTopicId": "haskell_pattern_matching"}
+}

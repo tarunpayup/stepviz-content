@@ -1,0 +1,230 @@
+[
+  {
+    "id": "haskell_values_types",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Values & Types",
+    "description": "Define immutable values and understand static typing.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "Haskell values are immutable and every expression has a type.",
+      "analogy": "A value is a sealed label; type is its category.",
+      "keyPoints": [
+        "Values are immutable",
+        "Type inference is strong",
+        "Explicit type signatures improve clarity"
+      ]
+    },
+    "defaultCode": "main :: IO ()\nmain = do\n  let name = \"StepViz\"\n  let count = 2\n  putStrLn (name ++ \" \" ++ show count)"
+  },
+  {
+    "id": "haskell_functions",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Write pure functions with type signatures.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Functions are first-class and typically pure in Haskell.",
+      "analogy": "A function is a transformation pipeline from input to output.",
+      "keyPoints": [
+        "Use type signatures",
+        "Functions are curried by default",
+        "Prefer pure definitions"
+      ]
+    },
+    "defaultCode": "add :: Int -> Int -> Int\nadd a b = a + b\n\nmain :: IO ()\nmain = print (add 3 4)"
+  },
+  {
+    "id": "haskell_conditionals",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Conditionals",
+    "description": "Branch logic using if/then/else and guards.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Haskell conditionals are expressions that must return a value.",
+      "analogy": "Conditionals choose one expression path to evaluate.",
+      "keyPoints": [
+        "if requires else",
+        "Guards support readable branching",
+        "Pattern matching often replaces condition chains"
+      ]
+    },
+    "defaultCode": "grade :: Int -> String\ngrade score =\n  if score >= 90 then \"A\"\n  else if score >= 80 then \"B\"\n  else \"C\"\n\nmain :: IO ()\nmain = putStrLn (grade 82)"
+  },
+  {
+    "id": "haskell_lists",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Lists",
+    "description": "Create and process linked-list collections.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Lists are homogeneous, immutable sequences in Haskell.",
+      "analogy": "A list is a chain where each item points to the next.",
+      "keyPoints": [
+        "Use [] for literals",
+        "Head/tail decomposition is common",
+        "map/filter/fold are core operations"
+      ]
+    },
+    "defaultCode": "main :: IO ()\nmain = do\n  let nums = [1,2,3,4]\n  print (filter even nums)"
+  },
+  {
+    "id": "haskell_pattern_matching",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Pattern Matching",
+    "description": "Destructure inputs directly in function definitions.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Pattern matching checks value shape and extracts data.",
+      "analogy": "Patterns are templates values can fit into.",
+      "keyPoints": [
+        "Case order matters",
+        "Patterns simplify branching",
+        "Use wildcard _ for defaults"
+      ]
+    },
+    "defaultCode": "describe :: [Int] -> String\ndescribe [] = \"empty\"\ndescribe (x:_) = \"starts with \" ++ show x\n\nmain :: IO ()\nmain = putStrLn (describe [2,3])"
+  },
+  {
+    "id": "haskell_recursion",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Recursion",
+    "description": "Solve repeated computation via base and recursive cases.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Recursion defines solutions in terms of smaller subproblems.",
+      "analogy": "Each call peels one layer until base case is reached.",
+      "keyPoints": [
+        "Always define base case",
+        "Progress toward base case",
+        "Tail recursion can improve performance"
+      ]
+    },
+    "defaultCode": "sumList :: [Int] -> Int\nsumList [] = 0\nsumList (x:xs) = x + sumList xs\n\nmain :: IO ()\nmain = print (sumList [1,2,3])"
+  },
+  {
+    "id": "haskell_higher_order",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Higher-Order Functions",
+    "description": "Pass and return functions for composition and reuse.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Higher-order functions take functions as arguments or return them.",
+      "analogy": "They are function combinators for building pipelines.",
+      "keyPoints": [
+        "map/filter/fold are higher-order",
+        "Functions are first-class values",
+        "Composition keeps code declarative"
+      ]
+    },
+    "defaultCode": "doubleAll :: [Int] -> [Int]\ndoubleAll xs = map (*2) xs\n\nmain :: IO ()\nmain = print (doubleAll [1,2,3])"
+  },
+  {
+    "id": "haskell_type_classes",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Type Classes",
+    "description": "Define shared behavior contracts across types.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Type classes define polymorphic interfaces implemented by types.",
+      "analogy": "A type class is a capability contract for many types.",
+      "keyPoints": [
+        "Eq/Ord/Show are common classes",
+        "Instances provide implementations",
+        "Constraints appear in type signatures"
+      ]
+    },
+    "defaultCode": "isEqual :: Eq a => a -> a -> Bool\nisEqual a b = a == b\n\nmain :: IO ()\nmain = print (isEqual 3 3)"
+  },
+  {
+    "id": "haskell_algebraic_data_types",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Algebraic Data Types",
+    "description": "Model domain states using sum and product types.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "ADTs combine constructors to represent structured domain models.",
+      "analogy": "ADTs are custom blueprints for valid states.",
+      "keyPoints": [
+        "data defines custom types",
+        "Constructors create values",
+        "Pattern matching consumes ADTs"
+      ]
+    },
+    "defaultCode": "data Status = Pending | Done\n\nlabel :: Status -> String\nlabel Pending = \"pending\"\nlabel Done = \"done\"\n\nmain :: IO ()\nmain = putStrLn (label Pending)"
+  },
+  {
+    "id": "haskell_maybe_either",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Maybe & Either",
+    "description": "Represent optional values and typed errors safely.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "Maybe models absence; Either models success/error outcomes.",
+      "analogy": "Maybe is value-or-nothing; Either is success-or-failure box.",
+      "keyPoints": [
+        "Avoid null-style errors",
+        "Use pattern matching on constructors",
+        "Compose with fmap/bind"
+      ]
+    },
+    "defaultCode": "safeHead :: [a] -> Maybe a\nsafeHead [] = Nothing\nsafeHead (x:_) = Just x\n\nmain :: IO ()\nmain = print (safeHead [1,2,3])"
+  },
+  {
+    "id": "haskell_io_basics",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "I/O Basics",
+    "description": "Work with side effects through IO actions.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "IO actions describe side effects while preserving pure core logic.",
+      "analogy": "IO is a controlled boundary between pure code and the real world.",
+      "keyPoints": [
+        "main :: IO () entry point",
+        "do notation sequences actions",
+        "Keep pure logic outside IO when possible"
+      ]
+    },
+    "defaultCode": "main :: IO ()\nmain = do\n  putStrLn \"Hello\"\n  line <- getLine\n  putStrLn (\"You typed: \" ++ line)"
+  },
+  {
+    "id": "haskell_functors_monads",
+    "language": "haskell",
+    "domain": "programming",
+    "title": "Functors & Monads",
+    "description": "Compose effectful computations with fmap and bind.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Functors map over wrapped values; monads sequence wrapped computations.",
+      "analogy": "They are abstraction layers for context-aware computation.",
+      "keyPoints": [
+        "fmap transforms inside context",
+        "Monad bind chains dependent steps",
+        "Maybe/IO are common monads"
+      ]
+    },
+    "defaultCode": "main :: IO ()\nmain = do\n  let x = Just 3\n  print (fmap (+1) x)"
+  }
+]

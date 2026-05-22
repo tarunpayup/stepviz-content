@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_values_types",
+  "topicId": "haskell_values_types",
+  "language": "haskell",
+  "title": "Values & Types",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Haskell values are immutable and strongly typed.",
+    "explanation": "Every expression has a type and bindings cannot be reassigned.",
+    "syntax": "let name = \"StepViz\"\nlet count = 2",
+    "keyPoints": ["Immutability by default", "Powerful type inference", "Signatures clarify intent"]
+  },
+  "demo": {
+    "intro": "Define immutable values and print them.",
+    "code": "main :: IO ()\nmain = do\n  let name = \"StepViz\"\n  let count = 2\n  putStrLn (name ++ \" \" ++ show count)",
+    "focusLine": 3,
+    "expectedHighlights": ["name bound", "count bound", "prints StepViz 2"],
+    "steps": [
+      {"type": "declare", "line": 3, "var": "name", "value": "StepViz", "dataType": "String", "explanation": {"what": "Bind value", "why": "Store text", "change": "name set", "intent": "Immutable binding", "misconception": "No reassignment"}},
+      {"type": "declare", "line": 4, "var": "count", "value": "2", "dataType": "Int", "explanation": {"what": "Bind number", "why": "Store integer", "change": "count set", "intent": "Typed value", "misconception": "Type inferred"}},
+      {"type": "print", "line": 5, "value": "StepViz 2", "explanation": {"what": "Print output", "why": "Verify bindings", "change": "output emitted", "intent": "Observe immutable values", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Can a let-bound value be reassigned?", "options": ["yes", "no", "only in IO", "only Int"], "correctIndex": 1, "explanation": "Bindings are immutable."},
+  "explanation": {"afterDemo": "Immutability makes Haskell programs predictable.", "keyTakeaways": ["Bindings are fixed", "Types are checked at compile time", "Inference reduces verbosity"]},
+  "practice": {
+    "prompt": "Create values lang='Haskell' and n=5, then print 'Haskell 5'.",
+    "starterCode": "main :: IO ()\nmain = do\n  -- write code",
+    "solutionCode": "main :: IO ()\nmain = do\n  let lang = \"Haskell\"\n  let n = 5\n  putStrLn (lang ++ \" \" ++ show n)",
+    "hint": "Use show to convert Int to String.",
+    "validation": {"type": "output", "expectedOutput": ["Haskell 5"]}
+  },
+  "feedback": {"successMessage": "Value bindings and printing are correct.", "retryHints": ["Use let for both values", "Use show for numeric value"]},
+  "summary": {"title": "Values & Types - Complete", "takeaways": ["Immutable bindings", "Static types", "Clear value modeling"], "nextTopicId": "haskell_functions"}
+}

@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_functions",
+  "topicId": "haskell_functions",
+  "language": "haskell",
+  "title": "Functions",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Functions are central and pure by default.",
+    "explanation": "Define functions with type signatures and expression bodies.",
+    "syntax": "add :: Int -> Int -> Int\nadd a b = a + b",
+    "keyPoints": ["Type signatures are helpful", "Functions are curried", "Pure functions are deterministic"]
+  },
+  "demo": {
+    "intro": "Create and call a function.",
+    "code": "add :: Int -> Int -> Int\nadd a b = a + b\n\nmain :: IO ()\nmain = print (add 3 4)",
+    "focusLine": 1,
+    "expectedHighlights": ["function declared", "prints 7"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "add", "value": "function", "dataType": "Int -> Int -> Int", "explanation": {"what": "Define signature", "why": "Document input/output", "change": "add contract set", "intent": "Type-safe design", "misconception": "Arrow chains are curried args"}},
+      {"type": "call", "line": 5, "name": "add", "args": ["3", "4"], "returnVar": "result", "explanation": {"what": "Call function", "why": "Compute sum", "change": "result=7", "intent": "Show evaluation", "misconception": "Pure result depends only on args"}},
+      {"type": "print", "line": 5, "value": "7", "explanation": {"what": "Print result", "why": "Verify function", "change": "output emitted", "intent": "Confirm behavior", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does Int -> Int -> Int mean?", "options": ["3 Int values", "two Int inputs, Int output", "list of Int", "Int pair"], "correctIndex": 1, "explanation": "Function takes two Ints and returns Int."},
+  "explanation": {"afterDemo": "Pure functions make programs easier to test and reason about.", "keyTakeaways": ["Use signatures", "Prefer pure logic", "Compose small functions"]},
+  "practice": {
+    "prompt": "Write mul :: Int -> Int -> Int and print mul 3 5.",
+    "starterCode": "main :: IO ()\nmain = print 0",
+    "solutionCode": "mul :: Int -> Int -> Int\nmul a b = a * b\n\nmain :: IO ()\nmain = print (mul 3 5)",
+    "hint": "Define mul above main.",
+    "validation": {"type": "output", "expectedOutput": ["15"]}
+  },
+  "feedback": {"successMessage": "Function definition and call are correct.", "retryHints": ["Add type signature", "Multiply a and b"]},
+  "summary": {"title": "Functions - Complete", "takeaways": ["Typed functions", "Currying model", "Pure outputs"], "nextTopicId": "haskell_conditionals"}
+}

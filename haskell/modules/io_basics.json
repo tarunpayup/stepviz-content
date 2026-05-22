@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_io_basics",
+  "topicId": "haskell_io_basics",
+  "language": "haskell",
+  "title": "I/O Basics",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "IO actions handle side effects in controlled way.",
+    "explanation": "Use do notation to sequence interactive operations.",
+    "syntax": "main = do\n  putStrLn \"Hello\"\n  line <- getLine",
+    "keyPoints": ["main :: IO ()", "do sequences actions", "Keep pure logic separate"]
+  },
+  "demo": {
+    "intro": "Read line and echo it.",
+    "code": "main :: IO ()\nmain = do\n  putStrLn \"Hello\"\n  line <- getLine\n  putStrLn (\"You typed: \" ++ line)",
+    "focusLine": 4,
+    "expectedHighlights": ["prompt shown", "input captured", "echo output"],
+    "steps": [
+      {"type": "print", "line": 3, "value": "Hello", "explanation": {"what": "Write greeting", "why": "Prompt user", "change": "console output", "intent": "Start interaction", "misconception": "IO action executed in sequence"}},
+      {"type": "assign", "line": 4, "var": "line", "value": "<user input>", "explanation": {"what": "Read input", "why": "Capture user text", "change": "line bound", "intent": "Input handling", "misconception": "<- extracts from IO context"}},
+      {"type": "print", "line": 5, "value": "You typed: ...", "explanation": {"what": "Echo input", "why": "Confirm value", "change": "console output", "intent": "Complete interaction", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What is type of main in standard Haskell program?", "options": ["String", "Int", "IO ()", "Maybe ()"], "correctIndex": 2, "explanation": "main has type IO ()."},
+  "explanation": {"afterDemo": "IO keeps effects explicit while pure logic remains testable.", "keyTakeaways": ["Effects are explicit in types", "Do notation orders actions", "Separate pure and impure code"]},
+  "practice": {
+    "prompt": "Print 'Hi' and then print line 'Done'.",
+    "starterCode": "main :: IO ()\nmain = do\n  -- write code",
+    "solutionCode": "main :: IO ()\nmain = do\n  putStrLn \"Hi\"\n  putStrLn \"Done\"",
+    "hint": "Use two putStrLn actions.",
+    "validation": {"type": "output", "expectedOutput": ["Hi", "Done"]}
+  },
+  "feedback": {"successMessage": "IO action sequencing is correct.", "retryHints": ["Keep both lines in do block", "Use putStrLn twice"]},
+  "summary": {"title": "I/O Basics - Complete", "takeaways": ["Explicit side effects", "Sequenced actions", "Clear program entry"], "nextTopicId": "haskell_functors_monads"}
+}

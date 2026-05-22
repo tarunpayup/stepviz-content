@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_pattern_matching",
+  "topicId": "haskell_pattern_matching",
+  "language": "haskell",
+  "title": "Pattern Matching",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Pattern matching destructures values directly.",
+    "explanation": "Function equations can branch by input structure and constructors.",
+    "syntax": "describe [] = \"empty\"\ndescribe (x:_) = \"starts with \" ++ show x",
+    "keyPoints": ["Ordered top to bottom", "Use _ wildcard", "Great with ADTs and lists"]
+  },
+  "demo": {
+    "intro": "Match empty vs non-empty list.",
+    "code": "describe :: [Int] -> String\ndescribe [] = \"empty\"\ndescribe (x:_) = \"starts with \" ++ show x\n\nmain :: IO ()\nmain = putStrLn (describe [2,3])",
+    "focusLine": 2,
+    "expectedHighlights": ["first pattern skipped", "second matches", "prints starts with 2"],
+    "steps": [
+      {"type": "condition_check", "line": 2, "expression": "[] pattern", "result": false, "branch": "empty", "explanation": {"what": "Try empty pattern", "why": "Input has elements", "change": "move next pattern", "intent": "Pattern order", "misconception": "First matching clause wins"}},
+      {"type": "condition_check", "line": 3, "expression": "(x:_) pattern", "result": true, "branch": "non-empty", "explanation": {"what": "Match non-empty list", "why": "Input starts with 2", "change": "x=2", "intent": "Destructure input", "misconception": "_ ignores rest"}},
+      {"type": "print", "line": 6, "value": "starts with 2", "explanation": {"what": "Print message", "why": "Show matched branch", "change": "output emitted", "intent": "Confirm pattern behavior", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does _ mean in a pattern?", "options": ["empty list", "wildcard ignore", "type variable", "error"], "correctIndex": 1, "explanation": "_ matches anything and ignores binding."},
+  "explanation": {"afterDemo": "Pattern matching often replaces explicit condition chains.", "keyTakeaways": ["Branch by structure", "Keep specific patterns first", "Use wildcard for defaults"]},
+  "practice": {
+    "prompt": "Write firstOrZero [] = 0; firstOrZero (x:_) = x, then print firstOrZero [5,6].",
+    "starterCode": "main :: IO ()\nmain = print 0",
+    "solutionCode": "firstOrZero :: [Int] -> Int\nfirstOrZero [] = 0\nfirstOrZero (x:_) = x\n\nmain :: IO ()\nmain = print (firstOrZero [5,6])",
+    "hint": "Use two equations for function definition.",
+    "validation": {"type": "output", "expectedOutput": ["5"]}
+  },
+  "feedback": {"successMessage": "Pattern matching is correct.", "retryHints": ["Define [] case first", "Use (x:_) for non-empty"]},
+  "summary": {"title": "Pattern Matching - Complete", "takeaways": ["Structural branching", "Clean destructuring", "Less boilerplate"] , "nextTopicId": "haskell_recursion"}
+}

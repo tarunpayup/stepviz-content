@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_recursion",
+  "topicId": "haskell_recursion",
+  "language": "haskell",
+  "title": "Recursion",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Recursion solves problems by reducing input size.",
+    "explanation": "Define base case and recursive step to ensure termination.",
+    "syntax": "sumList [] = 0\nsumList (x:xs) = x + sumList xs",
+    "keyPoints": ["Need base case", "Progress each call", "Great with lists and trees"]
+  },
+  "demo": {
+    "intro": "Sum a list recursively.",
+    "code": "sumList :: [Int] -> Int\nsumList [] = 0\nsumList (x:xs) = x + sumList xs\n\nmain :: IO ()\nmain = print (sumList [1,2,3])",
+    "focusLine": 2,
+    "expectedHighlights": ["base case defined", "recursive calls collapse", "prints 6"],
+    "steps": [
+      {"type": "condition_check", "line": 2, "expression": "[] base case", "result": false, "branch": "base", "explanation": {"what": "Check empty list", "why": "Input non-empty", "change": "go recursive", "intent": "Termination logic", "misconception": "Base case stops recursion"}},
+      {"type": "call", "line": 3, "name": "sumList", "args": ["xs"], "returnVar": "partial", "explanation": {"what": "Recurse on tail", "why": "Reduce problem size", "change": "eventually reaches []", "intent": "Divide-and-combine", "misconception": "Each call handles one head"}},
+      {"type": "print", "line": 6, "value": "6", "explanation": {"what": "Print total", "why": "Verify recursion", "change": "output emitted", "intent": "Observe computed sum", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Why is base case required?", "options": ["faster print", "avoid infinite recursion", "for type inference", "for IO"], "correctIndex": 1, "explanation": "Without base case recursion may never terminate."},
+  "explanation": {"afterDemo": "Recursion is a natural fit for immutable data traversal.", "keyTakeaways": ["Base + recursive case", "Shrink input each step", "Combine results cleanly"]},
+  "practice": {
+    "prompt": "Define len [] = 0; len (_:xs)=1+len xs, then print len [4,5,6].",
+    "starterCode": "main :: IO ()\nmain = print 0",
+    "solutionCode": "len :: [Int] -> Int\nlen [] = 0\nlen (_:xs) = 1 + len xs\n\nmain :: IO ()\nmain = print (len [4,5,6])",
+    "hint": "Use wildcard for head if unused.",
+    "validation": {"type": "output", "expectedOutput": ["3"]}
+  },
+  "feedback": {"successMessage": "Recursive structure is correct.", "retryHints": ["Add base case", "Reduce list with tail", "Return numeric result"]},
+  "summary": {"title": "Recursion - Complete", "takeaways": ["Natural list processing", "Guaranteed termination with base case", "Composable logic"], "nextTopicId": "haskell_higher_order"}
+}

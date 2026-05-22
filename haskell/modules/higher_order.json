@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_higher_order",
+  "topicId": "haskell_higher_order",
+  "language": "haskell",
+  "title": "Higher-Order Functions",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Higher-order functions accept or return functions.",
+    "explanation": "They enable concise reusable pipelines over collections and contexts.",
+    "syntax": "doubleAll xs = map (*2) xs",
+    "keyPoints": ["Functions are first-class", "map/filter/fold are core", "Composition improves clarity"]
+  },
+  "demo": {
+    "intro": "Use map to transform each element.",
+    "code": "doubleAll :: [Int] -> [Int]\ndoubleAll xs = map (*2) xs\n\nmain :: IO ()\nmain = print (doubleAll [1,2,3])",
+    "focusLine": 2,
+    "expectedHighlights": ["map applies function", "prints [2,4,6]"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "doubleAll", "value": "function", "dataType": "[Int] -> [Int]", "explanation": {"what": "Declare transformer", "why": "Reuse list mapping", "change": "doubleAll defined", "intent": "Higher-order abstraction", "misconception": "map takes a function argument"}},
+      {"type": "call", "line": 2, "name": "map (*2)", "args": ["xs"], "returnVar": "out", "explanation": {"what": "Apply function to list", "why": "Double each value", "change": "out transformed", "intent": "Declarative mapping", "misconception": "Original list unchanged"}},
+      {"type": "print", "line": 5, "value": "[2,4,6]", "explanation": {"what": "Print transformed list", "why": "Verify behavior", "change": "output emitted", "intent": "Observe higher-order result", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Which function keeps only matching elements?", "options": ["map", "foldr", "filter", "zip"], "correctIndex": 2, "explanation": "filter retains elements meeting predicate."},
+  "explanation": {"afterDemo": "Higher-order style reduces loops and boilerplate.", "keyTakeaways": ["Pass functions as values", "Compose transformations", "Prefer declarative list processing"]},
+  "practice": {
+    "prompt": "Use filter (>2) on [1,2,3,4] and print result.",
+    "starterCode": "main :: IO ()\nmain = print []",
+    "solutionCode": "main :: IO ()\nmain = print (filter (>2) [1,2,3,4])",
+    "hint": "Predicate goes first, list second.",
+    "validation": {"type": "output", "expectedOutput": ["[3,4]"]}
+  },
+  "feedback": {"successMessage": "Higher-order function usage is correct.", "retryHints": ["Use filter with predicate", "Print transformed list"]},
+  "summary": {"title": "Higher-Order Functions - Complete", "takeaways": ["Functions as values", "Reusable transforms", "Cleaner pipelines"], "nextTopicId": "haskell_type_classes"}
+}

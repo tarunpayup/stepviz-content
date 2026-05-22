@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_conditionals",
+  "topicId": "haskell_conditionals",
+  "language": "haskell",
+  "title": "Conditionals",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "if/then/else in Haskell are expressions.",
+    "explanation": "Every branch returns a value and else is mandatory.",
+    "syntax": "if score >= 90 then \"A\" else \"B\"",
+    "keyPoints": ["if returns value", "else required", "Guards provide clean alternatives"]
+  },
+  "demo": {
+    "intro": "Classify score into grade.",
+    "code": "grade :: Int -> String\ngrade score =\n  if score >= 90 then \"A\"\n  else if score >= 80 then \"B\"\n  else \"C\"\n\nmain :: IO ()\nmain = putStrLn (grade 82)",
+    "focusLine": 3,
+    "expectedHighlights": ["first condition false", "second true", "prints B"],
+    "steps": [
+      {"type": "condition_check", "line": 3, "expression": "score >= 90", "result": false, "branch": "if", "explanation": {"what": "Check first condition", "why": "82 < 90", "change": "fall through", "intent": "Ordered checks", "misconception": "if is expression"}},
+      {"type": "condition_check", "line": 4, "expression": "score >= 80", "result": true, "branch": "else-if", "explanation": {"what": "Check second condition", "why": "82 >= 80", "change": "grade='B'", "intent": "Select value", "misconception": "Only one branch chosen"}},
+      {"type": "print", "line": 8, "value": "B", "explanation": {"what": "Print grade", "why": "Verify result", "change": "output emitted", "intent": "Confirm conditional flow", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Is else optional in Haskell if?", "options": ["yes", "no", "only in main", "only with guards"], "correctIndex": 1, "explanation": "if must include else in Haskell."},
+  "explanation": {"afterDemo": "Expression-oriented branching keeps logic explicit.", "keyTakeaways": ["All branches return value", "Else is mandatory", "Guards can improve readability"]},
+  "practice": {
+    "prompt": "Define oddEven n returning 'even' or 'odd' and print oddEven 7.",
+    "starterCode": "main :: IO ()\nmain = putStrLn \"\"",
+    "solutionCode": "oddEven :: Int -> String\noddEven n = if n `mod` 2 == 0 then \"even\" else \"odd\"\n\nmain :: IO ()\nmain = putStrLn (oddEven 7)",
+    "hint": "Use mod for parity check.",
+    "validation": {"type": "output", "expectedOutput": ["odd"]}
+  },
+  "feedback": {"successMessage": "Conditional expression is correct.", "retryHints": ["Include else branch", "Return strings from both branches"]},
+  "summary": {"title": "Conditionals - Complete", "takeaways": ["Expression-based branching", "Deterministic branch selection", "Clear outputs"], "nextTopicId": "haskell_lists"}
+}

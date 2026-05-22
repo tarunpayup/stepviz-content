@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_type_classes",
+  "topicId": "haskell_type_classes",
+  "language": "haskell",
+  "title": "Type Classes",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Type classes define shared interfaces for types.",
+    "explanation": "A type class constraint says a type supports specific operations.",
+    "syntax": "isEqual :: Eq a => a -> a -> Bool",
+    "keyPoints": ["Constraints in signatures", "Instances implement class methods", "Supports ad-hoc polymorphism"]
+  },
+  "demo": {
+    "intro": "Use Eq constraint for polymorphic equality.",
+    "code": "isEqual :: Eq a => a -> a -> Bool\nisEqual a b = a == b\n\nmain :: IO ()\nmain = print (isEqual 3 3)",
+    "focusLine": 1,
+    "expectedHighlights": ["Eq constraint declared", "prints True"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "isEqual", "value": "polymorphic function", "dataType": "Eq a => a -> a -> Bool", "explanation": {"what": "Declare constrained type", "why": "Require equality support", "change": "Eq contract enforced", "intent": "Safe polymorphism", "misconception": "Any type with Eq instance works"}},
+      {"type": "call", "line": 5, "name": "isEqual", "args": ["3", "3"], "returnVar": "res", "explanation": {"what": "Invoke function", "why": "Check equality", "change": "res=True", "intent": "Use constrained polymorphism", "misconception": "Int already in Eq"}},
+      {"type": "print", "line": 5, "value": "True", "explanation": {"what": "Print result", "why": "Verify behavior", "change": "output emitted", "intent": "Observe class-constrained function", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does Eq a => mean?", "options": ["a is Int", "a must implement Eq", "a is list", "a is IO"], "correctIndex": 1, "explanation": "Type a must be an instance of Eq."},
+  "explanation": {"afterDemo": "Type classes enable flexible yet safe generic programming.", "keyTakeaways": ["Constraints document capabilities", "Instances provide behavior", "Polymorphism stays type-safe"]},
+  "practice": {
+    "prompt": "Write isSame :: Eq a => a -> a -> Bool using (==), print isSame 'x' 'x'.",
+    "starterCode": "main :: IO ()\nmain = print False",
+    "solutionCode": "isSame :: Eq a => a -> a -> Bool\nisSame a b = a == b\n\nmain :: IO ()\nmain = print (isSame 'x' 'x')",
+    "hint": "Reuse Eq constraint and equality operator.",
+    "validation": {"type": "output", "expectedOutput": ["True"]}
+  },
+  "feedback": {"successMessage": "Type class constraint and usage are correct.", "retryHints": ["Add Eq constraint", "Return a == b"]},
+  "summary": {"title": "Type Classes - Complete", "takeaways": ["Capability-based polymorphism", "Clear constraints", "Instance-driven behavior"], "nextTopicId": "haskell_algebraic_data_types"}
+}

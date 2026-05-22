@@ -1,0 +1,35 @@
+{
+  "id": "lm_haskell_maybe_either",
+  "topicId": "haskell_maybe_either",
+  "language": "haskell",
+  "title": "Maybe & Either",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Maybe and Either model optionality and errors explicitly.",
+    "explanation": "They avoid unchecked null-style failures.",
+    "syntax": "safeHead [] = Nothing\nsafeHead (x:_) = Just x",
+    "keyPoints": ["Maybe: Just/Nothing", "Either: Left/Right", "Pattern matching handles both paths"]
+  },
+  "demo": {
+    "intro": "Return Maybe from safeHead.",
+    "code": "safeHead :: [a] -> Maybe a\nsafeHead [] = Nothing\nsafeHead (x:_) = Just x\n\nmain :: IO ()\nmain = print (safeHead [1,2,3])",
+    "focusLine": 2,
+    "expectedHighlights": ["empty gives Nothing", "non-empty gives Just", "prints Just 1"],
+    "steps": [
+      {"type": "condition_check", "line": 2, "expression": "[] case", "result": false, "branch": "Nothing", "explanation": {"what": "Check empty input", "why": "Input non-empty", "change": "skip Nothing", "intent": "Safe optional return", "misconception": "No partial head call"}},
+      {"type": "condition_check", "line": 3, "expression": "(x:_) case", "result": true, "branch": "Just", "explanation": {"what": "Match non-empty list", "why": "Extract first element", "change": "returns Just 1", "intent": "Safe extraction", "misconception": "No crash on empty via Maybe"}},
+      {"type": "print", "line": 6, "value": "Just 1", "explanation": {"what": "Print maybe value", "why": "Verify safeHead", "change": "output emitted", "intent": "Observe optional modeling", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Which constructor means no value in Maybe?", "options": ["Just", "Left", "Nothing", "Null"], "correctIndex": 2, "explanation": "Nothing represents absence."},
+  "explanation": {"afterDemo": "Explicit optional/error types make failures visible in type signatures.", "keyTakeaways": ["No hidden nulls", "Pattern match both outcomes", "Safer APIs"]},
+  "practice": {
+    "prompt": "Define safeTail []=Nothing; safeTail (_:xs)=Just xs; print safeTail [2,3,4].",
+    "starterCode": "main :: IO ()\nmain = print Nothing",
+    "solutionCode": "safeTail :: [a] -> Maybe [a]\nsafeTail [] = Nothing\nsafeTail (_:xs) = Just xs\n\nmain :: IO ()\nmain = print (safeTail [2,3,4])",
+    "hint": "Return Maybe [a].",
+    "validation": {"type": "output", "expectedOutput": ["Just [3,4]"]}
+  },
+  "feedback": {"successMessage": "Maybe modeling is correct.", "retryHints": ["Handle [] and (_:xs)", "Return constructors explicitly"]},
+  "summary": {"title": "Maybe & Either - Complete", "takeaways": ["Explicit absence/error", "Safe pattern handling", "Typed outcomes"], "nextTopicId": "haskell_io_basics"}
+}
