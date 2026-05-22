@@ -1,0 +1,26 @@
+# Programming Language
+- Rust
+- Kotlin
+- Julia
+- Elixir
+- Crystal
+- TypeScript
+- Dart
+- Solidity
+- Pony
+- Zig
+- V
+- Mojo
+- Ballerina
+- Bosque
+- Gleam
+- Grain
+- Move
+- Cairo
+- Carbon
+- Vale
+- Roc
+- Koka
+- Q#
+- Red
+- ReasonML

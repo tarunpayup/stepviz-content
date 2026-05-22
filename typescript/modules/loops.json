@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_loops",
+  "topicId": "typescript_loops",
+  "language": "typescript",
+  "title": "Loops",
+  "difficulty": "easy",
+  "concept": {"headline": "Choose loop style based on intent.", "explanation": "for...of is ideal for values, for for indexes, and map/reduce for declarative transforms.", "syntax": "const nums: number[] = [1,2,3];\nlet sum = 0;\nfor (const n of nums) sum += n;\nconsole.log(sum);", "keyPoints": ["for...of iterates values", "for controls index", "map/reduce simplify transforms"]},
+  "demo": {"intro": "Accumulate total with for...of.", "code": "const nums: number[] = [1,2,3];\nlet sum = 0;\nfor (const n of nums) sum += n;\nconsole.log(sum);", "focusLine": 3, "expectedHighlights": ["iterate 1,2,3", "sum updates", "prints 6"], "steps": [{"type": "declare", "line": 2, "var": "sum", "value": "0", "dataType": "number", "explanation": {"what": "Initialize accumulator", "why": "Start from zero", "change": "sum=0", "intent": "Prepare loop", "misconception": "Need explicit init before accumulation"}}, {"type": "assign", "line": 3, "var": "sum", "value": "6", "explanation": {"what": "Add each element", "why": "Loop visits all numbers", "change": "sum:0->6", "intent": "Compute total", "misconception": "Loop order follows array order"}}, {"type": "print", "line": 4, "value": "6", "explanation": {"what": "Print sum", "why": "Final total computed", "change": "output <- 6", "intent": "Verify loop", "misconception": "console.log is side effect only"}}]},
+  "prediction": {"question": "What prints?\n\nlet c=0;\nfor(const _ of [1,2,3,4]) c++;\nconsole.log(c);", "options": ["3", "4", "5", "0"], "correctIndex": 1, "explanation": "Loop runs four times, so c becomes 4."},
+  "explanation": {"afterDemo": "Readable iteration style reduces off-by-one mistakes.", "keyTakeaways": ["for...of for values", "Initialize accumulators clearly", "Prefer simple loops for clarity"]},
+  "practice": {"prompt": "Sum [4,5,6] with for...of and print result.", "starterCode": "// write code", "solutionCode": "const arr = [4, 5, 6];\nlet total = 0;\nfor (const n of arr) total += n;\nconsole.log(total);", "hint": "Use total += n in loop.", "validation": {"type": "output", "expectedOutput": ["15"]}},
+  "feedback": {"successMessage": "Loop and accumulation are correct.", "retryHints": ["Start total at 0", "Use for...of", "Print after loop"]},
+  "summary": {"title": "Loops — Complete", "takeaways": ["Loop intent matters", "for...of is clean for arrays", "Simple accumulation patterns are reliable"], "nextTopicId": "typescript_arrays"}
+}

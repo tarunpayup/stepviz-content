@@ -1,0 +1,43 @@
+{
+  "id": "lm_solidity_security_basics",
+  "topicId": "solidity_security_basics",
+  "language": "solidity",
+  "title": "Security Basics",
+  "difficulty": "advanced",
+  "concept": {
+    "headline": "Secure contracts apply layered defenses and strict state-flow patterns.",
+    "explanation": "Prevent common exploits with checks-effects-interactions, reentrancy guards, and robust access control.",
+    "syntax": "uint256 a = bal[msg.sender];\nrequire(a > 0, 'none');\nbal[msg.sender] = 0;\n(bool ok,) = msg.sender.call{value: a}(\"\");\nrequire(ok, 'fail');",
+    "keyPoints": ["Use CEI ordering", "Guard external calls", "Restrict privileged functions", "Prefer audited libraries"]
+  },
+  "demo": {
+    "intro": "Withdraw flow using checks-effects-interactions.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract SafeWithdraw {\n  mapping(address => uint256) public bal;\n  function deposit() public payable { bal[msg.sender] += msg.value; }\n  function withdraw() public {\n    uint256 a = bal[msg.sender];\n    require(a > 0, 'none');\n    bal[msg.sender] = 0;\n    (bool ok,) = msg.sender.call{value: a}(\"\");\n    require(ok, 'fail');\n  }\n}",
+    "focusLine": 9,
+    "expectedHighlights": ["check balance", "set balance to zero", "external call after state update"],
+    "steps": [
+      {"type": "condition_check", "line": 8, "expression": "a > 0", "result": true, "branch": "require", "explanation": {"what": "Check withdrawable amount", "why": "Prevent empty withdrawals", "change": "continue if valid", "intent": "Input/state validation", "misconception": "Skipping checks invites unexpected paths"}},
+      {"type": "assign", "line": 9, "var": "bal[msg.sender]", "value": "0", "explanation": {"what": "Apply effects before interaction", "why": "Mitigate reentrancy risk", "change": "balance cleared", "intent": "CEI pattern", "misconception": "Updating after call can be exploitable"}},
+      {"type": "call", "line": 10, "name": "msg.sender.call", "args": ["value=a"], "returnVar": "ok", "explanation": {"what": "Send ETH externally", "why": "Finalize withdrawal", "change": "value transfer attempt", "intent": "Controlled interaction step", "misconception": "External calls can invoke attacker code"}}
+    ]
+  },
+  "prediction": {
+    "question": "Why set user balance to zero before external transfer?",
+    "options": ["save gas", "prevent reentrancy abuse", "improve readability", "required by compiler"],
+    "correctIndex": 1,
+    "explanation": "This follows CEI and reduces reentrancy attack surface."
+  },
+  "explanation": {
+    "afterDemo": "Security is architecture-level: contract flow order and authorization are as important as function correctness.",
+    "keyTakeaways": ["Apply CEI consistently", "Treat external calls as unsafe boundaries", "Use battle-tested libraries and audits"]
+  },
+  "practice": {
+    "prompt": "In a withdraw function, add require(amount > 0), then set stored amount to 0 before transfer call.",
+    "starterCode": "// add CEI sequence",
+    "solutionCode": "require(amount > 0, 'none');\nstored[msg.sender] = 0;\n(bool ok,) = msg.sender.call{value: amount}(\"\");\nrequire(ok, 'fail');",
+    "hint": "Order matters: check -> effects -> interaction.",
+    "validation": {"type": "step_count", "min": 3}
+  },
+  "feedback": {"successMessage": "Security ordering is correct.", "retryHints": ["Enforce precondition", "Zero state before external call", "Check call result"]},
+  "summary": {"title": "Security Basics — Complete", "takeaways": ["Use CEI for state-changing value transfers", "Protect privileged paths", "Security-first patterns are non-optional in production"], "nextTopicId": null}
+}

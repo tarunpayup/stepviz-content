@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_classes_objects",
+  "topicId": "python_classes_objects",
+  "language": "python",
+  "title": "Classes & Objects",
+  "difficulty": "medium",
+  "concept": {"headline": "Classes define structure; objects hold instance state.", "explanation": "Use class with __init__ and methods to model domain entities.", "syntax": "class User:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score", "keyPoints": ["self references instance", "Methods access state", "Instantiate via ClassName(...)"]},
+  "demo": {"intro": "Create a User object and call its method.", "code": "class User:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\n    def label(self):\n        return f'{self.name}: {self.score}'\n\nprint(User('Ari', 10).label())", "focusLine": 1, "expectedHighlights": ["class declaration", "instance created", "method returns label"], "steps": [{"type": "declare", "line": 1, "var": "User", "value": "class", "dataType": "type", "explanation": {"what": "Define class", "why": "Template for users", "change": "User type available", "intent": "Encapsulate state/behavior", "misconception": "Class body executes once at definition"}}, {"type": "call", "line": 9, "name": "User", "args": ["Ari", "10"], "returnVar": "obj", "explanation": {"what": "Instantiate object", "why": "Create user state", "change": "obj with fields name/score", "intent": "Build instance", "misconception": "__init__ initializes and returns None"}}, {"type": "print", "line": 9, "value": "Ari: 10", "explanation": {"what": "Call label and print", "why": "Show method output", "change": "output <- Ari: 10", "intent": "Verify object behavior", "misconception": "Method needs explicit self at call site"}}]},
+  "prediction": {"question": "What is self in methods?", "options": ["global object", "current instance", "class name", "loop variable"], "correctIndex": 1, "explanation": "self refers to the current object instance."},
+  "explanation": {"afterDemo": "Object models keep code organized and scalable.", "keyTakeaways": ["Class defines behavior", "Objects store per-instance values", "Methods operate on self"]},
+  "practice": {"prompt": "Create class Box with __init__(v) and get() returning v; print Box(5).get().", "starterCode": "# write code", "solutionCode": "class Box:\n    def __init__(self, v):\n        self.v = v\n\n    def get(self):\n        return self.v\n\nprint(Box(5).get())", "hint": "Store v as self.v.", "validation": {"type": "output", "expectedOutput": ["5"]}},
+  "feedback": {"successMessage": "Class and instance method are correct.", "retryHints": ["Use self in method params", "Return stored field"]},
+  "summary": {"title": "Classes & Objects — Complete", "takeaways": ["Classes are blueprints", "Objects carry data", "Methods use self"], "nextTopicId": "python_exceptions"}
+}

@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_functions",
+  "topicId": "swift_functions",
+  "language": "swift",
+  "title": "Functions",
+  "difficulty": "easy",
+  "concept": {"headline": "Functions are typed and explicit.", "explanation": "Swift functions define parameter and return types clearly.", "syntax": "func add(_ a: Int, _ b: Int) -> Int {\n    return a + b\n}", "keyPoints": ["func declares function", "-> marks return type", "Labels improve readability"]},
+  "demo": {"intro": "Define add and print result.", "code": "func add(_ a: Int, _ b: Int) -> Int {\n    return a + b\n}\nprint(add(3, 4))", "focusLine": 1, "expectedHighlights": ["function declaration", "call returns 7"], "steps": [{"type": "declare", "line": 1, "var": "add", "value": "function", "dataType": "(Int,Int)->Int", "explanation": {"what": "Define typed function", "why": "Reusable sum logic", "change": "add available", "intent": "Typed abstraction", "misconception": "Body not run until called"}}, {"type": "call", "line": 4, "name": "add", "args": ["3", "4"], "returnVar": "result", "explanation": {"what": "Invoke function", "why": "Compute output", "change": "result=7", "intent": "Use function", "misconception": "_ suppresses external labels"}}, {"type": "print", "line": 4, "value": "7", "explanation": {"what": "Print result", "why": "Confirm behavior", "change": "output <- 7", "intent": "Validate return", "misconception": "return and print are separate"}}]},
+  "prediction": {"question": "What does -> Int mean?", "options": ["input type", "return type", "error type", "generic"], "correctIndex": 1, "explanation": "It specifies the function return type."},
+  "explanation": {"afterDemo": "Typed functions make APIs self-documenting.", "keyTakeaways": ["Explicit signatures improve clarity", "Return values compose operations", "Keep functions focused"]},
+  "practice": {"prompt": "Write mul(_:_)->Int returning product of two Ints and print mul(3,5).", "starterCode": "// write code", "solutionCode": "func mul(_ a: Int, _ b: Int) -> Int {\n    return a * b\n}\nprint(mul(3, 5))", "hint": "Use typed parameters and return.", "validation": {"type": "output", "expectedOutput": ["15"]}},
+  "feedback": {"successMessage": "Function and call are correct.", "retryHints": ["Include return type", "Return a*b"]},
+  "summary": {"title": "Functions — Complete", "takeaways": ["func defines behavior", "Types are explicit", "Calls pass arguments"] , "nextTopicId": "swift_control_flow"}
+}

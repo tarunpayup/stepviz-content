@@ -1,0 +1,70 @@
+{
+  "id": "lm_crystal_modules",
+  "topicId": "crystal_modules",
+  "language": "crystal",
+  "title": "Modules & Mixins",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Modules provide namespacing and shared behavior reuse.",
+    "explanation": "In Crystal, modules can define constants and methods. Classes can include modules to gain instance methods without inheritance duplication.",
+    "syntax": "module Greeter\n  def greet\n    \"Hello!\"\n  end\nend\n\nclass Bot\n  include Greeter\nend\n\nputs Bot.new.greet",
+    "keyPoints": [
+      "module groups related behavior",
+      "include mixes in instance methods",
+      "Useful for shared capabilities",
+      "Cleaner than copy-pasting methods"
+    ]
+  },
+
+  "demo": {
+    "intro": "Mix a module into a class and call the injected method.",
+    "code": "module Greeter\n  def greet\n    \"Hello!\"\n  end\nend\n\nclass Bot\n  include Greeter\nend\n\nputs Bot.new.greet",
+    "focusLine": 1,
+    "expectedHighlights": ["module declared", "class includes module", "Bot instance can greet"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "Greeter", "value": "module", "dataType": "Module", "explanation": {"what": "Define Greeter module", "why": "Encapsulate reusable method", "change": "Greeter namespace available", "intent": "Create mixin", "misconception": "Module alone cannot be instantiated"}},
+      {"type": "declare", "line": 7, "var": "Bot", "value": "class include Greeter", "dataType": "Class", "explanation": {"what": "Include Greeter in Bot", "why": "Inject greet as instance method", "change": "Bot gains greet", "intent": "Compose behavior", "misconception": "include is not inheritance"}},
+      {"type": "print", "line": 11, "value": "Hello!", "explanation": {"what": "Call Bot.new.greet", "why": "Method comes from included module", "change": "output <- Hello!", "intent": "Confirm mixin effect", "misconception": "Method resolution checks class then included modules"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "If class Car includes module Startable with method start returning \"go\", what does puts Car.new.start print?",
+    "options": ["start", "go", "nil", "compile error"],
+    "correctIndex": 1,
+    "explanation": "include adds module instance methods to class instances, so output is go."
+  },
+
+  "explanation": {
+    "afterDemo": "Modules are key to Crystal architecture: they keep behavior reusable and avoid deep inheritance chains.",
+    "keyTakeaways": [
+      "Use modules for shared behavior.",
+      "include injects instance methods.",
+      "Mixins keep code DRY and composable."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create module Taggable with method tag returning \"[ok]\". Include it in class Job and print Job.new.tag.",
+    "starterCode": "# module Taggable\n# class Job include Taggable\n# print tag",
+    "solutionCode": "module Taggable\n  def tag\n    \"[ok]\"\n  end\nend\n\nclass Job\n  include Taggable\nend\n\nputs Job.new.tag",
+    "hint": "Include the module inside class Job.",
+    "validation": {"type": "output", "expectedOutput": ["[ok]"]}
+  },
+
+  "feedback": {
+    "successMessage": "Excellent. Module behavior was mixed in correctly.",
+    "retryHints": ["Define method inside module", "Use include in class", "Call on class instance"]
+  },
+
+  "summary": {
+    "title": "Modules — Complete",
+    "takeaways": [
+      "Modules encapsulate reusable behavior.",
+      "include gives classes module instance methods.",
+      "Mixins reduce duplication cleanly."
+    ],
+    "nextTopicId": "crystal_blocks"
+  }
+}

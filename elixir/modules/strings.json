@@ -1,0 +1,211 @@
+{
+  "id": "lm_elixir_strings",
+  "topicId": "elixir_strings",
+  "language": "elixir",
+  "title": "Strings",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Elixir strings are double-quoted UTF-8 binaries. Interpolation uses #{expr}. The String module provides length, upcase, downcase, split, trim, contains?, and more.",
+    "explanation": "Elixir strings are UTF-8 encoded binaries (<< >>). Always use double quotes — single-quoted values are charlists (lists of code points), a different type. String interpolation embeds any Elixir expression with #{expr}. The String module functions always return new strings (immutable). String.length/1 counts Unicode grapheme clusters; byte_size/1 counts raw bytes.",
+    "syntax": "# String literals — DOUBLE quotes only\nname = \"Alice\"\n\n# Interpolation\n\"Hello, #{name}!\"          # Hello, Alice!\n\"1 + 1 = #{1 + 1}\"        # 1 + 1 = 2\n\n# String module\nString.length(\"hello\")    # 5\nString.upcase(\"hello\")    # HELLO\nString.downcase(\"HELLO\")  # hello\nString.trim(\"  hi  \")     # hi\nString.split(\"a,b,c\", \",\") # [\"a\", \"b\", \"c\"]\nString.contains?(\"hello\", \"ell\")  # true\n\n# Concatenation\n\"Hello\" <> \" \" <> \"World\"  # Hello World",
+    "keyPoints": [
+      "Double-quoted ONLY — single quotes create charlists, not strings",
+      "Interpolation: #{expr} — any expression inside the braces",
+      "<> operator for string concatenation",
+      "String.length counts characters; byte_size counts bytes"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch string interpolation, concatenation, and String module functions in action.",
+    "code": "name = \"Alice\"\nscore = 95\ngreeting = \"Hello, #{name}!\"\nIO.puts(greeting)\nmsg = \"Score: #{score * 2}\"\nIO.puts(msg)\nIO.puts(String.length(name))\nIO.puts(String.upcase(name))\nparts = String.split(\"a,b,c\", \",\")\nIO.inspect(parts)",
+    "focusLine": 1,
+    "expectedHighlights": ["name=Alice", "greeting interpolated", "score*2 in string", "length=5", "upcase", "split"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "name",
+        "value": "\"Alice\"",
+        "dataType": "String (Binary)",
+        "explanation": {
+          "what": "name = \"Alice\" — double-quoted string bound to name",
+          "why": "Double quotes create a UTF-8 binary string in Elixir",
+          "change": "name = 'Alice'",
+          "intent": "Show double-quoted string creation",
+          "misconception": "NEVER use single quotes for strings in Elixir. 'Alice' creates a charlist [65, 108, 105, 99, 101] — a list of Unicode code point integers. This is a completely different type from the binary string \"Alice\"."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "score",
+        "value": "95",
+        "dataType": "Integer",
+        "explanation": {
+          "what": "score = 95 — integer for use in interpolation",
+          "why": "Setting up interpolation demo with a non-string value",
+          "change": "score = 95",
+          "intent": "Show that interpolation works with any type",
+          "misconception": "#{expr} in an interpolated string converts any expression result to its string representation automatically — no manual Integer.to_string() needed."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "greeting",
+        "value": "\"Hello, Alice!\"",
+        "dataType": "String",
+        "explanation": {
+          "what": "\"Hello, #{name}!\" — #{name} is replaced with the value of name",
+          "why": "String interpolation evaluates #{expr} and embeds the result",
+          "change": "greeting = 'Hello, Alice!'",
+          "intent": "Show basic interpolation with a variable",
+          "misconception": "#{} evaluates ANY Elixir expression — not just variables. #{name} evaluates the variable name. #{1 + 1} evaluates the expression 1+1 → 2."
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "Hello, Alice!",
+        "explanation": {
+          "what": "IO.puts(greeting) → Hello, Alice!",
+          "why": "The interpolated string was constructed with name='Alice'",
+          "change": "output ← 'Hello, Alice!'",
+          "intent": "Confirm interpolation result",
+          "misconception": "The interpolated string is a NEW string — it is not dynamically updated if name changes later. Elixir strings are constructed once at the point of evaluation."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "msg",
+        "value": "\"Score: 190\"",
+        "dataType": "String",
+        "explanation": {
+          "what": "\"Score: #{score * 2}\" — #{score * 2} evaluates 95*2=190",
+          "why": "Interpolation can embed arbitrary expressions, not just variables",
+          "change": "msg = 'Score: 190'",
+          "intent": "Show expression evaluation inside interpolation",
+          "misconception": "score * 2 is fully evaluated (95 * 2 = 190) THEN converted to string and embedded. The interpolation syntax #{} is an expression boundary — any valid Elixir expression works."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "Score: 190",
+        "explanation": {
+          "what": "IO.puts(msg) → Score: 190",
+          "why": "Expression in interpolation evaluated to 190",
+          "change": "output ← 'Score: 190'",
+          "intent": "Confirm expression interpolation",
+          "misconception": "score itself is unchanged — it is still 95. The expression score * 2 was evaluated and embedded in the new string, not stored back."
+        }
+      },
+      {
+        "type": "call",
+        "line": 7,
+        "name": "String.length",
+        "args": ["name"],
+        "returnVar": "len",
+        "explanation": {
+          "what": "String.length(\"Alice\") → 5",
+          "why": "String has 5 Unicode characters",
+          "change": "output ← '5'",
+          "intent": "Show String module function",
+          "misconception": "String.length counts GRAPHEME CLUSTERS (visible characters), not bytes. For ASCII strings these are the same. But \"café\" has String.length 4 but byte_size 5 (é is 2 bytes in UTF-8)."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "ALICE",
+        "explanation": {
+          "what": "String.upcase(\"Alice\") → ALICE",
+          "why": "String.upcase creates a new uppercased string",
+          "change": "output ← 'ALICE'",
+          "intent": "Show String.upcase returning a new string",
+          "misconception": "String.upcase returns a NEW string — name is still 'Alice'. All String module functions return new strings (immutable values)."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 9,
+        "var": "parts",
+        "value": "[\"a\", \"b\", \"c\"]",
+        "dataType": "List of Strings",
+        "explanation": {
+          "what": "String.split(\"a,b,c\", \",\") → [\"a\", \"b\", \"c\"]",
+          "why": "Splits on the delimiter \",\" and returns a list of substrings",
+          "change": "parts = ['a', 'b', 'c']",
+          "intent": "Show String.split returning a list",
+          "misconception": "String.split returns a List, not a string. You can iterate it with Enum.each or destructure it with pattern matching."
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "[\"a\", \"b\", \"c\"]",
+        "explanation": {
+          "what": "IO.inspect(parts) → [\"a\", \"b\", \"c\"]",
+          "why": "IO.inspect shows the Elixir representation including quotes",
+          "change": "output ← '[\"a\", \"b\", \"c\"]'",
+          "intent": "Show IO.inspect vs IO.puts for lists",
+          "misconception": "IO.puts on a list of strings would concatenate them without separators. IO.inspect is better for debugging non-scalar values — it shows the Elixir representation faithfully."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nlang = \"Elixir\"\nIO.puts(\"I love #{String.downcase(lang)}!\")",
+    "options": [
+      "I love Elixir!",
+      "I love elixir!",
+      "I love #{String.downcase(lang)}!",
+      "Error"
+    ],
+    "correctIndex": 1,
+    "explanation": "String.downcase(\"Elixir\") → \"elixir\". The interpolation #{...} embeds the result. Output: I love elixir!"
+  },
+
+  "explanation": {
+    "afterDemo": "String interpolation with #{} is idiomatic Elixir — preferred over string concatenation with <>. It handles type conversion automatically and is more readable. The String module covers most common operations; for high-performance binary manipulation, Elixir also has the binary pattern matching syntax (<< >>) which is powerful for parsing protocols and files.",
+    "keyTakeaways": [
+      "Double-quoted strings only — single quotes are charlists.",
+      "#{expr} interpolates any expression — variable, arithmetic, function call.",
+      "<> concatenates strings. String module for transformations (all return new strings)."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Bind name = \"elixir\" and year = 2011. Print \"Elixir was created in 2011\" using interpolation and String.capitalize/1 for the name.",
+    "starterCode": "name = \"elixir\"\nyear = 2011\nIO.puts(\"#{String.capitalize(name)} was created in #{year}\")",
+    "solutionCode": "name = \"elixir\"\nyear = 2011\nIO.puts(\"#{String.capitalize(name)} was created in #{year}\")",
+    "hint": "String.capitalize(name) → \"Elixir\". Embed both in a single interpolated string.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Elixir was created in 2011"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! String.capitalize makes 'elixir' → 'Elixir', interpolated with year 2011.",
+    "retryHints": [
+      "String.capitalize(\"elixir\") → \"Elixir\"",
+      "#{String.capitalize(name)} and #{year} in one string",
+      "Expected: Elixir was created in 2011"
+    ]
+  },
+
+  "summary": {
+    "title": "Strings — Complete",
+    "takeaways": [
+      "Double-quoted UTF-8 strings. Single quotes = charlists (different type).",
+      "#{expr} interpolation — any expression, automatic type conversion.",
+      "String module: length, upcase, downcase, trim, split, contains? — all return new strings."
+    ],
+    "nextTopicId": "elixir_functions"
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "id": "lm_rust_loops",
+  "topicId": "rust_loops",
+  "language": "rust",
+  "title": "Loops",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Rust has three loop forms: loop (infinite), while (condition-checked), and for (range/iterator).",
+    "explanation": "loop runs until an explicit break. while re-evaluates its condition before each iteration. for is the most common — it iterates over a range or any iterator. Unlike other languages, break can return a value from a loop expression, and there is no traditional C-style for(;;) — use ranges instead.",
+    "syntax": "// Infinite loop — break to exit\nloop {\n    break;          // exit\n}\n\n// loop with return value\nlet result = loop { break 42; };\n\n// while\nwhile n > 0 {\n    n -= 1;\n}\n\n// for with exclusive range (0,1,2,3,4)\nfor i in 0..5 { println!(\"{}\", i); }\n\n// for with inclusive range (0,1,2,3,4,5)\nfor i in 0..=5 { println!(\"{}\", i); }",
+    "keyPoints": [
+      "loop { } is truly infinite — must use break to exit",
+      "break value; exits loop and makes that value the result of the loop expression",
+      "while condition { } — condition re-evaluated each iteration",
+      "for x in range — range 0..5 is exclusive end; 0..=5 is inclusive",
+      "continue skips the rest of the current iteration body"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a for loop count down, then a loop expression that returns a value.",
+    "code": "fn main() {\n    for i in 1..=3 {\n        println!(\"i = {}\", i);\n    }\n\n    let answer = loop {\n        break 99;\n    };\n    println!(\"answer = {}\", answer);\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["i=1", "i=2", "i=3", "loop break 99", "answer=99"],
+    "steps": [
+      {
+        "type": "loop_start",
+        "line": 2,
+        "kind": "for",
+        "condition": "i in 1..=3",
+        "var": "i",
+        "explanation": {
+          "what": "Starting for loop over 1..=3",
+          "why": "The inclusive range 1..=3 produces an iterator yielding 1, 2, 3",
+          "change": "loop begins, i will take values 1, 2, 3",
+          "intent": "Iterate a known number of times using a range",
+          "misconception": "1..=3 includes 3; 1..3 would stop at 2 — the = sign makes the end inclusive"
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 2,
+        "condition": "i in 1..=3",
+        "result": true,
+        "iteration": 0,
+        "explanation": {
+          "what": "Iteration 1: i = 1",
+          "why": "The iterator yields 1 as the first element and binds it to i",
+          "change": "i = 1",
+          "intent": "Process the first value of the range",
+          "misconception": "i is re-bound each iteration — it is not mutated; a fresh binding is created"
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "i = 1",
+        "explanation": {
+          "what": "Printing i = 1",
+          "why": "Body runs with current i value",
+          "change": "output ← 'i = 1'",
+          "intent": "Observe the first iteration value",
+          "misconception": "The body runs once per yielded value, not based on a manual counter"
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 2,
+        "condition": "i in 1..=3",
+        "result": true,
+        "iteration": 1,
+        "explanation": {
+          "what": "Iteration 2: i = 2",
+          "why": "The iterator advances and yields 2",
+          "change": "i = 2",
+          "intent": "Process the second value",
+          "misconception": "Rust's for loop calls .next() on the iterator automatically — you never see the StopIteration signal"
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "i = 2",
+        "explanation": {
+          "what": "Printing i = 2",
+          "why": "Body runs again for i = 2",
+          "change": "output ← 'i = 2'",
+          "intent": "Show second iteration",
+          "misconception": "i inside the loop body is always the current iteration's binding"
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 2,
+        "condition": "i in 1..=3",
+        "result": true,
+        "iteration": 2,
+        "explanation": {
+          "what": "Iteration 3: i = 3",
+          "why": "The iterator yields 3 (the last value, since the range is inclusive)",
+          "change": "i = 3",
+          "intent": "Process the final value",
+          "misconception": "Because the range is 1..=3, 3 IS included — the loop runs 3 times total"
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "i = 3",
+        "explanation": {
+          "what": "Printing i = 3",
+          "why": "Last iteration body executes",
+          "change": "output ← 'i = 3'",
+          "intent": "Show final iteration",
+          "misconception": "After this, the iterator is exhausted — the for loop exits naturally without a break"
+        }
+      },
+      {
+        "type": "loop_end",
+        "line": 4,
+        "explanation": {
+          "what": "for loop exits",
+          "why": "The range iterator is exhausted — no more values to yield",
+          "change": "loop scope closes; i is no longer accessible",
+          "intent": "Automatic exit when the range is fully consumed",
+          "misconception": "You do not need break to end a for loop — it ends when the iterator is done"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "answer",
+        "value": "99",
+        "dataType": "i32",
+        "explanation": {
+          "what": "loop expression returns 99 via break",
+          "why": "break 99 exits the loop and makes 99 the value of the entire loop expression",
+          "change": "answer = 99 (new i32 slot)",
+          "intent": "Demonstrate that loop is an expression that can produce a value",
+          "misconception": "This is unique to loop (not while or for) — only loop can break with a value"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "answer = 99",
+        "explanation": {
+          "what": "Printing answer",
+          "why": "answer holds 99, the value returned by the loop expression",
+          "change": "output ← 'answer = 99'",
+          "intent": "Verify the loop expression value was captured correctly",
+          "misconception": "Without let answer = loop { ... }, the return value from break would be discarded"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "How many times does this loop body run?\n\nfor i in 0..4 {\n    println!(\"{}\", i);\n}",
+    "options": ["3", "4", "5", "infinite"],
+    "correctIndex": 1,
+    "explanation": "0..4 is an exclusive range — it yields 0, 1, 2, 3 (four values). The loop body runs 4 times, printing 0, 1, 2, 3."
+  },
+
+  "explanation": {
+    "afterDemo": "The for loop iterated over the inclusive range 1..=3, binding i to each value in turn. After the range was exhausted, the loop exited automatically. Then a loop expression used break 99 to return a value — showing that loop, like if, is an expression in Rust.",
+    "keyTakeaways": [
+      "for x in range is the idiomatic way to loop a known number of times.",
+      "0..n is exclusive end (n not included); 0..=n is inclusive.",
+      "loop { break value; } is an expression that returns a value."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Use a for loop to print each number from 1 to 5 (inclusive), each on its own line.",
+    "starterCode": "fn main() {\n    // for loop here\n}",
+    "solutionCode": "fn main() {\n    for i in 1..=5 {\n        println!(\"{}\", i);\n    }\n}",
+    "hint": "Use 1..=5 for an inclusive range. println!(\"{}\", i) inside the body.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["1", "2", "3", "4", "5"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 1..=5 iterates 1, 2, 3, 4, 5 — each printed on its own line.",
+    "retryHints": [
+      "Use 1..=5 (with =) to include 5. Using 1..5 would stop at 4.",
+      "Each println!(\"{}\", i) call outputs one line.",
+      "Expected output: five lines, each containing just the number (1 through 5)."
+    ]
+  },
+
+  "summary": {
+    "title": "Loops — Complete",
+    "takeaways": [
+      "for x in range is the idiomatic counted loop — no manual counter needed.",
+      "loop runs until break; it can return a value with break value.",
+      "while condition checks its guard before each iteration."
+    ],
+    "nextTopicId": "rust_ownership"
+  }
+}

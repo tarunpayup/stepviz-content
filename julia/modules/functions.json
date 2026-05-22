@@ -1,0 +1,171 @@
+{
+  "id": "lm_julia_functions",
+  "topicId": "julia_functions",
+  "language": "julia",
+  "title": "Functions",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Julia functions use function...end or compact f(x) = expr syntax. The last expression is implicitly returned. Functions are first-class values.",
+    "explanation": "A Julia function's body evaluates a sequence of expressions; the last one is automatically returned (no return keyword required unless doing an early exit). The compact assignment form f(x) = expr is idiomatic for one-liners. Functions are first-class — you can store them in variables, pass them to other functions, and return them.",
+    "syntax": "# Standard form\nfunction greet(name)\n    \"Hello, $name!\"\nend\n\n# Compact form (same thing)\ngreet(name) = \"Hello, $name!\"\n\n# Explicit return (early exit)\nfunction abs_val(x)\n    if x < 0\n        return -x\n    end\n    x\nend\n\n# Functions as values\napply(f, x) = f(x)\napply(sqrt, 16)  # 4.0",
+    "keyPoints": [
+      "function name(params) ... end — standard block form",
+      "f(x) = expr — compact one-liner, idiomatic in Julia",
+      "Last expression is the return value — no return needed",
+      "return exits early; omit it for the normal return path"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a standard-form and a compact-form function being called and returning values implicitly.",
+    "code": "function add(a, b)\n    a + b\nend\n\nsquare(x) = x^2\n\nprintln(add(3, 4))\nprintln(square(5))\nprintln(add(square(3), square(4)))",
+    "focusLine": 7,
+    "expectedHighlights": ["add(3,4)=7", "square(5)=25", "square(3)=9 square(4)=16 add=25"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 7,
+        "name": "add",
+        "args": ["3", "4"],
+        "returnVar": "result_1",
+        "explanation": {
+          "what": "add(3, 4) — calling the standard-form function",
+          "why": "Passes a=3, b=4 into add's body",
+          "change": "a=3, b=4 inside add",
+          "intent": "Show standard function call syntax",
+          "misconception": "add has no return keyword — the expression a + b on the last line IS the return value. Julia automatically returns the last evaluated expression."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "return value (add)",
+        "value": "7",
+        "dataType": "Int64",
+        "explanation": {
+          "what": "a + b = 3 + 4 = 7 — last expression, implicitly returned",
+          "why": "No return statement needed — the function body's last expression is the return",
+          "change": "add returns 7",
+          "intent": "Show implicit return from the last expression",
+          "misconception": "If you add a return keyword here (return a + b) it is equivalent — but Julia programmers often omit it for clean, mathematical-looking code"
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "7",
+        "explanation": {
+          "what": "println(add(3, 4)) → 7",
+          "why": "add returned 7",
+          "change": "output ← '7'",
+          "intent": "Confirm implicit return value",
+          "misconception": "println calls add and receives 7, then prints it — it is not aware that add had no explicit return"
+        }
+      },
+      {
+        "type": "call",
+        "line": 8,
+        "name": "square",
+        "args": ["5"],
+        "returnVar": "result_2",
+        "explanation": {
+          "what": "square(5) — compact form function x^2 with x=5",
+          "why": "Compact form square(x) = x^2 is equivalent to the block form",
+          "change": "x = 5 → x^2 = 25",
+          "intent": "Show compact single-expression function",
+          "misconception": "^ in Julia is the power operator. 5^2 = 25. In other languages ** is used for power — Julia uses ^ like mathematics."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "25",
+        "explanation": {
+          "what": "println(square(5)) → 25",
+          "why": "square returned 5^2 = 25",
+          "change": "output ← '25'",
+          "intent": "Confirm compact form result",
+          "misconception": "Compact and block forms are identical in behavior — choose based on readability"
+        }
+      },
+      {
+        "type": "call",
+        "line": 9,
+        "name": "add(square(3), square(4))",
+        "args": ["square(3)=9", "square(4)=16"],
+        "returnVar": "result_3",
+        "explanation": {
+          "what": "square(3)=9, square(4)=16, then add(9,16)=25",
+          "why": "Function calls compose naturally — Julia evaluates arguments left-to-right",
+          "change": "result = 25",
+          "intent": "Show function composition — functions as building blocks",
+          "misconception": "This is the Pythagorean triple check: 3^2 + 4^2 = 5^2 = 25. Julia naturally expresses mathematical relationships this way."
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "25",
+        "explanation": {
+          "what": "println(add(square(3), square(4))) → 25",
+          "why": "3^2 + 4^2 = 9 + 16 = 25",
+          "change": "output ← '25'",
+          "intent": "Confirm composed function call",
+          "misconception": "25 here is the hypotenuse squared: sqrt(25) = 5. This demonstrates that Julia functions compose elegantly."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this function return when called as mystery(3)?\n\nfunction mystery(x)\n    y = x * 2\n    z = y + 1\n    z\nend",
+    "options": [
+      "6",
+      "7",
+      "3",
+      "Nothing — no return statement"
+    ],
+    "correctIndex": 1,
+    "explanation": "y = 3*2 = 6, z = 6+1 = 7. The last expression z is implicitly returned. mystery(3) returns 7."
+  },
+
+  "explanation": {
+    "afterDemo": "Julia's implicit return makes function bodies read like mathematical definitions — they ARE expressions, not imperative procedures. The compact form f(x) = x^2 mirrors the mathematical notation f(x) = x². This design makes Julia code look clean and close to the math it implements.",
+    "keyTakeaways": [
+      "Last expression in a function is implicitly returned — no return keyword needed.",
+      "f(x) = expr is idiomatic for one-liners — use it freely.",
+      "return expr is used for early exit from inside a branch or loop."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a compact function celsius_to_fahrenheit(c) = ... that converts Celsius to Fahrenheit (formula: F = C * 9/5 + 32). Print celsius_to_fahrenheit(0), celsius_to_fahrenheit(100).",
+    "starterCode": "# compact function\n\nprintln(celsius_to_fahrenheit(0))\nprintln(celsius_to_fahrenheit(100))",
+    "solutionCode": "celsius_to_fahrenheit(c) = c * 9/5 + 32\n\nprintln(celsius_to_fahrenheit(0))\nprintln(celsius_to_fahrenheit(100))",
+    "hint": "celsius_to_fahrenheit(c) = c * 9/5 + 32",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["32.0", "212.0"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 0°C = 32°F and 100°C = 212°F.",
+    "retryHints": [
+      "celsius_to_fahrenheit(c) = c * 9/5 + 32",
+      "9/5 in Julia is 1.8 (Float64 division)",
+      "Expected: 32.0 then 212.0"
+    ]
+  },
+
+  "summary": {
+    "title": "Functions — Complete",
+    "takeaways": [
+      "function...end for block form; f(x) = expr for compact one-liners.",
+      "Last expression is implicitly returned — no return keyword for the normal path.",
+      "Functions are first-class values — pass them to other functions, store in variables."
+    ],
+    "nextTopicId": "julia_control_flow"
+  }
+}

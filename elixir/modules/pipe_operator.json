@@ -1,0 +1,215 @@
+{
+  "id": "lm_elixir_pipe_operator",
+  "topicId": "elixir_pipe_operator",
+  "language": "elixir",
+  "title": "Pipe Operator",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "The pipe operator |> passes the result of the left expression as the FIRST argument to the right function. It eliminates nesting and makes data transformations read left-to-right.",
+    "explanation": "x |> f() is exactly equivalent to f(x). x |> f(y) is exactly equivalent to f(x, y). The pipe operator is purely syntactic sugar — no performance difference. Its value is readability: transform steps read top-to-bottom like a pipeline, instead of inside-out nested calls. It is the most idiomatic Elixir pattern for chaining data transformations.",
+    "syntax": "# Without pipe — inside-out nesting\nString.replace(String.downcase(String.trim(\"  Hello, Elixir!  \")), \"elixir\", \"world\")\n\n# With pipe — left to right\n\"  Hello, Elixir!  \"\n|> String.trim()\n|> String.downcase()\n|> String.replace(\"elixir\", \"world\")\n# => \"hello, world!\"\n\n# Multi-arg: left side inserts as FIRST arg\n[1,2,3,4,5]\n|> Enum.filter(&(rem(&1, 2) == 0))   # filter goes first\n|> Enum.map(&(&1 * &1))              # then square\n|> Enum.sum()                         # then sum\n# => 4 + 16 = 20",
+    "keyPoints": [
+      "x |> f() — inserts x as first argument of f",
+      "No performance cost — purely syntactic sugar",
+      "Convention: one pipe step per line for readability",
+      "Composes naturally with Enum, String, Map, and all Elixir module functions"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a string pipeline using |> — same logic as nested calls, far more readable.",
+    "code": "input = \"  Hello, Elixir!  \"\n\nresult =\n  input\n  |> String.trim()\n  |> String.downcase()\n  |> String.replace(\"elixir\", \"world\")\n\nIO.puts(result)\n\nnums = [1, 2, 3, 4, 5]\ntotal =\n  nums\n  |> Enum.filter(fn x -> rem(x, 2) == 0 end)\n  |> Enum.map(fn x -> x * x end)\n  |> Enum.sum()\n\nIO.puts(total)",
+    "focusLine": 1,
+    "expectedHighlights": ["input value", "trim step", "downcase step", "replace step", "result", "filter→[2,4]", "map→[4,16]", "sum=20"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "input",
+        "value": "\"  Hello, Elixir!  \"",
+        "dataType": "String",
+        "explanation": {
+          "what": "input = '  Hello, Elixir!  ' — a string with leading/trailing whitespace",
+          "why": "Starting value for the pipeline",
+          "change": "input = '  Hello, Elixir!  '",
+          "intent": "Establish the pipeline source value",
+          "misconception": "The pipeline does NOT modify input. Each |> step produces a new string — input remains '  Hello, Elixir!  ' throughout."
+        }
+      },
+      {
+        "type": "call",
+        "line": 4,
+        "name": "String.trim",
+        "args": ["input"],
+        "returnVar": "step1",
+        "explanation": {
+          "what": "input |> String.trim() — inserts input as first arg: String.trim(input)",
+          "why": "|> passes the left value as the first argument to the right function",
+          "change": "step1 = 'Hello, Elixir!'",
+          "intent": "Show pipe operator inserting value as first argument",
+          "misconception": "String.trim() has NO arguments written here — that is intentional. The |> supplies the first argument automatically. This is the core mechanic of pipe."
+        }
+      },
+      {
+        "type": "call",
+        "line": 5,
+        "name": "String.downcase",
+        "args": ["'Hello, Elixir!'"],
+        "returnVar": "step2",
+        "explanation": {
+          "what": "'Hello, Elixir!' |> String.downcase() — downcases the trimmed string",
+          "why": "The result of trim flows into downcase as its first argument",
+          "change": "step2 = 'hello, elixir!'",
+          "intent": "Show second pipeline step receiving previous step's output",
+          "misconception": "Each step's output becomes the NEXT step's first argument. The pipeline is: trim→downcase→replace — not all applied to input simultaneously."
+        }
+      },
+      {
+        "type": "call",
+        "line": 6,
+        "name": "String.replace",
+        "args": ["'hello, elixir!'", "\"elixir\"", "\"world\""],
+        "returnVar": "result",
+        "explanation": {
+          "what": "'hello, elixir!' |> String.replace('elixir', 'world') — replaces the matched substring",
+          "why": "The lowercased string flows in as first arg; 'elixir' and 'world' are the remaining args",
+          "change": "result = 'hello, world!'",
+          "intent": "Show pipe with a multi-argument function — left side is first arg, rest follow",
+          "misconception": "String.replace takes 3 arguments: (string, pattern, replacement). With pipe, string is supplied by |>, so only pattern and replacement are written. result = String.replace('hello, elixir!', 'elixir', 'world')."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "hello, world!",
+        "explanation": {
+          "what": "IO.puts(result) → hello, world!",
+          "why": "Pipeline: trim → downcase → replace",
+          "change": "output ← 'hello, world!'",
+          "intent": "Confirm full string pipeline result",
+          "misconception": "Compare the piped version to the nested version: String.replace(String.downcase(String.trim(input)), 'elixir', 'world'). Same logic — pipe just reads left-to-right, nesting reads inside-out."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 11,
+        "var": "nums",
+        "value": "[1, 2, 3, 4, 5]",
+        "dataType": "List",
+        "explanation": {
+          "what": "nums = [1, 2, 3, 4, 5] — list for Enum pipeline",
+          "why": "Starting value for the Enum pipeline",
+          "change": "nums = [1, 2, 3, 4, 5]",
+          "intent": "Set up Enum pipeline source",
+          "misconception": "The |> operator works with ANY value type — strings, lists, maps, tuples, custom structs. It is not limited to strings or Enum."
+        }
+      },
+      {
+        "type": "call",
+        "line": 13,
+        "name": "Enum.filter",
+        "args": ["nums", "fn x -> rem(x,2)==0 end"],
+        "returnVar": "filtered",
+        "explanation": {
+          "what": "nums |> Enum.filter(fn x -> rem(x,2)==0 end) — keeps even numbers",
+          "why": "nums flows as first arg; the fn is the second arg",
+          "change": "filtered = [2, 4]",
+          "intent": "Show Enum.filter in a pipe",
+          "misconception": "Enum.filter takes (enumerable, fun). With pipe, enumerable = nums (the left side). fun is the only written argument."
+        }
+      },
+      {
+        "type": "call",
+        "line": 14,
+        "name": "Enum.map",
+        "args": ["[2, 4]", "fn x -> x * x end"],
+        "returnVar": "mapped",
+        "explanation": {
+          "what": "[2, 4] |> Enum.map(fn x -> x * x end) — squares each even",
+          "why": "[2, 4] flows from filter step",
+          "change": "mapped = [4, 16]",
+          "intent": "Show Enum.map in a pipe after filter",
+          "misconception": "2*2=4, 4*4=16. The intermediate results [2,4] and [4,16] exist but do not need variable names — the pipe chains them automatically."
+        }
+      },
+      {
+        "type": "call",
+        "line": 15,
+        "name": "Enum.sum",
+        "args": ["[4, 16]"],
+        "returnVar": "total",
+        "explanation": {
+          "what": "[4, 16] |> Enum.sum() — sums the squared evens",
+          "why": "[4, 16] flows from map step",
+          "change": "total = 20",
+          "intent": "Show terminal Enum.sum in a pipe",
+          "misconception": "Enum.sum() has no written arguments — the list is supplied entirely by |>. 4+16=20."
+        }
+      },
+      {
+        "type": "print",
+        "line": 17,
+        "value": "20",
+        "explanation": {
+          "what": "IO.puts(total) → 20",
+          "why": "Filter evens [2,4] → square [4,16] → sum 20",
+          "change": "output ← '20'",
+          "intent": "Confirm Enum pipeline result",
+          "misconception": "Without pipe: Enum.sum(Enum.map(Enum.filter([1,2,3,4,5], fn x -> rem(x,2)==0 end), fn x -> x*x end)) — same result, dramatically harder to read."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\n[1, 2, 3, 4, 5]\n|> Enum.filter(&(rem(&1, 2) == 0))\n|> Enum.sum()",
+    "options": [
+      "6",
+      "9",
+      "15",
+      "2"
+    ],
+    "correctIndex": 0,
+    "explanation": "Filter evens: [2, 4]. Sum: 2+4=6."
+  },
+
+  "explanation": {
+    "afterDemo": "The pipe operator |> is arguably the most loved feature in Elixir. It fundamentally changes how you read and write data transformation code — from inside-out nested calls to top-to-bottom pipelines. Combined with Enum, String, and Map modules, |> enables you to write highly expressive, readable transformation chains with zero extra variables.",
+    "keyTakeaways": [
+      "x |> f() is exactly f(x). Zero performance cost — just syntax.",
+      "x |> f(y) is exactly f(x, y) — left side inserts as FIRST argument.",
+      "Chain Enum, String, Map operations left-to-right for readable pipelines."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Using |>, take the string '  Elixir is AMAZING  ', trim it, downcase it, and use String.split(' ') to split into words. Print with IO.inspect.",
+    "starterCode": "result =\n  \"  Elixir is AMAZING  \"\n  |> String.trim()\n  |> String.downcase()\n  |> String.split(\" \")\n\nIO.inspect(result)",
+    "solutionCode": "result =\n  \"  Elixir is AMAZING  \"\n  |> String.trim()\n  |> String.downcase()\n  |> String.split(\" \")\n\nIO.inspect(result)",
+    "hint": "trim → downcase → split. Result is a list of words.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["[\"elixir\", \"is\", \"amazing\"]"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Pipeline: trim → downcase → split → [\"elixir\", \"is\", \"amazing\"].",
+    "retryHints": [
+      "trim removes leading/trailing spaces",
+      "downcase converts AMAZING → amazing",
+      "String.split(\" \") splits on space"
+    ]
+  },
+
+  "summary": {
+    "title": "Pipe Operator — Complete",
+    "takeaways": [
+      "|> inserts left side as first argument of the right function.",
+      "Purely syntactic — no performance cost. Enables left-to-right readable pipelines.",
+      "Combine with Enum, String, Map for clean, idiomatic Elixir data transformations."
+    ],
+    "nextTopicId": null
+  }
+}

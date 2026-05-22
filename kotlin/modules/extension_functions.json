@@ -1,0 +1,171 @@
+{
+  "id": "lm_kotlin_extension_functions",
+  "topicId": "kotlin_extension_functions",
+  "language": "kotlin",
+  "title": "Extension Functions",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Extension functions add new functions to existing classes without modifying them. this inside the extension refers to the receiver object.",
+    "explanation": "An extension function is defined as fun ReceiverType.functionName(params): ReturnType. Inside the body, this refers to the receiver instance. Extensions are resolved statically at compile time — they do not override members of the class and cannot access private fields. They are syntactic sugar: String.shout() compiles to a static utility function behind the scenes.",
+    "syntax": "// Add a function to String\nfun String.shout(): String = this.uppercase() + \"!\"\n\nprintln(\"hello\".shout())   // HELLO!\n\n// Add a function to Int\nfun Int.square(): Int = this * this\n\nprintln(4.square())         // 16\n\n// Extension on nullable type\nfun String?.orEmpty(): String = this ?: \"\"",
+    "keyPoints": [
+      "fun TypeName.funcName() — adds funcName to TypeName",
+      "this inside the extension = the receiver instance",
+      "Cannot access private members of the receiver",
+      "Resolved statically — member functions always win over extensions with the same signature"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch two extension functions — one on String, one on Int — being called exactly like member functions.",
+    "code": "fun String.shout(): String = this.uppercase() + \"!\"\nfun Int.square(): Int = this * this\n\nfun main() {\n    val msg = \"hello\".shout()\n    println(msg)\n    println(5.square())\n    println(\"world\".shout())\n}",
+    "focusLine": 4,
+    "expectedHighlights": ["receiver='hello'", "this='hello'", "shout returns 'HELLO!'", "receiver=5", "square=25"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 5,
+        "name": "\"hello\".shout",
+        "args": [],
+        "returnVar": "msg",
+        "explanation": {
+          "what": "\"hello\".shout() — calling the extension function on the string 'hello'",
+          "why": "shout is defined as an extension on String — it appears as a method",
+          "change": "inside shout: this = 'hello'",
+          "intent": "Show extension being called with dot notation — looks like a member function",
+          "misconception": "shout is NOT actually added to the String class — the compiler rewrites this call to StringExtensionsKt.shout(\"hello\") under the hood. The dot notation is syntactic sugar."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "return value (shout on 'hello')",
+        "value": "HELLO!",
+        "dataType": "String",
+        "explanation": {
+          "what": "this.uppercase() + \"!\" — this is 'hello', uppercase() → 'HELLO', + '!' → 'HELLO!'",
+          "why": "The extension body runs with this bound to the receiver 'hello'",
+          "change": "shout returns 'HELLO!'",
+          "intent": "Show this referring to the receiver inside the extension",
+          "misconception": "this is optional inside an extension — you can write uppercase() + \"!\" directly without this. It is only needed to disambiguate when there is a naming conflict."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "msg",
+        "value": "HELLO!",
+        "dataType": "String",
+        "explanation": {
+          "what": "val msg = \"hello\".shout() — result stored",
+          "why": "The extension returned 'HELLO!'",
+          "change": "msg = 'HELLO!'",
+          "intent": "Show extension return value stored like any other function call",
+          "misconception": "There is nothing special about how you store or use an extension function's return value — it behaves identically to a member function's return."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "HELLO!",
+        "explanation": {
+          "what": "println(msg) → 'HELLO!'",
+          "why": "msg = 'HELLO!'",
+          "change": "output ← 'HELLO!'",
+          "intent": "Confirm extension result",
+          "misconception": "No special printing needed — msg is a regular String"
+        }
+      },
+      {
+        "type": "call",
+        "line": 7,
+        "name": "5.square",
+        "args": [],
+        "returnVar": "square_result",
+        "explanation": {
+          "what": "5.square() — extension on Int called on literal 5",
+          "why": "Kotlin allows calling extensions on literals — 5 is a valid Int receiver",
+          "change": "inside square: this = 5 → this * this = 25",
+          "intent": "Show extension on Int used fluently on a number",
+          "misconception": "You can call extensions on any expression of the receiver type — including literals, variables, or function return values"
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "25",
+        "explanation": {
+          "what": "println(5.square()) → 25",
+          "why": "square computed 5 * 5 = 25",
+          "change": "output ← '25'",
+          "intent": "Show Int extension returning a computed value",
+          "misconception": "Int is a Kotlin built-in type but you can still add extensions to it — you just can't modify its source code or add private fields"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "WORLD!",
+        "explanation": {
+          "what": "\"world\".shout() → 'WORLD!'",
+          "why": "Same extension called on a different String receiver — this = 'world'",
+          "change": "output ← 'WORLD!'",
+          "intent": "Show same extension working on different receiver values",
+          "misconception": "Extensions are not stored on the object — there is no overhead per instance. The function exists once in the compiled class file."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nfun String.repeat3(): String = this + this + this\nprintln(\"ab\".repeat3())",
+    "options": [
+      "ab ab ab",
+      "ababab",
+      "ab3",
+      "Compile error"
+    ],
+    "correctIndex": 1,
+    "explanation": "this = 'ab', so this + this + this = 'ab' + 'ab' + 'ab' = 'ababab'. String + concatenates without spaces."
+  },
+
+  "explanation": {
+    "afterDemo": "Extension functions let you write fluent, readable APIs for any type — even ones you don't own. This is how Kotlin's standard library enriches Java's String, List, and other types with functions like reversed(), chunked(), joinToString() without modifying the original classes. Use them to make your domain types expressive.",
+    "keyTakeaways": [
+      "fun Type.name() = ... adds name() to Type. this refers to the receiver.",
+      "Extensions are resolved at compile time — no runtime overhead, no virtual dispatch.",
+      "Cannot access private members, and members always win over extensions with the same signature."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write an extension function on List<Int> called sum(): Int that returns the sum of all elements. Print listOf(1,2,3,4,5).sum().",
+    "starterCode": "fun List<Int>.sum(): Int {\n    // sum all elements\n}\n\nfun main() {\n    println(listOf(1, 2, 3, 4, 5).sum())\n}",
+    "solutionCode": "fun List<Int>.sum(): Int {\n    var total = 0\n    for (n in this) total += n\n    return total\n}\n\nfun main() {\n    println(listOf(1, 2, 3, 4, 5).sum())\n}",
+    "hint": "Iterate with for (n in this) and accumulate into a var total.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["15"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 1+2+3+4+5 = 15. Note: Kotlin's standard library already has .sum() — this exercise showed you how it could be built.",
+    "retryHints": [
+      "var total = 0; for (n in this) total += n; return total",
+      "this refers to the List<Int> receiver",
+      "Expected output: 15"
+    ]
+  },
+
+  "summary": {
+    "title": "Extension Functions — Complete",
+    "takeaways": [
+      "fun Type.name() adds a function to Type without modifying its source.",
+      "this inside the extension = the receiver object.",
+      "Extensions make APIs fluent and readable — the entire Kotlin stdlib enriches Java types this way."
+    ],
+    "nextTopicId": "kotlin_coroutines"
+  }
+}

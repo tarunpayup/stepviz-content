@@ -1,0 +1,42 @@
+{
+  "id": "lm_dart_error_handling",
+  "topicId": "dart_error_handling",
+  "language": "dart",
+  "title": "Error Handling",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Dart uses exceptions with try/catch/finally.",
+    "explanation": "Wrap risky code with try/catch and keep cleanup in finally when needed.",
+    "syntax": "try {\n  throw FormatException('Bad input');\n} catch (e) {\n  print(e);\n}",
+    "keyPoints": ["throw signals failures", "catch handles exceptions", "finally always runs"]
+  },
+  "demo": {
+    "intro": "Throw and catch a format exception.",
+    "code": "try {\n  throw FormatException('Bad input');\n} catch (e) {\n  print(e);\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["exception thrown", "caught in catch", "prints message"],
+    "steps": [
+      {"type": "call", "line": 2, "name": "throw FormatException", "args": ["Bad input"], "returnVar": "error", "explanation": {"what": "Throw exception", "why": "Signal invalid input", "change": "control jumps to catch", "intent": "Demonstrate failure path", "misconception": "Throwing stops normal flow immediately"}},
+      {"type": "print", "line": 4, "value": "FormatException: Bad input", "explanation": {"what": "Catch and print error", "why": "Recover gracefully", "change": "output <- exception text", "intent": "Show safe handling", "misconception": "Uncaught exceptions terminate program"}}
+    ]
+  },
+  "prediction": {
+    "question": "Which block runs regardless of error?",
+    "options": ["try", "catch", "finally", "none"],
+    "correctIndex": 2,
+    "explanation": "finally executes whether an exception occurs or not."
+  },
+  "explanation": {
+    "afterDemo": "Robust error handling makes code safer and easier to debug in production.",
+    "keyTakeaways": ["Use specific exception types", "Catch only what you can handle", "Use finally for cleanup"]
+  },
+  "practice": {
+    "prompt": "Throw Exception('Oops') in try and print 'handled' in catch.",
+    "starterCode": "// write code",
+    "solutionCode": "try {\n  throw Exception('Oops');\n} catch (e) {\n  print('handled');\n}",
+    "hint": "Place throw inside try block.",
+    "validation": {"type": "output", "expectedOutput": ["handled"]}
+  },
+  "feedback": {"successMessage": "Exception handling is correct.", "retryHints": ["Use try/catch", "Throw inside try", "Print in catch"]},
+  "summary": {"title": "Error Handling — Complete", "takeaways": ["Exceptions model runtime failures", "catch enables recovery", "finally supports cleanup"], "nextTopicId": null}
+}

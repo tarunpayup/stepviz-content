@@ -1,0 +1,169 @@
+{
+  "id": "lm_rust_enums",
+  "topicId": "rust_enums",
+  "language": "rust",
+  "title": "Enums",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Enums define a type that can be exactly one of several named variants — each variant can carry data.",
+    "explanation": "An enum lists all the forms a value can take. Unlike C enums (which are just integers), Rust enum variants can each hold different data. This makes them algebraic data types — perfect for representing things like network messages, game states, or error conditions. The most important built-in enum is Option<T>: Some(T) when a value exists, None when it doesn't — Rust's safe replacement for null.",
+    "syntax": "// Simple enum\nenum Direction { North, South, East, West }\n\n// Enum with data\nenum Shape {\n    Circle(f64),              // radius\n    Rectangle(f64, f64),      // width, height\n}\n\n// Option<T> — built in\nlet maybe: Option<i32> = Some(42);\nlet nothing: Option<i32> = None;\n\n// Access with match\nmatch maybe {\n    Some(v) => println!(\"{}\", v),\n    None    => println!(\"nothing\"),\n}",
+    "keyPoints": [
+      "Each variant may hold different types and amounts of data",
+      "Variants are namespaced: Direction::North, not just North",
+      "Option<T> replaces null — None means 'no value' without crashing",
+      "match on an enum must cover all variants — the compiler enforces this",
+      "#[derive(Debug)] lets you print enum values with {:?}"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch an enum value get created, matched, and an Option<i32> get unpacked.",
+    "code": "enum Coin {\n    Penny,\n    Nickel,\n    Dime,\n    Quarter,\n}\n\nfn value(c: Coin) -> u32 {\n    match c {\n        Coin::Penny   => 1,\n        Coin::Nickel  => 5,\n        Coin::Dime    => 10,\n        Coin::Quarter => 25,\n    }\n}\n\nfn main() {\n    let c = Coin::Quarter;\n    println!(\"cents = {}\", value(c));\n\n    let score: Option<i32> = Some(88);\n    if let Some(n) = score {\n        println!(\"score = {}\", n);\n    }\n}",
+    "focusLine": 18,
+    "expectedHighlights": ["Coin::Quarter created", "match selects Quarter arm", "returns 25", "Option Some(88)", "if let unpacks 88"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 18,
+        "var": "c",
+        "value": "Coin::Quarter",
+        "dataType": "Coin",
+        "explanation": {
+          "what": "Binding c to the enum variant Coin::Quarter",
+          "why": "We pick the Quarter variant to demonstrate matching — the enum enforces that c can only ever be one of the four defined variants",
+          "change": "c = Coin::Quarter",
+          "intent": "Create an enum value to pass to the value() function",
+          "misconception": "Coin::Quarter is not an integer — it is a distinct Rust value of type Coin. The integer 25 is only produced by the match, not stored in the variant."
+        }
+      },
+      {
+        "type": "call",
+        "line": 19,
+        "name": "value",
+        "args": ["Coin::Quarter"],
+        "returnVar": "cents",
+        "explanation": {
+          "what": "Calling value(c) — c moves into the function",
+          "why": "Coin does not implement Copy, so the value moves into the function parameter",
+          "change": "c is moved; value() receives Coin::Quarter",
+          "intent": "Convert an enum variant to its associated numeric value via match",
+          "misconception": "After this call c is no longer valid — it was moved. To keep using c, you would need to derive Copy on Coin."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 9,
+        "expression": "match c — Coin::Quarter arm",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "match selects the Coin::Quarter arm",
+          "why": "The match exhaustively tests each pattern in order; Quarter matches the fourth arm",
+          "change": "arm Coin::Quarter => 25 executes",
+          "intent": "Dispatch to the correct case based on the variant",
+          "misconception": "match does not fall through like switch in C — only the matching arm executes"
+        }
+      },
+      {
+        "type": "print",
+        "line": 19,
+        "value": "cents = 25",
+        "explanation": {
+          "what": "Printing the return value of value(c)",
+          "why": "value() returned 25 (the quarter arm), which is formatted into the string",
+          "change": "output ← 'cents = 25'",
+          "intent": "Show the result of enum dispatch",
+          "misconception": "The 25 was produced by the match — it did not come from storing an integer inside the variant"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 21,
+        "var": "score",
+        "value": "Some(88)",
+        "dataType": "Option<i32>",
+        "explanation": {
+          "what": "Binding score to Option::Some(88)",
+          "why": "Option<i32> is a built-in enum: Some wraps a value, None represents absence",
+          "change": "score = Some(88)",
+          "intent": "Model a value that may or may not exist — here it does (Some)",
+          "misconception": "You cannot use score as an i32 directly — you must unwrap it through match or if let first"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 22,
+        "expression": "if let Some(n) = score",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "if let Some(n) = score — pattern matches and binds n = 88",
+          "why": "score is Some(88), so the pattern matches and n is bound to the inner value 88",
+          "change": "n = 88 in this block's scope",
+          "intent": "Safely unwrap an Option without panicking, handling only the Some case",
+          "misconception": "if let is syntactic sugar for a match with one arm — it silently ignores None. Use match if you also need to handle None."
+        }
+      },
+      {
+        "type": "print",
+        "line": 23,
+        "value": "score = 88",
+        "explanation": {
+          "what": "Printing the unwrapped value n = 88",
+          "why": "n was bound to the inner value of Some(88) by the if let pattern",
+          "change": "output ← 'score = 88'",
+          "intent": "Show the safely unwrapped Option value",
+          "misconception": "If score were None, the if let block would be skipped entirely — no crash, no unwrap panic"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\nlet x: Option<i32> = None;\nmatch x {\n    Some(v) => println!(\"got {}\", v),\n    None    => println!(\"nothing\"),\n}",
+    "options": ["got 0", "nothing", "compile error — None not handled", "runtime panic"],
+    "correctIndex": 1,
+    "explanation": "x is None, so the None arm of the match runs and prints 'nothing'. No panic — match handles both variants safely."
+  },
+
+  "explanation": {
+    "afterDemo": "The Coin enum constrained c to exactly one of four variants. match converted that variant to an integer — exhaustively and safely. Option<T> then showed how Rust replaces null: Some wraps a value, None signals absence, and if let safely unpacks the value only when it exists.",
+    "keyTakeaways": [
+      "Enum variants can hold data — making them algebraic data types.",
+      "match on an enum is exhaustive — the compiler ensures every variant is handled.",
+      "Option<T> replaces null. Use Some(v) for a value and None for absence — never access the value without checking first."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Define an enum `Season` with variants Spring, Summer, Autumn, Winter. Write a function `is_warm(s: Season) -> bool` that returns true for Spring and Summer, false otherwise. Test with Season::Summer and print the result.",
+    "starterCode": "enum Season {\n    Spring, Summer, Autumn, Winter,\n}\n\nfn is_warm(s: Season) -> bool {\n    // use match\n}\n\nfn main() {\n    println!(\"{}\", is_warm(Season::Summer));\n}",
+    "solutionCode": "enum Season {\n    Spring, Summer, Autumn, Winter,\n}\n\nfn is_warm(s: Season) -> bool {\n    match s {\n        Season::Spring | Season::Summer => true,\n        _ => false,\n    }\n}\n\nfn main() {\n    println!(\"{}\", is_warm(Season::Summer));\n}",
+    "hint": "In the match, use Season::Spring | Season::Summer => true to match two variants in one arm.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["true"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! The | operator combines variants in a single match arm. Summer is warm, so the function returns true.",
+    "retryHints": [
+      "Use match s { ... } — s is moved in, so you cannot use s after the match (unless you #[derive(Copy)] the enum).",
+      "Pattern: Season::Spring | Season::Summer => true",
+      "Expected output: true"
+    ]
+  },
+
+  "summary": {
+    "title": "Enums — Complete",
+    "takeaways": [
+      "Enum variants can hold data — not just names.",
+      "match on an enum must cover every variant — the compiler enforces exhaustiveness.",
+      "Option<T> (Some / None) is Rust's null-safe way to represent optional values."
+    ],
+    "nextTopicId": "rust_pattern_matching"
+  }
+}

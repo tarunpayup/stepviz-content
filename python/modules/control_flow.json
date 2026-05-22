@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_control_flow",
+  "topicId": "python_control_flow",
+  "language": "python",
+  "title": "Control Flow",
+  "difficulty": "easy",
+  "concept": {"headline": "if/elif/else chooses execution path.", "explanation": "Conditions evaluate to True/False and select branch blocks.", "syntax": "if score >= 90:\n    grade = 'A'\nelif score >= 80:\n    grade = 'B'\nelse:\n    grade = 'C'", "keyPoints": ["Order conditions carefully", "First true branch wins", "else handles fallback"]},
+  "demo": {"intro": "Classify score into grade.", "code": "score = 82\nif score >= 90:\n    grade = 'A'\nelif score >= 80:\n    grade = 'B'\nelse:\n    grade = 'C'\nprint(grade)", "focusLine": 2, "expectedHighlights": ["first false", "second true", "prints B"], "steps": [{"type": "condition_check", "line": 2, "expression": "score >= 90", "result": false, "branch": "if", "explanation": {"what": "Check first condition", "why": "82 is less than 90", "change": "skip branch", "intent": "Ordered evaluation", "misconception": "False branch body is not run"}}, {"type": "condition_check", "line": 4, "expression": "score >= 80", "result": true, "branch": "elif", "explanation": {"what": "Check second condition", "why": "82 meets threshold", "change": "grade='B'", "intent": "Pick matching branch", "misconception": "Later branches are skipped after match"}}, {"type": "print", "line": 8, "value": "B", "explanation": {"what": "Print grade", "why": "Selected branch set value", "change": "output <- B", "intent": "Confirm result", "misconception": "print does not modify grade"}}]},
+  "prediction": {"question": "If score=70 in same logic, output?", "options": ["A", "B", "C", "error"], "correctIndex": 2, "explanation": "Both conditions fail, else gives C."},
+  "explanation": {"afterDemo": "Readable branch logic avoids subtle bugs.", "keyTakeaways": ["Write most specific checks first", "Use else fallback", "Keep condition expressions clear"]},
+  "practice": {"prompt": "Set temp=31; print 'hot' if temp>=30 else 'ok'.", "starterCode": "# write code", "solutionCode": "temp = 31\nif temp >= 30:\n    print('hot')\nelse:\n    print('ok')", "hint": "Use basic if/else.", "validation": {"type": "output", "expectedOutput": ["hot"]}},
+  "feedback": {"successMessage": "Branching is correct.", "retryHints": ["Check temp >= 30", "Print in both paths"]},
+  "summary": {"title": "Control Flow — Complete", "takeaways": ["Conditions direct flow", "elif handles alternatives", "else catches remaining cases"], "nextTopicId": "python_loops"}
+}

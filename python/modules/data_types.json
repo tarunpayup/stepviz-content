@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_data_types",
+  "topicId": "python_data_types",
+  "language": "python",
+  "title": "Core Data Types",
+  "difficulty": "easy",
+  "concept": {"headline": "Python provides rich built-in types.", "explanation": "Use numeric, text, and boolean types directly with literal syntax.", "syntax": "age = 20\nscore = 9.5\nname = 'Ari'\nactive = True", "keyPoints": ["int/float numbers", "str text", "bool logic"]},
+  "demo": {"intro": "Declare primitives and print them.", "code": "age = 20\nscore = 9.5\nname = 'Ari'\nactive = True\nprint(age, score, name, active)", "focusLine": 1, "expectedHighlights": ["typed literals", "prints values"], "steps": [{"type": "declare", "line": 1, "var": "age", "value": "20", "dataType": "int", "explanation": {"what": "Create integer", "why": "Whole number", "change": "age=20", "intent": "Show int", "misconception": "int is arbitrary precision in Python"}}, {"type": "declare", "line": 2, "var": "score", "value": "9.5", "dataType": "float", "explanation": {"what": "Create float", "why": "Decimal value", "change": "score=9.5", "intent": "Show float", "misconception": "float has precision limits"}}, {"type": "print", "line": 5, "value": "20 9.5 Ari True", "explanation": {"what": "Print all", "why": "Verify assignments", "change": "output <- values", "intent": "Observe result", "misconception": "repr and print differ in formatting"}}]},
+  "prediction": {"question": "Type of '12' is?", "options": ["int", "float", "str", "bool"], "correctIndex": 2, "explanation": "Quotes create a string."},
+  "explanation": {"afterDemo": "Knowing base types helps avoid conversion bugs.", "keyTakeaways": ["Use explicit conversions when needed", "Literals infer naturally", "Booleans are True/False"]},
+  "practice": {"prompt": "Create city='Pune', temp=30, ok=True and print them.", "starterCode": "# write code", "solutionCode": "city = 'Pune'\ntemp = 30\nok = True\nprint(city, temp, ok)", "hint": "Use string, int, bool literals.", "validation": {"type": "output", "expectedOutput": ["Pune 30 True"]}},
+  "feedback": {"successMessage": "Core type usage is correct.", "retryHints": ["Keep quotes for text", "Use True for boolean"]},
+  "summary": {"title": "Core Data Types — Complete", "takeaways": ["Python primitives are easy to use", "Literals infer type", "Type awareness avoids bugs"], "nextTopicId": "python_functions"}
+}

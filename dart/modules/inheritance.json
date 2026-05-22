@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_inheritance",
+  "topicId": "dart_inheritance",
+  "language": "dart",
+  "title": "Inheritance & Mixins",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Dart reuses behavior with extends, implements, and mixins.",
+    "explanation": "Use inheritance for specialization and mixins for shared capability composition.",
+    "syntax": "class Animal {\n  String speak() => '...';\n}\n\nclass Dog extends Animal {\n  @override\n  String speak() => 'Woof';\n}",
+    "keyPoints": ["extends creates subtype", "@override replaces behavior", "with adds mixin behavior", "implements enforces contracts"]
+  },
+  "demo": {
+    "intro": "Override superclass behavior in subclass.",
+    "code": "class Animal {\n  String speak() => '...';\n}\n\nclass Dog extends Animal {\n  @override\n  String speak() => 'Woof';\n}\n\nprint(Dog().speak());",
+    "focusLine": 5,
+    "expectedHighlights": ["Dog extends Animal", "method override", "prints Woof"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "Animal", "value": "class", "dataType": "Class", "explanation": {"what": "Define base class", "why": "Provide shared behavior", "change": "Animal available", "intent": "Create parent type", "misconception": "Base methods can be overridden"}},
+      {"type": "declare", "line": 5, "var": "Dog", "value": "extends Animal", "dataType": "Class", "explanation": {"what": "Define subclass", "why": "Specialize behavior", "change": "Dog inherits Animal", "intent": "Reuse + customize", "misconception": "Dart supports single class inheritance"}},
+      {"type": "print", "line": 10, "value": "Woof", "explanation": {"what": "Call overridden speak", "why": "Dog implementation takes precedence", "change": "output <- Woof", "intent": "Verify polymorphism", "misconception": "@override helps catch signature mismatch"}}
+    ]
+  },
+  "prediction": {
+    "question": "If Dog does not override speak(), output of Dog().speak() is?",
+    "options": ["Woof", "...", "null", "error"],
+    "correctIndex": 1,
+    "explanation": "Without override, inherited Animal.speak() returns '...'."
+  },
+  "explanation": {
+    "afterDemo": "Inheritance enables reuse, but composition/mixins can keep hierarchies simpler.",
+    "keyTakeaways": ["Override for specialization", "Prefer clear type hierarchies", "Use mixins for shared features"]
+  },
+  "practice": {
+    "prompt": "Create class Vehicle with move()=> 'move'. Create Car extends Vehicle overriding move()=> 'drive'. Print Car().move().",
+    "starterCode": "// write code",
+    "solutionCode": "class Vehicle {\n  String move() => 'move';\n}\n\nclass Car extends Vehicle {\n  @override\n  String move() => 'drive';\n}\n\nprint(Car().move());",
+    "hint": "Use @override on subclass method.",
+    "validation": {"type": "output", "expectedOutput": ["drive"]}
+  },
+  "feedback": {"successMessage": "Inheritance override is correct.", "retryHints": ["Extend base class", "Override method in subclass"]},
+  "summary": {"title": "Inheritance — Complete", "takeaways": ["extends builds subtype relation", "override customizes behavior", "Mixins add reusable capability"], "nextTopicId": "dart_async_await"}
+}

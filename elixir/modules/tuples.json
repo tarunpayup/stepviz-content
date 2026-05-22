@@ -1,0 +1,195 @@
+{
+  "id": "lm_elixir_tuples",
+  "topicId": "elixir_tuples",
+  "language": "elixir",
+  "title": "Tuples",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Tuples are fixed-size contiguous collections. {:ok, value} and {:error, reason} are the idiomatic result tags. Access with elem/2 (0-indexed) and tuple_size/1.",
+    "explanation": "Elixir tuples ({}) store elements contiguously in memory, making element access O(1) by index. They are immutable — put_elem/3 creates a new tuple. The {:ok, value} / {:error, reason} tagged tuple pattern is ubiquitous in Elixir APIs for returning success/failure with data. elem(t, i) accesses the i-th element (0-indexed). tuple_size(t) returns the count.",
+    "syntax": "# Create\npt = {3, 4}\n\n# Access (0-indexed!)\nelem(pt, 0)     # 3\nelem(pt, 1)     # 4\ntuple_size(pt)  # 2\n\n# Tagged result tuples\n{:ok, 42}\n{:error, \"not found\"}\n\n# Destructure\n{:ok, val} = {:ok, 100}\nIO.puts(val)    # 100\n\n# put_elem (creates new tuple)\nupdated = put_elem(pt, 0, 99)\n# updated = {99, 4}, pt = {3, 4} unchanged",
+    "keyPoints": [
+      "{a, b, c} — tuple literal, 0-indexed access with elem/2",
+      "tuple_size/1 for element count",
+      "{:ok, val} / {:error, reason} — result tag pattern",
+      "put_elem/3 creates a new tuple with one element changed"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch tagged tuples being created, destructured, and used in a case match.",
+    "code": "success = {:ok, 42}\nfailure = {:error, \"not found\"}\n\n{:ok, value} = success\nIO.puts(value)\n\nIO.puts(elem(failure, 0))\nIO.puts(elem(failure, 1))\nIO.puts(tuple_size(success))\n\nresult = {:ok, 100}\ncase result do\n  {:ok, val}    -> IO.puts(\"Got #{val}\")\n  {:error, msg} -> IO.puts(\"Error: #{msg}\")\nend",
+    "focusLine": 1,
+    "expectedHighlights": ["{:ok,42}", "{:error,..}", "destructure value=42", "elem/tuple_size", "case match"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "success",
+        "value": "{:ok, 42}",
+        "dataType": "Tuple",
+        "explanation": {
+          "what": "success = {:ok, 42} — a 2-tuple with atom :ok and integer 42",
+          "why": "{:ok, value} is the idiomatic success result in Elixir",
+          "change": "success = {:ok, 42}",
+          "intent": "Show the :ok tagged tuple pattern",
+          "misconception": "Tuples in Elixir are 0-indexed (unlike Julia's 1-based). elem(success, 0) gives :ok; elem(success, 1) gives 42."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "failure",
+        "value": "{:error, \"not found\"}",
+        "dataType": "Tuple",
+        "explanation": {
+          "what": "failure = {:error, 'not found'} — :error tagged tuple with a reason string",
+          "why": "{:error, reason} is the idiomatic failure result",
+          "change": "failure = {:error, 'not found'}",
+          "intent": "Show the :error tagged tuple pattern",
+          "misconception": "The reason in {:error, reason} can be any value — a string, atom, integer, or another tuple. Common reason values: :not_found, :unauthorized, 'human readable message'."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "value",
+        "value": "42",
+        "dataType": "Integer",
+        "explanation": {
+          "what": "{:ok, value} = success — pattern match: :ok must match :ok, value binds to 42",
+          "why": "The :ok in the pattern is a literal that must match exactly",
+          "change": "value = 42",
+          "intent": "Show tuple destructuring with atom literal check",
+          "misconception": "If you wrote {:error, value} = success, it would raise MatchError because :error does not match :ok. The atom in the pattern is a CONSTRAINT, not a variable."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "42",
+        "explanation": {
+          "what": "IO.puts(value) → 42",
+          "why": "value was extracted by pattern match",
+          "change": "output ← '42'",
+          "intent": "Confirm destructured value",
+          "misconception": "This pattern {:ok, value} = expr is how most Elixir functions are consumed — the caller immediately destructures the result to get the payload."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "error",
+        "explanation": {
+          "what": "elem(failure, 0) → :error → prints 'error'",
+          "why": "0-indexed: first element of failure is :error",
+          "change": "output ← 'error'",
+          "intent": "Show elem/2 with 0-based index",
+          "misconception": "elem uses 0-based indexing — different from Elixir list access conventions and from Julia's 1-based indexing."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "not found",
+        "explanation": {
+          "what": "elem(failure, 1) → 'not found'",
+          "why": "1-indexed: second element is the reason string",
+          "change": "output ← 'not found'",
+          "intent": "Confirm elem/2 for second element",
+          "misconception": "IO.puts on a string prints without quotes. The string 'not found' prints as: not found"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "2",
+        "explanation": {
+          "what": "tuple_size(success) → 2",
+          "why": "success = {:ok, 42} has 2 elements",
+          "change": "output ← '2'",
+          "intent": "Show tuple_size/1",
+          "misconception": "tuple_size is a BIF (built-in function) — O(1) like elem. It does NOT iterate the tuple."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 12,
+        "expression": "{:ok, val} matches {:ok, 100}",
+        "result": true,
+        "branch": "case first clause",
+        "explanation": {
+          "what": "case {:ok, 100}: {:ok, val} matches — val = 100",
+          "why": ":ok matches :ok, val captures 100",
+          "change": "case dispatches to first clause; val=100",
+          "intent": "Show case + tagged tuple as the canonical Elixir error handling pattern",
+          "misconception": "This case expression is the MOST COMMON pattern in Elixir for handling function results. Most stdlib functions return {:ok, result} or {:error, reason}."
+        }
+      },
+      {
+        "type": "print",
+        "line": 13,
+        "value": "Got 100",
+        "explanation": {
+          "what": "IO.puts('Got #{val}') → Got 100",
+          "why": "case matched {:ok, val} and val was bound to 100",
+          "change": "output ← 'Got 100'",
+          "intent": "Confirm case + tagged tuple result",
+          "misconception": "The {:error, msg} clause is never reached here — case evaluates the first matching clause and stops."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nt = {:a, :b, :c}\nIO.puts(elem(t, 2))",
+    "options": [
+      "c",
+      "b",
+      "a",
+      "BoundsError"
+    ],
+    "correctIndex": 0,
+    "explanation": "elem uses 0-based indexing: index 0=:a, 1=:b, 2=:c. elem(t, 2) → :c → prints 'c'."
+  },
+
+  "explanation": {
+    "afterDemo": "The {:ok, value} / {:error, reason} pattern is so fundamental to Elixir that the entire ecosystem builds on it. File.read, HTTP calls, database queries — all return tagged tuples. This consistency means you can chain case expressions predictably. The pattern also makes partial success impossible — you always know if you got valid data or an error reason.",
+    "keyTakeaways": [
+      "{:ok, val} / {:error, reason} — the universal Elixir result pattern.",
+      "elem(t, i) for 0-indexed access. tuple_size(t) for count.",
+      "Tuples are immutable. put_elem(t, i, val) creates a new tuple."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create {:ok, \"success\", 200} and pattern match it to bind msg and code (ignoring :ok). Print msg and code.",
+    "starterCode": "{:ok, msg, code} = {:ok, \"success\", 200}\nIO.puts(msg)\nIO.puts(code)",
+    "solutionCode": "{:ok, msg, code} = {:ok, \"success\", 200}\nIO.puts(msg)\nIO.puts(code)",
+    "hint": "{:ok, msg, code} — :ok is the literal check, msg and code are bound.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["success", "200"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! msg='success', code=200 extracted from the 3-tuple.",
+    "retryHints": [
+      "{:ok, msg, code} = {:ok, \"success\", 200}",
+      ":ok is a literal constraint; msg and code are bound",
+      "Expected: success then 200"
+    ]
+  },
+
+  "summary": {
+    "title": "Tuples — Complete",
+    "takeaways": [
+      "Tuples are contiguous, 0-indexed. elem(t, i) for access, tuple_size(t) for count.",
+      "{:ok, val} / {:error, reason} — the universal result pattern in Elixir.",
+      "Immutable — put_elem/3 creates a new tuple. Destructure with = or case."
+    ],
+    "nextTopicId": "elixir_maps"
+  }
+}

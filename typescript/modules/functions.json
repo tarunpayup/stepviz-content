@@ -1,0 +1,29 @@
+{
+  "id": "lm_typescript_functions",
+  "topicId": "typescript_functions",
+  "language": "typescript",
+  "title": "Functions",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Typed function signatures define valid input and output.",
+    "explanation": "Add parameter and return types to prevent mismatched calls and return bugs.",
+    "syntax": "function add(a: number, b: number): number {\n  return a + b;\n}",
+    "keyPoints": ["Annotate params", "Return type can be explicit", "Optional params use ?", "Default params simplify calls"]
+  },
+  "demo": {
+    "intro": "Define and call a typed add function.",
+    "code": "function add(a: number, b: number): number {\n  return a + b;\n}\nconst result = add(3, 4);\nconsole.log(result);",
+    "focusLine": 1,
+    "expectedHighlights": ["typed params", "returns number", "prints 7"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "add", "value": "function", "dataType": "(number, number) => number", "explanation": {"what": "Define add", "why": "Reusable arithmetic", "change": "add available", "intent": "Create typed function", "misconception": "Return type helps catch accidental string return"}},
+      {"type": "call", "line": 4, "name": "add", "args": ["3", "4"], "returnVar": "result", "explanation": {"what": "Call add", "why": "Inputs satisfy signature", "change": "result=7", "intent": "Show invocation", "misconception": "Wrong arg types fail compile"}},
+      {"type": "print", "line": 5, "value": "7", "explanation": {"what": "Log result", "why": "Observe return value", "change": "output <- 7", "intent": "Verify function behavior", "misconception": "Function types are erased at runtime"}}
+    ]
+  },
+  "prediction": {"question": "What error occurs?\n\nfunction add(a:number,b:number){return a+b;}\nadd(\"1\",2);", "options": ["no error", "type error on first arg", "runtime NaN only", "syntax error"], "correctIndex": 1, "explanation": "First argument must be number, not string."},
+  "explanation": {"afterDemo": "Function typing is one of the highest-value TypeScript habits.", "keyTakeaways": ["Typed signatures prevent misuse", "Compile-time checks reduce runtime bugs", "Small pure functions are easiest to test"]},
+  "practice": {"prompt": "Write function square(n:number):number and print square(6).", "starterCode": "// write code", "solutionCode": "function square(n: number): number {\n  return n * n;\n}\nconsole.log(square(6));", "hint": "Return n*n.", "validation": {"type": "output", "expectedOutput": ["36"]}},
+  "feedback": {"successMessage": "Good typed function implementation.", "retryHints": ["Parameter should be number", "Return number", "Print square(6)"]},
+  "summary": {"title": "Functions — Complete", "takeaways": ["Typed signatures communicate intent", "Compiler validates calls", "Explicit return types improve safety"], "nextTopicId": "typescript_control_flow"}
+}

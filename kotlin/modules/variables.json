@@ -1,0 +1,145 @@
+{
+  "id": "lm_kotlin_variables",
+  "topicId": "kotlin_variables",
+  "language": "kotlin",
+  "title": "Variables: val & var",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Kotlin has two variable keywords: val (read-only) and var (mutable). The compiler infers types so you rarely need to write them.",
+    "explanation": "val declares a binding you cannot reassign — once set, it stays. var declares a variable you can reassign at any time. Both support type inference: Kotlin looks at the initial value and determines the type automatically. Prefer val by default; switch to var only when you genuinely need to change the value.",
+    "syntax": "val name = \"Alice\"          // inferred String, read-only\nvar score = 0               // inferred Int, mutable\nscore = 10                  // OK — var can be reassigned\n// name = \"Bob\"             // ERROR — val cannot be reassigned\n\n// Explicit types (optional, same result)\nval pi: Double = 3.14\nvar count: Int = 0",
+    "keyPoints": [
+      "val — assign once, never reassign (like Java's final)",
+      "var — can be reassigned any number of times",
+      "Type inference means you rarely write the type explicitly",
+      "Prefer val; use var only when the value must change"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch how val and var behave as we track a player's name and score.",
+    "code": "fun main() {\n    val name = \"Alice\"\n    var score = 0\n    println(\"$name: $score\")\n    score = 10\n    println(\"$name: $score\")\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["name = 'Alice'", "score = 0", "output: Alice: 0", "score = 10", "output: Alice: 10"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "name",
+        "value": "Alice",
+        "dataType": "String",
+        "explanation": {
+          "what": "val name = \"Alice\" — declaring a read-only String",
+          "why": "The player's name won't change during the game, so val is the right choice",
+          "change": "name = 'Alice' stored in memory (read-only)",
+          "intent": "Show that val binds a name to a value permanently",
+          "misconception": "val does not mean the object is deeply immutable — a val List can still have mutable contents. It only means this variable binding cannot point to a different object."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "score",
+        "value": "0",
+        "dataType": "Int",
+        "explanation": {
+          "what": "var score = 0 — declaring a mutable Int",
+          "why": "The score will change as the player earns points, so var is appropriate",
+          "change": "score = 0 stored in memory (mutable)",
+          "intent": "Show that var allows future reassignment",
+          "misconception": "You still need to initialize var before using it — Kotlin does not assign a default value like null automatically for local variables"
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "Alice: 0",
+        "explanation": {
+          "what": "println(\"$name: $score\") prints 'Alice: 0'",
+          "why": "String template $name embeds the value of name, $score embeds score",
+          "change": "output ← 'Alice: 0'",
+          "intent": "Demonstrate string templates that read both variables",
+          "misconception": "$name in a string template does NOT call toString() on a String object — it simply inserts the string value. For expressions use ${...}."
+        }
+      },
+      {
+        "type": "assign",
+        "line": 5,
+        "var": "score",
+        "value": "10",
+        "dataType": "Int",
+        "explanation": {
+          "what": "score = 10 — reassigning the var",
+          "why": "The player earned points; we update the mutable variable",
+          "change": "score: 0 → 10",
+          "intent": "Show that var allows reassignment",
+          "misconception": "If score were declared with val, this line would be a compile error — 'Val cannot be reassigned'"
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "Alice: 10",
+        "explanation": {
+          "what": "println(\"$name: $score\") now prints 'Alice: 10'",
+          "why": "score was updated to 10; name is still 'Alice'",
+          "change": "output ← 'Alice: 10'",
+          "intent": "Confirm the reassignment is reflected immediately",
+          "misconception": "name did not need to change — val variables can be read any number of times, they just cannot be reassigned"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What happens if you try to reassign a val variable?\n\nval city = \"Paris\"\ncity = \"London\"",
+    "options": [
+      "city becomes 'London' at runtime",
+      "city is silently ignored and stays 'Paris'",
+      "Compile error: Val cannot be reassigned",
+      "A NullPointerException is thrown"
+    ],
+    "correctIndex": 2,
+    "explanation": "Kotlin catches val reassignment at compile time — the program won't even build. This is one of Kotlin's safety features: immutability violations are errors, not runtime surprises."
+  },
+
+  "explanation": {
+    "afterDemo": "val and var are Kotlin's way of making intent explicit in the type system. When you see val you immediately know this value won't change — no need to search the rest of the code to be sure. var signals 'watch out, this may change'. Prefer val everywhere and only reach for var when mutation is genuinely needed.",
+    "keyTakeaways": [
+      "val = read-only binding: cannot be reassigned after initialization. Use it by default.",
+      "var = mutable binding: can be reassigned any number of times.",
+      "Type inference reads the initial value — you rarely need to write the type explicitly."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Declare a val city set to \"Tokyo\" and a var temperature set to 20. Then update temperature to 25 and print: \"Tokyo: 25°C\".",
+    "starterCode": "fun main() {\n    // declare city (val) and temperature (var)\n    // update temperature to 25\n    // print \"Tokyo: 25°C\"\n}",
+    "solutionCode": "fun main() {\n    val city = \"Tokyo\"\n    var temperature = 20\n    temperature = 25\n    println(\"$city: ${temperature}°C\")\n}",
+    "hint": "Use val for city and var for temperature. Update temperature with a plain assignment, then use a string template to print both.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Tokyo: 25°C"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! city stays 'Tokyo' (val) while temperature changes from 20 to 25 (var).",
+    "retryHints": [
+      "Declare with: val city = \"Tokyo\" and var temperature = 20",
+      "Reassign with: temperature = 25 (no val/var keyword on reassignment)",
+      "Print with: println(\"$city: ${temperature}°C\")"
+    ]
+  },
+
+  "summary": {
+    "title": "Variables — Complete",
+    "takeaways": [
+      "val is read-only: assign once, never reassign. Prefer it by default.",
+      "var is mutable: reassign as needed. Use only when the value genuinely changes.",
+      "Type inference removes boilerplate — Kotlin deduces the type from the initial value."
+    ],
+    "nextTopicId": "kotlin_data_types"
+  }
+}

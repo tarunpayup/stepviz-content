@@ -1,0 +1,70 @@
+{
+  "id": "lm_crystal_macros",
+  "topicId": "crystal_macros",
+  "language": "crystal",
+  "title": "Macros Basics",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Crystal macros generate code at compile time.",
+    "explanation": "Macros receive AST fragments and emit Crystal code before runtime. They are useful for repetitive patterns but should stay readable.",
+    "syntax": "macro say(name)\n  puts \"Hello, {{name}}\"\nend\n\nsay \"Crystal\"",
+    "keyPoints": [
+      "macro runs during compilation",
+      "{{ }} injects AST content",
+      "Useful for reducing boilerplate",
+      "Overusing macros can hurt readability"
+    ]
+  },
+
+  "demo": {
+    "intro": "Expand a simple greeting macro into generated code behavior.",
+    "code": "macro say(name)\n  puts \"Hello, {{name}}\"\nend\n\nsay \"Crystal\"",
+    "focusLine": 1,
+    "expectedHighlights": ["macro defined", "macro invoked", "generated puts runs", "prints greeting"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "say", "value": "macro", "dataType": "Macro", "explanation": {"what": "Define compile-time macro", "why": "Template greeting code", "change": "say macro available", "intent": "Introduce metaprogramming", "misconception": "Macro is not a runtime method"}},
+      {"type": "call", "line": 5, "name": "say", "args": ["Crystal"], "returnVar": "generated_code", "explanation": {"what": "Invoke macro", "why": "Compiler expands call", "change": "equivalent puts generated", "intent": "Show compile-time expansion", "misconception": "Macro call disappears after expansion"}},
+      {"type": "print", "line": 5, "value": "Hello, Crystal", "explanation": {"what": "Generated puts executes", "why": "Expanded code runs normally", "change": "output <- Hello, Crystal", "intent": "Observe macro effect", "misconception": "Runtime sees generated code, not macro body"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "Macros in Crystal run at which stage?",
+    "options": ["runtime", "compile time", "deployment", "linking only"],
+    "correctIndex": 1,
+    "explanation": "Crystal macros execute during compilation and generate runtime code."
+  },
+
+  "explanation": {
+    "afterDemo": "Macros are powerful for framework internals and repetitive declarations, but normal methods are often better for everyday logic.",
+    "keyTakeaways": [
+      "Macros are compile-time code generators.",
+      "They can reduce repetitive patterns significantly.",
+      "Use macros judiciously to keep code understandable."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create macro warn(msg) that emits puts \"WARN: ...\" and call it with \"Disk low\".",
+    "starterCode": "# define macro warn\n# invoke macro",
+    "solutionCode": "macro warn(msg)\n  puts \"WARN: {{msg}}\"\nend\n\nwarn \"Disk low\"",
+    "hint": "Use {{msg}} inside the macro string.",
+    "validation": {"type": "output", "expectedOutput": ["WARN: Disk low"]}
+  },
+
+  "feedback": {
+    "successMessage": "Great. You used macro expansion correctly.",
+    "retryHints": ["Define with macro keyword", "Inject arg using {{msg}}", "Invoke like warn \"Disk low\""]
+  },
+
+  "summary": {
+    "title": "Macros — Complete",
+    "takeaways": [
+      "Macros execute at compile time.",
+      "They generate Crystal code from templates/AST.",
+      "Balance macro power with readability."
+    ],
+    "nextTopicId": "crystal_concurrency"
+  }
+}

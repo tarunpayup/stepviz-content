@@ -1,0 +1,185 @@
+{
+  "id": "lm_julia_control_flow",
+  "topicId": "julia_control_flow",
+  "language": "julia",
+  "title": "Control Flow: if / elseif / else",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Julia's if/elseif/else block ends with end and returns a value. The ternary operator cond ? a : b is available for concise branching.",
+    "explanation": "Julia's if is an expression — it evaluates to the value of the matched branch. Blocks are terminated with end (no braces). elseif (one word, not else if) handles intermediate branches. The ternary operator ? : is the concise form. Short-circuit operators && and || only evaluate their right operand when needed.",
+    "syntax": "# if as expression\nresult = if x > 0\n    \"positive\"\nelseif x < 0\n    \"negative\"\nelse\n    \"zero\"\nend\n\n# Ternary\nlabel = x >= 0 ? \"non-negative\" : \"negative\"\n\n# Short-circuit\nx > 0 && println(\"x is positive\")   # prints only if x > 0\nx < 0 || println(\"x is non-negative\")",
+    "keyPoints": [
+      "if / elseif / else / end — note: elseif is one word",
+      "if is an expression — assign its result to a variable",
+      "Ternary: cond ? value_if_true : value_if_false",
+      "&& and || short-circuit: right side only evaluated when needed"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch an if expression classify a number and return its result to a variable.",
+    "code": "function classify(x)\n    if x > 0\n        \"positive\"\n    elseif x < 0\n        \"negative\"\n    else\n        \"zero\"\n    end\nend\n\nprintln(classify(5))\nprintln(classify(-3))\nprintln(classify(0))",
+    "focusLine": 10,
+    "expectedHighlights": ["x=5 positive", "x=-3 negative", "x=0 zero"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 10,
+        "name": "classify",
+        "args": ["5"],
+        "returnVar": "result_1",
+        "explanation": {
+          "what": "classify(5) — x = 5 inside the function",
+          "why": "Testing positive branch",
+          "change": "x = 5 inside classify",
+          "intent": "Show if evaluating the positive branch",
+          "misconception": "Julia's if block ends with end — there are no curly braces. Python uses indentation; Julia uses end keywords."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 2,
+        "expression": "x > 0",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "5 > 0 → true — first branch matches",
+          "why": "5 is greater than 0",
+          "change": "if body: return value is 'positive'",
+          "intent": "Show first branch evaluation",
+          "misconception": "Once a true branch is found, the rest are not evaluated — elseif and else are skipped"
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "positive",
+        "explanation": {
+          "what": "classify returned 'positive' — printed",
+          "why": "The if expression's last evaluated line ('positive') is the implicit return",
+          "change": "output ← 'positive'",
+          "intent": "Confirm if-as-expression returning a String",
+          "misconception": "The function classify has no explicit return — the if expression's value is the function's return value"
+        }
+      },
+      {
+        "type": "call",
+        "line": 11,
+        "name": "classify",
+        "args": ["-3"],
+        "returnVar": "result_2",
+        "explanation": {
+          "what": "classify(-3) — x = -3",
+          "why": "Testing negative branch",
+          "change": "x = -3 inside classify",
+          "intent": "Show elseif branch",
+          "misconception": "elseif in Julia is a single keyword (not 'else if' with a space). Writing 'else if' creates a nested if inside the else block — a common mistake."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 4,
+        "expression": "x < 0",
+        "result": true,
+        "branch": "elseif",
+        "explanation": {
+          "what": "-3 < 0 → true — elseif branch matches",
+          "why": "x > 0 was false (skipped), x < 0 is true",
+          "change": "elseif body: return value is 'negative'",
+          "intent": "Show elseif as a secondary condition check",
+          "misconception": "elseif is checked only when all previous conditions were false — it is not checked independently"
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "negative",
+        "explanation": {
+          "what": "classify(-3) returned 'negative'",
+          "why": "The elseif branch matched",
+          "change": "output ← 'negative'",
+          "intent": "Confirm elseif branch result",
+          "misconception": "The else branch and the 'positive' if branch were never evaluated for this call"
+        }
+      },
+      {
+        "type": "call",
+        "line": 12,
+        "name": "classify",
+        "args": ["0"],
+        "returnVar": "result_3",
+        "explanation": {
+          "what": "classify(0) — x = 0, testing else branch",
+          "why": "0 is neither > 0 nor < 0 — only the else branch remains",
+          "change": "x = 0 inside classify",
+          "intent": "Show else as the catch-all",
+          "misconception": "else has no condition — it fires when ALL previous conditions were false"
+        }
+      },
+      {
+        "type": "print",
+        "line": 12,
+        "value": "zero",
+        "explanation": {
+          "what": "classify(0) returned 'zero'",
+          "why": "else branch fired for x = 0",
+          "change": "output ← 'zero'",
+          "intent": "Confirm else branch result",
+          "misconception": "Without an else, if none of the conditions match and the if is used as an expression, Julia returns nothing (type Nothing)"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nx = 4\nprintln(x % 2 == 0 ? \"even\" : \"odd\")",
+    "options": [
+      "even",
+      "odd",
+      "4",
+      "true"
+    ],
+    "correctIndex": 0,
+    "explanation": "4 % 2 = 0, so x % 2 == 0 is true — the ternary returns 'even'. Output: even."
+  },
+
+  "explanation": {
+    "afterDemo": "Julia's if being an expression is a small but powerful design choice — it eliminates mutable temporary variables. Instead of declaring result = \"\" then setting it in each branch, you directly assign result = if ... end. This style is especially common in Julia functions and makes code more declarative.",
+    "keyTakeaways": [
+      "if / elseif / else / end — elseif is one word. Blocks end with end.",
+      "if is an expression — use it on the right side of an assignment.",
+      "Ternary cond ? a : b is concise for simple two-branch choices."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function abs_val(x) that returns -x if x < 0, else x (absolute value). Use if as an expression. Print abs_val(-7) and abs_val(3).",
+    "starterCode": "function abs_val(x)\n    # if expression here\nend\n\nprintln(abs_val(-7))\nprintln(abs_val(3))",
+    "solutionCode": "function abs_val(x)\n    if x < 0\n        -x\n    else\n        x\n    end\nend\n\nprintln(abs_val(-7))\nprintln(abs_val(3))",
+    "hint": "if x < 0; -x; else; x; end — the if expression returns -x or x.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["7", "3"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! abs_val(-7) = 7, abs_val(3) = 3.",
+    "retryHints": [
+      "if x < 0; -x; else; x; end",
+      "The if expression returns the last expression in the matching branch",
+      "Expected: 7 then 3"
+    ]
+  },
+
+  "summary": {
+    "title": "Control Flow — Complete",
+    "takeaways": [
+      "if / elseif / else / end — elseif is ONE word. All blocks end with end.",
+      "if returns a value — assign it directly without mutable temporaries.",
+      "Ternary cond ? a : b for concise two-way branching."
+    ],
+    "nextTopicId": "julia_loops"
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-05-22",
+  "categories": [
+    {
+      "id": "programming",
+      "label": "Programming Languages",
+      "icon": "code",
+      "description": "Learn modern programming languages step by step",
+      "courses": [
+        {
+          "id": "java",
+          "label": "Java",
+          "folder": null,
+          "builtin": true,
+          "icon": "☕",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+          "color": "#FF8C42",
+          "bgColor": "rgba(255,140,66,0.08)",
+          "description": "Object-oriented programming fundamentals",
+          "difficulty": "beginner",
+          "status": "available"
+        },
+        {
+          "id": "kotlin",
+          "label": "Kotlin",
+          "folder": "kotlin",
+          "builtin": false,
+          "icon": "K",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
+          "color": "#A97BFF",
+          "bgColor": "rgba(169,123,255,0.08)",
+          "description": "Modern, concise JVM language by JetBrains",
+          "difficulty": "beginner",
+          "status": "available"
+        },
+        {
+          "id": "rust",
+          "label": "Rust",
+          "folder": "rust",
+          "builtin": false,
+          "icon": "Rs",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg",
+          "color": "#FF6B35",
+          "bgColor": "rgba(255,107,53,0.08)",
+          "description": "Systems programming with memory safety guarantees",
+          "difficulty": "intermediate",
+          "status": "available"
+        },
+        {
+          "id": "julia",
+          "label": "Julia",
+          "folder": "julia",
+          "builtin": false,
+          "icon": "Jl",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/julia/julia-original.svg",
+          "color": "#9558B2",
+          "bgColor": "rgba(149,88,178,0.08)",
+          "description": "High-performance scientific and numerical computing",
+          "difficulty": "intermediate",
+          "status": "available"
+        },
+        {
+          "id": "elixir",
+          "label": "Elixir",
+          "folder": "elixir",
+          "builtin": false,
+          "icon": "Ex",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elixir/elixir-original.svg",
+          "color": "#6E4AFF",
+          "bgColor": "rgba(110,74,255,0.08)",
+          "description": "Functional, concurrent programming on the BEAM VM",
+          "difficulty": "intermediate",
+          "status": "available"
+        },
+        {
+          "id": "python",
+          "label": "Python",
+          "folder": "python",
+          "builtin": false,
+          "icon": "Py",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+          "color": "#3776AB",
+          "bgColor": "rgba(55,118,171,0.08)",
+          "description": "Versatile language for data, web, and automation",
+          "difficulty": "beginner",
+          "status": "available"
+        },
+        {
+          "id": "typescript",
+          "label": "TypeScript",
+          "folder": "typescript",
+          "builtin": false,
+          "icon": "TS",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+          "color": "#3178C6",
+          "bgColor": "rgba(49,120,198,0.08)",
+          "description": "JavaScript with types — safe, scalable web development",
+          "difficulty": "beginner",
+          "status": "available"
+        },
+        {
+          "id": "go",
+          "label": "Go",
+          "folder": "go",
+          "builtin": false,
+          "icon": "Go",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
+          "color": "#00ADD8",
+          "bgColor": "rgba(0,173,216,0.08)",
+          "description": "Simple, fast concurrency for modern cloud systems",
+          "difficulty": "beginner",
+          "status": "available"
+        },
+        {
+          "id": "swift",
+          "label": "Swift",
+          "folder": "swift",
+          "builtin": false,
+          "icon": "Sw",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg",
+          "color": "#FA7343",
+          "bgColor": "rgba(250,115,67,0.08)",
+          "description": "Apple's modern language for iOS and macOS apps",
+          "difficulty": "intermediate",
+          "status": "available"
+        },
+        {
+          "id": "dart",
+          "label": "Dart",
+          "folder": "dart",
+          "builtin": false,
+          "icon": "Dt",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg",
+          "color": "#0175C2",
+          "bgColor": "rgba(1,117,194,0.08)",
+          "description": "Google's language powering Flutter mobile apps",
+          "difficulty": "beginner",
+          "status": "available"
+        },
+        {
+          "id": "solidity",
+          "label": "Solidity",
+          "folder": "solidity",
+          "builtin": false,
+          "icon": "Sol",
+          "iconUrl": "https://cdn.simpleicons.org/solidity/363636",
+          "color": "#363636",
+          "bgColor": "rgba(54,54,54,0.08)",
+          "description": "Smart contract programming for Ethereum-compatible blockchains",
+          "difficulty": "intermediate",
+          "status": "available"
+        },
+        {
+          "id": "scala",
+          "label": "Scala",
+          "folder": "scala",
+          "builtin": false,
+          "icon": "Sc",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scala/scala-original.svg",
+          "color": "#DC322F",
+          "bgColor": "rgba(220,50,47,0.08)",
+          "description": "Functional and object-oriented programming on the JVM",
+          "difficulty": "advanced",
+          "status": "coming-soon"
+        },
+        {
+          "id": "haskell",
+          "label": "Haskell",
+          "folder": "haskell",
+          "builtin": false,
+          "icon": "HS",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/haskell/haskell-original.svg",
+          "color": "#8B6FAE",
+          "bgColor": "rgba(139,111,174,0.08)",
+          "description": "Purely functional programming with strong static types",
+          "difficulty": "advanced",
+          "status": "coming-soon"
+        },
+        {
+          "id": "crystal",
+          "label": "Crystal",
+          "folder": "crystal",
+          "builtin": false,
+          "icon": "Cr",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/crystal/crystal-original.svg",
+          "color": "#38BDF8",
+          "bgColor": "rgba(56,189,248,0.08)",
+          "description": "Ruby-like syntax with the speed of compiled C",
+          "difficulty": "intermediate",
+          "status": "available"
+        },
+        {
+          "id": "zig",
+          "label": "Zig",
+          "folder": "zig",
+          "builtin": false,
+          "icon": "Zg",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/zig/zig-original.svg",
+          "color": "#F7A41D",
+          "bgColor": "rgba(247,164,29,0.08)",
+          "description": "Systems language for reliable, optimal software",
+          "difficulty": "advanced",
+          "status": "coming-soon"
+        },
+        {
+          "id": "gleam",
+          "label": "Gleam",
+          "folder": "gleam",
+          "builtin": false,
+          "icon": "Gm",
+          "iconUrl": "https://cdn.simpleicons.org/gleam/FFAFF3",
+          "color": "#FFAFF3",
+          "bgColor": "rgba(255,175,243,0.08)",
+          "description": "Type-safe functional language on the Erlang BEAM VM",
+          "difficulty": "intermediate",
+          "status": "coming-soon"
+        }
+      ]
+    },
+    {
+      "id": "dsa",
+      "label": "DSA",
+      "icon": "workflow",
+      "description": "Data structures and algorithms learning tracks",
+      "courses": [
+        {
+          "id": "dsa",
+          "label": "Data Structures & Algorithms",
+          "folder": "dsa",
+          "builtin": false,
+          "icon": "DSA",
+          "iconUrl": "https://cdn.simpleicons.org/thealgorithms/22C55E",
+          "color": "#22C55E",
+          "bgColor": "rgba(34,197,94,0.08)",
+          "description": "Master arrays, linked lists, trees, graphs, and core algorithm patterns",
+          "difficulty": "beginner",
+          "status": "coming-soon"
+        }
+      ]
+    }
+  ]
+}

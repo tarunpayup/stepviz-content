@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_control_flow",
+  "topicId": "typescript_control_flow",
+  "language": "typescript",
+  "title": "Control Flow",
+  "difficulty": "easy",
+  "concept": {"headline": "Runtime checks narrow union types.", "explanation": "TypeScript updates possible types inside branches based on guards like typeof.", "syntax": "function label(value: string | number): string {\n  if (typeof value === \"string\") return value.toUpperCase();\n  return `#${value}`;\n}", "keyPoints": ["Use guards to narrow", "Switch improves readability", "Exhaustive handling prevents missed cases"]},
+  "demo": {"intro": "Branch on union value and observe narrowing.", "code": "function label(value: string | number): string {\n  if (typeof value === \"string\") return value.toUpperCase();\n  return `#${value}`;\n}\nconsole.log(label(7));", "focusLine": 2, "expectedHighlights": ["typeof guard", "number branch", "prints #7"], "steps": [{"type": "condition_check", "line": 2, "expression": "typeof value === 'string'", "result": false, "branch": "if", "explanation": {"what": "Evaluate guard", "why": "Input is number 7", "change": "skip string branch", "intent": "Show guard behavior", "misconception": "Narrowing is compile-time, guard is runtime"}}, {"type": "print", "line": 5, "value": "#7", "explanation": {"what": "Print formatted number", "why": "Number branch executed", "change": "output <- #7", "intent": "Confirm branch result", "misconception": "Both branches must return string per signature"}}]},
+  "prediction": {"question": "If input is \"ab\", what prints?", "options": ["ab", "AB", "#ab", "error"], "correctIndex": 1, "explanation": "String branch runs and returns uppercase AB."},
+  "explanation": {"afterDemo": "Type narrowing makes union-heavy code both safe and ergonomic.", "keyTakeaways": ["Guard first, then use narrowed members", "Narrowing reduces unsafe casts", "Branch return types should stay consistent"]},
+  "practice": {"prompt": "Write function normalize(v:string|number) returning string: for numbers return `num:${v}`, for strings return lowercase.", "starterCode": "// write function", "solutionCode": "function normalize(v: string | number): string {\n  if (typeof v === \"number\") return `num:${v}`;\n  return v.toLowerCase();\n}\nconsole.log(normalize(9));", "hint": "Use typeof v === \"number\".", "validation": {"type": "output", "expectedOutput": ["num:9"]}},
+  "feedback": {"successMessage": "Great narrowing logic.", "retryHints": ["Guard on number", "Return string in both branches"]},
+  "summary": {"title": "Control Flow — Complete", "takeaways": ["Guards narrow unions", "Branches should be explicit", "Switch/if + narrowing improves reliability"], "nextTopicId": "typescript_loops"}
+}

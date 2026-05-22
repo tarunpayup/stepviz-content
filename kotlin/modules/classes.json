@@ -1,0 +1,145 @@
+{
+  "id": "lm_kotlin_classes",
+  "topicId": "kotlin_classes",
+  "language": "kotlin",
+  "title": "Classes & Properties",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Kotlin classes declare properties directly in the primary constructor. Methods are functions inside the class body. Classes are final by default.",
+    "explanation": "A Kotlin class's primary constructor sits right after the class name. Properties declared with val/var there are automatically created with getters (and setters for var). The class body holds methods and additional properties. Unlike Java there is no need to write field declarations and a constructor separately. Classes cannot be subclassed unless marked open.",
+    "syntax": "class Person(val name: String, var age: Int) {\n    // member function\n    fun greet() = \"Hi, I'm $name!\"\n\n    // computed property (no backing field)\n    val isAdult: Boolean\n        get() = age >= 18\n}\n\n// Create an instance\nval p = Person(\"Alice\", 30)\nprintln(p.greet())   // Hi, I'm Alice!\np.age = 31           // OK — var property\n// p.name = \"Bob\"   // ERROR — val property",
+    "keyPoints": [
+      "class Name(val prop: Type, var mutableProp: Type)",
+      "val in constructor → getter only. var → getter + setter.",
+      "Member functions access properties with this (often implicit)",
+      "Classes are final by default — use open to allow inheritance"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a Person class being constructed and its methods called.",
+    "code": "class Person(val name: String, var age: Int) {\n    fun greet(): String = \"Hi, I'm $name and I'm $age.\"\n    fun birthday() { age++ }\n}\n\nfun main() {\n    val p = Person(\"Alice\", 30)\n    println(p.greet())\n    p.birthday()\n    println(p.age)\n}",
+    "focusLine": 6,
+    "expectedHighlights": ["p created", "name='Alice'", "age=30", "greet called", "birthday called", "age=31"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 7,
+        "var": "p",
+        "value": "Person(name='Alice', age=30)",
+        "dataType": "Person",
+        "explanation": {
+          "what": "Person(\"Alice\", 30) — constructor called, object created",
+          "why": "Primary constructor parameters become the object's properties automatically",
+          "change": "p.name = 'Alice' (val), p.age = 30 (var)",
+          "intent": "Show primary constructor assigning properties",
+          "misconception": "There is no separate init block needed here — the primary constructor parameters marked val/var ARE the property declarations. No extra code required."
+        }
+      },
+      {
+        "type": "call",
+        "line": 8,
+        "name": "p.greet",
+        "args": [],
+        "returnVar": "greeting",
+        "explanation": {
+          "what": "p.greet() — calling the member function on p",
+          "why": "Access the object's method using dot notation",
+          "change": "Inside greet: name = 'Alice', age = 30",
+          "intent": "Show member function accessing the object's own properties",
+          "misconception": "Inside greet, $name and $age refer to this.name and this.age — the implicit receiver. this is optional and usually omitted."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "Hi, I'm Alice and I'm 30.",
+        "explanation": {
+          "what": "println(p.greet()) prints the returned string",
+          "why": "greet() assembled the string template using p's current properties",
+          "change": "output ← \"Hi, I'm Alice and I'm 30.\"",
+          "intent": "Show how member functions use property values",
+          "misconception": "greet() is a pure function — it reads but does not modify any property"
+        }
+      },
+      {
+        "type": "call",
+        "line": 9,
+        "name": "p.birthday",
+        "args": [],
+        "returnVar": null,
+        "explanation": {
+          "what": "p.birthday() — mutates the object's age property",
+          "why": "birthday increments age by 1 — it modifies the mutable var property",
+          "change": "p.age: 30 → 31",
+          "intent": "Show that var properties can be mutated through methods",
+          "misconception": "birthday() can mutate age because age is declared with var. If age were val, the age++ inside birthday() would be a compile error."
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "31",
+        "explanation": {
+          "what": "println(p.age) reads the updated property",
+          "why": "birthday() incremented age from 30 to 31",
+          "change": "output ← '31'",
+          "intent": "Confirm mutation via method was reflected in the property",
+          "misconception": "p.age accesses the property directly — no getter call needed in Kotlin syntax, though internally it calls the generated getter"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "Given:\n\nclass Box(val width: Int, val height: Int)\nval b = Box(4, 6)\nb.width = 10\n\nWhat happens?",
+    "options": [
+      "width becomes 10",
+      "Compile error: Val cannot be reassigned",
+      "Runtime error: immutable property",
+      "width stays 4 silently"
+    ],
+    "correctIndex": 1,
+    "explanation": "width is declared with val, so its setter is never generated. Trying to assign b.width = 10 is a compile error — 'Val cannot be reassigned'. Change val to var in the constructor to allow mutation."
+  },
+
+  "explanation": {
+    "afterDemo": "Kotlin's primary constructor eliminates the Java ceremony of declaring fields, writing constructors, and writing getters. You express the same thing in one concise line. val properties are read-only from outside the class; var ones are mutable. This makes class APIs immediately readable — you can tell at a glance what can be changed.",
+    "keyTakeaways": [
+      "Primary constructor: class Name(val x: T, var y: T) — properties declared inline.",
+      "val generates a getter only; var generates getter + setter.",
+      "Member functions access properties via this (implicit) — no boilerplate needed."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create a class Rectangle(val width: Int, val height: Int) with a function area(): Int that returns width * height. In main, create Rectangle(4, 5) and print area().",
+    "starterCode": "class Rectangle(/* properties */) {\n    // area function\n}\n\nfun main() {\n    val r = Rectangle(4, 5)\n    println(r.area())\n}",
+    "solutionCode": "class Rectangle(val width: Int, val height: Int) {\n    fun area(): Int = width * height\n}\n\nfun main() {\n    val r = Rectangle(4, 5)\n    println(r.area())\n}",
+    "hint": "Declare width and height as val in the primary constructor. area() = width * height as expression body.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["20"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! area() returns 4 * 5 = 20.",
+    "retryHints": [
+      "class Rectangle(val width: Int, val height: Int)",
+      "fun area(): Int = width * height",
+      "Expected output: 20"
+    ]
+  },
+
+  "summary": {
+    "title": "Classes — Complete",
+    "takeaways": [
+      "Primary constructor declares properties inline — no separate field declarations.",
+      "val property → read-only (getter only). var property → mutable (getter + setter).",
+      "Member functions access properties directly — this is implicit."
+    ],
+    "nextTopicId": "kotlin_data_classes"
+  }
+}

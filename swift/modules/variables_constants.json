@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_variables_constants",
+  "topicId": "swift_variables_constants",
+  "language": "swift",
+  "title": "Variables & Constants",
+  "difficulty": "easy",
+  "concept": {"headline": "Use let for constants, var for mutable values.", "explanation": "Swift encourages immutability first with let.", "syntax": "let app = \"StepViz\"\nvar count = 1\ncount += 1", "keyPoints": ["Prefer let by default", "var allows updates", "Type inference is automatic"]},
+  "demo": {"intro": "Declare immutable and mutable bindings.", "code": "let app = \"StepViz\"\nvar count = 1\ncount += 1\nprint(app, count)", "focusLine": 1, "expectedHighlights": ["let constant", "var increment", "prints StepViz 2"], "steps": [{"type": "declare", "line": 1, "var": "app", "value": "StepViz", "dataType": "String", "explanation": {"what": "Declare constant", "why": "Value should not change", "change": "app bound", "intent": "Immutability", "misconception": "let cannot be reassigned"}}, {"type": "assign", "line": 3, "var": "count", "value": "2", "explanation": {"what": "Increment var", "why": "Track changeable state", "change": "count:1->2", "intent": "Mutation example", "misconception": "Only var supports this"}}, {"type": "print", "line": 4, "value": "StepViz 2", "explanation": {"what": "Print bindings", "why": "Verify output", "change": "output <- StepViz 2", "intent": "Observe state", "misconception": "print does not alter values"}}]},
+  "prediction": {"question": "Which can be reassigned?", "options": ["let", "var", "both", "neither"], "correctIndex": 1, "explanation": "var is mutable."},
+  "explanation": {"afterDemo": "Choosing let where possible improves safety.", "keyTakeaways": ["let is immutable", "var is mutable", "Inference keeps syntax concise"]},
+  "practice": {"prompt": "Create let lang='Swift', var n=2, n+=3, print lang and n.", "starterCode": "// write code", "solutionCode": "let lang = \"Swift\"\nvar n = 2\nn += 3\nprint(lang, n)", "hint": "Only n should be var.", "validation": {"type": "output", "expectedOutput": ["Swift 5"]}},
+  "feedback": {"successMessage": "let/var usage is correct.", "retryHints": ["Use let for fixed value", "Use var for updates"]},
+  "summary": {"title": "Variables & Constants — Complete", "takeaways": ["Immutability by default", "Mutability when needed", "Readable state management"], "nextTopicId": "swift_data_types"}
+}

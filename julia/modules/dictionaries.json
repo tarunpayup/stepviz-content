@@ -1,0 +1,197 @@
+{
+  "id": "lm_julia_dictionaries",
+  "topicId": "julia_dictionaries",
+  "language": "julia",
+  "title": "Dictionaries",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Julia Dict maps keys to values using the => syntax. Keys must be unique. Access with d[key], add/update with d[key]=val, check with haskey(d, key).",
+    "explanation": "A Julia Dict{K,V} is an unordered key-value store. Create with Dict(key => value, ...) literal syntax. Access a value with d[key] — throws a KeyError if missing. Use get(d, key, default) for safe access. haskey(d, key) checks existence. Iterate with for (k,v) in d. delete!(d, key) removes an entry.",
+    "syntax": "# Create\nages = Dict(\"Alice\" => 30, \"Bob\" => 25)\n\n# Access\nages[\"Alice\"]         # 30\n\n# Safe access (default if missing)\nget(ages, \"Carol\", 0) # 0 — default\n\n# Add/update\nages[\"Carol\"] = 28\n\n# Check existence\nhaskey(ages, \"Alice\")  # true\n\n# Delete\ndelete!(ages, \"Bob\")\n\n# Iterate\nfor (name, age) in ages\n    println(\"$name is $age\")\nend",
+    "keyPoints": [
+      "Dict(key => value) — use => for key-value pairs",
+      "d[key] throws KeyError if missing; use get(d, key, default) for safety",
+      "haskey(d, key) — membership test",
+      "for (k,v) in d — destructuring iteration over key-value pairs"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a Dict being created, accessed, extended, and iterated.",
+    "code": "scores = Dict(\"Alice\" => 92, \"Bob\" => 78)\nprintln(scores[\"Alice\"])\nscores[\"Carol\"] = 85\nprintln(haskey(scores, \"Bob\"))\nprintln(haskey(scores, \"Dave\"))\nfor (name, val) in scores\n    println(\"$name: $val\")\nend",
+    "focusLine": 1,
+    "expectedHighlights": ["Alice=92", "Carol added", "haskey Bob=true", "haskey Dave=false"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "scores",
+        "value": "Dict(\"Alice\"=>92, \"Bob\"=>78)",
+        "dataType": "Dict{String, Int64}",
+        "explanation": {
+          "what": "scores = Dict(\"Alice\" => 92, \"Bob\" => 78)",
+          "why": "=> pairs create a key-value Dict",
+          "change": "scores: Alice→92, Bob→78",
+          "intent": "Show Dict literal creation with => syntax",
+          "misconception": "Julia Dicts are UNORDERED — iteration order is not insertion order. If you need ordered key-value pairs, use DataStructures.OrderedDict or a sorted approach."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "92",
+        "explanation": {
+          "what": "scores[\"Alice\"] → 92",
+          "why": "Direct lookup by String key",
+          "change": "output ← '92'",
+          "intent": "Show key-based access",
+          "misconception": "If the key does not exist, scores[\"unknown\"] throws a KeyError. Always check with haskey() first, or use get(scores, key, default) to provide a fallback."
+        }
+      },
+      {
+        "type": "assign",
+        "line": 3,
+        "var": "scores[\"Carol\"]",
+        "value": "85",
+        "dataType": "Int64",
+        "explanation": {
+          "what": "scores[\"Carol\"] = 85 — adds a new key-value pair",
+          "why": "Assignment to a new key inserts it. Assignment to an existing key updates it.",
+          "change": "scores: Alice→92, Bob→78, Carol→85",
+          "intent": "Show insertion syntax — same as update syntax",
+          "misconception": "There is no separate insert() function — d[key] = val both inserts (if key new) and updates (if key exists). This is different from languages with separate insert/update methods."
+        }
+      },
+      {
+        "type": "call",
+        "line": 4,
+        "name": "haskey",
+        "args": ["scores", "\"Bob\""],
+        "returnVar": "result_1",
+        "explanation": {
+          "what": "haskey(scores, \"Bob\") → true",
+          "why": "\"Bob\" is a key in scores",
+          "change": "output ← 'true'",
+          "intent": "Show haskey for membership testing",
+          "misconception": "haskey() checks the KEYS only, not the values. It is always safer to use haskey() before accessing a key to avoid KeyError."
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "true",
+        "explanation": {
+          "what": "println(haskey(scores, \"Bob\")) → true",
+          "why": "Bob is in the dict",
+          "change": "output ← 'true'",
+          "intent": "Confirm true case",
+          "misconception": "haskey is case-sensitive — 'bob' and 'Bob' are different keys"
+        }
+      },
+      {
+        "type": "call",
+        "line": 5,
+        "name": "haskey",
+        "args": ["scores", "\"Dave\""],
+        "returnVar": "result_2",
+        "explanation": {
+          "what": "haskey(scores, \"Dave\") → false",
+          "why": "\"Dave\" was never added",
+          "change": "output ← 'false'",
+          "intent": "Show false case of haskey",
+          "misconception": "haskey returning false means: the key does not exist. Accessing scores[\"Dave\"] at this point would throw a KeyError."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "false",
+        "explanation": {
+          "what": "println(haskey(scores, \"Dave\")) → false",
+          "why": "Dave is not in the dict",
+          "change": "output ← 'false'",
+          "intent": "Confirm false case",
+          "misconception": "Use get(scores, 'Dave', 0) to get a safe default value of 0 instead of throwing on missing keys"
+        }
+      },
+      {
+        "type": "loop_start",
+        "line": 6,
+        "var": "(name, val)",
+        "start": "scores iteration",
+        "end": "all entries",
+        "explanation": {
+          "what": "for (name, val) in scores — destructuring iteration over all key-value pairs",
+          "why": "Each dict entry yields a (key, value) pair; destructuring binds them to name and val",
+          "change": "name, val bound to each pair",
+          "intent": "Show for-loop destructuring iteration over Dict",
+          "misconception": "Dict iteration order is not guaranteed to match insertion order. The three entries may print in any order each run."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "(each entry printed — order may vary)",
+        "explanation": {
+          "what": "Prints 'Alice: 92', 'Bob: 78', 'Carol: 85' in some order",
+          "why": "Dicts are unordered — the print order depends on internal hash layout",
+          "change": "output ← all three name:val lines",
+          "intent": "Show string interpolation inside a loop over a Dict",
+          "misconception": "If you need sorted output, wrap in sort(collect(scores)) — collect turns the Dict into a Vector of Pair{String,Int64}, then sort alphabetically."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\nd = Dict(\"a\" => 1, \"b\" => 2)\nd[\"c\"] = 3\nprintln(length(d))",
+    "options": [
+      "2",
+      "3",
+      "1",
+      "KeyError"
+    ],
+    "correctIndex": 1,
+    "explanation": "d starts with 2 entries (a, b). d['c']=3 adds a third. length(d) counts all keys → 3."
+  },
+
+  "explanation": {
+    "afterDemo": "Dicts are Julia's go-to for labeled data lookups and frequency counting. The haskey / get pattern prevents runtime KeyErrors. The (k,v) destructuring in for loops is idiomatic and readable. For sorted iteration, collect and sort the pairs — or prefer a sorted structure if order matters frequently.",
+    "keyTakeaways": [
+      "Dict(key => value) — use => for key-value pairs.",
+      "d[key] throws on missing key. Use get(d, key, default) for safe access.",
+      "haskey(d, key) for membership. for (k,v) in d for iteration."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create a Dict mapping three fruits to their prices: apple=1.20, banana=0.50, cherry=2.80. Print the price of banana, then print whether 'mango' is in the dict.",
+    "starterCode": "prices = # your dict\nprintln(prices[\"banana\"])\nprintln(haskey(prices, \"mango\"))",
+    "solutionCode": "prices = Dict(\"apple\" => 1.20, \"banana\" => 0.50, \"cherry\" => 2.80)\nprintln(prices[\"banana\"])\nprintln(haskey(prices, \"mango\"))",
+    "hint": "Dict(\"apple\" => 1.20, \"banana\" => 0.50, \"cherry\" => 2.80)",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["0.5", "false"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! banana=0.5, mango not in dict → false.",
+    "retryHints": [
+      "Dict(\"apple\" => 1.20, \"banana\" => 0.50, \"cherry\" => 2.80)",
+      "prices[\"banana\"] → 0.5 (Julia prints 0.50 as 0.5)",
+      "haskey(prices, \"mango\") → false"
+    ]
+  },
+
+  "summary": {
+    "title": "Dictionaries — Complete",
+    "takeaways": [
+      "Dict(k => v) for creation. d[k] = v for insert/update. delete!(d, k) for removal.",
+      "Safe access: get(d, k, default). Membership: haskey(d, k).",
+      "Iteration: for (k,v) in d. Dicts are unordered — sort if order matters."
+    ],
+    "nextTopicId": "julia_multiple_dispatch"
+  }
+}

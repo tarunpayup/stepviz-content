@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_control_flow",
+  "topicId": "swift_control_flow",
+  "language": "swift",
+  "title": "Control Flow",
+  "difficulty": "easy",
+  "concept": {"headline": "if/else and switch control branches.", "explanation": "Conditions route execution through the correct logic path.", "syntax": "if score >= 90 {\n    grade = \"A\"\n} else if score >= 80 {\n    grade = \"B\"\n} else {\n    grade = \"C\"\n}", "keyPoints": ["Evaluate in order", "First matching branch runs", "Use clear conditions"]},
+  "demo": {"intro": "Compute grade from score.", "code": "let score = 82\nlet grade: String\nif score >= 90 {\n    grade = \"A\"\n} else if score >= 80 {\n    grade = \"B\"\n} else {\n    grade = \"C\"\n}\nprint(grade)", "focusLine": 3, "expectedHighlights": ["first condition false", "second true", "prints B"], "steps": [{"type": "condition_check", "line": 3, "expression": "score >= 90", "result": false, "branch": "if", "explanation": {"what": "Evaluate first condition", "why": "82 < 90", "change": "skip first branch", "intent": "Ordered checks", "misconception": "False block not executed"}}, {"type": "condition_check", "line": 5, "expression": "score >= 80", "result": true, "branch": "else if", "explanation": {"what": "Evaluate second condition", "why": "82 qualifies", "change": "grade='B'", "intent": "Select branch", "misconception": "Later else ignored after match"}}, {"type": "print", "line": 10, "value": "B", "explanation": {"what": "Print result", "why": "Confirm branch outcome", "change": "output <- B", "intent": "Validation", "misconception": "None"}}]},
+  "prediction": {"question": "With score=95, grade is?", "options": ["A", "B", "C", "none"], "correctIndex": 0, "explanation": "First condition matches."},
+  "explanation": {"afterDemo": "Branch clarity prevents logic bugs.", "keyTakeaways": ["Order matters", "Use else fallback", "Keep conditions readable"]},
+  "practice": {"prompt": "If n is even print 'even' else print 'odd' for n=7.", "starterCode": "// write code", "solutionCode": "let n = 7\nif n % 2 == 0 {\n    print(\"even\")\n} else {\n    print(\"odd\")\n}", "hint": "Use remainder operator %.", "validation": {"type": "output", "expectedOutput": ["odd"]}},
+  "feedback": {"successMessage": "Control flow branch is correct.", "retryHints": ["Check condition in if", "Handle else path"]},
+  "summary": {"title": "Control Flow — Complete", "takeaways": ["Conditions control behavior", "Else-if chains handle ranges", "Branch ordering is critical"], "nextTopicId": "swift_loops"}
+}

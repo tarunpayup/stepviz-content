@@ -1,0 +1,70 @@
+{
+  "id": "lm_crystal_error_handling",
+  "topicId": "crystal_error_handling",
+  "language": "crystal",
+  "title": "Error Handling",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Crystal handles runtime failures with exceptions and rescue.",
+    "explanation": "Use begin/rescue to catch expected failures and ensure to run cleanup code. Keep error messages explicit for observability.",
+    "syntax": "begin\n  n = \"12x\".to_i\n  puts n\nrescue ex\n  puts \"parse failed: #{ex.message}\"\nensure\n  puts \"done\"\nend",
+    "keyPoints": [
+      "raise creates exceptions",
+      "rescue catches failures",
+      "ensure runs regardless of outcome",
+      "Catch specific exception classes when possible"
+    ]
+  },
+
+  "demo": {
+    "intro": "See rescue and ensure behavior around a parsing failure.",
+    "code": "begin\n  value = Int32.parse(\"12x\")\n  puts value\nrescue ex\n  puts \"parse failed: #{ex.message}\"\nensure\n  puts \"done\"\nend",
+    "focusLine": 2,
+    "expectedHighlights": ["parse throws", "rescue prints error", "ensure prints done"],
+    "steps": [
+      {"type": "call", "line": 2, "name": "Int32.parse", "args": ["12x"], "returnVar": "value", "explanation": {"what": "Attempt integer parse", "why": "Input has invalid character", "change": "exception raised", "intent": "Trigger controlled failure", "misconception": "Failed parse does not silently return 0"}},
+      {"type": "print", "line": 5, "value": "parse failed: Invalid Int32: 12x", "explanation": {"what": "Rescue handles exception", "why": "ex.message describes parse issue", "change": "output <- failure message", "intent": "Expose readable error", "misconception": "rescue without variable still catches but loses detail"}},
+      {"type": "print", "line": 7, "value": "done", "explanation": {"what": "Ensure executes", "why": "ensure always runs", "change": "output <- done", "intent": "Guarantee cleanup/reporting", "misconception": "ensure runs on both success and failure"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "What always runs in a begin/rescue/ensure block?",
+    "options": ["begin", "rescue", "ensure", "none"],
+    "correctIndex": 2,
+    "explanation": "ensure executes whether or not an exception occurred."
+  },
+
+  "explanation": {
+    "afterDemo": "Good error handling keeps programs robust and easier to debug in production.",
+    "keyTakeaways": [
+      "rescue handles expected runtime failures.",
+      "ensure is the always-run section.",
+      "Specific exception handling improves safety."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Parse Int32 from \"9z\" inside begin/rescue and print \"bad input\" in rescue.",
+    "starterCode": "# begin\n# parse\n# rescue print bad input\n# end",
+    "solutionCode": "begin\n  puts Int32.parse(\"9z\")\nrescue\n  puts \"bad input\"\nend",
+    "hint": "Use Int32.parse to force exception then rescue it.",
+    "validation": {"type": "output", "expectedOutput": ["bad input"]}
+  },
+
+  "feedback": {
+    "successMessage": "Correct. You caught the parse failure cleanly.",
+    "retryHints": ["Use begin/rescue", "Call Int32.parse on invalid value", "Print fallback message"]
+  },
+
+  "summary": {
+    "title": "Error Handling — Complete",
+    "takeaways": [
+      "Exceptions represent runtime failures.",
+      "rescue allows graceful recovery.",
+      "ensure guarantees finalization logic."
+    ],
+    "nextTopicId": "crystal_macros"
+  }
+}

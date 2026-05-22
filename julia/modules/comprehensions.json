@@ -1,0 +1,183 @@
+{
+  "id": "lm_julia_comprehensions",
+  "topicId": "julia_comprehensions",
+  "language": "julia",
+  "title": "Comprehensions",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Julia comprehensions build arrays from expressions over a range or iterable, with optional filtering. [expr for x in iter if cond] is the core form.",
+    "explanation": "Array comprehensions are a concise syntax for building arrays by transforming and filtering elements. [x^2 for x in 1:5] creates [1,4,9,16,25]. An optional if clause filters: [x^2 for x in 1:10 if x%2==0] gives squares of even numbers only. Generator expressions (without brackets) are lazy and memory-efficient. Dict and Set comprehensions follow the same pattern.",
+    "syntax": "# Basic comprehension\n[x^2 for x in 1:5]          # [1, 4, 9, 16, 25]\n\n# With filter\n[x^2 for x in 1:10 if x%2==0]  # [4, 16, 36, 64, 100]\n\n# Over an array\nnums = [3, 1, 4, 1, 5]\n[n * 2 for n in nums]      # [6, 2, 8, 2, 10]\n\n# Generator (lazy, no allocation)\nsum(x^2 for x in 1:100)\n\n# Nested comprehension (2D)\n[(i,j) for i in 1:2, j in 1:2]  # matrix form",
+    "keyPoints": [
+      "[expr for var in iter] — basic form, returns a Vector",
+      "[expr for var in iter if cond] — filtered form",
+      "(expr for var in iter) — generator: lazy, no intermediate array",
+      "Nest multiple 'for' clauses for multi-dimensional comprehensions"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch array comprehensions build lists from expressions and filtered conditions.",
+    "code": "squares = [x^2 for x in 1:5]\nprintln(squares)\n\neven_squares = [x^2 for x in 1:10 if x%2 == 0]\nprintln(even_squares)\n\nwords = [\"hello\", \"world\", \"julia\"]\nupper_words = [uppercase(w) for w in words]\nprintln(upper_words)\n\ntotal = sum(x^2 for x in 1:4)\nprintln(total)",
+    "focusLine": 1,
+    "expectedHighlights": ["squares=[1,4,9,16,25]", "even_squares=[4,16,36,64,100]", "upper words", "sum=30"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "squares",
+        "value": "[1, 4, 9, 16, 25]",
+        "dataType": "Vector{Int64}",
+        "explanation": {
+          "what": "[x^2 for x in 1:5] — computes x² for each x in the range 1,2,3,4,5",
+          "why": "Comprehension iterates x over 1:5 and applies x^2 to each value",
+          "change": "squares = [1, 4, 9, 16, 25]",
+          "intent": "Show basic comprehension without filter",
+          "misconception": "This is equivalent to: result=[]; for x in 1:5; push!(result, x^2); end — but far more concise. The comprehension also communicates INTENT (transform) rather than process (append)."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "[1, 4, 9, 16, 25]",
+        "explanation": {
+          "what": "squares printed",
+          "why": "x^2 for x=1,2,3,4,5 gives 1,4,9,16,25",
+          "change": "output ← '[1, 4, 9, 16, 25]'",
+          "intent": "Confirm comprehension output",
+          "misconception": "The range 1:5 is inclusive — x takes values 1, 2, 3, 4, 5 (five values, five results)"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "even_squares",
+        "value": "[4, 16, 36, 64, 100]",
+        "dataType": "Vector{Int64}",
+        "explanation": {
+          "what": "[x^2 for x in 1:10 if x%2==0] — squares of even numbers 2,4,6,8,10",
+          "why": "The if clause filters: only x where x%2==0 (even) are processed",
+          "change": "even_squares = [4, 16, 36, 64, 100]",
+          "intent": "Show filtered comprehension with if clause",
+          "misconception": "The if in a comprehension is a FILTER — it selects which elements from the range get included. It is not an if-else — there is no 'else' clause in a comprehension filter."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "[4, 16, 36, 64, 100]",
+        "explanation": {
+          "what": "2^2=4, 4^2=16, 6^2=36, 8^2=64, 10^2=100",
+          "why": "Only x=2,4,6,8,10 passed the x%2==0 filter",
+          "change": "output ← '[4, 16, 36, 64, 100]'",
+          "intent": "Confirm filtered comprehension",
+          "misconception": "Odd values 1,3,5,7,9 are completely excluded from the result — the comprehension never applies x^2 to them"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 8,
+        "var": "upper_words",
+        "value": "[\"HELLO\", \"WORLD\", \"JULIA\"]",
+        "dataType": "Vector{String}",
+        "explanation": {
+          "what": "[uppercase(w) for w in words] — applies uppercase() to each word",
+          "why": "Comprehensions work over any iterable, not just ranges",
+          "change": "upper_words = ['HELLO', 'WORLD', 'JULIA']",
+          "intent": "Show comprehension over an existing array with a function call",
+          "misconception": "Comprehensions can use any expression — function calls, arithmetic, string operations — as long as the expression is valid for each element type"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "[\"HELLO\", \"WORLD\", \"JULIA\"]",
+        "explanation": {
+          "what": "Each word transformed to uppercase",
+          "why": "uppercase() applied to each String element",
+          "change": "output ← '[\"HELLO\", \"WORLD\", \"JULIA\"]'",
+          "intent": "Confirm String transformation via comprehension",
+          "misconception": "The original words array is unchanged — comprehensions return a NEW array"
+        }
+      },
+      {
+        "type": "call",
+        "line": 11,
+        "name": "sum",
+        "args": ["x^2 for x in 1:4"],
+        "returnVar": "total",
+        "explanation": {
+          "what": "sum(x^2 for x in 1:4) — generator expression passed to sum()",
+          "why": "Generator (without []) produces values lazily — no intermediate array allocated",
+          "change": "total = 1+4+9+16 = 30",
+          "intent": "Show generator expression as a memory-efficient alternative to comprehension",
+          "misconception": "sum(x^2 for x in 1:4) is more memory-efficient than sum([x^2 for x in 1:4]) — the generator never creates the intermediate array. For aggregations (sum, maximum, etc.), always prefer generators over comprehensions."
+        }
+      },
+      {
+        "type": "print",
+        "line": 12,
+        "value": "30",
+        "explanation": {
+          "what": "1^2 + 2^2 + 3^2 + 4^2 = 1+4+9+16 = 30",
+          "why": "sum() consumed the generator",
+          "change": "output ← '30'",
+          "intent": "Confirm generator + sum",
+          "misconception": "A generator cannot be indexed like an array — g = (x^2 for x in 1:4); g[1] throws an error. To index, wrap in collect() or use a comprehension []."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nresult = [x for x in 1:10 if x % 3 == 0]\nprintln(length(result))",
+    "options": [
+      "3",
+      "4",
+      "10",
+      "9"
+    ],
+    "correctIndex": 0,
+    "explanation": "x % 3 == 0 selects multiples of 3 in 1:10: [3, 6, 9] — that's 3 elements. length([3,6,9]) = 3."
+  },
+
+  "explanation": {
+    "afterDemo": "Comprehensions are a hallmark of Julia's expressiveness for data transformation. They replace verbose for-push! loops with a single readable line. The if clause replaces an inner if-block. For aggregation (sum, maximum, any, all) use generators instead of comprehensions — they avoid allocating the intermediate array entirely, which matters for large inputs.",
+    "keyTakeaways": [
+      "[expr for x in iter] — basic transform. [expr for x in iter if cond] — filtered.",
+      "(expr for x in iter) — generator: lazy, no memory allocation.",
+      "Use generators with sum/maximum/any/all to avoid intermediate arrays."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create a list of all numbers from 1 to 20 that are divisible by both 2 and 3. Print the list.",
+    "starterCode": "result = [# your comprehension here]\nprintln(result)",
+    "solutionCode": "result = [x for x in 1:20 if x % 2 == 0 && x % 3 == 0]\nprintln(result)",
+    "hint": "Use x % 2 == 0 && x % 3 == 0 as the filter condition.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["[6, 12, 18]"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 6, 12, 18 are divisible by both 2 and 3 in 1:20.",
+    "retryHints": [
+      "[x for x in 1:20 if x % 2 == 0 && x % 3 == 0]",
+      "Divisible by 6 is equivalent to divisible by both 2 and 3",
+      "Expected: [6, 12, 18]"
+    ]
+  },
+
+  "summary": {
+    "title": "Comprehensions — Complete",
+    "takeaways": [
+      "[expr for x in iter] builds an array. Add if cond to filter.",
+      "Generator (expr for x in iter) is lazy — no intermediate array.",
+      "Use generators with sum/maximum/any/all for memory efficiency on large inputs."
+    ],
+    "nextTopicId": "julia_error_handling"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "lm_solidity_structs_enums",
+  "topicId": "solidity_structs_enums",
+  "language": "solidity",
+  "title": "Structs & Enums",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Structs organize related fields; enums model finite states.",
+    "explanation": "Use structs for grouped data and enums for explicit workflow statuses.",
+    "syntax": "enum Status { Pending, Done }\nstruct Task { string title; Status status; }",
+    "keyPoints": ["Structs reduce scattered variables", "Enums prevent invalid free-form status strings", "Default enum value is first member"]
+  },
+  "demo": {
+    "intro": "Create task record with enum status.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Tasks {\n  enum Status { Pending, Done }\n  struct Task { string title; Status status; }\n  Task public t = Task('Learn Solidity', Status.Pending);\n}",
+    "focusLine": 6,
+    "expectedHighlights": ["enum declared", "struct declared", "state struct initialized"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "Status", "value": "enum", "dataType": "Enum", "explanation": {"what": "Define finite statuses", "why": "Constrain allowed state values", "change": "Status enum available", "intent": "Model workflow safely", "misconception": "Enums compile to integers"}},
+      {"type": "declare", "line": 5, "var": "Task", "value": "struct", "dataType": "Struct", "explanation": {"what": "Define grouped task record", "why": "Keep related fields together", "change": "Task type available", "intent": "Data modeling clarity", "misconception": "Struct fields can include enums"}},
+      {"type": "declare", "line": 6, "var": "t", "value": "Task('Learn Solidity', Pending)", "dataType": "Task", "explanation": {"what": "Initialize struct state", "why": "Set initial contract task", "change": "t stored on-chain", "intent": "Show composed state", "misconception": "Public struct getter returns tuple-like output"}}
+    ]
+  },
+  "prediction": {
+    "question": "Default value of enum Status { Pending, Done } is?",
+    "options": ["Done", "Pending", "null", "revert"],
+    "correctIndex": 1,
+    "explanation": "First enum member is default, so Pending."
+  },
+  "explanation": {
+    "afterDemo": "Struct + enum composition is common in production contracts for clean state machines.",
+    "keyTakeaways": ["Use struct for grouped fields", "Use enum for controlled states", "Initialize state explicitly"]
+  },
+  "practice": {
+    "prompt": "Create enum Phase { Open, Closed } and struct Sale { uint256 price; Phase phase; } with one public Sale initialized to Open.",
+    "starterCode": "// add enum, struct, and public variable",
+    "solutionCode": "enum Phase { Open, Closed }\nstruct Sale { uint256 price; Phase phase; }\nSale public s = Sale(1 ether, Phase.Open);",
+    "hint": "Use enum member as struct field value.",
+    "validation": {"type": "step_count", "min": 3}
+  },
+  "feedback": {"successMessage": "Struct and enum modeling are correct.", "retryHints": ["Define enum first", "Reference enum type inside struct", "Initialize with enum member"]},
+  "summary": {"title": "Structs & Enums — Complete", "takeaways": ["Structs group contract data", "Enums constrain status transitions", "Combined modeling improves correctness"], "nextTopicId": "solidity_modifiers"}
+}

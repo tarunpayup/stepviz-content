@@ -1,0 +1,43 @@
+{
+  "id": "lm_solidity_arrays_mappings",
+  "topicId": "solidity_arrays_mappings",
+  "language": "solidity",
+  "title": "Arrays & Mappings",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Arrays preserve order; mappings provide efficient key lookups.",
+    "explanation": "Mappings are ideal for account-indexed balances and flags but cannot be iterated directly on-chain.",
+    "syntax": "uint256[] public nums;\nmapping(address => uint256) public score;",
+    "keyPoints": ["Array push appends values", "Mapping missing keys return defaults", "Mappings are not enumerable"]
+  },
+  "demo": {
+    "intro": "Define and update an array plus mapping.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Store {\n  uint256[] public nums;\n  mapping(address => uint256) public score;\n\n  function add(uint256 x) public { nums.push(x); }\n}",
+    "focusLine": 7,
+    "expectedHighlights": ["array state", "mapping state", "push appends"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "nums", "value": "[]", "dataType": "uint256[]", "explanation": {"what": "Declare dynamic array", "why": "Store ordered numbers", "change": "nums initialized empty", "intent": "List-like storage", "misconception": "Array length grows with push"}},
+      {"type": "declare", "line": 5, "var": "score", "value": "mapping", "dataType": "mapping(address=>uint256)", "explanation": {"what": "Declare mapping", "why": "Address keyed values", "change": "score mapping created", "intent": "Fast key-based access", "misconception": "Mappings can't be iterated directly"}},
+      {"type": "assign", "line": 7, "var": "nums", "value": "nums.push(x)", "explanation": {"what": "Append value", "why": "Add new entry", "change": "array length increases", "intent": "Mutate dynamic array", "misconception": "push writes to storage and costs gas"}}
+    ]
+  },
+  "prediction": {
+    "question": "Reading an unset mapping key returns what?",
+    "options": ["revert", "null", "default value", "random memory"],
+    "correctIndex": 2,
+    "explanation": "Unset keys return type default (e.g., 0 for uint)."
+  },
+  "explanation": {
+    "afterDemo": "Choosing between arrays and mappings depends on access patterns and gas constraints.",
+    "keyTakeaways": ["Arrays for ordered data", "Mappings for direct lookup", "Mapping iteration requires off-chain indexing"]
+  },
+  "practice": {
+    "prompt": "Create mapping(address => bool) public isMember; and function join() setting caller to true.",
+    "starterCode": "mapping(address => bool) public isMember;\n\nfunction join() public {\n  // set membership\n}",
+    "solutionCode": "mapping(address => bool) public isMember;\n\nfunction join() public {\n  isMember[msg.sender] = true;\n}",
+    "hint": "Use msg.sender as mapping key.",
+    "validation": {"type": "step_count", "min": 1}
+  },
+  "feedback": {"successMessage": "Mapping write logic is correct.", "retryHints": ["Index mapping with msg.sender", "Assign boolean true"]},
+  "summary": {"title": "Arrays & Mappings — Complete", "takeaways": ["Arrays keep order", "Mappings optimize lookups", "Know default values and iteration limits"], "nextTopicId": "solidity_structs_enums"}
+}

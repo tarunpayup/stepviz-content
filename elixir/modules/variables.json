@@ -1,0 +1,195 @@
+{
+  "id": "lm_elixir_variables",
+  "topicId": "elixir_variables",
+  "language": "elixir",
+  "title": "Variables & Immutability",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Elixir's = is the match operator, not assignment. Variables are immutable bindings — you can rebind a name, but the original value never changes.",
+    "explanation": "In Elixir, writing x = 42 does not 'assign' 42 to x — it pattern-matches the value 42 against the variable x, binding x to 42. Since values are immutable, x = 42 followed by x = 99 does not mutate — it creates a new binding. The original 42 is unchanged. Use IO.puts to print a value, IO.inspect to print with type information.",
+    "syntax": "# Bind integers, floats, strings\nx = 42\ny = 3.14\nname = \"Elixir\"\n\n# Rebind (new binding, not mutation)\nx = 99    # x now points to 99; 42 is unchanged\n\n# Check type\nIO.puts(is_integer(x))\nIO.puts(is_float(y))\nIO.puts(is_binary(name))   # strings are binaries in Elixir",
+    "keyPoints": [
+      "= is pattern matching — not assignment",
+      "Values are immutable — rebinding creates a new binding",
+      "IO.puts prints a value; IO.inspect prints with type info",
+      "is_integer/is_float/is_binary — type-check predicates"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch Elixir bind integers, floats, and strings, then rebind without mutation.",
+    "code": "x = 42\ny = 3.14\nname = \"Elixir\"\nIO.puts(x)\nIO.puts(y)\nIO.puts(name)\nx = 99\nIO.puts(x)\nIO.puts(is_integer(x))",
+    "focusLine": 1,
+    "expectedHighlights": ["x=42", "y=3.14", "name=Elixir", "x rebound to 99"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "x",
+        "value": "42",
+        "dataType": "Integer",
+        "explanation": {
+          "what": "x = 42 — pattern match: x is bound to 42",
+          "why": "= matches the right side against the left side. A bare variable always matches.",
+          "change": "x = 42",
+          "intent": "Show = as pattern match / binding",
+          "misconception": "= in Elixir is NOT assignment like in Python or JavaScript. It is a match operator. For a bare variable like x, the match always succeeds and x is bound to the right-hand value."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "y",
+        "value": "3.14",
+        "dataType": "Float",
+        "explanation": {
+          "what": "y = 3.14 — y bound to float 3.14",
+          "why": "Float literal matched against y",
+          "change": "y = 3.14",
+          "intent": "Show float binding",
+          "misconception": "Elixir has Integer and Float types. 42 is Integer; 42.0 is Float. They are different types — integer division uses div(a,b) not / which returns float in Elixir."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "name",
+        "value": "\"Elixir\"",
+        "dataType": "String (Binary)",
+        "explanation": {
+          "what": "name = \"Elixir\" — name bound to the string",
+          "why": "String literal matched against name",
+          "change": "name = 'Elixir'",
+          "intent": "Show string binding",
+          "misconception": "Elixir strings (double-quoted) are UTF-8 binaries. Single-quoted strings like 'hello' are charlists (lists of character code points) — a completely different type. Always use double quotes for strings."
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "42",
+        "explanation": {
+          "what": "IO.puts(x) → 42",
+          "why": "IO.puts prints the value followed by a newline",
+          "change": "output ← '42'",
+          "intent": "Show IO.puts for output",
+          "misconception": "IO.puts converts the value to a string before printing. For non-string types it uses the default representation. IO.inspect prints with type metadata — more useful for debugging."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "3.14",
+        "explanation": {
+          "what": "IO.puts(y) → 3.14",
+          "why": "y holds 3.14",
+          "change": "output ← '3.14'",
+          "intent": "Confirm float output",
+          "misconception": "IO.puts on a float works fine — it prints the decimal representation"
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "Elixir",
+        "explanation": {
+          "what": "IO.puts(name) → Elixir",
+          "why": "name holds the string 'Elixir'",
+          "change": "output ← 'Elixir'",
+          "intent": "Confirm string output",
+          "misconception": "IO.puts prints strings without surrounding quotes — the output is just Elixir, not 'Elixir'"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 7,
+        "var": "x",
+        "value": "99",
+        "dataType": "Integer",
+        "explanation": {
+          "what": "x = 99 — x is REBOUND to 99. The original 42 is unchanged.",
+          "why": "Elixir allows rebinding a variable name to a new value in the same scope",
+          "change": "x now refers to 99",
+          "intent": "Show rebinding — name points to new value, original unchanged",
+          "misconception": "This does NOT mutate x from 42 to 99. The integer 42 still exists in memory (until garbage collected). x is simply a new binding pointing to 99. In concurrent code, other processes that held a reference to x's previous value still see 42."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "99",
+        "explanation": {
+          "what": "IO.puts(x) → 99 — confirms rebinding",
+          "why": "x now refers to 99",
+          "change": "output ← '99'",
+          "intent": "Confirm rebinding effect",
+          "misconception": "The value 42 was not destroyed — it was just no longer referenced by x. Elixir's garbage collector handles cleanup."
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "true",
+        "explanation": {
+          "what": "is_integer(99) → true",
+          "why": "99 is an Integer",
+          "change": "output ← 'true'",
+          "intent": "Show type predicate function",
+          "misconception": "is_integer/is_float/is_binary are guard-safe predicates — they also work inside function guard clauses (when is_integer(x))"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\na = 10\nb = a\na = 20\nIO.puts(b)",
+    "options": [
+      "20",
+      "10",
+      "Error",
+      "nil"
+    ],
+    "correctIndex": 1,
+    "explanation": "b = a binds b to the VALUE 10 (not a reference to a). Rebinding a to 20 does not affect b. IO.puts(b) → 10."
+  },
+
+  "explanation": {
+    "afterDemo": "Elixir's immutability is not a restriction — it is a superpower for concurrent systems. When values never change, you can share data between processes with zero risk of race conditions. There is no need for locks, mutexes, or defensive copies. This is the foundation that makes Elixir systems highly concurrent and fault-tolerant.",
+    "keyTakeaways": [
+      "= is pattern matching — binds names to values when they match.",
+      "Values are immutable — rebinding a name points it at a new value; old values unchanged.",
+      "IO.puts for printing; is_integer/is_float/is_binary for type checks."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Bind x = 5, y = 10. Compute z = x + y. Print z, then print is_integer(z).",
+    "starterCode": "x = 5\ny = 10\nz = # x + y\nIO.puts(z)\nIO.puts(is_integer(z))",
+    "solutionCode": "x = 5\ny = 10\nz = x + y\nIO.puts(z)\nIO.puts(is_integer(z))",
+    "hint": "z = x + y — arithmetic on bound variables.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["15", "true"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! z = 5+10 = 15. is_integer(15) → true.",
+    "retryHints": [
+      "z = x + y — addition of two integers",
+      "is_integer(z) returns true for an Integer",
+      "Expected: 15 then true"
+    ]
+  },
+
+  "summary": {
+    "title": "Variables & Immutability — Complete",
+    "takeaways": [
+      "= matches and binds — not assignment. Bare variables always match.",
+      "Rebinding creates a new binding; the old value is unchanged.",
+      "IO.puts for output. is_integer/is_float/is_binary for type checks."
+    ],
+    "nextTopicId": "elixir_atoms"
+  }
+}

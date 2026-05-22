@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_async_await",
+  "topicId": "dart_async_await",
+  "language": "dart",
+  "title": "Async/Await",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Dart async code returns Future values.",
+    "explanation": "Mark functions async and use await to read completed Future results cleanly.",
+    "syntax": "Future<int> fetchCount() async {\n  return 42;\n}\n\nfetchCount().then(print);",
+    "keyPoints": ["async returns Future<T>", "await works inside async functions", "Use try/catch around awaited calls"]
+  },
+  "demo": {
+    "intro": "Define async function and consume its Future.",
+    "code": "Future<int> fetchCount() async {\n  return 42;\n}\n\nfetchCount().then(print);",
+    "focusLine": 1,
+    "expectedHighlights": ["Future<int> return", "resolved value 42", "prints 42"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "fetchCount", "value": "async function", "dataType": "() => Future<int>", "explanation": {"what": "Define async function", "why": "Represent future completion", "change": "fetchCount available", "intent": "Model async operation", "misconception": "async fn does not return raw int directly"}},
+      {"type": "call", "line": 5, "name": "fetchCount", "args": [], "returnVar": "future", "explanation": {"what": "Invoke function", "why": "Obtain Future<int>", "change": "future resolved with 42", "intent": "Show async invocation", "misconception": "Need await/then to use value"}},
+      {"type": "print", "line": 5, "value": "42", "explanation": {"what": "Print resolved result", "why": "then callback receives value", "change": "output <- 42", "intent": "Verify async flow", "misconception": "Execution order may differ from sync code"}}
+    ]
+  },
+  "prediction": {
+    "question": "Return type of async String f() => 'ok'; is?",
+    "options": ["String", "Future<String>", "dynamic", "void"],
+    "correctIndex": 1,
+    "explanation": "async wraps return value into Future<String>."
+  },
+  "explanation": {
+    "afterDemo": "Async/await keeps asynchronous code readable and type-safe.",
+    "keyTakeaways": ["Think in Future<T>", "Use await for clean sequence", "Handle async errors explicitly"]
+  },
+  "practice": {
+    "prompt": "Write Future<int> getFive() async returning 5 and print it with then.",
+    "starterCode": "// write code",
+    "solutionCode": "Future<int> getFive() async {\n  return 5;\n}\n\ngetFive().then(print);",
+    "hint": "Return value from async function.",
+    "validation": {"type": "output", "expectedOutput": ["5"]}
+  },
+  "feedback": {"successMessage": "Async Future usage is correct.", "retryHints": ["Use Future<int>", "Consume with then(print)"]},
+  "summary": {"title": "Async/Await — Complete", "takeaways": ["async returns Future", "await/then consume results", "Type futures explicitly"], "nextTopicId": "dart_error_handling"}
+}

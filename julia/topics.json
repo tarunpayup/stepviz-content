@@ -1,0 +1,182 @@
+[
+  {
+    "id": "julia_variables",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Variables & Types",
+    "description": "Learn Julia's dynamic typing, type annotations with ::, and core built-in types: Int64, Float64, Bool, Char, String.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia is dynamically typed — you don't need to declare types, but you can annotate them with :: for clarity or performance. Variables are untyped containers; values carry types. Julia's default integer is Int64 and default float is Float64.",
+      "analogy": "A Julia variable is like a labelled box that accepts anything. Type annotations are like adding a 'only integers allowed' sign on the box — Julia will check and warn if you try to put the wrong thing in.",
+      "keyPoints": ["No type declaration needed — Julia infers from the value", ":: is the type annotation operator: x::Int64 = 5", "typeof(x) tells you the type at runtime", "Integers default to Int64; floats to Float64"]
+    },
+    "defaultCode": "x = 42\ny = 3.14\nz = \"Julia\"\nprintln(typeof(x), \" \", typeof(y), \" \", typeof(z))"
+  },
+  {
+    "id": "julia_strings",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Strings",
+    "description": "Work with Julia strings using double quotes, string interpolation ($var), multiline strings, and common operations like length, uppercase, split.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia strings use double quotes. String interpolation embeds variables or expressions with $var or $(expr). Chars use single quotes. Common functions: length, uppercase, lowercase, split, join, startswith, contains.",
+      "analogy": "String interpolation is like filling in blanks in a form letter — $name drops the variable's value right into the string.",
+      "keyPoints": ["Strings: double quotes. Chars: single quotes.", "Interpolation: \"Hello, $name\" or \"$(2+2)\"", "length(s), uppercase(s), split(s, delim)", "* concatenates strings: \"a\" * \"b\" == \"ab\""]
+    },
+    "defaultCode": "name = \"Julia\"\nprintln(\"Hello, $name!\")\nprintln(length(name))\nprintln(uppercase(name))"
+  },
+  {
+    "id": "julia_functions",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Define functions with function...end, use compact single-line syntax, understand implicit return of the last expression, and pass functions as values.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia functions are defined with function name(params) ... end. The last expression is the implicit return value — no return keyword needed (though you can use it). Single-expression functions can use compact syntax: f(x) = x^2. Functions are first-class values.",
+      "analogy": "A Julia function is like a mathematical formula — what you write is what it computes. The last line is automatically the answer.",
+      "keyPoints": ["function f(x) ... end — standard form", "f(x) = expression — compact one-liner", "Last expression is implicitly returned", "return can be used for early exit"]
+    },
+    "defaultCode": "function add(a, b)\n    a + b\nend\n\nsquare(x) = x^2\n\nprintln(add(3, 4))\nprintln(square(5))"
+  },
+  {
+    "id": "julia_control_flow",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Control Flow: if / elseif / else",
+    "description": "Use if, elseif, else blocks, the ternary operator, and short-circuit operators && and ||.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia's if/elseif/else is terminated with end. if is an expression — it returns the value of the matched branch. The ternary operator is cond ? a : b. Short-circuit operators && and || only evaluate the right side if needed.",
+      "analogy": "if is like a railway switch — the train (execution) follows whichever track the condition points to.",
+      "keyPoints": ["if cond ... elseif cond ... else ... end", "if is an expression — returns the chosen branch's value", "Ternary: cond ? a : b", "&& and || short-circuit: right side not evaluated if not needed"]
+    },
+    "defaultCode": "x = 7\nresult = if x > 0\n    \"positive\"\nelseif x < 0\n    \"negative\"\nelse\n    \"zero\"\nend\nprintln(result)"
+  },
+  {
+    "id": "julia_loops",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Loops: for & while",
+    "description": "Iterate with for over ranges and collections, use while for condition loops, and control flow with break and continue.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia for loops iterate over any iterable: ranges (1:5), arrays, strings. Ranges use start:end (inclusive) or start:step:end. while loops repeat until the condition is false. break exits the loop; continue skips to the next iteration.",
+      "analogy": "for over a range is like walking numbered steps on a staircase. while is like waiting for a bus — keep waiting until it arrives.",
+      "keyPoints": ["for i in 1:5 — inclusive range 1 to 5", "for i in 1:2:10 — step 2", "while condition ... end", "break exits; continue skips to next iteration"]
+    },
+    "defaultCode": "for i in 1:5\n    println(\"i = $i\")\nend\n\nx = 1\nwhile x <= 3\n    println(\"x = $x\")\n    x += 1\nend"
+  },
+  {
+    "id": "julia_arrays",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Arrays",
+    "description": "Create 1D arrays, use 1-based indexing, push! and pop! for mutation, and common operations like length, sum, sort.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia arrays are 1-indexed (first element at index 1). Create with [] literals or zeros/ones/rand. Mutating functions end with ! by convention. push!(arr, val) appends; pop!(arr) removes the last. Arrays are mutable; access with arr[i].",
+      "analogy": "A Julia array is like a numbered shelf starting at shelf 1. push! adds a new shelf at the end; pop! removes the last one.",
+      "keyPoints": ["arr = [1, 2, 3] — literal syntax", "1-based indexing: arr[1] is the first element", "push!(arr, val) appends; pop!(arr) removes last", "length(arr), sum(arr), sort(arr)"]
+    },
+    "defaultCode": "nums = [3, 1, 4, 1, 5]\npush!(nums, 9)\nprintln(nums)\nprintln(length(nums))\nprintln(sort(nums))"
+  },
+  {
+    "id": "julia_tuples",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Tuples & Named Tuples",
+    "description": "Use immutable tuples for fixed-size heterogeneous data, access by index, and named tuples for self-documenting structured values.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "A tuple is an immutable, ordered collection of values (possibly different types). Named tuples add field names for clarity. Access tuple elements with [i] or, for named tuples, .fieldname. Tuples cannot be modified after creation.",
+      "analogy": "A tuple is like a sealed box with slots — you can peek into any slot by number, but you can't change what's inside. A named tuple labels each slot.",
+      "keyPoints": ["t = (1, \"hello\", 3.14) — heterogeneous tuple", "t[1] → 1 (1-based indexing)", "nt = (x=1, y=2) — named tuple", "nt.x → 1 — access by field name"]
+    },
+    "defaultCode": "point = (x=3, y=4)\nprintln(point.x)\nprintln(point.y)\nprintln(sqrt(point.x^2 + point.y^2))"
+  },
+  {
+    "id": "julia_dictionaries",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Dictionaries",
+    "description": "Create key-value Dicts, access and update values, check membership with haskey, and iterate over key-value pairs.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia's Dict is an unordered key-value store. Create with Dict(key => value, ...). Access with d[key]; set with d[key] = val. haskey(d, key) checks existence. Iterate with for (k, v) in d.",
+      "analogy": "A Dict is like a phone book — look up a name (key) to get a number (value). You can add new names and change numbers.",
+      "keyPoints": ["Dict(\"a\" => 1, \"b\" => 2)", "d[\"a\"] → 1; d[\"c\"] = 3 adds a new entry", "haskey(d, \"a\") → true/false", "for (k, v) in d iterates key-value pairs"]
+    },
+    "defaultCode": "scores = Dict(\"Alice\" => 95, \"Bob\" => 82)\nscores[\"Carol\"] = 88\nprintln(scores[\"Alice\"])\nprintln(haskey(scores, \"Dave\"))"
+  },
+  {
+    "id": "julia_multiple_dispatch",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Multiple Dispatch",
+    "description": "Define multiple methods for the same function name distinguished by argument types. Understand how Julia selects the most specific method at runtime.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Multiple dispatch is Julia's defining feature: the same function name can have many methods, each specialized for different argument types. Julia automatically calls the most specific method that matches the argument types. This is more powerful than object-oriented method dispatch, which only considers the first argument.",
+      "analogy": "Multiple dispatch is like a smart mail sorter — when a package arrives, it reads all the labels (all argument types) and routes it to the most specialized handler.",
+      "keyPoints": ["Define methods with type annotations: describe(x::Int) = ...", "Julia picks the most specific matching method", "methods(f) shows all methods of a function", "Default (catch-all): describe(x) — no type annotation"]
+    },
+    "defaultCode": "describe(x::Int)   = \"integer: $x\"\ndescribe(x::Float64) = \"float: $x\"\ndescribe(x)          = \"other: $x\"\n\nprintln(describe(42))\nprintln(describe(3.14))\nprintln(describe(\"hello\"))"
+  },
+  {
+    "id": "julia_structs",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Structs",
+    "description": "Define immutable structs and mutable structs to group related data. Add constructor functions and access fields with dot notation.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "struct defines an immutable composite type. mutable struct allows field modification. Fields are accessed with dot notation. Julia auto-generates a default constructor. You can add custom inner constructors for validation.",
+      "analogy": "A struct is like a form with labelled fields — every instance fills in the same set of labels. An immutable struct is a filled-in form sealed in plastic.",
+      "keyPoints": ["struct Name\\n  field::Type\\nend — immutable by default", "mutable struct — fields can be reassigned", "Point(1, 2) — default constructor", "p.x — field access via dot notation"]
+    },
+    "defaultCode": "struct Point\n    x::Float64\n    y::Float64\nend\n\np = Point(3.0, 4.0)\nprintln(p.x)\nprintln(sqrt(p.x^2 + p.y^2))"
+  },
+  {
+    "id": "julia_comprehensions",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Comprehensions",
+    "description": "Create arrays concisely with array comprehensions, apply filters, and use generator expressions for memory-efficient iteration.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Array comprehensions create arrays in a single expression: [expr for var in range]. Add a condition with if: [expr for var in range if condition]. Generator expressions use () instead of [] — they produce values lazily without allocating an array.",
+      "analogy": "A comprehension is like ordering a custom pizza: 'give me one slice for each topping in this list, but only the vegetarian ones'. All in one sentence.",
+      "keyPoints": ["[x^2 for x in 1:5] → [1, 4, 9, 16, 25]", "Filter: [x for x in 1:10 if x % 2 == 0]", "Nested: [i*j for i in 1:3, j in 1:3]", "Generator: sum(x^2 for x in 1:5) — no array allocated"]
+    },
+    "defaultCode": "squares = [x^2 for x in 1:5]\neven_squares = [x^2 for x in 1:10 if x % 2 == 0]\nprintln(squares)\nprintln(even_squares)"
+  },
+  {
+    "id": "julia_error_handling",
+    "language": "julia",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Use try/catch to handle exceptions, throw custom errors with error() and throw(), and ensure cleanup with finally.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Julia uses try/catch/finally for exception handling. error(msg) throws an ErrorException. You can throw any value with throw(). catch e binds the exception to e. finally always runs — used for cleanup. Use ArgumentError, DomainError, etc. for specific exception types.",
+      "analogy": "try/catch is like a safety net under a tightrope — if you fall (throw), the net catches you and lets the show go on.",
+      "keyPoints": ["try ... catch e ... end — catch any exception in e", "error(\"message\") — throws ErrorException", "throw(ArgumentError(\"bad arg\")) — typed exceptions", "finally block always runs (cleanup)"]
+    },
+    "defaultCode": "function safe_divide(a, b)\n    if b == 0\n        error(\"division by zero\")\n    end\n    a / b\nend\n\ntry\n    println(safe_divide(10, 2))\n    println(safe_divide(5, 0))\ncatch e\n    println(\"Caught: \", e.msg)\nend"
+  }
+]

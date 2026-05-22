@@ -1,0 +1,173 @@
+{
+  "id": "lm_rust_borrowing",
+  "topicId": "rust_borrowing",
+  "language": "rust",
+  "title": "References & Borrowing",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Borrow a value with & to use it without taking ownership.",
+    "explanation": "Instead of moving a value into a function, you can lend it via a reference. An immutable reference (&T) lets the borrower read the value; a mutable reference (&mut T) lets it modify the value. Rust enforces two rules: you can have any number of &T references at once, OR exactly one &mut T — but never both simultaneously. This statically prevents data races.",
+    "syntax": "// Immutable borrow — read-only\nfn show(s: &String) {\n    println!(\"{}\", s);\n}\nlet s = String::from(\"hi\");\nshow(&s);   // lend s; s still owned by caller\n\n// Mutable borrow — can modify\nfn append(s: &mut String) {\n    s.push_str(\" world\");\n}\nlet mut s = String::from(\"hello\");\nappend(&mut s);",
+    "keyPoints": [
+      "&T is a shared (immutable) reference — multiple allowed simultaneously",
+      "&mut T is an exclusive (mutable) reference — only one allowed at a time",
+      "You cannot have &mut T and any &T in the same scope at the same time",
+      "References must always be valid — Rust prevents dangling references",
+      "Borrowing does not transfer ownership — the original owner retains it"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a function borrow a String immutably (read), then another function borrow it mutably (write).",
+    "code": "fn length(s: &String) -> usize {\n    s.len()\n}\n\nfn append(s: &mut String) {\n    s.push_str(\" world\");\n}\n\nfn main() {\n    let mut s = String::from(\"hello\");\n    let len = length(&s);\n    println!(\"len = {}\", len);\n    append(&mut s);\n    println!(\"{}\", s);\n}",
+    "focusLine": 10,
+    "expectedHighlights": ["s owns 'hello'", "&s lent to length", "len = 5", "&mut s lent to append", "s = 'hello world'"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 10,
+        "var": "s",
+        "value": "\"hello\" (heap)",
+        "dataType": "String",
+        "explanation": {
+          "what": "s owns a mutable String 'hello'",
+          "why": "We declare s as mut because we plan to mutably borrow it later (append needs &mut s)",
+          "change": "s = String 'hello' (heap)",
+          "intent": "Set up the String we will both read from and modify",
+          "misconception": "let mut s means the binding s can be reassigned AND we can take &mut references to it. Without mut on the binding, you cannot create a &mut reference."
+        }
+      },
+      {
+        "type": "call",
+        "line": 11,
+        "name": "length",
+        "args": ["&s"],
+        "returnVar": "len",
+        "explanation": {
+          "what": "Calling length with an immutable borrow &s",
+          "why": "length only needs to read s.len() — an immutable reference is sufficient and does not affect ownership",
+          "change": "temporary &String borrow created; s still owned by main",
+          "intent": "Demonstrate reading via reference without moving the value",
+          "misconception": "Passing &s creates a borrow, not a copy. The function sees the same heap data as main but cannot modify it."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 11,
+        "var": "len",
+        "value": "5",
+        "dataType": "usize",
+        "explanation": {
+          "what": "len = 5 returned from length()",
+          "why": "s.len() inside length() reads the length field of the String metadata — 'hello' has 5 bytes",
+          "change": "len = 5 (new usize slot in main)",
+          "intent": "Capture the result of reading via a reference",
+          "misconception": "After length() returns, the borrow &s is released — s is fully accessible again in main"
+        }
+      },
+      {
+        "type": "print",
+        "line": 12,
+        "value": "len = 5",
+        "explanation": {
+          "what": "Printing len",
+          "why": "len holds the usize 5 returned by the length function",
+          "change": "output ← 'len = 5'",
+          "intent": "Show the string length was read successfully via a borrow",
+          "misconception": "println! borrows len for reading — usize is Copy so it could also be printed by value"
+        }
+      },
+      {
+        "type": "call",
+        "line": 13,
+        "name": "append",
+        "args": ["&mut s"],
+        "returnVar": null,
+        "explanation": {
+          "what": "Calling append with a mutable borrow &mut s",
+          "why": "append needs to push bytes onto the heap buffer — it requires exclusive write access via &mut",
+          "change": "exclusive &mut String borrow created; no other borrows of s may exist",
+          "intent": "Modify the String through a mutable reference without transferring ownership",
+          "misconception": "You cannot hold any &s borrow at the same time as &mut s — Rust would reject that at compile time"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 5,
+        "var": "s",
+        "value": "\"hello world\" (heap — extended)",
+        "explanation": {
+          "what": "push_str appends ' world' to s's heap buffer",
+          "why": "The mutable borrow allows the function to write to the heap allocation",
+          "change": "s: 'hello' → 'hello world'",
+          "intent": "Show that mutation via &mut modifies the original, not a copy",
+          "misconception": "push_str does not create a new String — it extends the existing heap buffer in place (if capacity allows)"
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "hello world",
+        "explanation": {
+          "what": "Printing s after mutation",
+          "why": "The &mut borrow was released when append() returned — s is fully owned by main again, now with value 'hello world'",
+          "change": "output ← 'hello world'",
+          "intent": "Confirm that the mutation via &mut s affected the original",
+          "misconception": "s was never moved — only borrowed. main retained ownership throughout and gets the modified value back."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is wrong with this code?\n\nlet mut s = String::from(\"x\");\nlet r1 = &s;\nlet r2 = &mut s;\nprintln!(\"{} {}\", r1, r2);",
+    "options": [
+      "Nothing — both borrows are fine",
+      "Compile error: cannot have &mut s while &s is active",
+      "Compile error: s is not mutable",
+      "Runtime panic: double borrow"
+    ],
+    "correctIndex": 1,
+    "explanation": "r1 holds an immutable borrow of s. While r1 is still in use (on the println! line), taking &mut s is illegal — Rust's borrow checker rejects simultaneous shared and mutable borrows."
+  },
+
+  "explanation": {
+    "afterDemo": "length borrowed &s to read the length without affecting ownership. Once length returned, the borrow expired and main could take a &mut borrow for append. The two borrows never overlapped — that is why the code compiled. If you had tried to use r1 and &mut s at the same time, the compiler would have caught it.",
+    "keyTakeaways": [
+      "&T allows many simultaneous readers; &mut T requires exclusive access.",
+      "Borrowing does not transfer ownership — the owner retains it and gets it back when the borrow ends.",
+      "Rust checks borrow conflicts at compile time — no runtime cost."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function `double_it` that takes &mut i32 and multiplies the value by 2. In main, declare a mutable variable `n = 5`, call double_it, and print n.",
+    "starterCode": "fn double_it(n: &mut i32) {\n    // multiply *n by 2\n}\n\nfn main() {\n    let mut n = 5;\n    double_it(&mut n);\n    println!(\"{}\", n);\n}",
+    "solutionCode": "fn double_it(n: &mut i32) {\n    *n *= 2;\n}\n\nfn main() {\n    let mut n = 5;\n    double_it(&mut n);\n    println!(\"{}\", n);\n}",
+    "hint": "To write through a mutable reference, dereference with *: *n *= 2;",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["10"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! *n *= 2 dereferences the mutable reference to write through it. n in main becomes 10.",
+    "retryHints": [
+      "Use *n to dereference the mutable reference — n inside the function is a &mut i32, not an i32.",
+      "*n *= 2 is shorthand for *n = *n * 2.",
+      "Expected output: 10 (5 × 2)."
+    ]
+  },
+
+  "summary": {
+    "title": "References & Borrowing — Complete",
+    "takeaways": [
+      "&T gives read-only access to a value without taking ownership.",
+      "&mut T gives exclusive write access — no other borrows may coexist.",
+      "The borrow checker enforces these rules at compile time with zero runtime cost."
+    ],
+    "nextTopicId": "rust_structs"
+  }
+}

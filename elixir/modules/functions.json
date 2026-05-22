@@ -1,0 +1,183 @@
+{
+  "id": "lm_elixir_functions",
+  "topicId": "elixir_functions",
+  "language": "elixir",
+  "title": "Functions",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Named functions live in modules (def inside defmodule). Anonymous functions use fn -> end and are called with dot notation func.(args). & is a shorthand capture.",
+    "explanation": "Elixir has two kinds of functions. Named functions (def/defp) must live inside a module (defmodule) and are called as Module.function(args). Anonymous functions (fn args -> body end) are first-class values stored in variables and called with a dot: func.(arg). The & capture shorthand creates compact anonymous functions: &(&1 * 2) means fn x -> x * 2 end where &1 is the first argument.",
+    "syntax": "# Anonymous function\ndouble = fn x -> x * 2 end\ndouble.(5)   # 10 — note the dot!\n\n# Multi-arg anonymous\nadd = fn a, b -> a + b end\nadd.(3, 4)   # 7\n\n# & capture shorthand\nsquare = &(&1 * &1)\nsquare.(6)   # 36\n\nadd2 = &(&1 + &2)\nadd2.(3, 4)  # 7\n\n# Named function (inside module)\ndefmodule Calc do\n  def double(x), do: x * 2\nend\nCalc.double(5)   # 10",
+    "keyPoints": [
+      "fn args -> body end — anonymous function",
+      "func.(args) — dot required to call anonymous function",
+      "&(&1 + &2) — capture shorthand: &1, &2 are argument placeholders",
+      "def name(args), do: expr — single-line named function syntax"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch anonymous functions being created, called with dot notation, and compared to the & shorthand.",
+    "code": "double = fn x -> x * 2 end\nIO.puts(double.(5))\n\nadd = fn a, b -> a + b end\nIO.puts(add.(3, 4))\n\nsquare = &(&1 * &1)\nIO.puts(square.(6))\n\ngreet = &(\"Hello, #{&1}!\")\nIO.puts(greet.(\"World\"))",
+    "focusLine": 1,
+    "expectedHighlights": ["fn double", "call double.(5)=10", "fn add", "add.(3,4)=7", "& square", "square.(6)=36", "& greet"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "double",
+        "value": "fn x -> x * 2 end",
+        "dataType": "Function",
+        "explanation": {
+          "what": "double = fn x -> x * 2 end — anonymous function stored in variable double",
+          "why": "fn...end creates a function value that can be stored and passed around",
+          "change": "double = anonymous function (x -> x * 2)",
+          "intent": "Show anonymous function creation syntax",
+          "misconception": "This is NOT a named function — it is a function VALUE stored in a variable. Named functions require defmodule + def. Anonymous functions are first-class values."
+        }
+      },
+      {
+        "type": "call",
+        "line": 2,
+        "name": "double",
+        "args": ["5"],
+        "returnVar": "r1",
+        "explanation": {
+          "what": "double.(5) — call the anonymous function with argument 5",
+          "why": "The DOT (.) is required to call anonymous functions — it distinguishes them from named functions",
+          "change": "x = 5 → x * 2 = 10",
+          "intent": "Show the dot notation for calling anonymous functions",
+          "misconception": "double(5) WITHOUT the dot would look for a named function called double in the current module — which does not exist. The dot double.(5) is mandatory for calling function values stored in variables."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "10",
+        "explanation": {
+          "what": "IO.puts(double.(5)) → 10",
+          "why": "5 * 2 = 10",
+          "change": "output ← '10'",
+          "intent": "Confirm anonymous function call result",
+          "misconception": "The function body x * 2 evaluated with x=5 gives 10 — the last expression is returned implicitly"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "add",
+        "value": "fn a, b -> a + b end",
+        "dataType": "Function",
+        "explanation": {
+          "what": "fn a, b -> a + b end — two-argument anonymous function",
+          "why": "Multiple parameters listed after fn, before ->",
+          "change": "add = anonymous function (a, b -> a + b)",
+          "intent": "Show multi-argument anonymous function",
+          "misconception": "Parameters are comma-separated before the ->. The -> separates parameters from the function body."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "7",
+        "explanation": {
+          "what": "add.(3, 4) → 7",
+          "why": "a=3, b=4 → a+b=7",
+          "change": "output ← '7'",
+          "intent": "Confirm two-argument anonymous function call",
+          "misconception": "Each argument is separated by comma in both the function definition and the call: add.(3, 4)"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 7,
+        "var": "square",
+        "value": "&(&1 * &1)",
+        "dataType": "Function",
+        "explanation": {
+          "what": "&(&1 * &1) — capture shorthand for fn x -> x * x end",
+          "why": "& creates a function from an expression. &1 is the first argument placeholder.",
+          "change": "square = anonymous function (&1 * &1)",
+          "intent": "Show & capture shorthand",
+          "misconception": "&1 means 'first argument', &2 means 'second argument', etc. The outer & wraps the expression into a function. &(&1 * &1) is exactly equivalent to fn x -> x * x end."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "36",
+        "explanation": {
+          "what": "square.(6) → 6 * 6 = 36",
+          "why": "&1 = 6 → &1 * &1 = 36",
+          "change": "output ← '36'",
+          "intent": "Confirm & capture function call",
+          "misconception": "The & shorthand is idiomatic for short, single-expression functions. For anything with multiple steps, the fn...end form is clearer."
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "Hello, World!",
+        "explanation": {
+          "what": "greet.(\"World\") → &(\"Hello, #{&1}!\") with &1=\"World\" → \"Hello, World!\"",
+          "why": "String interpolation works inside & capture expressions",
+          "change": "output ← 'Hello, World!'",
+          "intent": "Show & capture with string interpolation",
+          "misconception": "#{&1} inside a & capture expression is valid — &1 is evaluated as the first argument at call time."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nmultiply = fn a, b -> a * b end\nIO.puts(multiply.(4, 5))",
+    "options": [
+      "20",
+      "9",
+      "Error — missing dot",
+      "45"
+    ],
+    "correctIndex": 0,
+    "explanation": "multiply.(4, 5) calls the anonymous function with a=4, b=5. a*b = 20. Output: 20."
+  },
+
+  "explanation": {
+    "afterDemo": "The distinction between named functions (Module.func()) and anonymous functions (func.()) is a key Elixir idiom. Anonymous functions are used heavily as arguments to Enum.map, Enum.filter, and other higher-order functions. The & capture shorthand is idiomatic for short inline transforms: Enum.map(list, &(&1 * 2)) is much more compact than writing a full fn...end.",
+    "keyTakeaways": [
+      "fn args -> body end creates an anonymous function stored in a variable.",
+      "Call with dot: func.(args) — the dot distinguishes function values from named functions.",
+      "&(&1 + &2) is shorthand for fn a, b -> a + b end. &1, &2 are argument placeholders."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create an anonymous function triple = fn x -> x * 3 end. Then create a & shorthand for the same: triple2 = &(&1 * 3). Print triple.(7) and triple2.(7).",
+    "starterCode": "triple = fn x -> x * 3 end\ntriple2 = &(&1 * 3)\nIO.puts(triple.(7))\nIO.puts(triple2.(7))",
+    "solutionCode": "triple = fn x -> x * 3 end\ntriple2 = &(&1 * 3)\nIO.puts(triple.(7))\nIO.puts(triple2.(7))",
+    "hint": "Both forms should return 7 * 3 = 21.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["21", "21"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Both forms of triple return 21 for input 7.",
+    "retryHints": [
+      "fn x -> x * 3 end and &(&1 * 3) are equivalent",
+      "Call with dot: triple.(7) and triple2.(7)",
+      "Expected: 21 then 21"
+    ]
+  },
+
+  "summary": {
+    "title": "Functions — Complete",
+    "takeaways": [
+      "fn args -> body end — anonymous function. Stored in a variable.",
+      "func.(args) — DOT required for calling anonymous functions.",
+      "&(&1 * 3) — shorthand for fn x -> x * 3 end. &1/&2 are argument positions."
+    ],
+    "nextTopicId": "elixir_control_flow"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_exceptions",
+  "topicId": "python_exceptions",
+  "language": "python",
+  "title": "Exceptions",
+  "difficulty": "medium",
+  "concept": {"headline": "Exceptions handle runtime errors gracefully.", "explanation": "Use try/except blocks around risky operations like parsing and IO.", "syntax": "try:\n    int('x')\nexcept ValueError:\n    print('bad input')", "keyPoints": ["Catch specific exception types", "Avoid broad bare except", "Use finally for cleanup"]},
+  "demo": {"intro": "Safely handle failed integer conversion.", "code": "try:\n    int('x')\nexcept ValueError:\n    print('bad input')", "focusLine": 2, "expectedHighlights": ["ValueError raised", "except branch runs"], "steps": [{"type": "call", "line": 2, "name": "int", "args": ["'x'"], "returnVar": "error", "explanation": {"what": "Attempt conversion", "why": "Parse input", "change": "ValueError raised", "intent": "Trigger exception path", "misconception": "Control jumps to matching except"}}, {"type": "condition_check", "line": 3, "expression": "matches ValueError", "result": true, "branch": "except", "explanation": {"what": "Match handler", "why": "Specific type caught", "change": "execute handler", "intent": "Graceful recovery", "misconception": "Unhandled exceptions terminate program"}}, {"type": "print", "line": 4, "value": "bad input", "explanation": {"what": "Print message", "why": "Communicate failure", "change": "output <- bad input", "intent": "User feedback", "misconception": "Program can continue after handled error"}}]},
+  "prediction": {"question": "Which block runs on no error?", "options": ["except", "try", "finally only", "none"], "correctIndex": 1, "explanation": "try body runs; except is skipped if no exception."},
+  "explanation": {"afterDemo": "Exception handling improves robustness for user inputs and external data.", "keyTakeaways": ["Handle expected failures", "Catch specific types", "Keep handlers clear"]},
+  "practice": {"prompt": "Wrap int('7') in try/except ValueError and print parsed value.", "starterCode": "# write code", "solutionCode": "try:\n    v = int('7')\n    print(v)\nexcept ValueError:\n    print('bad')", "hint": "No exception here; expect number output.", "validation": {"type": "output", "expectedOutput": ["7"]}},
+  "feedback": {"successMessage": "Exception handling is correct.", "retryHints": ["Use try/except ValueError", "Print parsed number in try"]},
+  "summary": {"title": "Exceptions — Complete", "takeaways": ["Exceptions model failures", "try/except recovers safely", "Specific catches are best"], "nextTopicId": "python_modules_packages"}
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "solidity_variables",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Variables & Value Types",
+    "description": "Understand uint, int, bool, address, bytes, and default values in Solidity.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "Solidity contracts use strongly typed state and local variables, with explicit value-size types like uint256.",
+      "analogy": "State variables are permanent ledger fields; local variables are temporary scratch notes.",
+      "keyPoints": [
+        "State variables persist on-chain",
+        "uint256 is the common integer type",
+        "address stores Ethereum account/contract addresses",
+        "Public state vars auto-generate getter functions"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Counter {\n  uint256 public count = 1;\n  bool public active = true;\n}"
+  },
+  {
+    "id": "solidity_functions",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Functions & Visibility",
+    "description": "Learn function declarations, visibility (public/private/internal/external), and return values.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Functions define contract behavior and can be restricted by visibility and mutability modifiers.",
+      "analogy": "Visibility is door access: public is open lobby, private is back office.",
+      "keyPoints": [
+        "public callable internally and externally",
+        "external optimized for outside calls",
+        "private only in same contract",
+        "returns declares output values"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Math {\n  function add(uint256 a, uint256 b) public pure returns (uint256) {\n    return a + b;\n  }\n}"
+  },
+  {
+    "id": "solidity_control_flow",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Use if/else, require, and conditional checks in smart contract logic.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Conditional logic in Solidity often combines if/else with guard functions like require().",
+      "analogy": "require is a gatekeeper that rejects invalid transactions at the door.",
+      "keyPoints": [
+        "if/else branches execution",
+        "require enforces preconditions",
+        "revert stops and rolls back state changes",
+        "Custom errors reduce gas vs long revert strings"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Vault {\n  address public owner;\n  constructor() { owner = msg.sender; }\n\n  function onlyOwnerAction() public view returns (bool) {\n    require(msg.sender == owner, 'Not owner');\n    return true;\n  }\n}"
+  },
+  {
+    "id": "solidity_loops",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Loops & Gas Awareness",
+    "description": "Use for/while carefully and understand gas costs of iteration.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Loops are supported, but unbounded iteration can cause gas-limit failures.",
+      "analogy": "Each loop step costs fuel; long loops can run out mid-transaction.",
+      "keyPoints": [
+        "Prefer bounded loops",
+        "Avoid iterating large on-chain arrays",
+        "Use events/off-chain indexing for heavy scans",
+        "Use memory arrays for temporary processing"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Sum {\n  function sumUpTo(uint256 n) public pure returns (uint256 s) {\n    for (uint256 i = 1; i <= n; i++) {\n      s += i;\n    }\n  }\n}"
+  },
+  {
+    "id": "solidity_arrays_mappings",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Arrays & Mappings",
+    "description": "Store grouped data with dynamic arrays and key-value mappings.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Arrays preserve order while mappings provide efficient key-based lookup.",
+      "analogy": "Arrays are lists; mappings are hash-based address books.",
+      "keyPoints": [
+        "Mapping keys are not enumerable on-chain",
+        "Dynamic arrays can grow with push",
+        "Use mapping(address => uint256) for balances",
+        "Reading missing mapping key returns default value"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Store {\n  uint256[] public nums;\n  mapping(address => uint256) public score;\n\n  function add(uint256 x) public { nums.push(x); }\n}"
+  },
+  {
+    "id": "solidity_structs_enums",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Structs & Enums",
+    "description": "Model rich contract state with structured records and finite status values.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Structs group related fields and enums represent finite state transitions.",
+      "analogy": "Structs are form records; enums are controlled status labels.",
+      "keyPoints": [
+        "Structs can be stored in mappings and arrays",
+        "Enums compile to integer states",
+        "Use enum for workflow stage safety",
+        "Default enum value is first member"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Tasks {\n  enum Status { Pending, Done }\n  struct Task { string title; Status status; }\n  Task public t = Task('Learn Solidity', Status.Pending);\n}"
+  },
+  {
+    "id": "solidity_modifiers",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Modifiers",
+    "description": "Reuse access and validation logic with function modifiers.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Modifiers wrap function execution with pre/post checks using _ placeholder.",
+      "analogy": "A modifier is a reusable security checkpoint before function body execution.",
+      "keyPoints": [
+        "Use modifiers for access control",
+        "_ marks where function body executes",
+        "Combine multiple modifiers carefully",
+        "Keep modifier logic simple and auditable"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Owned {\n  address public owner = msg.sender;\n  modifier onlyOwner() {\n    require(msg.sender == owner, 'Not owner');\n    _;\n  }\n}"
+  },
+  {
+    "id": "solidity_inheritance",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Inheritance & Interfaces",
+    "description": "Build composable contracts with inheritance, abstract contracts, and interfaces.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Solidity supports multiple inheritance and interface-driven design for modular contracts.",
+      "analogy": "Interfaces are promises; inheritance is extension wiring.",
+      "keyPoints": [
+        "Interfaces define external function signatures",
+        "Abstract contracts can include implemented logic",
+        "Use override with explicit base list when needed",
+        "Be cautious of inheritance linearization"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ninterface IGreeter { function greet() external pure returns (string memory); }\ncontract Greeter is IGreeter {\n  function greet() external pure override returns (string memory) {\n    return 'hello';\n  }\n}"
+  },
+  {
+    "id": "solidity_events",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Events & Logging",
+    "description": "Emit events for off-chain indexing, monitoring, and frontend updates.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Events write logs to the transaction receipt for off-chain consumers.",
+      "analogy": "Events are blockchain receipts your app can subscribe to.",
+      "keyPoints": [
+        "Use indexed fields for searchable topics",
+        "Events are not readable on-chain like state",
+        "Emit after successful state changes",
+        "Events are cheaper than storing full history on-chain"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Logger {\n  event Deposited(address indexed user, uint256 amount);\n  function deposit() public payable {\n    emit Deposited(msg.sender, msg.value);\n  }\n}"
+  },
+  {
+    "id": "solidity_error_handling",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Use require, revert, assert, and custom errors safely.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "Solidity error primitives revert transaction state and can return error data.",
+      "analogy": "Errors are rollback triggers that cancel invalid state changes.",
+      "keyPoints": [
+        "require for input/state checks",
+        "revert for explicit abort paths",
+        "assert for internal invariants",
+        "Custom errors save gas"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\nerror TooSmall(uint256 sent, uint256 min);\n\ncontract Pay {\n  function buy() public payable {\n    if (msg.value < 1 ether) revert TooSmall(msg.value, 1 ether);\n  }\n}"
+  },
+  {
+    "id": "solidity_payable",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Payable & Ether Transfer",
+    "description": "Receive ETH with payable functions and transfer value safely.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Payable functions accept Ether and can update accounting state based on msg.value.",
+      "analogy": "Payable is the contract cashier window for ETH.",
+      "keyPoints": [
+        "msg.value holds sent wei",
+        "Use payable(address) for value transfers",
+        "Prefer call for flexible gas forwarding",
+        "Follow checks-effects-interactions"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract Wallet {\n  receive() external payable {}\n  function balance() public view returns (uint256) { return address(this).balance; }\n}"
+  },
+  {
+    "id": "solidity_security_basics",
+    "language": "solidity",
+    "domain": "programming",
+    "title": "Security Basics",
+    "description": "Learn reentrancy prevention, access control, and safe contract patterns.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Secure Solidity design minimizes attack surface through disciplined state flow and authorization checks.",
+      "analogy": "Smart contract security is vault design: layered controls and minimal trust assumptions.",
+      "keyPoints": [
+        "Use reentrancy guards for external calls",
+        "Enforce role-based access control",
+        "Validate all user inputs",
+        "Favor audited libraries (e.g., OpenZeppelin)"
+      ]
+    },
+    "defaultCode": "pragma solidity ^0.8.20;\n\ncontract SafeWithdraw {\n  mapping(address => uint256) public bal;\n  function deposit() public payable { bal[msg.sender] += msg.value; }\n  function withdraw() public {\n    uint256 a = bal[msg.sender];\n    require(a > 0, 'none');\n    bal[msg.sender] = 0;\n    (bool ok,) = msg.sender.call{value: a}(\"\");\n    require(ok, 'fail');\n  }\n}"
+  }
+]

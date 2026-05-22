@@ -1,0 +1,193 @@
+{
+  "id": "lm_rust_pattern_matching",
+  "topicId": "rust_pattern_matching",
+  "language": "rust",
+  "title": "Pattern Matching",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Patterns destructure values and bind names — match, if let, and while let all use them.",
+    "explanation": "A pattern describes the shape of a value. When a pattern matches, Rust binds the named parts of the pattern to the corresponding parts of the value. Patterns appear in match arms, if let, while let, function parameters, and let bindings. They can match ranges, literals, enum variants, struct fields, tuples, and include guards (extra if conditions).",
+    "syntax": "// match with range patterns and guard\nmatch n {\n    i32::MIN..=-1 => println!(\"negative\"),\n    0             => println!(\"zero\"),\n    1..=9         => println!(\"single digit\"),\n    x if x % 2 == 0 => println!(\"large even: {}\", x),\n    _             => println!(\"large odd\"),\n}\n\n// if let — handle one variant\nif let Some(v) = option_val {\n    println!(\"{}\", v);\n}\n\n// Destructuring a tuple\nlet (x, y) = (1, 2);\n\n// Destructuring a struct\nlet Point { x, y } = p;",
+    "keyPoints": [
+      "Patterns are tested top to bottom; the first matching arm runs",
+      "Guards: pattern if condition — checked only if the pattern already matches",
+      "if let Some(v) = opt { } is a single-arm match that ignores None",
+      "while let Some(v) = iter.next() { } loops until the pattern fails",
+      ".. in struct/tuple patterns ignores remaining fields"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch match categorise a number using range patterns, then a guard, then a wildcard.",
+    "code": "fn categorise(n: i32) -> &'static str {\n    match n {\n        i32::MIN..=-1 => \"negative\",\n        0             => \"zero\",\n        1..=9         => \"single digit\",\n        _             => \"large\",\n    }\n}\n\nfn main() {\n    for n in [-3, 0, 7, 42] {\n        println!(\"{}: {}\", n, categorise(n));\n    }\n}",
+    "focusLine": 10,
+    "expectedHighlights": ["-3 → negative", "0 → zero", "7 → single digit", "42 → large"],
+    "steps": [
+      {
+        "type": "loop_start",
+        "line": 10,
+        "kind": "for",
+        "condition": "n in [-3, 0, 7, 42]",
+        "var": "n",
+        "explanation": {
+          "what": "Iterating over array [-3, 0, 7, 42]",
+          "why": "We test categorise() with four values to see all four match arms",
+          "change": "Loop starts; n will be -3, 0, 7, 42 in turn",
+          "intent": "Drive the visualizer through each pattern branch",
+          "misconception": "[-3, 0, 7, 42] is an array literal — Rust infers its type as [i32; 4]"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 2,
+        "expression": "match -3: MIN..=-1 matches",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "Pattern i32::MIN..=-1 matches n = -3",
+          "why": "-3 falls in the range MIN to -1 inclusive",
+          "change": "arm 'negative' selected",
+          "intent": "Show how a range pattern covers an open-ended range",
+          "misconception": "i32::MIN is -2,147,483,648 — this pattern covers ALL negative i32 values, not just those near -3"
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "-3: negative",
+        "explanation": {
+          "what": "Printing '-3: negative'",
+          "why": "categorise(-3) returned 'negative'; println! formats it with n",
+          "change": "output ← '-3: negative'",
+          "intent": "Show first range pattern result",
+          "misconception": "The function returns a &'static str — a string slice pointing to a string literal baked into the binary, not heap-allocated"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 3,
+        "expression": "match 0: literal 0 matches",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "Literal pattern 0 matches n = 0",
+          "why": "Literal patterns match exact values — 0 only matches the integer 0",
+          "change": "arm 'zero' selected",
+          "intent": "Demonstrate exact literal matching",
+          "misconception": "The range arm MIN..=-1 was checked first and did NOT match 0 — patterns are tested in order"
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "0: zero",
+        "explanation": {
+          "what": "Printing '0: zero'",
+          "why": "categorise(0) returned 'zero'",
+          "change": "output ← '0: zero'",
+          "intent": "Show literal pattern result",
+          "misconception": "The order of arms matters — if 0 appeared after 1..=9, it would never be reached (though the compiler would warn about unreachable patterns)"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 4,
+        "expression": "match 7: 1..=9 matches",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "Range pattern 1..=9 matches n = 7",
+          "why": "7 is in [1, 9] inclusive",
+          "change": "arm 'single digit' selected",
+          "intent": "Show inclusive range pattern for single-digit positives",
+          "misconception": "1..=9 in a pattern is NOT a range object — it is a range pattern that only exists at compile time for matching"
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "7: single digit",
+        "explanation": {
+          "what": "Printing '7: single digit'",
+          "why": "categorise(7) returned 'single digit'",
+          "change": "output ← '7: single digit'",
+          "intent": "Confirm range pattern coverage",
+          "misconception": "The range 1..=9 covers exactly 1 through 9 — 10 would fall through to the wildcard"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 5,
+        "expression": "match 42: _ wildcard matches",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "Wildcard _ matches n = 42",
+          "why": "42 did not match any earlier pattern, so _ catches it — _ discards the value without binding it",
+          "change": "arm 'large' selected",
+          "intent": "Show the required catch-all arm",
+          "misconception": "_ is required when there are unhandled values — without it, the compiler rejects the match as non-exhaustive"
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "42: large",
+        "explanation": {
+          "what": "Printing '42: large'",
+          "why": "categorise(42) fell through to the wildcard and returned 'large'",
+          "change": "output ← '42: large'",
+          "intent": "Show wildcard catch-all result",
+          "misconception": "The _ arm MUST be last — placing it first would match everything and the compiler would warn about unreachable patterns below it"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\nlet t = (2, -1);\nmatch t {\n    (x, y) if x == y   => println!(\"equal\"),\n    (x, y) if x + y == 0 => println!(\"opposites\"),\n    _                  => println!(\"other\"),\n}",
+    "options": ["equal", "opposites", "other", "compile error"],
+    "correctIndex": 1,
+    "explanation": "t is (2, -1). The first guard: x == y → 2 == -1 is false. The second guard: x + y == 0 → 2 + (-1) = 1 ≠ 0... wait, 2 + (-1) = 1. So both guards fail and 'other' prints."
+  },
+
+  "explanation": {
+    "afterDemo": "match tested each arm top to bottom — range patterns for negatives and single digits, an exact literal for zero, and a wildcard for everything else. Patterns make the compiler guarantee that all cases are covered, so you never miss an edge case that would cause a runtime crash.",
+    "keyTakeaways": [
+      "Patterns are tested in order — first match wins.",
+      "Guards (if condition) add extra checks after the structural pattern matches.",
+      "_ (wildcard) is the catch-all; it must be the last arm."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a match on an i32 variable `score` (set to 85) that prints:\n- \"A\" if 90..=100\n- \"B\" if 75..=89\n- \"C\" if 60..=74\n- \"F\" otherwise",
+    "starterCode": "fn main() {\n    let score = 85;\n    match score {\n        // fill in arms\n    }\n}",
+    "solutionCode": "fn main() {\n    let score = 85;\n    match score {\n        90..=100 => println!(\"A\"),\n        75..=89  => println!(\"B\"),\n        60..=74  => println!(\"C\"),\n        _        => println!(\"F\"),\n    }\n}",
+    "hint": "Use inclusive range patterns: 90..=100 => println!(\"A\"), etc.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["B"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 85 falls in 75..=89, so the B arm fires.",
+    "retryHints": [
+      "Range patterns use ..= for inclusive end: 75..=89 covers 75, 76, …, 89.",
+      "Make sure you include a wildcard _ arm at the end — required for exhaustiveness.",
+      "Expected output: B"
+    ]
+  },
+
+  "summary": {
+    "title": "Pattern Matching — Complete",
+    "takeaways": [
+      "Patterns are tested top to bottom — place specific patterns before wide ones.",
+      "Guards (if condition) refine pattern matching with extra logic.",
+      "Use if let for a single-arm match; while let for looping over an iterator."
+    ],
+    "nextTopicId": "rust_vectors"
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "id": "lm_crystal_variables",
+  "topicId": "crystal_variables",
+  "language": "crystal",
+  "title": "Variables & Type Inference",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Crystal infers variable types at compile time from assigned values.",
+    "explanation": "You usually write plain assignments like name = \"Crystal\" and Crystal infers the type automatically. Reassignments are allowed, and the compiler tracks possible types safely.",
+    "syntax": "name = \"Crystal\"\ncount = 1\ncount = count + 2\nputs \"#{name}: #{count}\"",
+    "keyPoints": [
+      "Inference is static, not dynamic",
+      "Variables can be reassigned",
+      "Compiler checks type compatibility",
+      "Union types may appear in branching"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch Crystal infer and update variables line by line.",
+    "code": "name = \"Crystal\"\ncount = 1\ncount = count + 2\nputs \"#{name}: #{count}\"",
+    "focusLine": 1,
+    "expectedHighlights": ["name inferred String", "count inferred Int32", "count updated to 3", "prints Crystal: 3"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "name",
+        "value": "Crystal",
+        "dataType": "String",
+        "explanation": {
+          "what": "Declare name as a String",
+          "why": "Double-quoted literal infers String",
+          "change": "name = 'Crystal'",
+          "intent": "Show basic inference",
+          "misconception": "Crystal infers at compile time, not runtime"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "count",
+        "value": "1",
+        "dataType": "Int32",
+        "explanation": {
+          "what": "Declare count as integer",
+          "why": "Numeric literal infers an integer type",
+          "change": "count = 1",
+          "intent": "Set up mutable numeric state",
+          "misconception": "Inferred does not mean weakly typed"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 3,
+        "var": "count",
+        "value": "3",
+        "explanation": {
+          "what": "Reassign count to count + 2",
+          "why": "Crystal allows reassignment with compatible type",
+          "change": "count: 1 -> 3",
+          "intent": "Demonstrate mutable variable update",
+          "misconception": "Reassignment is different from changing declared type"
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "Crystal: 3",
+        "explanation": {
+          "what": "Print interpolated output",
+          "why": "String interpolation inserts variable values",
+          "change": "output <- 'Crystal: 3'",
+          "intent": "Observe final state",
+          "misconception": "Interpolation does not convert compile-time types into dynamic typing"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is printed?\n\ncount = 4\ncount = count + 1\nputs count",
+    "options": ["4", "5", "41", "compile error"],
+    "correctIndex": 1,
+    "explanation": "count starts at 4, then increments to 5, so output is 5."
+  },
+
+  "explanation": {
+    "afterDemo": "Crystal gives Ruby-like syntax with static type safety. You write concise assignments while the compiler checks correctness ahead of runtime.",
+    "keyTakeaways": [
+      "Type inference is compile-time",
+      "Variables can be updated safely",
+      "Interpolation reads values, it does not weaken types"
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create label = \"StepViz\", score = 7, then set score = score + 5 and print \"StepViz: 12\".",
+    "starterCode": "label = \"StepViz\"\nscore = 7\n# update score\n# print output",
+    "solutionCode": "label = \"StepViz\"\nscore = 7\nscore = score + 5\nputs \"#{label}: #{score}\"",
+    "hint": "Use score = score + 5, then interpolation in puts.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["StepViz: 12"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Nice work. You used inference and reassignment correctly.",
+    "retryHints": [
+      "Keep label as a String",
+      "Update score numerically",
+      "Print using interpolation"
+    ]
+  },
+
+  "summary": {
+    "title": "Variables & Type Inference — Complete",
+    "takeaways": [
+      "Crystal infers types automatically at compile time.",
+      "Reassignment is allowed for compatible values.",
+      "Compiler safety remains strict despite concise syntax."
+    ],
+    "nextTopicId": "crystal_data_types"
+  }
+}

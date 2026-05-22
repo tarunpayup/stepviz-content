@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_collections",
+  "topicId": "swift_collections",
+  "language": "swift",
+  "title": "Collections",
+  "difficulty": "easy",
+  "concept": {"headline": "Array, Dictionary, and Set organize grouped data.", "explanation": "Swift collections are generic and type-safe.", "syntax": "let nums = [1, 2, 3, 4]\nlet evens = nums.filter { $0 % 2 == 0 }", "keyPoints": ["Array is ordered", "Dictionary maps keys", "Set keeps unique elements"]},
+  "demo": {"intro": "Filter array into even values.", "code": "let nums = [1, 2, 3, 4]\nlet evens = nums.filter { $0 % 2 == 0 }\nprint(evens)", "focusLine": 2, "expectedHighlights": ["filter closure", "prints [2, 4]"], "steps": [{"type": "declare", "line": 1, "var": "nums", "value": "[1,2,3,4]", "dataType": "[Int]", "explanation": {"what": "Create array", "why": "Ordered collection", "change": "nums initialized", "intent": "Collection basics", "misconception": "Array preserves insertion order"}}, {"type": "assign", "line": 2, "var": "evens", "value": "[2,4]", "explanation": {"what": "Filter values", "why": "Keep matching items", "change": "evens created", "intent": "Transformation", "misconception": "$0 is current element"}}, {"type": "print", "line": 3, "value": "[2, 4]", "explanation": {"what": "Print result", "why": "Verify filtering", "change": "output <- [2,4]", "intent": "Observe collection op", "misconception": "None"}}]},
+  "prediction": {"question": "Which collection enforces uniqueness?", "options": ["Array", "Dictionary", "Set", "Tuple"], "correctIndex": 2, "explanation": "Set stores unique elements."},
+  "explanation": {"afterDemo": "Collection APIs enable expressive data processing.", "keyTakeaways": ["Pick collection by access pattern", "Use higher-order methods", "Type safety catches mistakes early"]},
+  "practice": {"prompt": "Create array [3,4,5], map it to doubled values, print result.", "starterCode": "// write code", "solutionCode": "let nums = [3, 4, 5]\nlet doubled = nums.map { $0 * 2 }\nprint(doubled)", "hint": "Use map closure.", "validation": {"type": "output", "expectedOutput": ["[6, 8, 10]"]}},
+  "feedback": {"successMessage": "Collection transform is correct.", "retryHints": ["Use map or filter", "Print transformed array"]},
+  "summary": {"title": "Collections — Complete", "takeaways": ["Arrays for order", "Sets for uniqueness", "Dictionary for key lookup"], "nextTopicId": "swift_structs_classes"}
+}

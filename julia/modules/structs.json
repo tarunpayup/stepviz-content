@@ -1,0 +1,183 @@
+{
+  "id": "lm_julia_structs",
+  "topicId": "julia_structs",
+  "language": "julia",
+  "title": "Structs",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Julia structs define composite types with named typed fields. struct is immutable by default; mutable struct allows field reassignment. No classes — behavior comes from functions dispatching on struct types.",
+    "explanation": "A struct in Julia groups named fields under a type name. Fields can optionally have type annotations (field::Type). By default, structs are immutable — you cannot change their fields after creation. Use mutable struct when you need field mutation. Julia has no class methods — instead, you define regular functions that dispatch on your struct type. The constructor is called with TypeName(val1, val2, ...).",
+    "syntax": "# Immutable struct\nstruct Point\n    x::Float64\n    y::Float64\nend\n\n# Create\np = Point(3.0, 4.0)\np.x    # 3.0\np.y    # 4.0\n\n# External function dispatching on Point\nfunction distance(p::Point)\n    sqrt(p.x^2 + p.y^2)\nend\ndistance(p)    # 5.0\n\n# Mutable struct\nmutable struct Counter\n    count::Int\nend\nc = Counter(0)\nc.count += 1   # allowed — mutable",
+    "keyPoints": [
+      "struct TypeName ... end — immutable by default",
+      "mutable struct — allows field mutation after creation",
+      "Constructor: TypeName(field1, field2, ...) in declaration order",
+      "No methods inside struct — define functions externally with ::TypeName dispatch"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a Point struct being defined, instantiated, and used with an external distance function.",
+    "code": "struct Point\n    x::Float64\n    y::Float64\nend\n\nfunction distance(p::Point)\n    sqrt(p.x^2 + p.y^2)\nend\n\np1 = Point(3.0, 4.0)\nprintln(p1.x)\nprintln(p1.y)\nprintln(distance(p1))\n\np2 = Point(0.0, 0.0)\nprintln(distance(p2))",
+    "focusLine": 10,
+    "expectedHighlights": ["struct definition", "Point(3,4)", "p1.x=3.0", "p1.y=4.0", "dist=5.0", "p2 origin dist=0.0"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "Point (type definition)",
+        "value": "struct Point x::Float64; y::Float64 end",
+        "dataType": "DataType",
+        "explanation": {
+          "what": "struct Point defines a new composite type with two Float64 fields: x and y",
+          "why": "struct groups related data under a single type name",
+          "change": "Point type registered in Julia's type system",
+          "intent": "Show struct declaration with typed fields",
+          "misconception": "Julia structs do NOT contain method definitions — there are no def/fn inside the struct body. All functions that work with Point are defined separately and dispatch on ::Point."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 10,
+        "var": "p1",
+        "value": "Point(3.0, 4.0)",
+        "dataType": "Point",
+        "explanation": {
+          "what": "p1 = Point(3.0, 4.0) — constructs a Point with x=3.0, y=4.0",
+          "why": "Julia auto-generates a positional constructor: Point(x, y) in declaration order",
+          "change": "p1.x = 3.0, p1.y = 4.0",
+          "intent": "Show struct instantiation with the auto-generated constructor",
+          "misconception": "Arguments must match the field order in the struct definition. Point(4.0, 3.0) would give p1.x=4.0, p1.y=3.0 — reversed."
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "3.0",
+        "explanation": {
+          "what": "p1.x → 3.0",
+          "why": "Dot notation accesses struct fields by name",
+          "change": "output ← '3.0'",
+          "intent": "Show dot-notation field access",
+          "misconception": "p1.x is read-only for an immutable struct. p1.x = 99 would throw: cannot set field of immutable struct of type Point."
+        }
+      },
+      {
+        "type": "print",
+        "line": 12,
+        "value": "4.0",
+        "explanation": {
+          "what": "p1.y → 4.0",
+          "why": "y field holds 4.0",
+          "change": "output ← '4.0'",
+          "intent": "Confirm second field access",
+          "misconception": "You cannot delete or add fields after a struct is defined. Structs in Julia are closed types."
+        }
+      },
+      {
+        "type": "call",
+        "line": 13,
+        "name": "distance",
+        "args": ["p1"],
+        "returnVar": "d1",
+        "explanation": {
+          "what": "distance(p1) — external function dispatching on Point type",
+          "why": "distance(p::Point) matches because p1 is of type Point",
+          "change": "computes sqrt(3.0^2 + 4.0^2) = sqrt(9+16) = sqrt(25) = 5.0",
+          "intent": "Show external function dispatching on a struct type",
+          "misconception": "This is Julia's alternative to class methods. In Python you'd write p1.distance() — in Julia it's distance(p1). The behavior is defined OUTSIDE the struct."
+        }
+      },
+      {
+        "type": "print",
+        "line": 13,
+        "value": "5.0",
+        "explanation": {
+          "what": "println(distance(p1)) → 5.0",
+          "why": "3-4-5 right triangle",
+          "change": "output ← '5.0'",
+          "intent": "Confirm external function result",
+          "misconception": "Multiple functions can operate on the same struct from different modules — this is the 'open' nature of Julia's dispatch system vs encapsulated OOP"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 15,
+        "var": "p2",
+        "value": "Point(0.0, 0.0)",
+        "dataType": "Point",
+        "explanation": {
+          "what": "p2 = Point(0.0, 0.0) — the origin",
+          "why": "Testing distance from origin",
+          "change": "p2.x = 0.0, p2.y = 0.0",
+          "intent": "Show another Point instance — same type, different data",
+          "misconception": "p1 and p2 are two SEPARATE instances of Point — mutating one (if struct were mutable) would not affect the other"
+        }
+      },
+      {
+        "type": "print",
+        "line": 16,
+        "value": "0.0",
+        "explanation": {
+          "what": "distance(p2) = sqrt(0+0) = 0.0",
+          "why": "Origin has zero distance from itself",
+          "change": "output ← '0.0'",
+          "intent": "Confirm the same function works on a different Point instance",
+          "misconception": "The distance function works on ANY Point instance — this is the power of type dispatch: one function definition handles all instances of the type"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nstruct Rect\n    w::Int\n    h::Int\nend\n\narea(r::Rect) = r.w * r.h\n\nr = Rect(6, 4)\nprintln(area(r))",
+    "options": [
+      "24",
+      "10",
+      "Rect(6, 4)",
+      "Error"
+    ],
+    "correctIndex": 0,
+    "explanation": "Rect(6,4) creates a rect with w=6, h=4. area(r) = r.w * r.h = 6*4 = 24."
+  },
+
+  "explanation": {
+    "afterDemo": "Julia's struct + external dispatch replaces OOP class hierarchies. Instead of putting methods inside a class, you define types that carry data and write functions that dispatch on those types. This design enables composability — third-party packages can add new functions that work with your types without modifying your struct definition.",
+    "keyTakeaways": [
+      "struct TypeName ... end — immutable composite type. Fields accessed with dot notation.",
+      "mutable struct — use only when you need post-creation field mutation.",
+      "Functions dispatching on ::TypeName replace class methods — define them externally."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Define a struct Circle with a single field radius::Float64. Write a function circumference(c::Circle) = 2 * π * c.radius. Create Circle(5.0) and print its circumference (hint: π is available as π in Julia).",
+    "starterCode": "struct Circle\n    # field here\nend\n\ncircumference(c::Circle) = # formula\n\nc = Circle(5.0)\nprintln(circumference(c))",
+    "solutionCode": "struct Circle\n    radius::Float64\nend\n\ncircumference(c::Circle) = 2 * π * c.radius\n\nc = Circle(5.0)\nprintln(circumference(c))",
+    "hint": "circumference = 2 * π * radius. Julia's π is a built-in constant.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["31.41592653589793"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Circumference of Circle(5.0) = 2π×5 ≈ 31.416.",
+    "retryHints": [
+      "struct Circle; radius::Float64; end",
+      "circumference(c::Circle) = 2 * π * c.radius",
+      "Expected: 31.41592653589793"
+    ]
+  },
+
+  "summary": {
+    "title": "Structs — Complete",
+    "takeaways": [
+      "struct TypeName field::Type end — immutable by default. mutable struct for mutable fields.",
+      "Constructor: TypeName(val1, val2) in field declaration order.",
+      "External functions with ::TypeName dispatch replace OOP methods."
+    ],
+    "nextTopicId": "julia_comprehensions"
+  }
+}

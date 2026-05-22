@@ -1,0 +1,159 @@
+{
+  "id": "lm_kotlin_null_safety",
+  "topicId": "kotlin_null_safety",
+  "language": "kotlin",
+  "title": "Null Safety",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Kotlin's type system distinguishes nullable (String?) from non-null (String). Safe call (?.), Elvis (?:), and let prevent NullPointerExceptions at compile time.",
+    "explanation": "In Kotlin, String can never be null. If you want to allow null you must opt in with String?. The compiler then forces you to handle the null case before accessing members. Safe call (?.) returns null instead of throwing if the object is null. Elvis (?:) provides a fallback value. let runs a block only if the value is non-null. !! asserts non-null and throws NullPointerException if wrong — use it sparingly.",
+    "syntax": "var name: String  = \"Alice\"  // cannot be null\nvar nick: String? = null      // nullable\n\n// Safe call — returns null if nick is null\nval len = nick?.length        // Int? — could be null\n\n// Elvis — fallback when null\nval display = nick ?: \"anonymous\"  // String\n\n// let — block only runs when non-null\nnick?.let { println(it.uppercase()) }\n\n// !! — assert non-null (crashes if null)\nval forced = nick!!.length    // NPE if nick is null",
+    "keyPoints": [
+      "Type? means the value can be null; without ? it cannot",
+      "?.member — safe call: returns null if receiver is null",
+      "?: fallback — Elvis: use right side when left is null",
+      "!! asserts non-null — throws NPE at runtime; avoid unless certain"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a greet function handle both a real name and null safely using Elvis.",
+    "code": "fun greet(name: String?): String {\n    val safe = name ?: \"stranger\"\n    return \"Hello, $safe!\"\n}\n\nfun main() {\n    println(greet(\"Alice\"))\n    println(greet(null))\n}",
+    "focusLine": 6,
+    "expectedHighlights": ["name='Alice'", "safe='Alice'", "output: Hello, Alice!", "name=null", "Elvis fires", "safe='stranger'", "output: Hello, stranger!"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 7,
+        "name": "greet",
+        "args": ["\"Alice\""],
+        "returnVar": "result_1",
+        "explanation": {
+          "what": "greet(\"Alice\") — name = 'Alice' (non-null)",
+          "why": "Testing with a real string value",
+          "change": "name = 'Alice' inside greet",
+          "intent": "Show non-null path through a nullable parameter",
+          "misconception": "name: String? can hold a String OR null. Passing 'Alice' is perfectly valid — the ? just means null is also allowed."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "safe",
+        "value": "Alice",
+        "dataType": "String",
+        "explanation": {
+          "what": "name ?: \"stranger\" — name is non-null, so Elvis returns name itself",
+          "why": "The Elvis operator returns the left side when it is non-null",
+          "change": "safe = 'Alice'",
+          "intent": "Show Elvis returning the actual value when non-null",
+          "misconception": "?:  is NOT a ternary — it only provides a fallback for null. When the left side is non-null, the right side is never evaluated."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "Hello, Alice!",
+        "explanation": {
+          "what": "greet returns 'Hello, Alice!' — printed to output",
+          "why": "safe = 'Alice', so the string template produces 'Hello, Alice!'",
+          "change": "output ← 'Hello, Alice!'",
+          "intent": "Show happy path with non-null input",
+          "misconception": "safe is typed as String (not String?) — the Elvis operator narrowed the type by guaranteeing a non-null fallback"
+        }
+      },
+      {
+        "type": "call",
+        "line": 8,
+        "name": "greet",
+        "args": ["null"],
+        "returnVar": "result_2",
+        "explanation": {
+          "what": "greet(null) — name = null",
+          "why": "Testing the null path",
+          "change": "name = null inside greet",
+          "intent": "Show how nullable parameter is handled when null is passed",
+          "misconception": "This is only possible because the parameter is typed String? — if it were String, passing null would be a compile error"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "safe",
+        "value": "stranger",
+        "dataType": "String",
+        "explanation": {
+          "what": "name ?: \"stranger\" — name is null, so Elvis returns 'stranger'",
+          "why": "Left side of ?: is null → right side is used",
+          "change": "safe = 'stranger'",
+          "intent": "Show Elvis providing the fallback value when left side is null",
+          "misconception": "The fallback ('stranger') is only evaluated when the left side is null — not on every call"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "Hello, stranger!",
+        "explanation": {
+          "what": "greet returns 'Hello, stranger!' — printed to output",
+          "why": "safe = 'stranger' (from Elvis fallback)",
+          "change": "output ← 'Hello, stranger!'",
+          "intent": "Show null safely handled without any if check or crash",
+          "misconception": "No NullPointerException occurred — the Elvis operator handled null gracefully before we ever touched the value"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nval text: String? = null\nprintln(text?.length ?: -1)",
+    "options": [
+      "null",
+      "0",
+      "-1",
+      "NullPointerException"
+    ],
+    "correctIndex": 2,
+    "explanation": "text is null, so text?.length returns null (safe call). null ?: -1 — Elvis fires and returns -1. Output: -1."
+  },
+
+  "explanation": {
+    "afterDemo": "Kotlin eliminates NullPointerException at the language level by forcing you to acknowledge nullable types explicitly. The compiler won't let you call a method on a String? without a null check. Elvis (?:) and safe call (?.) are the two tools you'll use daily — they make null handling concise and visible.",
+    "keyTakeaways": [
+      "String? means nullable; String means never null. The compiler enforces this distinction.",
+      "Safe call (?.) returns null instead of throwing when the receiver is null.",
+      "Elvis (?:) provides a fallback value — val x = nullable ?: default."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function fullName(first: String, last: String?): String that returns \"first last\" if last is non-null, or just \"first\" if last is null. Print fullName(\"Alice\", \"Smith\") and fullName(\"Bob\", null).",
+    "starterCode": "fun fullName(first: String, last: String?): String {\n    // use Elvis or if\n}\n\nfun main() {\n    println(fullName(\"Alice\", \"Smith\"))\n    println(fullName(\"Bob\", null))\n}",
+    "solutionCode": "fun fullName(first: String, last: String?): String {\n    return if (last != null) \"$first $last\" else first\n}\n\nfun main() {\n    println(fullName(\"Alice\", \"Smith\"))\n    println(fullName(\"Bob\", null))\n}",
+    "hint": "Use if (last != null) to check. Inside the if block the compiler smart-casts last to String (non-null).",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Alice Smith", "Bob"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Kotlin's smart cast makes last usable as String inside the non-null branch without any explicit cast.",
+    "retryHints": [
+      "if (last != null) \"$first $last\" else first",
+      "Or use: last?.let { \"$first $it\" } ?: first",
+      "Expected: 'Alice Smith' then 'Bob'"
+    ]
+  },
+
+  "summary": {
+    "title": "Null Safety — Complete",
+    "takeaways": [
+      "String vs String? — the type system separates nullable from non-null. Compile-time safety, not runtime luck.",
+      "Safe call (?.) — null-propagating member access. Returns null if receiver is null.",
+      "Elvis (?:) — null fallback operator. val x = nullable ?: default."
+    ],
+    "nextTopicId": "kotlin_classes"
+  }
+}

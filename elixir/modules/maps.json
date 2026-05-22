@@ -1,0 +1,217 @@
+{
+  "id": "lm_elixir_maps",
+  "topicId": "elixir_maps",
+  "language": "elixir",
+  "title": "Maps",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Maps store key-value pairs. Use atom keys with %{key: val} syntax and access with map.key. Update with %{map | key: new_val}. Maps are immutable — all operations produce new maps.",
+    "explanation": "Elixir maps are created with %{} literal. Atom keys use shorthand %{name: 'Alice'} (same as %{:name => 'Alice'}). Access atom keys with dot notation: map.name. Map.get(map, key) handles missing keys gracefully. The update syntax %{map | key: new_val} creates a new map with one key changed — it does NOT add new keys (use Map.put for that). All map operations are immutable.",
+    "syntax": "# Create with atom keys\nperson = %{name: \"Alice\", age: 30}\n\n# Access: dot notation (atom keys only)\nperson.name          # \"Alice\"\nperson.age           # 30\n\n# Map.get — safe, returns nil or default if missing\nMap.get(person, :name)        # \"Alice\"\nMap.get(person, :email)       # nil\nMap.get(person, :email, \"n/a\")  # \"n/a\"\n\n# Update syntax (only existing keys!)\nupdated = %{person | age: 31}\n# updated = %{name: \"Alice\", age: 31}\n# person unchanged: %{name: \"Alice\", age: 30}\n\n# Map.put — add or update a key\nnew = Map.put(person, :email, \"a@b.com\")\n\n# Check key exists\nMap.has_key?(person, :name)   # true\nMap.has_key?(person, :phone)  # false\n\n# Keys and values\nMap.keys(person)    # [:name, :age]\nMap.values(person)  # [\"Alice\", 30]",
+    "keyPoints": [
+      "%{name: val} — atom key shorthand (most common Elixir style)",
+      "map.key — dot access for atom keys",
+      "%{map | key: new_val} — update existing key; produces new map",
+      "Map.get(map, key, default) — safe access with optional default"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a person map be created, accessed, and immutably updated.",
+    "code": "person = %{name: \"Alice\", age: 30, role: \"admin\"}\nIO.puts(person.name)\nIO.puts(person.age)\n\nIO.puts(Map.get(person, :role))\nIO.puts(Map.get(person, :email, \"none\"))\n\nupdated = %{person | age: 31}\nIO.puts(updated.age)\nIO.puts(person.age)\n\nenriched = Map.put(person, :email, \"alice@example.com\")\nIO.puts(enriched.email)\nIO.puts(Map.has_key?(enriched, :email))",
+    "focusLine": 1,
+    "expectedHighlights": ["person map", "dot access", "Map.get", "| update immutable", "Map.put new key"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "person",
+        "value": "%{name: \"Alice\", age: 30, role: \"admin\"}",
+        "dataType": "Map",
+        "explanation": {
+          "what": "person = %{name: 'Alice', age: 30, role: 'admin'} — map with 3 atom keys",
+          "why": "%{key: val} syntax uses atom keys (shorthand for %{:key => val})",
+          "change": "person = %{name: 'Alice', age: 30, role: 'admin'}",
+          "intent": "Create a typical Elixir map with atom keys",
+          "misconception": "Maps with atom keys (%{name: val}) are different from maps with string keys (%{'name' => val}). Atom keys support dot access (map.name); string keys do not (must use map['name'] or Map.get). Choose atom keys for structured data."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "Alice",
+        "explanation": {
+          "what": "person.name → 'Alice'",
+          "why": "Dot notation works for atom keys",
+          "change": "output ← 'Alice'",
+          "intent": "Show dot access for atom key maps",
+          "misconception": "Dot access raises KeyError if the key does not exist — unlike Map.get which returns nil. Use dot access when you are SURE the key exists; use Map.get when you need safe/default access."
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "30",
+        "explanation": {
+          "what": "person.age → 30",
+          "why": "Dot access for :age key",
+          "change": "output ← '30'",
+          "intent": "Confirm dot access for a second key",
+          "misconception": "person.age returns the INTEGER 30. IO.puts converts it to the string '30' for output."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "admin",
+        "explanation": {
+          "what": "Map.get(person, :role) → 'admin'",
+          "why": ":role key exists; Map.get returns its value",
+          "change": "output ← 'admin'",
+          "intent": "Show Map.get for existing key",
+          "misconception": "Map.get(person, :role) is equivalent to person.role here. Map.get is preferred when the key might not exist or when you need a default value."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "none",
+        "explanation": {
+          "what": "Map.get(person, :email, 'none') → 'none' (key absent, default returned)",
+          "why": "person has no :email key; the third argument is the default",
+          "change": "output ← 'none'",
+          "intent": "Show Map.get default value when key is missing",
+          "misconception": "Without the default argument, Map.get(person, :email) returns nil — which IO.puts would print as empty string. The default parameter makes absent keys safe to handle."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 8,
+        "var": "updated",
+        "value": "%{name: \"Alice\", age: 31, role: \"admin\"}",
+        "dataType": "Map",
+        "explanation": {
+          "what": "%{person | age: 31} — creates new map with age changed to 31",
+          "why": "| update syntax produces a new map; original unchanged",
+          "change": "updated = %{name: 'Alice', age: 31, role: 'admin'}",
+          "intent": "Show immutable map update with | syntax",
+          "misconception": "The | update syntax ONLY works for EXISTING keys. %{person | phone: '123'} raises KeyError because :phone is not in person. Use Map.put to add new keys."
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "31",
+        "explanation": {
+          "what": "updated.age → 31",
+          "why": "updated has the new age value",
+          "change": "output ← '31'",
+          "intent": "Show updated map has new value",
+          "misconception": "updated is a SEPARATE new map — not a mutation of person."
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "30",
+        "explanation": {
+          "what": "person.age → 30 (original unchanged)",
+          "why": "%{person | age: 31} did NOT modify person",
+          "change": "output ← '30'",
+          "intent": "Prove original map is unchanged after update",
+          "misconception": "This is the core of Elixir immutability. No function or operation ever modifies an existing value. person still has age: 30 after %{person | age: 31}."
+        }
+      },
+      {
+        "type": "call",
+        "line": 12,
+        "name": "Map.put",
+        "args": ["person", ":email", "\"alice@example.com\""],
+        "returnVar": "enriched",
+        "explanation": {
+          "what": "Map.put(person, :email, 'alice@example.com') — adds new :email key",
+          "why": "| syntax cannot add new keys; Map.put can add OR update",
+          "change": "enriched = %{name: 'Alice', age: 30, role: 'admin', email: 'alice@example.com'}",
+          "intent": "Show Map.put for adding new keys",
+          "misconception": "Map.put both ADDS new keys and UPDATES existing keys. It creates a new map each time."
+        }
+      },
+      {
+        "type": "print",
+        "line": 13,
+        "value": "alice@example.com",
+        "explanation": {
+          "what": "enriched.email → 'alice@example.com'",
+          "why": "Map.put added the :email key",
+          "change": "output ← 'alice@example.com'",
+          "intent": "Confirm Map.put added the new key",
+          "misconception": "person still has no :email key — only enriched has it."
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "true",
+        "explanation": {
+          "what": "Map.has_key?(enriched, :email) → true",
+          "why": "enriched has :email from Map.put",
+          "change": "output ← 'true'",
+          "intent": "Show Map.has_key? for key existence check",
+          "misconception": "The ? suffix is a naming CONVENTION in Elixir for functions that return boolean. Map.has_key?, is_atom?, String.starts_with?, etc. It is NOT special syntax."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nm = %{a: 1, b: 2}\nIO.puts(Map.get(m, :c, 99))",
+    "options": [
+      "99",
+      "nil",
+      "0",
+      "KeyError"
+    ],
+    "correctIndex": 0,
+    "explanation": ":c does not exist in m. Map.get with default 99 returns 99 when key is absent."
+  },
+
+  "explanation": {
+    "afterDemo": "Maps are Elixir's primary key-value data structure. The atom-key shorthand %{name: val} and dot access make them feel like structs. The | update syntax and Map.put enforce immutability — you always get a new map, never modify in place. This predictability is a core strength of Elixir's functional design.",
+    "keyTakeaways": [
+      "%{key: val} — atom key map. map.key for dot access.",
+      "%{map | key: new_val} — update existing key (KeyError if key absent).",
+      "Map.put adds/updates. Map.get with default handles missing keys safely."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create %{language: 'Elixir', year: 2012}. Use Map.put to add :creator => 'José Valim'. Then update :year to 2022 with | syntax. Print creator and year.",
+    "starterCode": "lang = %{language: \"Elixir\", year: 2012}\nlang2 = Map.put(lang, :creator, \"José Valim\")\nlang3 = %{lang2 | year: 2022}\nIO.puts(lang3.creator)\nIO.puts(lang3.year)",
+    "solutionCode": "lang = %{language: \"Elixir\", year: 2012}\nlang2 = Map.put(lang, :creator, \"José Valim\")\nlang3 = %{lang2 | year: 2022}\nIO.puts(lang3.creator)\nIO.puts(lang3.year)",
+    "hint": "Three separate maps: original, after Map.put, after | update.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["José Valim", "2022"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! creator='José Valim', year=2022.",
+    "retryHints": [
+      "Map.put adds :creator key",
+      "%{lang2 | year: 2022} updates :year in the new map",
+      "Expected: José Valim then 2022"
+    ]
+  },
+
+  "summary": {
+    "title": "Maps — Complete",
+    "takeaways": [
+      "%{key: val} atom-key syntax. map.key for dot access.",
+      "%{map | key: val} — immutable update. Map.put — add or update.",
+      "Map.get(map, key, default) — safe access. Map.has_key? — key check."
+    ],
+    "nextTopicId": "elixir_modules"
+  }
+}

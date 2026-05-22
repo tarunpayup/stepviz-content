@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_classes",
+  "topicId": "dart_classes",
+  "language": "dart",
+  "title": "Classes",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Classes model state and behavior together.",
+    "explanation": "Define fields and methods inside class blocks, then create instances with constructors.",
+    "syntax": "class User {\n  String name;\n  int points;\n  User(this.name, this.points);\n  String label() => '$name: $points';\n}",
+    "keyPoints": ["Fields hold instance state", "Methods define behavior", "Constructors initialize values"]
+  },
+  "demo": {
+    "intro": "Create a class instance and call its method.",
+    "code": "class User {\n  String name;\n  int points;\n  User(this.name, this.points);\n  String label() => '$name: $points';\n}\n\nprint(User('Ari', 10).label());",
+    "focusLine": 1,
+    "expectedHighlights": ["class declared", "instance created", "prints Ari: 10"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "User", "value": "class", "dataType": "Class", "explanation": {"what": "Define User class", "why": "Model user data + behavior", "change": "User type available", "intent": "Introduce OOP", "misconception": "Class definition does not instantiate objects"}},
+      {"type": "call", "line": 8, "name": "User(...)", "args": ["Ari", "10"], "returnVar": "instance", "explanation": {"what": "Construct User instance", "why": "Provide required field values", "change": "object created", "intent": "Use constructor", "misconception": "Constructor parameters map to fields"}},
+      {"type": "print", "line": 8, "value": "Ari: 10", "explanation": {"what": "Call label and print", "why": "Method formats instance state", "change": "output <- Ari: 10", "intent": "Verify class method", "misconception": "Method reads fields from current instance"}}
+    ]
+  },
+  "prediction": {
+    "question": "What prints from User('Sam', 5).label()?",
+    "options": ["Sam", "5", "Sam: 5", "error"],
+    "correctIndex": 2,
+    "explanation": "label returns '$name: $points'."
+  },
+  "explanation": {
+    "afterDemo": "Classes help organize larger systems by grouping related logic around data.",
+    "keyTakeaways": ["Class = blueprint", "Object = instance", "Methods operate on instance state"]
+  },
+  "practice": {
+    "prompt": "Create class Box with int value and method doubleValue() returning value*2. Print for value 6.",
+    "starterCode": "// write code",
+    "solutionCode": "class Box {\n  int value;\n  Box(this.value);\n  int doubleValue() => value * 2;\n}\n\nprint(Box(6).doubleValue());",
+    "hint": "Use constructor shorthand for value.",
+    "validation": {"type": "output", "expectedOutput": ["12"]}
+  },
+  "feedback": {"successMessage": "Class and method are correct.", "retryHints": ["Define field + constructor", "Return value*2 in method"]},
+  "summary": {"title": "Classes — Complete", "takeaways": ["Classes encapsulate data and behavior", "Constructors initialize state", "Methods express operations"], "nextTopicId": "dart_constructors"}
+}

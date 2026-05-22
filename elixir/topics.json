@@ -1,0 +1,242 @@
+[
+  {
+    "id": "elixir_variables",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Variables & Immutability",
+    "description": "Elixir variables are immutable bindings. The = operator is a pattern match, not assignment. Variables can be rebound (shadowed) but the original value never changes.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "In Elixir, = performs pattern matching. Binding a name to a value creates an immutable reference. Rebinding a name (x = 2 after x = 1) creates a new binding — it does not mutate the original. Use the pin operator ^ to match against the current value of a variable.",
+      "analogy": "Think of Elixir variables as sticky notes on boxes. You can move the sticky note to a new box (rebind), but you cannot change what is inside the original box (immutable value).",
+      "keyPoints": [
+        "= is pattern matching, not assignment",
+        "Bindings are immutable — values never change in place",
+        "Rebinding creates a new binding (the name points to a new value)",
+        "^ (pin operator) matches against the current binding without rebinding"
+      ]
+    },
+    "defaultCode": "x = 42\ny = 3.14\nname = \"Elixir\"\nIO.puts(x)\nIO.puts(y)\nIO.puts(name)"
+  },
+  {
+    "id": "elixir_atoms",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Atoms & Booleans",
+    "description": "Atoms are named constants whose value is their own name. Booleans (true/false) and nil are atoms. :ok and :error are the idiomatic success/failure atoms.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "An atom is a constant whose name IS its value — :ok, :error, :hello. Atoms are extremely efficient (stored as integers internally). true, false, and nil are aliases for the atoms :true, :false, :nil. Atoms are used everywhere: function return tags, map keys, module names.",
+      "analogy": "Atoms are like enum constants — :ok is always exactly :ok, just as Color.RED is always RED. Two atoms with the same name are always the same atom.",
+      "keyPoints": [
+        ":atom_name — prefixed with colon",
+        "true, false, nil are atoms (aliases for :true, :false, :nil)",
+        "Atoms are constants — their value is their name",
+        "Used as tags in tuples: {:ok, value} and {:error, reason}"
+      ]
+    },
+    "defaultCode": "status = :ok\nIO.puts(status)\nIO.puts(is_atom(:hello))\nIO.puts(true == :true)\nIO.puts(is_nil(nil))"
+  },
+  {
+    "id": "elixir_strings",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Strings",
+    "description": "Elixir strings are UTF-8 binary sequences. Double-quoted only. Interpolation with #{expr}. The String module provides length, upcase, split, contains?, and more.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Elixir strings are UTF-8 encoded binaries, written with double quotes. String interpolation uses #{expr} to embed any expression. The String module (String.length, String.upcase, String.split, String.contains?) provides utilities. Note: String.length counts Unicode graphemes — byte_size counts raw bytes.",
+      "analogy": "Elixir strings are like sealed UTF-8 envelopes. You cannot change a letter inside — but you can create a new envelope that combines or transforms the content.",
+      "keyPoints": [
+        "Always double-quoted — single quotes are charlists, a different type",
+        "Interpolation: #{expr} embeds any expression",
+        "Immutable — String functions return new strings",
+        "String.length counts characters; byte_size counts bytes"
+      ]
+    },
+    "defaultCode": "name = \"Alice\"\ngreeting = \"Hello, #{name}!\"\nIO.puts(greeting)\nIO.puts(String.length(name))\nIO.puts(String.upcase(name))"
+  },
+  {
+    "id": "elixir_functions",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Named functions use def inside defmodule. Anonymous functions use fn -> end. The & capture shorthand creates compact function references.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Named functions (def) live inside modules (defmodule). Private functions use defp. Anonymous functions are created with fn args -> body end and called with func.(args). The & capture operator creates shorthand anonymous functions: &(&1 * 2) is fn x -> x * 2 end. Functions are first-class — pass them, return them, store them.",
+      "analogy": "Named functions (def) are like published recipes in a cookbook (module). Anonymous functions (fn) are like ad-hoc instructions written on a napkin — useful right now, passed around, but not in the cookbook.",
+      "keyPoints": [
+        "def name(args) do ... end — named function inside a module",
+        "fn args -> body end — anonymous function",
+        "Call anonymous fn with dot: func.(arg)",
+        "& shorthand: &(&1 + &2) is fn a, b -> a + b end"
+      ]
+    },
+    "defaultCode": "double = fn x -> x * 2 end\nIO.puts(double.(5))\nadd = &(&1 + &2)\nIO.puts(add.(3, 4))"
+  },
+  {
+    "id": "elixir_control_flow",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Control Flow: if, cond, case",
+    "description": "if/unless for simple binary checks. cond for multi-branch conditions. case for pattern-matching against a value. All are expressions returning a value.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Elixir control flow constructs are all expressions. if cond do ... else ... end handles binary branching. unless is the negated if. cond do clause -> result end matches the first true clause. case value do pattern -> result end matches the first pattern.",
+      "analogy": "if is a coin flip (two outcomes). cond is a decision tree (first true branch wins). case is a type sorter (first matching shape wins).",
+      "keyPoints": [
+        "if/unless for simple true/false branching",
+        "cond for multi-branch conditions (like chained if-elseif)",
+        "case for pattern matching against a specific value",
+        "All three are expressions — they return the matched branch's value"
+      ]
+    },
+    "defaultCode": "x = 7\nresult = if x > 0 do\n  \"positive\"\nelse\n  \"non-positive\"\nend\nIO.puts(result)"
+  },
+  {
+    "id": "elixir_pattern_matching",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Pattern Matching",
+    "description": "The = operator pattern-matches. Destructure tuples, lists, and maps. Use _ to ignore values. The pin operator ^ matches without rebinding.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "In Elixir, = is the match operator. {:ok, value} = {:ok, 42} binds value=42. [head | tail] = [1,2,3] binds head=1, tail=[2,3]. _ is the anonymous variable that ignores its match. case and function clauses use pattern matching implicitly. ^ (pin) prevents rebinding: ^x = 5 fails if x != 5.",
+      "analogy": "Pattern matching is like a jigsaw puzzle check — you press a shape against the data. If they fit, named holes (variables) are filled with the matching pieces. If they don't fit, a MatchError is raised.",
+      "keyPoints": [
+        "= matches shapes — variables are filled by matching positions",
+        "{:ok, val} = result — destructure a tuple",
+        "[h | t] = list — head/tail destructure",
+        "_ ignores a position. ^var pins to current value."
+      ]
+    },
+    "defaultCode": "{:ok, value} = {:ok, 42}\nIO.puts(value)\n[head | tail] = [1, 2, 3]\nIO.puts(head)\nIO.inspect(tail)"
+  },
+  {
+    "id": "elixir_lists",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Lists & Enum",
+    "description": "Elixir lists are linked lists. Prepend with [h|t]. The Enum module provides map, filter, reduce, each, and more for any enumerable.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Elixir lists are singly-linked lists. Prepending is O(1): [0 | list]. Random access is O(n). The Enum module works on any enumerable (list, range, map). Enum.map transforms, Enum.filter selects, Enum.reduce accumulates. length() for list length.",
+      "analogy": "A list is like a chain of paper clips. Adding to the front is instant (clip on). Getting to the 100th clip requires traversing the chain.",
+      "keyPoints": [
+        "[1, 2, 3] — list literal",
+        "[h | t] prepend/destructure",
+        "Enum.map(list, fn x -> ... end) — transform each element",
+        "Enum.filter and Enum.reduce for selection and accumulation"
+      ]
+    },
+    "defaultCode": "nums = [1, 2, 3, 4, 5]\ndoubled = Enum.map(nums, fn x -> x * 2 end)\nIO.inspect(doubled)\nevens = Enum.filter(nums, fn x -> rem(x, 2) == 0 end)\nIO.inspect(evens)"
+  },
+  {
+    "id": "elixir_tuples",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Tuples",
+    "description": "Tuples are fixed-size ordered collections stored contiguously. {:ok, value} and {:error, reason} are the idiomatic success/error tags.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Elixir tuples store elements contiguously in memory (unlike lists). Access by index with elem(t, i) (0-indexed). tuple_size(t) returns the count. Tuples are immutable — use put_elem(t, i, val) to create a modified copy. The {:ok, value} / {:error, reason} pattern is ubiquitous in Elixir APIs.",
+      "analogy": "A tuple is like a fixed-size tray of labeled compartments. You always know exactly how many slots there are and can reach any slot instantly — but you cannot add or remove slots.",
+      "keyPoints": [
+        "{a, b, c} — tuple literal",
+        "elem(t, i) — 0-indexed access",
+        "tuple_size(t) — number of elements",
+        "{:ok, val} / {:error, reason} — idiomatic result tag pattern"
+      ]
+    },
+    "defaultCode": "result = {:ok, 42}\n{:ok, value} = result\nIO.puts(value)\nIO.puts(elem(result, 0))\nIO.puts(tuple_size(result))"
+  },
+  {
+    "id": "elixir_maps",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Maps",
+    "description": "Maps are key-value stores. %{key: value} for atom keys. %{\"key\" => value} for string keys. Map.get, Map.put, Map.update for operations. | syntax for field update.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Elixir maps (%{}) are the go-to key-value structure. Atom keys allow dot-like access in structs: map.key. Map.get(m, key, default) for safe access. Map.put(m, key, val) returns a NEW map (immutable). The update syntax %{map | key: new_val} creates a new map with one field changed. Maps are unordered.",
+      "analogy": "Maps are like spreadsheets — each row is a key-value pair. Changing a cell produces a new spreadsheet (immutable), not an in-place edit.",
+      "keyPoints": [
+        "%{key: value} for atom keys, %{\"key\" => value} for string keys",
+        "map.key or map[:key] for atom key access",
+        "Map.get(m, key, default) for safe lookup",
+        "%{map | key: new_val} to create an updated map"
+      ]
+    },
+    "defaultCode": "person = %{name: \"Alice\", age: 30}\nIO.puts(person.name)\nIO.puts(Map.get(person, :age))\nupdated = %{person | age: 31}\nIO.puts(updated.age)"
+  },
+  {
+    "id": "elixir_modules",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Modules & Named Functions",
+    "description": "defmodule groups named functions. def for public, defp for private. Module attributes (@name) for constants. Functions match on clauses in definition order.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "defmodule Name do ... end defines a module. def name(args) do ... end declares a public function. defp is private. Multiple clauses of the same function are matched top-to-bottom — this replaces if/case inside functions. Module attributes @attr value define compile-time constants.",
+      "analogy": "A module is like a toolbox. Named functions are tools inside. defp tools are for internal use only. Multiple clauses are like the same tool that works differently based on what you hand it.",
+      "keyPoints": [
+        "defmodule Name do ... end wraps related functions",
+        "def for public, defp for private",
+        "Multiple clauses with pattern matching replace if/case",
+        "@attribute for module-level constants"
+      ]
+    },
+    "defaultCode": "defmodule Greeter do\n  def greet(\"Alice\"), do: \"Hi Alice!\"\n  def greet(name), do: \"Hello, #{name}!\"\nend\nIO.puts(Greeter.greet(\"Alice\"))\nIO.puts(Greeter.greet(\"Bob\"))"
+  },
+  {
+    "id": "elixir_recursion",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Recursion",
+    "description": "Elixir has no mutable loops — recursion with pattern-matched base cases replaces for/while. Tail recursion with accumulators avoids stack overflow.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Since Elixir values are immutable, traditional mutation-based loops (for i = 0; i < n; i++) do not exist. Recursion with a base case replaces iteration. Tail-recursive functions (where the recursive call is the last expression) are optimized by Elixir's runtime to run in constant stack space — use an accumulator argument pattern for this.",
+      "analogy": "Recursion is like a set of Russian nesting dolls. Each doll (function call) opens to find a smaller doll (recursive call), until you reach the smallest doll (base case) and stop.",
+      "keyPoints": [
+        "Base case (empty list, 0) handled by a pattern-matched clause",
+        "Recursive case reduces the problem (smaller list, n-1)",
+        "Tail recursion: recursive call is the last operation",
+        "Accumulator pattern: carry the result as an argument"
+      ]
+    },
+    "defaultCode": "defmodule Math do\n  def sum([]), do: 0\n  def sum([h | t]), do: h + sum(t)\nend\nIO.puts(Math.sum([1, 2, 3, 4, 5]))"
+  },
+  {
+    "id": "elixir_pipe_operator",
+    "language": "elixir",
+    "domain": "programming",
+    "title": "Pipe Operator |>",
+    "description": "The |> operator passes the result of the left expression as the first argument to the right function. Transforms nested calls into a readable left-to-right pipeline.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "The pipe operator |> takes the value on the left and passes it as the FIRST argument to the function on the right. x |> f(y) is equivalent to f(x, y). This eliminates deeply nested function calls and reads naturally left-to-right as a data transformation pipeline.",
+      "analogy": "The pipe operator is like an assembly line conveyor belt. Each station (function) receives the item from the previous station, transforms it, and passes it on to the next.",
+      "keyPoints": [
+        "val |> f(args) is f(val, args) — val inserted as first argument",
+        "Eliminates nested calls: f(g(h(x))) becomes x |> h() |> g() |> f()",
+        "Reads left-to-right as a data transformation pipeline",
+        "Each step in the pipe should take the piped value as its first argument"
+      ]
+    },
+    "defaultCode": "result = \"  Hello, Elixir!  \"\n  |> String.trim()\n  |> String.downcase()\n  |> String.replace(\"elixir\", \"world\")\nIO.puts(result)"
+  }
+]

@@ -1,0 +1,154 @@
+{
+  "id": "lm_rust_ownership",
+  "topicId": "rust_ownership",
+  "language": "rust",
+  "title": "Ownership",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Every value has exactly one owner — when that owner leaves scope, the value is dropped.",
+    "explanation": "Rust achieves memory safety without a garbage collector through ownership. Three rules govern every value: 1) Each value has exactly one owner. 2) When the owner goes out of scope, the value is automatically freed (dropped). 3) There can only be one owner at a time. Assigning a heap-allocated value (like String) to another variable moves ownership — the original binding becomes invalid. Primitive types (i32, bool, etc.) implement the Copy trait and are duplicated instead.",
+    "syntax": "// String: heap-allocated — move on assignment\nlet s1 = String::from(\"hello\");\nlet s2 = s1;          // s1 is moved into s2\n// s1 is now invalid — use s2\n\n// i32: Copy — duplicated on assignment\nlet n1 = 5;\nlet n2 = n1;          // n1 is still valid\n\n// Passing to a function also moves ownership\nfn take(s: String) { }  // s dropped here\ntake(s2);              // s2 moved into take()\n// s2 no longer valid",
+    "keyPoints": [
+      "Rule 1: Each value has exactly one owner at a time",
+      "Rule 2: When the owner goes out of scope, the value is dropped (freed)",
+      "Rule 3: Assignment of heap types moves ownership — the old binding is invalid",
+      "Copy types (i32, f64, bool, char, tuples of Copy types) are duplicated, not moved",
+      "String is not Copy — it owns heap memory that cannot be cheaply duplicated"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch how assigning a String moves ownership, while assigning an i32 copies it.",
+    "code": "fn main() {\n    let s1 = String::from(\"hello\");\n    let s2 = s1;  // move\n    println!(\"{}\", s2);\n\n    let n1 = 5;\n    let n2 = n1;  // copy\n    println!(\"{} {}\", n1, n2);\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["s1 owns heap data", "s2 takes ownership", "s1 invalid", "n1 copied to n2", "both n1 n2 valid"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "s1",
+        "value": "\"hello\" (heap)",
+        "dataType": "String",
+        "explanation": {
+          "what": "s1 owns a String on the heap",
+          "why": "String::from allocates heap memory to store 'hello' and gives ownership of that allocation to s1",
+          "change": "s1 = String pointing to heap data 'hello'",
+          "intent": "Create a heap-allocated string — the owner is responsible for freeing it",
+          "misconception": "String (capital S) is heap-allocated and owns its data. &str is a view into string data (a borrow). They are different types."
+        }
+      },
+      {
+        "type": "assign",
+        "line": 3,
+        "var": "s2",
+        "value": "\"hello\" (heap — moved from s1)",
+        "explanation": {
+          "what": "Ownership of the heap data moves from s1 to s2",
+          "why": "Rust cannot have two owners for the same heap allocation — so s1 is invalidated and s2 becomes the sole owner",
+          "change": "s2 owns heap data; s1 is now invalid (moved)",
+          "intent": "Transfer the obligation to free the data from s1 to s2",
+          "misconception": "This is NOT a copy of the heap data — Rust moves the pointer (stack metadata) and invalidates s1. No heap allocation happens."
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "hello",
+        "explanation": {
+          "what": "Printing s2",
+          "why": "s2 is the current owner of the heap string — it is valid to use",
+          "change": "output ← 'hello'",
+          "intent": "Show that the moved value is accessible through the new owner",
+          "misconception": "Using s1 here would be a compile error: 'use of moved value: s1'. Rust catches this statically."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "n1",
+        "value": "5",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Declaring n1 = 5 (Copy type)",
+          "why": "i32 is stored on the stack and implements the Copy trait",
+          "change": "n1 = 5 (stack slot)",
+          "intent": "Demonstrate a Copy type to contrast with String's move behaviour",
+          "misconception": "Stack-allocated types like i32 are trivially copyable — duplicating them is as cheap as duplicating a register value"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 7,
+        "var": "n2",
+        "value": "5",
+        "dataType": "i32",
+        "explanation": {
+          "what": "n2 = n1 — value is COPIED, not moved",
+          "why": "i32 implements Copy, so let n2 = n1 duplicates the bit pattern — n1 remains valid",
+          "change": "n2 = 5 (new independent stack slot); n1 still valid",
+          "intent": "Show that Copy types behave like you expect from most languages",
+          "misconception": "This is not ownership transfer — both n1 and n2 independently own their own 5"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "5 5",
+        "explanation": {
+          "what": "Printing n1 and n2 — both valid",
+          "why": "n1 was copied, not moved, so both bindings are usable",
+          "change": "output ← '5 5'",
+          "intent": "Confirm that both n1 and n2 are independently valid after the copy",
+          "misconception": "Had n1 been a String, using it here after let n2 = n1 would be a compile error"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "Which line causes a compile error?\n\nlet a = String::from(\"world\");\nlet b = a;\nprintln!(\"{}\", a);  // Line 3\nprintln!(\"{}\", b);  // Line 4",
+    "options": ["Line 3 — a was moved into b", "Line 4 — b is not valid", "No error — Strings are Copy", "Line 2 — cannot assign String"],
+    "correctIndex": 0,
+    "explanation": "let b = a moves ownership of the String from a to b. After the move, a is invalid. Printing a on Line 3 is a compile error: use of moved value. Line 4 is fine because b is the current owner."
+  },
+
+  "explanation": {
+    "afterDemo": "String carries heap memory, so Rust enforces a single owner — assigning s1 to s2 moves the ownership pointer and invalidates s1. i32 sits on the stack and is trivially copied, so both n1 and n2 hold independent 5s. This is how Rust guarantees no double-free errors: at most one variable can own any heap allocation at a time.",
+    "keyTakeaways": [
+      "Assigning a heap type (String) moves ownership — the old binding is invalidated.",
+      "Copy types (i32, bool, etc.) are duplicated — both old and new bindings stay valid.",
+      "When the owning variable goes out of scope, Rust automatically drops (frees) the heap memory."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create a String `s` with value \"Rust\". Move it into a function called `print_it` that takes a String and prints it. Then try to print `s` after the call — observe the compile error (in your head), then fix the code by cloning: pass s.clone() instead.",
+    "starterCode": "fn print_it(val: String) {\n    println!(\"{}\", val);\n}\n\nfn main() {\n    let s = String::from(\"Rust\");\n    print_it(s.clone());  // clone avoids moving s\n    println!(\"{}\", s);    // s is still valid\n}",
+    "solutionCode": "fn print_it(val: String) {\n    println!(\"{}\", val);\n}\n\nfn main() {\n    let s = String::from(\"Rust\");\n    print_it(s.clone());\n    println!(\"{}\", s);\n}",
+    "hint": "s.clone() creates a deep copy of the heap data — both the original and the copy are valid owners of separate allocations.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Rust", "Rust"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Well done! clone() produces a fresh heap allocation, so both print_it and main get their own owned String.",
+    "retryHints": [
+      "Passing s (without clone) to print_it moves s — the function owns it, and it is dropped when print_it returns.",
+      "Use s.clone() to create a deep copy and keep s valid in main.",
+      "Expected output: 'Rust' printed twice — once from print_it, once from main."
+    ]
+  },
+
+  "summary": {
+    "title": "Ownership — Complete",
+    "takeaways": [
+      "Each value has exactly one owner; ownership moves on assignment of heap types.",
+      "When the owner's scope ends, the value is automatically freed.",
+      "Copy types are duplicated; heap types are moved. Use .clone() for an explicit deep copy."
+    ],
+    "nextTopicId": "rust_borrowing"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "lm_solidity_variables",
+  "topicId": "solidity_variables",
+  "language": "solidity",
+  "title": "Variables & Value Types",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "State variables persist on-chain and can expose auto-generated getters.",
+    "explanation": "Solidity variables are strongly typed and stored either in state, memory, or calldata depending on context.",
+    "syntax": "pragma solidity ^0.8.20;\n\ncontract Counter {\n  uint256 public count = 1;\n  bool public active = true;\n}",
+    "keyPoints": ["State vars persist across transactions", "uint256 is common numeric type", "public auto-generates getters"]
+  },
+  "demo": {
+    "intro": "Define simple persistent state variables.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Counter {\n  uint256 public count = 1;\n  bool public active = true;\n}",
+    "focusLine": 4,
+    "expectedHighlights": ["count initialized", "active initialized", "public getter implied"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "count", "value": "1", "dataType": "uint256", "explanation": {"what": "Declare state counter", "why": "Persistent integer state", "change": "count=1", "intent": "Show on-chain variable", "misconception": "State vars are not reset between calls"}},
+      {"type": "declare", "line": 5, "var": "active", "value": "true", "dataType": "bool", "explanation": {"what": "Declare boolean state", "why": "Track feature switch", "change": "active=true", "intent": "Show simple flag state", "misconception": "Public var creates getter automatically"}}
+    ]
+  },
+  "prediction": {
+    "question": "If a state variable is marked public, what is auto-created?",
+    "options": ["constructor", "getter function", "event", "modifier"],
+    "correctIndex": 1,
+    "explanation": "public state variables get an auto-generated getter."
+  },
+  "explanation": {
+    "afterDemo": "Understanding state storage is foundational because persistent writes cost gas and affect contract behavior globally.",
+    "keyTakeaways": ["State variables persist", "Type choice matters", "public gives free read access via getter"]
+  },
+  "practice": {
+    "prompt": "Create contract Flag with bool public enabled = false and uint256 public version = 1.",
+    "starterCode": "pragma solidity ^0.8.20;\n\ncontract Flag {\n  // add vars\n}",
+    "solutionCode": "pragma solidity ^0.8.20;\n\ncontract Flag {\n  bool public enabled = false;\n  uint256 public version = 1;\n}",
+    "hint": "Use public on both state variables.",
+    "validation": {"type": "step_count", "min": 2}
+  },
+  "feedback": {"successMessage": "State variables are defined correctly.", "retryHints": ["Use explicit types", "Mark vars public", "Initialize values"]},
+  "summary": {"title": "Variables — Complete", "takeaways": ["State is persistent", "Solidity is strictly typed", "public generates getters"], "nextTopicId": "solidity_functions"}
+}

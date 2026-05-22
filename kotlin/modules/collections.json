@@ -1,0 +1,145 @@
+{
+  "id": "lm_kotlin_collections",
+  "topicId": "kotlin_collections",
+  "language": "kotlin",
+  "title": "Collections: List, Map, Set",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Kotlin separates read-only (listOf, mapOf) from mutable (mutableListOf, mutableMapOf) collections. filter, map, and forEach transform and iterate them.",
+    "explanation": "Read-only collections expose no mutation methods — but are not deeply immutable (the underlying list can still change if you hold a mutable reference). Mutable collections (MutableList, MutableMap, MutableSet) add add(), remove(), put() etc. The functional operators filter { }, map { }, forEach { }, find { }, any { }, all { } work on all collection types.",
+    "syntax": "// Read-only\nval nums = listOf(1, 2, 3, 4, 5)\nval m    = mapOf(\"a\" to 1, \"b\" to 2)\n\n// Mutable\nval items = mutableListOf(\"apple\", \"banana\")\nitems.add(\"cherry\")\nitems.remove(\"banana\")\n\n// Functional ops\nval evens   = nums.filter { it % 2 == 0 }   // [2, 4]\nval squares = nums.map { it * it }           // [1,4,9,16,25]\nnums.forEach { print(\"$it \") }",
+    "keyPoints": [
+      "listOf → read-only. mutableListOf → add/remove allowed",
+      "mapOf(\"key\" to value) — read-only map",
+      "filter { condition } returns a new list of matching elements",
+      "map { transform } returns a new list of transformed elements"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a list being filtered and mapped to produce a new transformed list.",
+    "code": "fun main() {\n    val nums = listOf(1, 2, 3, 4, 5)\n    val evens = nums.filter { it % 2 == 0 }\n    val doubled = evens.map { it * 2 }\n    println(evens)\n    println(doubled)\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["nums=[1,2,3,4,5]", "evens=[2,4]", "doubled=[4,8]"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "nums",
+        "value": "[1, 2, 3, 4, 5]",
+        "dataType": "List<Int>",
+        "explanation": {
+          "what": "listOf(1,2,3,4,5) — creates a read-only List<Int>",
+          "why": "listOf returns an immutable view; the numbers are stored in order",
+          "change": "nums = [1, 2, 3, 4, 5]",
+          "intent": "Show list creation with listOf",
+          "misconception": "listOf does NOT mean the data is frozen in a JVM sense — it means this reference has no add/remove methods. Under the hood it uses Java's Arrays.asList."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "evens",
+        "value": "[2, 4]",
+        "dataType": "List<Int>",
+        "explanation": {
+          "what": "nums.filter { it % 2 == 0 } — keep only elements where condition is true",
+          "why": "it refers to the current element; it % 2 == 0 is true for even numbers",
+          "change": "evens = [2, 4]",
+          "intent": "Show filter producing a new list — original is unchanged",
+          "misconception": "filter does NOT modify nums — it returns a brand-new list. nums still equals [1,2,3,4,5] after this line."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "doubled",
+        "value": "[4, 8]",
+        "dataType": "List<Int>",
+        "explanation": {
+          "what": "evens.map { it * 2 } — transform each element",
+          "why": "it is each element of evens; it * 2 doubles it",
+          "change": "doubled = [4, 8] (2*2=4, 4*2=8)",
+          "intent": "Show map producing a transformed list of the same size",
+          "misconception": "map always returns a list of the SAME SIZE as the input — one output per input. Use filter to reduce size, map to transform."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "[2, 4]",
+        "explanation": {
+          "what": "println(evens) uses the list's toString()",
+          "why": "Kotlin collections print as [elem1, elem2, ...]",
+          "change": "output ← '[2, 4]'",
+          "intent": "Show list toString format",
+          "misconception": "Java would print the memory address for a raw array. Kotlin collections always print their contents."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "[4, 8]",
+        "explanation": {
+          "what": "println(doubled) prints the mapped list",
+          "why": "doubled = [4, 8]",
+          "change": "output ← '[4, 8]'",
+          "intent": "Confirm filter + map pipeline produced expected result",
+          "misconception": "These operations can be chained: nums.filter { ... }.map { ... } — no need for intermediate variables"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nval words = listOf(\"apple\", \"banana\", \"avocado\")\nval aWords = words.filter { it.startsWith(\"a\") }\nprintln(aWords.size)",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "0"
+    ],
+    "correctIndex": 1,
+    "explanation": "filter keeps 'apple' and 'avocado' (both start with 'a') — 'banana' is excluded. aWords.size = 2."
+  },
+
+  "explanation": {
+    "afterDemo": "Kotlin's collection API is functional and composable. filter, map, forEach, find, any, all chain together cleanly. The read-only / mutable split makes APIs safer — when a function returns a List<T>, callers know they can't accidentally mutate it. Use mutableListOf only when you genuinely need to add/remove elements.",
+    "keyTakeaways": [
+      "listOf → read-only; mutableListOf → add/remove. Both expose filter/map/forEach.",
+      "filter { predicate } — returns new list of elements matching the condition.",
+      "map { transform } — returns new list of transformed elements, same size as input."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Given listOf(\"cat\", \"dog\", \"elephant\", \"ant\", \"bear\"), filter words with length <= 3 and map them to uppercase. Print the result.",
+    "starterCode": "fun main() {\n    val animals = listOf(\"cat\", \"dog\", \"elephant\", \"ant\", \"bear\")\n    // filter length <= 3, then uppercase\n    println(/* result */)\n}",
+    "solutionCode": "fun main() {\n    val animals = listOf(\"cat\", \"dog\", \"elephant\", \"ant\", \"bear\")\n    val result = animals.filter { it.length <= 3 }.map { it.uppercase() }\n    println(result)\n}",
+    "hint": "Chain: animals.filter { it.length <= 3 }.map { it.uppercase() }",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["[CAT, DOG, ANT]"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! cat, dog, ant pass the length filter; then each is uppercased.",
+    "retryHints": [
+      "filter { it.length <= 3 } keeps short words: cat, dog, ant",
+      "map { it.uppercase() } transforms each to uppercase",
+      "Expected: [CAT, DOG, ANT]"
+    ]
+  },
+
+  "summary": {
+    "title": "Collections — Complete",
+    "takeaways": [
+      "listOf / mapOf / setOf — read-only. mutableListOf / mutableMapOf — mutable.",
+      "filter { } narrows a list; map { } transforms each element into a new list.",
+      "Chain operations: list.filter { }.map { }.forEach { } — clean functional pipelines."
+    ],
+    "nextTopicId": "kotlin_lambdas"
+  }
+}

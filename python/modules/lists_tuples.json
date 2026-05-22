@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_lists_tuples",
+  "topicId": "python_lists_tuples",
+  "language": "python",
+  "title": "Lists & Tuples",
+  "difficulty": "easy",
+  "concept": {"headline": "Lists are mutable; tuples are immutable.", "explanation": "Choose list for changing sequences and tuple for fixed records.", "syntax": "nums = [1, 2, 3]\npoint = (10, 20)\nnums.append(4)", "keyPoints": ["list supports append/remove", "tuple is fixed", "Both support indexing"]},
+  "demo": {"intro": "Modify list while keeping tuple unchanged.", "code": "nums = [1, 2, 3]\npoint = (10, 20)\nnums.append(4)\nprint(nums, point)", "focusLine": 3, "expectedHighlights": ["list grows", "tuple unchanged"], "steps": [{"type": "declare", "line": 1, "var": "nums", "value": "[1,2,3]", "dataType": "list", "explanation": {"what": "Create list", "why": "Mutable sequence", "change": "nums initialized", "intent": "Show list behavior", "misconception": "list elements are ordered"}}, {"type": "declare", "line": 2, "var": "point", "value": "(10,20)", "dataType": "tuple", "explanation": {"what": "Create tuple", "why": "Fixed coordinate pair", "change": "point initialized", "intent": "Show immutable record", "misconception": "Tuple size/content fixed"}}, {"type": "print", "line": 4, "value": "[1, 2, 3, 4] (10, 20)", "explanation": {"what": "Print both", "why": "Observe mutation difference", "change": "output <- list and tuple", "intent": "Contrast sequence types", "misconception": "Tuple would raise on append"}}]},
+  "prediction": {"question": "Which supports append()?", "options": ["tuple", "list", "both", "neither"], "correctIndex": 1, "explanation": "append is a list method."},
+  "explanation": {"afterDemo": "Choosing the right sequence type improves correctness and intent.", "keyTakeaways": ["Use list for mutable collections", "Use tuple for fixed records", "Both are indexable"]},
+  "practice": {"prompt": "Create list vals=[1,2], append 3, print vals and tuple (5,6).", "starterCode": "# write code", "solutionCode": "vals = [1, 2]\nvals.append(3)\nprint(vals, (5, 6))", "hint": "Use list append method.", "validation": {"type": "output", "expectedOutput": ["[1, 2, 3] (5, 6)"]}},
+  "feedback": {"successMessage": "List/tuple usage is correct.", "retryHints": ["Append only on list", "Print tuple literal separately"]},
+  "summary": {"title": "Lists & Tuples — Complete", "takeaways": ["List mutable, tuple immutable", "Pick type by change requirements", "Sequence indexing starts at 0"], "nextTopicId": "python_dicts_sets"}
+}

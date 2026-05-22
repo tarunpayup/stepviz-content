@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_data_types",
+  "topicId": "scala_data_types",
+  "language": "scala",
+  "title": "Core Data Types",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Scala primitives are statically typed and inferred.",
+    "explanation": "Int, Double, String, and Boolean are fundamental for most code.",
+    "syntax": "val age = 20\nval score = 9.5\nval active = true",
+    "keyPoints": ["Strong typing", "Inference from literals", "Use explicit types when helpful"]
+  },
+  "demo": {
+    "intro": "Declare and print primitive values.",
+    "code": "object Main extends App {\n  val age = 20\n  val score = 9.5\n  val name = \"Ari\"\n  val active = true\n  println(age + \" \" + score + \" \" + name + \" \" + active)\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["typed values", "single output line"],
+    "steps": [
+      {"type": "declare", "line": 2, "var": "age", "value": "20", "dataType": "Int", "explanation": {"what": "Create Int", "why": "Whole number", "change": "age set", "intent": "Numeric primitive", "misconception": "Type inferred as Int"}},
+      {"type": "declare", "line": 3, "var": "score", "value": "9.5", "dataType": "Double", "explanation": {"what": "Create Double", "why": "Decimal value", "change": "score set", "intent": "Floating primitive", "misconception": "Double precision semantics"}},
+      {"type": "print", "line": 6, "value": "20 9.5 Ari true", "explanation": {"what": "Print all values", "why": "Check declarations", "change": "output emitted", "intent": "Verify data types", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Best type for decimal numbers?", "options": ["Int", "Double", "Boolean", "String"], "correctIndex": 1, "explanation": "Double represents decimal values."},
+  "explanation": {"afterDemo": "Correct type choice improves correctness and readability.", "keyTakeaways": ["Choose proper primitives", "Compiler catches mismatches", "Inference remains type-safe"]},
+  "practice": {
+    "prompt": "Declare city='Pune', temp=31.2, sunny=true and print them.",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  val city = \"Pune\"\n  val temp = 31.2\n  val sunny = true\n  println(city + \" \" + temp + \" \" + sunny)\n}",
+    "hint": "Use String, Double, Boolean literals.",
+    "validation": {"type": "contains", "expectedTokens": ["Pune", "31.2", "true"]}
+  },
+  "feedback": {"successMessage": "Primitive declarations are correct.", "retryHints": ["Use literal values", "Print all variables"]},
+  "summary": {"title": "Core Data Types - Complete", "takeaways": ["Static typing", "Safe inference", "Correct primitives"], "nextTopicId": "scala_functions"}
+}

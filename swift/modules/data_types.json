@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_data_types",
+  "topicId": "swift_data_types",
+  "language": "swift",
+  "title": "Core Data Types",
+  "difficulty": "easy",
+  "concept": {"headline": "Swift is strongly typed with rich primitives.", "explanation": "Int, Double, String, and Bool are foundational in everyday code.", "syntax": "let age: Int = 20\nlet score: Double = 9.5\nlet name: String = \"Ari\"\nlet active: Bool = true", "keyPoints": ["Use explicit types when clarity helps", "Inference works well", "Type safety prevents many bugs"]},
+  "demo": {"intro": "Declare and print primitive values.", "code": "let age: Int = 20\nlet score: Double = 9.5\nlet name: String = \"Ari\"\nlet active: Bool = true\nprint(age, score, name, active)", "focusLine": 1, "expectedHighlights": ["typed declarations", "prints all values"], "steps": [{"type": "declare", "line": 1, "var": "age", "value": "20", "dataType": "Int", "explanation": {"what": "Declare Int", "why": "Whole number", "change": "age=20", "intent": "Numeric primitive", "misconception": "Int size is platform-dependent"}}, {"type": "declare", "line": 2, "var": "score", "value": "9.5", "dataType": "Double", "explanation": {"what": "Declare Double", "why": "Decimal precision", "change": "score=9.5", "intent": "Floating type", "misconception": "Binary floats have precision limits"}}, {"type": "print", "line": 5, "value": "20 9.5 Ari true", "explanation": {"what": "Print values", "why": "Validate declarations", "change": "output <- primitives", "intent": "Observe typed data", "misconception": "Bool prints lowercase true/false"}}]},
+  "prediction": {"question": "Which type stores decimal numbers?", "options": ["Int", "Bool", "Double", "String"], "correctIndex": 2, "explanation": "Double stores floating-point numbers."},
+  "explanation": {"afterDemo": "Strong typing helps make intent explicit.", "keyTakeaways": ["Choose the right primitive", "Type annotations improve clarity", "Inference is convenient"]},
+  "practice": {"prompt": "Declare city as String, temp as Double, sunny as Bool; print them.", "starterCode": "// write code", "solutionCode": "let city: String = \"Pune\"\nlet temp: Double = 31.2\nlet sunny: Bool = true\nprint(city, temp, sunny)", "hint": "Use explicit type annotations.", "validation": {"type": "contains", "expectedTokens": ["Pune", "31.2", "true"]}},
+  "feedback": {"successMessage": "Primitive type usage is correct.", "retryHints": ["Use Double for decimal", "Use Bool for true/false"]},
+  "summary": {"title": "Core Data Types — Complete", "takeaways": ["Swift primitives are strict", "Type safety improves reliability", "Annotations can aid readability"], "nextTopicId": "swift_functions"}
+}

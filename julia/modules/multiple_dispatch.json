@@ -1,0 +1,169 @@
+{
+  "id": "lm_julia_multiple_dispatch",
+  "topicId": "julia_multiple_dispatch",
+  "language": "julia",
+  "title": "Multiple Dispatch",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Multiple dispatch lets you define the same function name with different type signatures. Julia automatically selects the most specific matching method when you call it.",
+    "explanation": "In Julia, a function is a collection of methods. Each method is a specialization of the function for particular argument types (x::Int, x::Float64, etc.). When you call describe(42), Julia inspects the type of 42 (Int64) and dispatches to the most specific matching method. If no specific method matches, a catch-all method (no type annotation) handles it. Multiple dispatch considers ALL argument types simultaneously — not just the first argument like OOP single dispatch.",
+    "syntax": "# Three methods for 'describe' — same name, different types\nfunction describe(x::Int)\n    println(\"Integer: $x\")\nend\n\nfunction describe(x::Float64)\n    println(\"Float: $x\")\nend\n\nfunction describe(x)   # catch-all\n    println(\"Unknown type: $(typeof(x))\")\nend\n\ndescribe(42)       # → Integer: 42\ndescribe(3.14)     # → Float: 3.14\ndescribe(\"hello\")  # → Unknown type: String\n\n# Check all methods\nmethods(describe)",
+    "keyPoints": [
+      "::Type annotation restricts which method handles which argument",
+      "Most specific method wins — describe(x::Int) preferred over describe(x) for Int args",
+      "No type annotation = catch-all that accepts any type",
+      "Multiple dispatch considers ALL argument types — true multi-method polymorphism"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch Julia dispatch to different method implementations based on argument type.",
+    "code": "function describe(x::Int)\n    \"Integer: $x\"\nend\n\nfunction describe(x::Float64)\n    \"Float: $x\"\nend\n\nfunction describe(x)\n    \"Unknown: $(typeof(x))\"\nend\n\nprintln(describe(42))\nprintln(describe(3.14))\nprintln(describe(\"hi\"))\nprintln(describe(true))",
+    "focusLine": 12,
+    "expectedHighlights": ["Int dispatch", "Float64 dispatch", "catch-all for String", "catch-all for Bool"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 12,
+        "name": "describe",
+        "args": ["42"],
+        "returnVar": "r1",
+        "explanation": {
+          "what": "describe(42) — 42 is Int64. Julia searches for describe(x::Int) method.",
+          "why": "42 is an integer literal — its type is Int64 in Julia (Int is an alias for Int64 on 64-bit systems)",
+          "change": "dispatches to describe(x::Int) body",
+          "intent": "Show dispatch to the Int-specific method",
+          "misconception": "Julia's Int is Int64 on 64-bit platforms. The method describe(x::Int) matches both Int and Int64 because Int is an alias."
+        }
+      },
+      {
+        "type": "print",
+        "line": 12,
+        "value": "Integer: 42",
+        "explanation": {
+          "what": "describe(x::Int) body returns 'Integer: 42'",
+          "why": "Most specific method for Int64 argument",
+          "change": "output ← 'Integer: 42'",
+          "intent": "Confirm Int method was chosen",
+          "misconception": "The catch-all describe(x) also accepts Int — but Julia always prefers the MORE specific method. describe(x::Int) is more specific than describe(x)."
+        }
+      },
+      {
+        "type": "call",
+        "line": 13,
+        "name": "describe",
+        "args": ["3.14"],
+        "returnVar": "r2",
+        "explanation": {
+          "what": "describe(3.14) — 3.14 is Float64. Dispatches to describe(x::Float64).",
+          "why": "Float64 literal matches the Float64-specific method",
+          "change": "dispatches to describe(x::Float64) body",
+          "intent": "Show dispatch to the Float64-specific method",
+          "misconception": "3.14 in Julia is Float64. If you wrote 3.14f0 (Float32), it would NOT match describe(x::Float64) and would fall through to the catch-all."
+        }
+      },
+      {
+        "type": "print",
+        "line": 13,
+        "value": "Float: 3.14",
+        "explanation": {
+          "what": "describe(x::Float64) body returns 'Float: 3.14'",
+          "why": "Most specific method for Float64",
+          "change": "output ← 'Float: 3.14'",
+          "intent": "Confirm Float64 method was chosen",
+          "misconception": "Multiple dispatch happens at RUNTIME based on the actual argument types. In OOP languages (Java, Python) dispatch only considers the receiver object type, not all arguments."
+        }
+      },
+      {
+        "type": "call",
+        "line": 14,
+        "name": "describe",
+        "args": ["\"hi\""],
+        "returnVar": "r3",
+        "explanation": {
+          "what": "describe(\"hi\") — String has no specific method. Falls to catch-all describe(x).",
+          "why": "No describe(x::String) defined — catch-all matches",
+          "change": "dispatches to describe(x) catch-all",
+          "intent": "Show catch-all fallback when no specific method matches",
+          "misconception": "Without the catch-all describe(x), calling describe('hi') would throw a MethodError: no method matching describe(::String). The catch-all is a safety net."
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "Unknown: String",
+        "explanation": {
+          "what": "Catch-all fires: typeof('hi') = String",
+          "why": "No specific method for String",
+          "change": "output ← 'Unknown: String'",
+          "intent": "Confirm catch-all using typeof() to identify the type",
+          "misconception": "typeof() returns the concrete type at runtime. It is used here to make the catch-all informative about what type was passed."
+        }
+      },
+      {
+        "type": "print",
+        "line": 15,
+        "value": "Unknown: Bool",
+        "explanation": {
+          "what": "describe(true) — Bool has no specific method. Catch-all: typeof(true) = Bool",
+          "why": "No describe(x::Bool) was defined",
+          "change": "output ← 'Unknown: Bool'",
+          "intent": "Reinforce that each new type without a specific method falls to catch-all",
+          "misconception": "Bool is a subtype of Integer in Julia (true==1, false==0), but method dispatch is based on the declared type, not numeric value. true does NOT match describe(x::Int) because its type is Bool, not Int."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "Given these two methods:\n\nfunction area(r::Float64)\n    π * r^2\nend\nfunction area(x)\n    \"no formula\"\nend\n\nWhat does area(5) return?",
+    "options": [
+      "78.53981...",
+      "\"no formula\"",
+      "Error",
+      "25.0"
+    ],
+    "correctIndex": 1,
+    "explanation": "5 is Int64, not Float64. The Float64 method does not match. The catch-all area(x) fires and returns 'no formula'. To use the Float64 method you would call area(5.0)."
+  },
+
+  "explanation": {
+    "afterDemo": "Multiple dispatch is Julia's core design innovation. It enables writing generic algorithms that specialize automatically — libraries like LinearAlgebra and DifferentialEquations achieve their performance and generality through dispatch. Unlike OOP where adding behavior requires modifying a class hierarchy, Julia lets you add new methods to existing functions from outside their package — called 'open methods'.",
+    "keyTakeaways": [
+      "Same function name, different type annotations → different methods.",
+      "Most specific method wins. Catch-all (no annotation) is the fallback.",
+      "Dispatch happens at runtime on ALL argument types — not just the first."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Define two methods for double(x):\n1. double(x::Int) returns x * 2\n2. double(x::String) returns x * 2 (string repetition — * repeats strings in Julia)\n\nPrint double(5) and double(\"ha\").",
+    "starterCode": "# define double for Int\n# define double for String\n\nprintln(double(5))\nprintln(double(\"ha\"))",
+    "solutionCode": "function double(x::Int)\n    x * 2\nend\n\nfunction double(x::String)\n    x * 2\nend\n\nprintln(double(5))\nprintln(double(\"ha\"))",
+    "hint": "In Julia, * repeats strings: 'ha' * 2 = 'haha'",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["10", "haha"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! double(5)=10, double('ha')='haha'. Two methods, same name, different dispatch.",
+    "retryHints": [
+      "function double(x::Int) ... x * 2 ... end",
+      "function double(x::String) ... x * 2 ... end",
+      "String * integer = repetition in Julia. Expected: 10 then haha"
+    ]
+  },
+
+  "summary": {
+    "title": "Multiple Dispatch — Complete",
+    "takeaways": [
+      "Define multiple methods with the same name but different ::Type annotations.",
+      "Julia calls the most specific matching method automatically.",
+      "Catch-all (no annotation) handles types with no specific method."
+    ],
+    "nextTopicId": "julia_structs"
+  }
+}

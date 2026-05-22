@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_null_safety",
+  "topicId": "dart_null_safety",
+  "language": "dart",
+  "title": "Null Safety",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Dart null safety separates nullable and non-nullable types.",
+    "explanation": "Use ? for nullable types, ?? for fallback values, and ! only when you're certain a value is non-null.",
+    "syntax": "String? name;\nfinal safe = name ?? 'Guest';\nprint(safe);",
+    "keyPoints": ["T is non-nullable by default", "T? allows null", "?? provides default", "! asserts non-null"]
+  },
+  "demo": {
+    "intro": "Read a nullable value safely with fallback.",
+    "code": "String? name;\nfinal safeName = name ?? 'Guest';\nprint(safeName);",
+    "focusLine": 2,
+    "expectedHighlights": ["nullable declaration", "fallback applied", "prints Guest"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "name", "value": "null", "dataType": "String?", "explanation": {"what": "Declare nullable variable", "why": "Value may be absent", "change": "name=null", "intent": "Model optional data", "misconception": "String? is different from String"}},
+      {"type": "declare", "line": 2, "var": "safeName", "value": "Guest", "dataType": "String", "explanation": {"what": "Apply null-coalescing fallback", "why": "name is null", "change": "safeName='Guest'", "intent": "Avoid null access", "misconception": "?? only uses fallback when left side is null"}},
+      {"type": "print", "line": 3, "value": "Guest", "explanation": {"what": "Print safe value", "why": "Fallback resolved string", "change": "output <- Guest", "intent": "Show safe null handling", "misconception": "No runtime null error here"}}
+    ]
+  },
+  "prediction": {
+    "question": "Output?\n\nString? x;\nprint(x ?? 'N/A');",
+    "options": ["null", "N/A", "error", "empty"],
+    "correctIndex": 1,
+    "explanation": "x is null, so ?? returns 'N/A'."
+  },
+  "explanation": {
+    "afterDemo": "Null safety catches absent-value bugs at compile time instead of crashing later.",
+    "keyTakeaways": ["Prefer non-nullable types by default", "Use nullable only when needed", "Use ?? and checks before access"]
+  },
+  "practice": {
+    "prompt": "Create int? retries = null and print retries ?? 3.",
+    "starterCode": "// write code",
+    "solutionCode": "int? retries = null;\nprint(retries ?? 3);",
+    "hint": "Use ?? fallback operator.",
+    "validation": {"type": "output", "expectedOutput": ["3"]}
+  },
+  "feedback": {"successMessage": "Null fallback is correct.", "retryHints": ["Use nullable int?", "Apply ?? for default"]},
+  "summary": {"title": "Null Safety — Complete", "takeaways": ["Nullable and non-nullable types are distinct", "?? is the safest default tool", "Avoid overusing ! assertions"], "nextTopicId": "dart_classes"}
+}

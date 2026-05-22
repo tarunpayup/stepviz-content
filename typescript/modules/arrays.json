@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_arrays",
+  "topicId": "typescript_arrays",
+  "language": "typescript",
+  "title": "Arrays & Tuples",
+  "difficulty": "easy",
+  "concept": {"headline": "Arrays and tuples model list data with different guarantees.", "explanation": "Use arrays for variable-length lists and tuples for fixed positional data.", "syntax": "const scores: number[] = [90,80,85];\nconst point: [number, number] = [10,20];", "keyPoints": ["Array<T> and T[] are equivalent", "Tuples keep positional meaning", "ReadonlyArray prevents mutation"]},
+  "demo": {"intro": "Read values from typed array and tuple.", "code": "const scores: number[] = [90,80,85];\nconst point: [number, number] = [10,20];\nconsole.log(scores[0], point[1]);", "focusLine": 3, "expectedHighlights": ["array first value", "tuple second value", "prints 90 20"], "steps": [{"type": "declare", "line": 1, "var": "scores", "value": "[90,80,85]", "dataType": "number[]", "explanation": {"what": "Declare typed array", "why": "Store numeric series", "change": "scores set", "intent": "Model list data", "misconception": "Array element type is enforced"}}, {"type": "declare", "line": 2, "var": "point", "value": "[10,20]", "dataType": "[number, number]", "explanation": {"what": "Declare tuple", "why": "Fixed x,y structure", "change": "point set", "intent": "Model positional pair", "misconception": "Tuple position types matter"}}, {"type": "print", "line": 3, "value": "90 20", "explanation": {"what": "Print indexed values", "why": "Access array and tuple positions", "change": "output <- 90 20", "intent": "Confirm indexing", "misconception": "Tuple index out-of-range is type error"}}]},
+  "prediction": {"question": "Which is valid for tuple [string, number]?", "options": ["[1,\"a\"]", "[\"a\",1]", "[\"a\"]", "[\"a\",1,2]"], "correctIndex": 1, "explanation": "Order and length must match [string, number]."},
+  "explanation": {"afterDemo": "Tuples are useful for compact structured pairs while arrays fit open-ended lists.", "keyTakeaways": ["Use arrays for collections", "Use tuples for fixed shape", "Type checks protect indexed access"]},
+  "practice": {"prompt": "Create tuple user:[string,number] = [\"Ari\", 21] and print both values.", "starterCode": "// write code", "solutionCode": "const user: [string, number] = [\"Ari\", 21];\nconsole.log(user[0], user[1]);", "hint": "Keep correct tuple order.", "validation": {"type": "output", "expectedOutput": ["Ari 21"]}},
+  "feedback": {"successMessage": "Tuple typing and access are correct.", "retryHints": ["Use [string, number]", "Print index 0 and 1"]},
+  "summary": {"title": "Arrays & Tuples — Complete", "takeaways": ["Arrays for variable lists", "Tuples for fixed positions", "Indexed access stays type-safe"], "nextTopicId": "typescript_objects"}
+}

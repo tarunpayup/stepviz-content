@@ -1,0 +1,169 @@
+{
+  "id": "lm_julia_error_handling",
+  "topicId": "julia_error_handling",
+  "language": "julia",
+  "title": "Error Handling",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Julia uses try/catch/finally for error handling. error('msg') throws an ErrorException. catch e binds the exception. finally runs always regardless of error.",
+    "explanation": "Julia's error model uses throw() to raise exceptions and try...catch...end to handle them. error('msg') is the standard way to throw an ErrorException with a message. catch e binds the exception to e — you can inspect it with typeof(e), e.msg, sprint(showerror, e). finally always executes (cleanup). For multiple error types, check typeof(e) or use isa(e, SomeError).",
+    "syntax": "# Basic try/catch\ntry\n    result = risky_operation()\ncatch e\n    println(\"Error: $e\")\nend\n\n# With finally\ntry\n    open_file()\ncatch e\n    println(\"failed\")\nfinally\n    println(\"always runs\")\nend\n\n# Throw a custom error\nfunction safe_divide(a, b)\n    if b == 0\n        error(\"Cannot divide by zero\")\n    end\n    a / b\nend\n\n# Inspect exception type\ntry\n    safe_divide(1, 0)\ncatch e\n    println(typeof(e))  # ErrorException\n    println(e.msg)      # Cannot divide by zero\nend",
+    "keyPoints": [
+      "try ... catch e ... end — catch binds exception to e",
+      "error('msg') throws ErrorException — the standard way to signal failure",
+      "finally ... end — runs after try/catch regardless of outcome",
+      "typeof(e) or isa(e, Type) to handle different exception types"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a guarded division function raise and catch an error with a finally block.",
+    "code": "function safe_divide(a, b)\n    if b == 0\n        error(\"Cannot divide by zero\")\n    end\n    a / b\nend\n\ntry\n    result = safe_divide(10, 2)\n    println(\"Result: $result\")\ncatch e\n    println(\"Error: $(e.msg)\")\nfinally\n    println(\"Done\")\nend\n\ntry\n    result = safe_divide(10, 0)\n    println(\"Result: $result\")\ncatch e\n    println(\"Error: $(e.msg)\")\nfinally\n    println(\"Done\")\nend",
+    "focusLine": 8,
+    "expectedHighlights": ["10/2=5.0 success", "finally", "10/0 error caught", "finally again"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 9,
+        "name": "safe_divide",
+        "args": ["10", "2"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "safe_divide(10, 2) — b=2, not zero. No error thrown.",
+          "why": "b != 0 so the error() branch is skipped",
+          "change": "result = 10 / 2 = 5.0",
+          "intent": "Show the happy path through try without an exception",
+          "misconception": "try does not slow down the happy path — it is only active when an exception propagates. Zero-cost in the no-exception case."
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "Result: 5.0",
+        "explanation": {
+          "what": "println('Result: $result') → Result: 5.0",
+          "why": "No exception was thrown — the try body completed normally",
+          "change": "output ← 'Result: 5.0'",
+          "intent": "Show try body completing without hitting catch",
+          "misconception": "When no exception occurs, the catch block is SKIPPED entirely. Only the try body and finally execute."
+        }
+      },
+      {
+        "type": "print",
+        "line": 13,
+        "value": "Done",
+        "explanation": {
+          "what": "finally block runs — prints 'Done'",
+          "why": "finally always executes, error or not",
+          "change": "output ← 'Done'",
+          "intent": "Show finally executing after successful try",
+          "misconception": "finally is for cleanup code that MUST run regardless of success or failure — closing files, releasing resources, logging. It runs even if the catch block throws."
+        }
+      },
+      {
+        "type": "call",
+        "line": 18,
+        "name": "safe_divide",
+        "args": ["10", "0"],
+        "returnVar": null,
+        "explanation": {
+          "what": "safe_divide(10, 0) — b=0, triggers the error() call",
+          "why": "b == 0 is true — error('Cannot divide by zero') throws an ErrorException",
+          "change": "ErrorException thrown — execution jumps to catch",
+          "intent": "Show error() throwing an exception that propagates to the enclosing try",
+          "misconception": "error('msg') throws and immediately exits the current function. Lines after error() in the same branch never execute."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 2,
+        "expression": "b == 0",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "b == 0 → true — error() is called",
+          "why": "Division by zero must be prevented",
+          "change": "throws ErrorException('Cannot divide by zero')",
+          "intent": "Show guard clause pattern — validate inputs, throw descriptive error",
+          "misconception": "error() is NOT the same as println() — it throws an exception that unwinds the call stack until caught or the program crashes"
+        }
+      },
+      {
+        "type": "print",
+        "line": 20,
+        "value": "Error: Cannot divide by zero",
+        "explanation": {
+          "what": "catch e fires — e is the ErrorException. e.msg = 'Cannot divide by zero'",
+          "why": "The exception propagated from safe_divide to the enclosing try/catch",
+          "change": "output ← 'Error: Cannot divide by zero'",
+          "intent": "Show catch binding and accessing e.msg",
+          "misconception": "e.msg accesses the message string of an ErrorException. For other exception types the field may differ — use sprint(showerror, e) as a universal way to get a human-readable error string."
+        }
+      },
+      {
+        "type": "print",
+        "line": 22,
+        "value": "Done",
+        "explanation": {
+          "what": "finally runs again even though an exception was caught",
+          "why": "finally always executes — after either the try body or the catch body",
+          "change": "output ← 'Done'",
+          "intent": "Confirm finally runs in the error case too",
+          "misconception": "finally runs after the catch block finishes, not instead of it. Order: try body → (catch if error) → finally."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\ntry\n    x = parse(Int, \"abc\")\npatch e\n    println(\"caught\")\nfinally\n    println(\"clean\")\nend",
+    "options": [
+      "caught\nclean",
+      "clean",
+      "Error and crash",
+      "caught"
+    ],
+    "correctIndex": 0,
+    "explanation": "parse(Int, 'abc') throws an ArgumentError (cannot parse 'abc' as Int). The catch fires → 'caught'. Then finally → 'clean'. Output: caught then clean."
+  },
+
+  "explanation": {
+    "afterDemo": "Julia's try/catch/finally closely mirrors other languages but has one key difference: error handling via exceptions is idiomatic for truly exceptional conditions, not normal control flow. For expected failure cases (e.g., looking up a key in a dict), prefer conditional checks (haskey) or get() with a default. Reserve try/catch for unpredictable failures like I/O errors, malformed input, and external API failures.",
+    "keyTakeaways": [
+      "try...catch e...end captures exceptions. e.msg for ErrorException message.",
+      "error('msg') throws ErrorException. throw(ExceptionType(...)) for specific types.",
+      "finally always runs — use it for cleanup (file close, resource release)."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function safe_sqrt(x) that throws an error if x < 0 (message: 'Cannot sqrt negative'), otherwise returns sqrt(x). Call it wrapped in try/catch — test with safe_sqrt(9.0) then safe_sqrt(-1.0). Print the result or the error message.",
+    "starterCode": "function safe_sqrt(x)\n    # guard here\n    sqrt(x)\nend\n\ntry\n    println(safe_sqrt(9.0))\ncatch e\n    println(\"Error: $(e.msg)\")\nend\n\ntry\n    println(safe_sqrt(-1.0))\ncatch e\n    println(\"Error: $(e.msg)\")\nend",
+    "solutionCode": "function safe_sqrt(x)\n    if x < 0\n        error(\"Cannot sqrt negative\")\n    end\n    sqrt(x)\nend\n\ntry\n    println(safe_sqrt(9.0))\ncatch e\n    println(\"Error: $(e.msg)\")\nend\n\ntry\n    println(safe_sqrt(-1.0))\ncatch e\n    println(\"Error: $(e.msg)\")\nend",
+    "hint": "if x < 0; error('Cannot sqrt negative'); end",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["3.0", "Error: Cannot sqrt negative"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! safe_sqrt(9.0)=3.0, safe_sqrt(-1.0) throws and is caught.",
+    "retryHints": [
+      "if x < 0; error('Cannot sqrt negative'); end",
+      "sqrt(9.0) = 3.0",
+      "Expected: 3.0 then Error: Cannot sqrt negative"
+    ]
+  },
+
+  "summary": {
+    "title": "Error Handling — Complete",
+    "takeaways": [
+      "try...catch e...end — catches any thrown exception, binds it to e.",
+      "error('msg') throws ErrorException — the standard signal for invalid input/state.",
+      "finally always executes — ideal for cleanup code regardless of success or failure."
+    ],
+    "nextTopicId": null
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_data_types",
+  "topicId": "dart_data_types",
+  "language": "dart",
+  "title": "Core Data Types",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Dart has strong static typing with clear primitives and collections.",
+    "explanation": "Use explicit types when readability matters and inference when obvious.",
+    "syntax": "int age = 20;\ndouble score = 9.5;\nString name = 'Ari';\nbool active = true;",
+    "keyPoints": ["int/double for numbers", "String for text", "bool for logic", "List/Map for grouped data"]
+  },
+  "demo": {
+    "intro": "Declare primitive values and print them.",
+    "code": "int age = 20;\ndouble score = 9.5;\nString name = 'Ari';\nbool active = true;\nprint('$age $score $name $active');",
+    "focusLine": 1,
+    "expectedHighlights": ["typed declarations", "print values"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "age", "value": "20", "dataType": "int", "explanation": {"what": "Declare int", "why": "Whole number", "change": "age=20", "intent": "Numeric typing", "misconception": "int and double are distinct types"}},
+      {"type": "declare", "line": 2, "var": "score", "value": "9.5", "dataType": "double", "explanation": {"what": "Declare double", "why": "Decimal number", "change": "score=9.5", "intent": "Floating-point typing", "misconception": "double may have precision limits"}},
+      {"type": "print", "line": 5, "value": "20 9.5 Ari true", "explanation": {"what": "Print typed values", "why": "Confirm declarations", "change": "output <- values", "intent": "Observe runtime output", "misconception": "Types are compile-time safety; runtime prints plain values"}}
+    ]
+  },
+  "prediction": {
+    "question": "Is this valid?\n\nint n = 3.2;",
+    "options": ["yes", "no"],
+    "correctIndex": 1,
+    "explanation": "3.2 is a double, not an int."
+  },
+  "explanation": {
+    "afterDemo": "Accurate types improve compiler checks and documentation quality.",
+    "keyTakeaways": ["Type primitives clearly", "Use the right numeric type", "Type-safe code catches mistakes early"]
+  },
+  "practice": {
+    "prompt": "Create String city='Pune', int temp=30, bool hot=true and print all three.",
+    "starterCode": "// write code",
+    "solutionCode": "String city = 'Pune';\nint temp = 30;\nbool hot = true;\nprint('$city $temp $hot');",
+    "hint": "Use explicit types on each declaration.",
+    "validation": {"type": "output", "expectedOutput": ["Pune 30 true"]}
+  },
+  "feedback": {"successMessage": "Data type usage looks correct.", "retryHints": ["Keep temp as int", "Use bool for hot", "Print all values"]},
+  "summary": {"title": "Core Data Types — Complete", "takeaways": ["Use precise primitive types", "Dart enforces type safety", "Clear typing improves readability"], "nextTopicId": "dart_functions"}
+}

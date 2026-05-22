@@ -1,0 +1,181 @@
+{
+  "id": "lm_julia_arrays",
+  "topicId": "julia_arrays",
+  "language": "julia",
+  "title": "Arrays",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Julia arrays are 1-indexed, mutable, and typed. push! appends, pop! removes. Access with arr[i]. Mutating functions follow the ! convention.",
+    "explanation": "Julia arrays (Vector{T}) are created with [] literals. They are 1-indexed — the first element is at index 1. Mutating functions are named with a trailing ! by convention: push!(arr, val) appends, pop!(arr) removes the last element, sort!(arr) sorts in place. Non-mutating versions (sort, reverse) return new arrays. Use length(), sum(), minimum(), maximum() for aggregation.",
+    "syntax": "# Create\nnums = [3, 1, 4, 1, 5, 9]\n\n# Access (1-indexed!)\nnums[1]    # 3\nnums[end]  # 9 — last element\n\n# Mutate\npush!(nums, 2)   # append\npop!(nums)       # remove last\n\n# Aggregate\nlength(nums)     # count\nsum(nums)        # total\nsort(nums)       # new sorted array\nsort!(nums)      # sort in place",
+    "keyPoints": [
+      "1-indexed: first element at arr[1], last at arr[end]",
+      "push!(arr, v) appends; pop!(arr) removes last",
+      "! suffix = mutates in place. Without ! = returns new array",
+      "length, sum, minimum, maximum for common aggregations"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch an array being created, mutated with push!/pop!, and aggregated.",
+    "code": "nums = [3, 1, 4, 1, 5]\nprintln(nums[1])\nprintln(nums[end])\npush!(nums, 9)\nprintln(nums)\npop!(nums)\nprintln(length(nums))\nprintln(sum(nums))",
+    "focusLine": 1,
+    "expectedHighlights": ["nums=[3,1,4,1,5]", "first=3", "last=5", "push 9", "pop", "length=5", "sum=14"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "nums",
+        "value": "[3, 1, 4, 1, 5]",
+        "dataType": "Vector{Int64}",
+        "explanation": {
+          "what": "nums = [3, 1, 4, 1, 5] — creates a Vector{Int64}",
+          "why": "Square bracket literal infers element type as Int64",
+          "change": "nums = [3, 1, 4, 1, 5]",
+          "intent": "Show array literal creation and automatic type inference",
+          "misconception": "Julia arrays are typed — Vector{Int64} means every element must be an Int64 (or promotable to Int64). Pushing a String to this array would throw a MethodError."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "3",
+        "explanation": {
+          "what": "nums[1] → 3 — the first element",
+          "why": "Julia is 1-indexed — index 1 is the first element",
+          "change": "output ← '3'",
+          "intent": "Show 1-based indexing — the most common Julia gotcha for newcomers",
+          "misconception": "Julia uses 1-based indexing, NOT 0-based like Python, JavaScript, or C. nums[0] would throw a BoundsError."
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "5",
+        "explanation": {
+          "what": "nums[end] → 5 — the last element",
+          "why": "end is a special index that refers to the last element (equivalent to nums[length(nums)])",
+          "change": "output ← '5'",
+          "intent": "Show the end keyword for last-element access",
+          "misconception": "end works in any index expression: nums[end-1] is the second-to-last element. This is much cleaner than computing length()-1 manually."
+        }
+      },
+      {
+        "type": "call",
+        "line": 4,
+        "name": "push!",
+        "args": ["nums", "9"],
+        "returnVar": null,
+        "explanation": {
+          "what": "push!(nums, 9) — appends 9 to the end of nums",
+          "why": "push! mutates the array in place (hence the !)",
+          "change": "nums = [3, 1, 4, 1, 5, 9]",
+          "intent": "Show push! adding an element",
+          "misconception": "push! modifies the ORIGINAL array. There is no return value you need to capture — nums itself is updated. This differs from Python's append() which also modifies in place."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "[3, 1, 4, 1, 5, 9]",
+        "explanation": {
+          "what": "println(nums) shows the updated array",
+          "why": "push! added 9 at the end",
+          "change": "output ← '[3, 1, 4, 1, 5, 9]'",
+          "intent": "Confirm push! mutation",
+          "misconception": "Julia arrays print with brackets: [1, 2, 3] — no extra 'Array' prefix"
+        }
+      },
+      {
+        "type": "call",
+        "line": 6,
+        "name": "pop!",
+        "args": ["nums"],
+        "returnVar": "popped",
+        "explanation": {
+          "what": "pop!(nums) — removes and returns the last element (9)",
+          "why": "pop! removes the last element and returns it",
+          "change": "nums = [3, 1, 4, 1, 5]; removed value = 9",
+          "intent": "Show pop! removing the last element",
+          "misconception": "pop! returns the removed value — you can capture it: val = pop!(nums). Here we ignore it."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "5",
+        "explanation": {
+          "what": "length(nums) → 5 — back to 5 elements after pop!",
+          "why": "push! added 1 element, pop! removed 1 — net change: 0",
+          "change": "output ← '5'",
+          "intent": "Confirm array length after mutations",
+          "misconception": "length() counts elements, not the last index. Since arrays are 1-indexed, the last valid index equals length(nums)."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "14",
+        "explanation": {
+          "what": "sum(nums) → 3+1+4+1+5 = 14",
+          "why": "sum adds all elements: 3+1+4+1+5=14",
+          "change": "output ← '14'",
+          "intent": "Show sum() aggregation function",
+          "misconception": "sum() works on any numeric collection — it does not modify the array"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\narr = [10, 20, 30]\npush!(arr, 40)\nprintln(arr[end])",
+    "options": [
+      "30",
+      "40",
+      "4",
+      "BoundsError"
+    ],
+    "correctIndex": 1,
+    "explanation": "push!(arr, 40) appends 40 to the array making it [10,20,30,40]. arr[end] accesses the last element, which is 40."
+  },
+
+  "explanation": {
+    "afterDemo": "Julia arrays are the workhorse of numerical computing. The 1-based indexing aligns with mathematics and Fortran — if you come from Python the shift takes a moment but becomes natural. The ! convention makes it immediately clear whether a function mutates its argument or returns a new value — a design discipline that prevents many bugs.",
+    "keyTakeaways": [
+      "1-indexed: arr[1] is first, arr[end] is last. arr[0] throws BoundsError.",
+      "push!(arr, v) appends in place. pop!(arr) removes and returns the last element.",
+      "! suffix = mutates in place. sort(arr) → new array; sort!(arr) → modifies arr."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Start with arr = [5, 2, 8, 1, 9]. Push 3 onto it, sort! it in place, then print the first and last elements on separate lines.",
+    "starterCode": "arr = [5, 2, 8, 1, 9]\n# push 3\n# sort in place\n# print first and last",
+    "solutionCode": "arr = [5, 2, 8, 1, 9]\npush!(arr, 3)\nsort!(arr)\nprintln(arr[1])\nprintln(arr[end])",
+    "hint": "push!(arr, 3) then sort!(arr) in place. arr[1] is first, arr[end] is last.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["1", "9"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! After push and sort: [1, 2, 3, 5, 8, 9]. First=1, last=9.",
+    "retryHints": [
+      "push!(arr, 3) — arr becomes [5,2,8,1,9,3]",
+      "sort!(arr) — sorts in place: [1,2,3,5,8,9]",
+      "arr[1]=1, arr[end]=9. Expected: 1 then 9"
+    ]
+  },
+
+  "summary": {
+    "title": "Arrays — Complete",
+    "takeaways": [
+      "1-indexed arrays: arr[1] is first. arr[end] is last.",
+      "push!/pop! append/remove at the end. ! means mutates in place.",
+      "Aggregate with length(), sum(), minimum(), maximum(). sort() → new; sort!() → in place."
+    ],
+    "nextTopicId": "julia_tuples"
+  }
+}

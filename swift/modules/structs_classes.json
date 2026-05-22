@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_structs_classes",
+  "topicId": "swift_structs_classes",
+  "language": "swift",
+  "title": "Structs & Classes",
+  "difficulty": "medium",
+  "concept": {"headline": "Structs are value types; classes are reference types.", "explanation": "Swift prefers structs for most models due to safer copying behavior.", "syntax": "struct User {\n    var name: String\n    var score: Int\n}", "keyPoints": ["Struct copy creates independent value", "Class copy shares reference", "Both can have methods"]},
+  "demo": {"intro": "Define a struct and print a field.", "code": "struct User {\n    var name: String\n    var score: Int\n}\nlet u = User(name: \"Ari\", score: 10)\nprint(u.name)", "focusLine": 1, "expectedHighlights": ["struct declaration", "instance init", "prints Ari"], "steps": [{"type": "declare", "line": 1, "var": "User", "value": "struct", "dataType": "type", "explanation": {"what": "Declare value type", "why": "Model user data", "change": "User type available", "intent": "Domain modeling", "misconception": "Struct instances are copied on assignment"}}, {"type": "call", "line": 5, "name": "User", "args": ["name:Ari", "score:10"], "returnVar": "u", "explanation": {"what": "Create instance", "why": "Hold user state", "change": "u initialized", "intent": "Construct data", "misconception": "Memberwise initializer auto-generated"}}, {"type": "print", "line": 6, "value": "Ari", "explanation": {"what": "Print property", "why": "Validate model", "change": "output <- Ari", "intent": "Access fields", "misconception": "None"}}]},
+  "prediction": {"question": "Default recommended for simple models?", "options": ["class", "struct", "enum", "protocol"], "correctIndex": 1, "explanation": "Swift recommends structs by default."},
+  "explanation": {"afterDemo": "Understanding value vs reference behavior is key in Swift.", "keyTakeaways": ["Structs reduce shared-state bugs", "Classes needed for reference semantics", "Choose intentionally"]},
+  "practice": {"prompt": "Create struct Point with x,y Int and print x of Point(x:2,y:3).", "starterCode": "// write code", "solutionCode": "struct Point {\n    var x: Int\n    var y: Int\n}\nlet p = Point(x: 2, y: 3)\nprint(p.x)", "hint": "Use memberwise initializer.", "validation": {"type": "output", "expectedOutput": ["2"]}},
+  "feedback": {"successMessage": "Struct modeling is correct.", "retryHints": ["Define stored properties", "Initialize with labels"]},
+  "summary": {"title": "Structs & Classes — Complete", "takeaways": ["Structs are value-centric", "Classes are reference-centric", "Modeling choice affects behavior"], "nextTopicId": "swift_protocols_extensions"}
+}

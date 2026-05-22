@@ -1,0 +1,116 @@
+{
+  "id": "lm_go_variables",
+  "topicId": "go_variables",
+  "language": "go",
+  "title": "Variables",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Go variables are statically typed bindings.",
+    "explanation": "Use var or short declaration := to create local variables.",
+    "syntax": "name := \"StepViz\"\ncount := 1\ncount++",
+    "keyPoints": [
+      "Use := inside functions",
+      "Type is inferred when possible",
+      "Variables have fixed type after declaration"
+    ]
+  },
+  "demo": {
+    "intro": "Declare and update local values.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tname := \"StepViz\"\n\tcount := 1\n\tcount++\n\tfmt.Println(name, count)\n}",
+    "focusLine": 6,
+    "expectedHighlights": [
+      "name declared",
+      "count incremented",
+      "prints StepViz 2"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "name",
+        "value": "StepViz",
+        "dataType": "string",
+        "explanation": {
+          "what": "Declare name",
+          "why": "Store text value",
+          "change": "name set",
+          "intent": "Introduce short declaration",
+          "misconception": "Type inferred from literal"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 8,
+        "var": "count",
+        "value": "2",
+        "explanation": {
+          "what": "Increment count",
+          "why": "Update numeric state",
+          "change": "count:1->2",
+          "intent": "Demonstrate mutation",
+          "misconception": "Only mutable vars can be incremented"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "StepViz 2",
+        "explanation": {
+          "what": "Print values",
+          "why": "Check result",
+          "change": "output emitted",
+          "intent": "Verify declarations",
+          "misconception": "Print does not alter state"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "Output?\n\nx := 5\nx = x + 1\nfmt.Println(x)",
+    "options": [
+      "5",
+      "6",
+      "51",
+      "error"
+    ],
+    "correctIndex": 1,
+    "explanation": "x becomes 6 after reassignment."
+  },
+  "explanation": {
+    "afterDemo": "Variables are typed and explicit in Go.",
+    "keyTakeaways": [
+      "Short declaration is ergonomic",
+      "Types are fixed per variable",
+      "State updates are explicit"
+    ]
+  },
+  "practice": {
+    "prompt": "Declare title='Go', n=3, then increment n by 4 and print both.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ttitle := \"Go\"\n\tn := 3\n\tn += 4\n\tfmt.Println(title, n)\n}",
+    "hint": "Use := and +=.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "Go 7"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Variable declarations and updates are correct.",
+    "retryHints": [
+      "Use fmt.Println",
+      "Increment n with += 4",
+      "Declare title and n in main"
+    ]
+  },
+  "summary": {
+    "title": "Variables - Complete",
+    "takeaways": [
+      "Go variables are typed",
+      ":= is common for locals",
+      "Mutation is explicit"
+    ],
+    "nextTopicId": "go_data_types"
+  }
+}

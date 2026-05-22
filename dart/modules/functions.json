@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_functions",
+  "topicId": "dart_functions",
+  "language": "dart",
+  "title": "Functions",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Functions in Dart support strong typing and concise syntax.",
+    "explanation": "Declare return and parameter types for safer APIs. Use named/default parameters for flexibility.",
+    "syntax": "int add(int a, int b) {\n  return a + b;\n}\nprint(add(3, 4));",
+    "keyPoints": ["Type parameters and returns", "Named parameters improve call clarity", "Arrow syntax for one-line functions"]
+  },
+  "demo": {
+    "intro": "Define and call a typed function.",
+    "code": "int add(int a, int b) {\n  return a + b;\n}\n\nfinal r = add(3, 4);\nprint(r);",
+    "focusLine": 1,
+    "expectedHighlights": ["function declared", "call add(3,4)", "prints 7"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "add", "value": "function", "dataType": "(int,int)->int", "explanation": {"what": "Define add", "why": "Reusable arithmetic", "change": "add available", "intent": "Create typed function", "misconception": "Return type helps catch wrong returns"}},
+      {"type": "call", "line": 5, "name": "add", "args": ["3", "4"], "returnVar": "r", "explanation": {"what": "Invoke function", "why": "Arguments match types", "change": "r=7", "intent": "Show function call", "misconception": "Wrong arg types fail compile"}},
+      {"type": "print", "line": 6, "value": "7", "explanation": {"what": "Print result", "why": "Observe return value", "change": "output <- 7", "intent": "Verify behavior", "misconception": "Function type checks happen before run"}}
+    ]
+  },
+  "prediction": {
+    "question": "What happens?\n\nint f(int x) => x;\nf('2');",
+    "options": ["prints 2", "compile error", "runtime null", "syntax error"],
+    "correctIndex": 1,
+    "explanation": "f expects int, but string argument is provided."
+  },
+  "explanation": {
+    "afterDemo": "Typed functions reduce integration bugs and improve maintainability.",
+    "keyTakeaways": ["Use explicit signatures", "Match argument types", "Prefer small focused functions"]
+  },
+  "practice": {
+    "prompt": "Write int square(int n) and print square(6).",
+    "starterCode": "// write code",
+    "solutionCode": "int square(int n) {\n  return n * n;\n}\n\nprint(square(6));",
+    "hint": "Return n * n.",
+    "validation": {"type": "output", "expectedOutput": ["36"]}
+  },
+  "feedback": {"successMessage": "Function implementation is correct.", "retryHints": ["Keep return type int", "Return multiplication result"]},
+  "summary": {"title": "Functions — Complete", "takeaways": ["Typed signatures improve reliability", "Calls must match parameter types", "Return types clarify API contracts"], "nextTopicId": "dart_control_flow"}
+}

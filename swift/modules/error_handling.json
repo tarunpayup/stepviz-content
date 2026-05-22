@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_error_handling",
+  "topicId": "swift_error_handling",
+  "language": "swift",
+  "title": "Error Handling",
+  "difficulty": "medium",
+  "concept": {"headline": "Swift uses throw/try/catch for recoverable failures.", "explanation": "Define Error types and handle thrown errors with do-catch.", "syntax": "enum ParseError: Error { case bad }\nfunc parse(_ s: String) throws -> Int {\n    guard let v = Int(s) else { throw ParseError.bad }\n    return v\n}", "keyPoints": ["Error types conform to Error", "throw raises failures", "do-catch handles them"]},
+  "demo": {"intro": "Parse string to Int with error handling.", "code": "enum ParseError: Error { case bad }\nfunc parse(_ s: String) throws -> Int {\n    guard let v = Int(s) else { throw ParseError.bad }\n    return v\n}\ndo {\n    print(try parse(\"12\"))\n} catch {\n    print(\"error\")\n}", "focusLine": 2, "expectedHighlights": ["throws function", "try call", "prints 12"], "steps": [{"type": "declare", "line": 1, "var": "ParseError", "value": "Error enum", "dataType": "enum", "explanation": {"what": "Define error type", "why": "Typed failure cases", "change": "ParseError available", "intent": "Controlled errors", "misconception": "Error is protocol"}}, {"type": "call", "line": 7, "name": "parse", "args": ["12"], "returnVar": "value", "explanation": {"what": "Try parse", "why": "Convert input", "change": "value=12", "intent": "Success path", "misconception": "try required for throwing calls"}}, {"type": "print", "line": 7, "value": "12", "explanation": {"what": "Print parsed value", "why": "Confirm success", "change": "output <- 12", "intent": "Validate handling", "misconception": "catch runs only on error"}}]},
+  "prediction": {"question": "Keyword to mark a function that can throw?", "options": ["error", "throws", "try", "catch"], "correctIndex": 1, "explanation": "throws marks throwable functions."},
+  "explanation": {"afterDemo": "Typed errors improve reliability and debugging clarity.", "keyTakeaways": ["Model expected failures", "Handle with do-catch", "Use guard for early exits"]},
+  "practice": {"prompt": "Create enum E: Error { case bad } and function f() throws that throws E.bad; call in do-catch and print 'handled'.", "starterCode": "// write code", "solutionCode": "enum E: Error { case bad }\nfunc f() throws { throw E.bad }\ndo {\n    try f()\n} catch {\n    print(\"handled\")\n}", "hint": "Throw inside f and catch outside.", "validation": {"type": "output", "expectedOutput": ["handled"]}},
+  "feedback": {"successMessage": "Error throwing and catching are correct.", "retryHints": ["Mark function with throws", "Use try in do block"]},
+  "summary": {"title": "Error Handling — Complete", "takeaways": ["Throws signal recoverable errors", "do-catch handles them", "Typed errors improve design"], "nextTopicId": "swift_async_await"}
+}

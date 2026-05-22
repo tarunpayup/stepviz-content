@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_functions",
+  "topicId": "python_functions",
+  "language": "python",
+  "title": "Functions",
+  "difficulty": "easy",
+  "concept": {"headline": "Functions package reusable logic.", "explanation": "Use def with parameters and return for clean reusable behavior.", "syntax": "def add(a, b):\n    return a + b", "keyPoints": ["def starts function", "return sends value", "Use descriptive names"]},
+  "demo": {"intro": "Define and call add().", "code": "def add(a, b):\n    return a + b\n\nprint(add(3, 4))", "focusLine": 1, "expectedHighlights": ["function declared", "call returns 7"], "steps": [{"type": "declare", "line": 1, "var": "add", "value": "function", "dataType": "callable", "explanation": {"what": "Define function", "why": "Reuse operation", "change": "add available", "intent": "Create callable", "misconception": "Definition does not execute body immediately"}}, {"type": "call", "line": 4, "name": "add", "args": ["3", "4"], "returnVar": "result", "explanation": {"what": "Call add", "why": "Compute sum", "change": "result=7", "intent": "Function invocation", "misconception": "Args are positional here"}}, {"type": "print", "line": 4, "value": "7", "explanation": {"what": "Print result", "why": "Show output", "change": "output <- 7", "intent": "Verify function", "misconception": "print is separate from return"}}]},
+  "prediction": {"question": "What does return do?", "options": ["prints value", "ends function and sends value", "creates variable", "loops"], "correctIndex": 1, "explanation": "return exits function and provides output."},
+  "explanation": {"afterDemo": "Small functions keep programs modular and testable.", "keyTakeaways": ["Functions isolate logic", "Return values compose well", "Parameters make behavior reusable"]},
+  "practice": {"prompt": "Write function square(n) returning n*n and print square(6).", "starterCode": "# write code", "solutionCode": "def square(n):\n    return n * n\n\nprint(square(6))", "hint": "Multiply n by itself.", "validation": {"type": "output", "expectedOutput": ["36"]}},
+  "feedback": {"successMessage": "Function implementation is correct.", "retryHints": ["Use def square(n)", "Return n*n"]},
+  "summary": {"title": "Functions — Complete", "takeaways": ["def defines reusable blocks", "return provides outputs", "Function calls pass inputs"] , "nextTopicId": "python_control_flow"}
+}

@@ -1,0 +1,117 @@
+{
+  "id": "lm_go_control_flow",
+  "topicId": "go_control_flow",
+  "language": "go",
+  "title": "Control Flow",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "if/else and switch drive branching behavior.",
+    "explanation": "Conditions evaluate to true/false and route execution.",
+    "syntax": "if score >= 90 {\n\tgrade = \"A\"\n} else if score >= 80 {\n\tgrade = \"B\"\n} else {\n\tgrade = \"C\"\n}",
+    "keyPoints": [
+      "Branches are checked in order",
+      "Only one branch runs in if/else chain",
+      "switch is cleaner for many cases"
+    ]
+  },
+  "demo": {
+    "intro": "Assign grade from a score.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tscore := 82\n\tgrade := \"C\"\n\tif score >= 90 {\n\t\tgrade = \"A\"\n\t} else if score >= 80 {\n\t\tgrade = \"B\"\n\t}\n\tfmt.Println(grade)\n}",
+    "focusLine": 8,
+    "expectedHighlights": [
+      "first condition false",
+      "second condition true",
+      "prints B"
+    ],
+    "steps": [
+      {
+        "type": "condition_check",
+        "line": 8,
+        "expression": "score >= 90",
+        "result": false,
+        "branch": "if",
+        "explanation": {
+          "what": "Check first condition",
+          "why": "82 is below 90",
+          "change": "skip first branch",
+          "intent": "Ordered branching",
+          "misconception": "False branch body is not executed"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 10,
+        "expression": "score >= 80",
+        "result": true,
+        "branch": "else-if",
+        "explanation": {
+          "what": "Check next condition",
+          "why": "82 meets threshold",
+          "change": "grade becomes B",
+          "intent": "Select matching path",
+          "misconception": "Chain stops after true condition"
+        }
+      },
+      {
+        "type": "print",
+        "line": 13,
+        "value": "B",
+        "explanation": {
+          "what": "Print grade",
+          "why": "Confirm chosen branch",
+          "change": "output emitted",
+          "intent": "Verify logic",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "If score is 70 in this logic, what prints?",
+    "options": [
+      "A",
+      "B",
+      "C",
+      "error"
+    ],
+    "correctIndex": 2,
+    "explanation": "Neither condition matches, so grade stays C."
+  },
+  "explanation": {
+    "afterDemo": "Clear branch ordering avoids subtle errors.",
+    "keyTakeaways": [
+      "Write specific conditions first",
+      "Ensure fallback path exists",
+      "Test boundary values"
+    ]
+  },
+  "practice": {
+    "prompt": "For n:=7, print 'odd' else 'even'.",
+    "starterCode": "package main\n\nfunc main() {\n\tn := 7\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tn := 7\n\tif n%2 == 0 {\n\t\tfmt.Println(\"even\")\n\t} else {\n\t\tfmt.Println(\"odd\")\n\t}\n}",
+    "hint": "Use n%2 == 0 in the if condition.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "odd"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Conditional logic is correct.",
+    "retryHints": [
+      "Use if/else",
+      "Check remainder with %",
+      "Print exactly one branch"
+    ]
+  },
+  "summary": {
+    "title": "Control Flow - Complete",
+    "takeaways": [
+      "Conditions direct execution",
+      "Else-if chains handle ranges",
+      "Fallback paths matter"
+    ],
+    "nextTopicId": "go_loops"
+  }
+}

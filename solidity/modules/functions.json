@@ -1,0 +1,42 @@
+{
+  "id": "lm_solidity_functions",
+  "topicId": "solidity_functions",
+  "language": "solidity",
+  "title": "Functions & Visibility",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Function visibility controls who can call what.",
+    "explanation": "Use public/private/internal/external deliberately and annotate purity when no state is changed/read.",
+    "syntax": "function add(uint256 a, uint256 b) public pure returns (uint256) {\n  return a + b;\n}",
+    "keyPoints": ["public is broadly accessible", "external optimized for external calls", "pure/view express mutability"]
+  },
+  "demo": {
+    "intro": "Define a pure arithmetic function.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Math {\n  function add(uint256 a, uint256 b) public pure returns (uint256) {\n    return a + b;\n  }\n}",
+    "focusLine": 4,
+    "expectedHighlights": ["public function", "pure mutability", "returns uint256"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "add", "value": "function", "dataType": "(uint256,uint256)->uint256", "explanation": {"what": "Declare typed function", "why": "Reusable arithmetic logic", "change": "add available", "intent": "Show signature + visibility", "misconception": "pure means no state read/write"}},
+      {"type": "return", "line": 5, "value": "a+b", "explanation": {"what": "Return sum", "why": "Function output value", "change": "computed return value", "intent": "Complete function body", "misconception": "Return type must match declaration"}}
+    ]
+  },
+  "prediction": {
+    "question": "Which visibility makes a function callable only inside the same contract?",
+    "options": ["public", "external", "private", "view"],
+    "correctIndex": 2,
+    "explanation": "private functions can only be called from within the defining contract."
+  },
+  "explanation": {
+    "afterDemo": "Visibility and mutability are key API design choices in smart contracts.",
+    "keyTakeaways": ["Declare visibility explicitly", "Use view/pure correctly", "Keep interfaces minimal and safe"]
+  },
+  "practice": {
+    "prompt": "Write function mul(uint256 x, uint256 y) public pure returns (uint256) and return x*y.",
+    "starterCode": "function mul(uint256 x, uint256 y) public pure returns (uint256) {\n  // return\n}",
+    "solutionCode": "function mul(uint256 x, uint256 y) public pure returns (uint256) {\n  return x * y;\n}",
+    "hint": "Use return x * y;",
+    "validation": {"type": "step_count", "min": 1}
+  },
+  "feedback": {"successMessage": "Function signature and return are correct.", "retryHints": ["Keep public pure", "Return uint256 expression"]},
+  "summary": {"title": "Functions — Complete", "takeaways": ["Visibility limits access", "Mutability documents behavior", "Typed returns improve safety"], "nextTopicId": "solidity_control_flow"}
+}

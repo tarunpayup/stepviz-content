@@ -1,0 +1,230 @@
+[
+  {
+    "id": "go_variables",
+    "language": "go",
+    "domain": "programming",
+    "title": "Variables",
+    "description": "Declare and initialize values using var and short declaration.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "Go variables store typed values and can be declared with var or :=.",
+      "analogy": "A variable is a labeled slot that holds one value type.",
+      "keyPoints": [
+        "Use := inside functions",
+        "Type inference is common",
+        "Zero values exist for uninitialized vars"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tname := \"StepViz\"\n\tcount := 1\n\tcount++\n\tfmt.Println(name, count)\n}"
+  },
+  {
+    "id": "go_data_types",
+    "language": "go",
+    "domain": "programming",
+    "title": "Core Data Types",
+    "description": "Use built-in numeric, string, and boolean types.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Go includes strong static types like int, float64, string, and bool.",
+      "analogy": "Types are strict containers for valid values.",
+      "keyPoints": [
+        "int for integers",
+        "float64 for decimal numbers",
+        "string for text and bool for true/false"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tage := 20\n\tscore := 9.5\n\tname := \"Ari\"\n\tactive := true\n\tfmt.Println(age, score, name, active)\n}"
+  },
+  {
+    "id": "go_functions",
+    "language": "go",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Write reusable functions with explicit parameter and return types.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Functions encapsulate logic and define input/output contracts.",
+      "analogy": "A function is a machine that transforms input into output.",
+      "keyPoints": [
+        "func declares functions",
+        "Return types are explicit",
+        "Use small focused functions"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc add(a int, b int) int {\n\treturn a + b\n}\n\nfunc main() {\n\tfmt.Println(add(3, 4))\n}"
+  },
+  {
+    "id": "go_control_flow",
+    "language": "go",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Use if/else and switch for branching logic.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Control flow chooses which branch executes based on conditions.",
+      "analogy": "Branches are decision gates in program flow.",
+      "keyPoints": [
+        "if handles condition checks",
+        "else provides fallback",
+        "switch simplifies multi-case logic"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tscore := 82\n\tgrade := \"C\"\n\tif score >= 90 {\n\t\tgrade = \"A\"\n\t} else if score >= 80 {\n\t\tgrade = \"B\"\n\t}\n\tfmt.Println(grade)\n}"
+  },
+  {
+    "id": "go_loops",
+    "language": "go",
+    "domain": "programming",
+    "title": "Loops",
+    "description": "Repeat operations with Go's for loop forms.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Go uses for as its single loop keyword for many iteration styles.",
+      "analogy": "A loop is a repeat lane for a block of code.",
+      "keyPoints": [
+        "Classic for init;cond;post",
+        "for range over collections",
+        "break and continue adjust flow"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ttotal := 0\n\tfor _, n := range []int{1, 2, 3} {\n\t\ttotal += n\n\t}\n\tfmt.Println(total)\n}"
+  },
+  {
+    "id": "go_arrays_slices",
+    "language": "go",
+    "domain": "programming",
+    "title": "Arrays & Slices",
+    "description": "Store ordered collections with fixed and dynamic sizing.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Arrays have fixed length; slices are flexible views over arrays.",
+      "analogy": "Array is a fixed tray, slice is a flexible window on items.",
+      "keyPoints": [
+        "Array length is part of type",
+        "Slices are most commonly used",
+        "append grows slices"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tarr := [3]int{1, 2, 3}\n\tnums := []int{1, 2}\n\tnums = append(nums, 3)\n\tfmt.Println(arr, nums)\n}"
+  },
+  {
+    "id": "go_maps",
+    "language": "go",
+    "domain": "programming",
+    "title": "Maps",
+    "description": "Use key-value mappings for fast lookup.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Maps store key-value pairs with efficient key-based access.",
+      "analogy": "A map is a dictionary table for quick retrieval.",
+      "keyPoints": [
+        "Create with map literals or make",
+        "Read with key lookup",
+        "Second value indicates presence"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tuser := map[string]int{\"age\": 20}\n\tuser[\"age\"] = 21\n\tfmt.Println(user[\"age\"])\n}"
+  },
+  {
+    "id": "go_structs_methods",
+    "language": "go",
+    "domain": "programming",
+    "title": "Structs & Methods",
+    "description": "Model data and behavior with structs and receiver methods.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Structs group related fields; methods attach behavior to types.",
+      "analogy": "Struct is a blueprint, methods are its actions.",
+      "keyPoints": [
+        "type Name struct defines model",
+        "Methods use receivers",
+        "Pointer receivers allow mutation"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\ntype User struct {\n\tName  string\n\tScore int\n}\n\nfunc (u User) Label() string {\n\treturn fmt.Sprintf(\"%s: %d\", u.Name, u.Score)\n}\n\nfunc main() {\n\tu := User{Name: \"Ari\", Score: 10}\n\tfmt.Println(u.Label())\n}"
+  },
+  {
+    "id": "go_interfaces",
+    "language": "go",
+    "domain": "programming",
+    "title": "Interfaces",
+    "description": "Define behavior contracts with method sets.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Interfaces describe behavior and are satisfied implicitly.",
+      "analogy": "An interface is a capability checklist.",
+      "keyPoints": [
+        "No explicit implements keyword",
+        "Small interfaces are preferred",
+        "Promotes decoupled design"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\ntype Greeter interface {\n\tGreet() string\n}\n\ntype Bot struct{}\n\nfunc (Bot) Greet() string { return \"Hello\" }\n\nfunc main() {\n\tvar g Greeter = Bot{}\n\tfmt.Println(g.Greet())\n}"
+  },
+  {
+    "id": "go_error_handling",
+    "language": "go",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Handle failures explicitly using error values.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "Go returns errors as values instead of exceptions.",
+      "analogy": "Error handling is a checked return lane after each risky call.",
+      "keyPoints": [
+        "if err != nil is standard pattern",
+        "Return early on failures",
+        "Wrap errors with context"
+      ]
+    },
+    "defaultCode": "package main\n\nimport (\n\t\"fmt\"\n\t\"strconv\"\n)\n\nfunc main() {\n\tv, err := strconv.Atoi(\"12\")\n\tif err != nil {\n\t\tfmt.Println(\"bad input\")\n\t\treturn\n\t}\n\tfmt.Println(v)\n}"
+  },
+  {
+    "id": "go_packages",
+    "language": "go",
+    "domain": "programming",
+    "title": "Packages",
+    "description": "Organize and reuse code through package imports.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Packages are the unit of modularity in Go projects.",
+      "analogy": "Packages are toolboxes with named public tools.",
+      "keyPoints": [
+        "package keyword sets namespace",
+        "Import standard or custom packages",
+        "Exported names start with uppercase"
+      ]
+    },
+    "defaultCode": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc main() {\n\tfmt.Println(math.Sqrt(16))\n}"
+  },
+  {
+    "id": "go_goroutines_channels",
+    "language": "go",
+    "domain": "programming",
+    "title": "Goroutines & Channels",
+    "description": "Write concurrent code with goroutines and channel communication.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Goroutines run functions concurrently and channels coordinate data flow.",
+      "analogy": "Goroutines are workers; channels are message pipes.",
+      "keyPoints": [
+        "go keyword launches goroutine",
+        "Channels transfer typed values",
+        "Use synchronization carefully"
+      ]
+    },
+    "defaultCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tch := make(chan int)\n\tgo func() {\n\t\tch <- 42\n\t}()\n\tv := <-ch\n\tfmt.Println(v)\n}"
+  }
+]

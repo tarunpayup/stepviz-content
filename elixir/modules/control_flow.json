@@ -1,0 +1,213 @@
+{
+  "id": "lm_elixir_control_flow",
+  "topicId": "elixir_control_flow",
+  "language": "elixir",
+  "title": "Control Flow: if, cond, case",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "if/unless for binary branching. cond for multi-branch conditions (like chained if-else). case for pattern-matching a value. All are expressions returning a value.",
+    "explanation": "Elixir control flow constructs are expressions — they evaluate to a value. if cond do...else...end is the standard binary branch. unless is the negated form. cond do clause -> result ... end matches the first true clause (like a switch on conditions). case value do pattern -> result end matches the first pattern against value.",
+    "syntax": "# if / else\nresult = if x > 0 do\n  \"positive\"\nelse\n  \"non-positive\"\nend\n\n# unless (negated if)\nunless x == 0 do\n  IO.puts(\"x is not zero\")\nend\n\n# cond — first true clause wins\ngrade = cond do\n  score >= 90 -> \"A\"\n  score >= 80 -> \"B\"\n  score >= 70 -> \"C\"\n  true        -> \"F\"\nend\n\n# case — pattern matching on a value\ncase result do\n  {:ok, val}    -> IO.puts(\"Got: #{val}\")\n  {:error, msg} -> IO.puts(\"Error: #{msg}\")\n  _             -> IO.puts(\"Unknown\")\nend",
+    "keyPoints": [
+      "if cond do ... else ... end — binary branch, returns a value",
+      "unless is if with negated condition — use for readability",
+      "cond: first true clause wins. Catch-all: true -> ...",
+      "case: first matching pattern wins. Catch-all: _ -> ..."
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch if and cond classify a score, then case match an atom tag.",
+    "code": "score = 85\n\nresult = if score >= 60 do\n  \"pass\"\nelse\n  \"fail\"\nend\nIO.puts(result)\n\ngrade = cond do\n  score >= 90 -> \"A\"\n  score >= 80 -> \"B\"\n  score >= 70 -> \"C\"\n  true        -> \"F\"\nend\nIO.puts(grade)\n\nstatus = {:ok, \"done\"}\ncase status do\n  {:ok, msg}    -> IO.puts(\"Success: #{msg}\")\n  {:error, msg} -> IO.puts(\"Error: #{msg}\")\nend",
+    "focusLine": 3,
+    "expectedHighlights": ["score=85", "if pass", "cond B", "case :ok"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "score",
+        "value": "85",
+        "dataType": "Integer",
+        "explanation": {
+          "what": "score = 85 — integer to test control flow branches",
+          "why": "Setting up the test value",
+          "change": "score = 85",
+          "intent": "Establish the value that drives all branches",
+          "misconception": "All three control flow forms (if, cond, case) will make decisions based on this value"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 3,
+        "expression": "score >= 60",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "85 >= 60 → true — if takes the do branch",
+          "why": "85 is greater than or equal to 60",
+          "change": "if expression evaluates to 'pass'",
+          "intent": "Show if with a truthy condition",
+          "misconception": "In Elixir, ONLY false and nil are falsy. Everything else — 0, empty string, empty list — is TRUTHY. This is different from JavaScript, Python, and Ruby."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "result",
+        "value": "\"pass\"",
+        "dataType": "String",
+        "explanation": {
+          "what": "if expression returns 'pass' — bound to result",
+          "why": "The do branch was taken; its last expression is the if's return value",
+          "change": "result = 'pass'",
+          "intent": "Show if as an expression returning a value",
+          "misconception": "if is an expression — its result can be bound to a variable. This eliminates mutable temporary variables."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "pass",
+        "explanation": {
+          "what": "IO.puts(result) → pass",
+          "why": "score >= 60 was true",
+          "change": "output ← 'pass'",
+          "intent": "Confirm if expression result",
+          "misconception": "If you use if without an else and the condition is false, the if expression returns nil."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 11,
+        "expression": "score >= 90",
+        "result": false,
+        "branch": "cond first clause",
+        "explanation": {
+          "what": "cond: first clause — 85 >= 90 → false, skip",
+          "why": "85 is not >= 90",
+          "change": "first clause skipped, check next",
+          "intent": "Show cond checking clauses top-to-bottom",
+          "misconception": "cond checks each clause from top to bottom. The FIRST true clause wins. Unlike case, cond does not match against a specific value — each clause is an independent condition."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 12,
+        "expression": "score >= 80",
+        "result": true,
+        "branch": "cond second clause",
+        "explanation": {
+          "what": "85 >= 80 → true — second clause matches",
+          "why": "85 is >= 80",
+          "change": "cond returns 'B'",
+          "intent": "Show cond selecting the first true clause",
+          "misconception": "Once a true clause is found, the remaining clauses are NOT checked. grade = 'B', not 'C' — even though score >= 70 is also true."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 10,
+        "var": "grade",
+        "value": "\"B\"",
+        "dataType": "String",
+        "explanation": {
+          "what": "cond returns 'B' — bound to grade",
+          "why": "score >= 80 was the first true clause",
+          "change": "grade = 'B'",
+          "intent": "Show cond result bound to a variable",
+          "misconception": "The true -> 'F' at the end is the catch-all — like else in if. Without it, cond raises a CondClauseError if no clause matches."
+        }
+      },
+      {
+        "type": "print",
+        "line": 17,
+        "value": "B",
+        "explanation": {
+          "what": "IO.puts(grade) → B",
+          "why": "cond selected 'B' for score=85",
+          "change": "output ← 'B'",
+          "intent": "Confirm cond result",
+          "misconception": "cond is Elixir's replacement for chained if-else if-else. It is more readable when you have 3+ conditions."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 21,
+        "expression": "{:ok, msg} matches {:ok, \"done\"}",
+        "result": true,
+        "branch": "case first clause",
+        "explanation": {
+          "what": "case {:ok, 'done'}: first pattern {:ok, msg} matches — msg bound to 'done'",
+          "why": "The first element :ok matches :ok; msg captures 'done'",
+          "change": "case dispatches to first clause; msg = 'done'",
+          "intent": "Show case pattern matching on a tagged tuple",
+          "misconception": "case is different from cond — case matches PATTERNS against a single value. {:ok, msg} is a pattern: :ok must match exactly, msg captures the second element."
+        }
+      },
+      {
+        "type": "print",
+        "line": 21,
+        "value": "Success: done",
+        "explanation": {
+          "what": "IO.puts('Success: #{msg}') → Success: done",
+          "why": "msg was bound to 'done' by the pattern match",
+          "change": "output ← 'Success: done'",
+          "intent": "Confirm case with destructuring in the pattern",
+          "misconception": "The pattern {:ok, msg} both tests the shape AND extracts data. This is why case + tuples is Elixir's primary error-handling pattern."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nx = 0\nresult = if x do\n  \"truthy\"\nelse\n  \"falsy\"\nend\nIO.puts(result)",
+    "options": [
+      "falsy",
+      "truthy",
+      "nil",
+      "Error"
+    ],
+    "correctIndex": 1,
+    "explanation": "In Elixir, ONLY false and nil are falsy. 0 is truthy. So if 0 takes the do branch → 'truthy'."
+  },
+
+  "explanation": {
+    "afterDemo": "The real power of Elixir control flow is case combined with pattern matching. case {:ok, val} / {:error, msg} is the idiomatic way to handle function results that can succeed or fail — replacing both if/else and try/catch for expected conditions. cond is perfect for multi-branch score classifications, business rules, and priority decision trees.",
+    "keyTakeaways": [
+      "Only false and nil are falsy in Elixir — 0, empty string, empty list are ALL truthy.",
+      "cond: first true clause wins. Always add a true -> catch-all.",
+      "case: pattern-matches a value. Combines testing and destructuring in one step."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Use cond to classify an age: age >= 65 → \"senior\", age >= 18 → \"adult\", age >= 13 → \"teen\", true → \"child\". Test with age = 16. Print the result.",
+    "starterCode": "age = 16\ncategory = cond do\n  age >= 65 -> \"senior\"\n  age >= 18 -> \"adult\"\n  age >= 13 -> \"teen\"\n  true      -> \"child\"\nend\nIO.puts(category)",
+    "solutionCode": "age = 16\ncategory = cond do\n  age >= 65 -> \"senior\"\n  age >= 18 -> \"adult\"\n  age >= 13 -> \"teen\"\n  true      -> \"child\"\nend\nIO.puts(category)",
+    "hint": "16 >= 13 is true and comes before the true -> catch-all. Expected: teen.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["teen"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 16 >= 65 false, 16 >= 18 false, 16 >= 13 true → teen.",
+    "retryHints": [
+      "cond checks top-to-bottom — first true clause wins",
+      "16 >= 13 is true — that clause fires before the true catch-all",
+      "Expected: teen"
+    ]
+  },
+
+  "summary": {
+    "title": "Control Flow — Complete",
+    "takeaways": [
+      "if/unless for binary branches. Only false/nil are falsy — 0 and empty list are truthy.",
+      "cond for multi-branch: first true clause wins. true -> is the catch-all.",
+      "case for pattern matching: first matching pattern wins. _ -> is the catch-all."
+    ],
+    "nextTopicId": "elixir_pattern_matching"
+  }
+}

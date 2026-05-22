@@ -1,0 +1,71 @@
+{
+  "id": "lm_crystal_control_flow",
+  "topicId": "crystal_control_flow",
+  "language": "crystal",
+  "title": "Control Flow",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Crystal uses if/unless and case/when for clear branching.",
+    "explanation": "Branching lets your program choose actions based on conditions. Crystal keeps syntax readable and explicit.",
+    "syntax": "score = 82\ngrade = if score >= 90\n  \"A\"\nelsif score >= 80\n  \"B\"\nelse\n  \"C\"\nend\nputs grade",
+    "keyPoints": [
+      "if/elsif/else for condition chains",
+      "unless for negated checks",
+      "case/when for multi-branch comparison",
+      "Readable control flow prevents logic errors"
+    ]
+  },
+
+  "demo": {
+    "intro": "Trace how Crystal decides a grade from score.",
+    "code": "score = 82\ngrade = if score >= 90\n  \"A\"\nelsif score >= 80\n  \"B\"\nelse\n  \"C\"\nend\nputs grade",
+    "focusLine": 2,
+    "expectedHighlights": ["first condition false", "second condition true", "grade set to B", "prints B"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "score", "value": "82", "dataType": "Int32", "explanation": {"what": "Set score", "why": "Input for branching", "change": "score = 82", "intent": "Drive branch logic", "misconception": "Conditions evaluate in order"}},
+      {"type": "condition_check", "line": 2, "expression": "score >= 90", "result": false, "branch": "if", "explanation": {"what": "Check top branch", "why": "82 is below 90", "change": "fall through", "intent": "Show ordered checks", "misconception": "False branches do not execute"}},
+      {"type": "condition_check", "line": 4, "expression": "score >= 80", "result": true, "branch": "elsif", "explanation": {"what": "Check second branch", "why": "82 meets >= 80", "change": "grade = 'B'", "intent": "Pick correct branch", "misconception": "Once true branch matches, others are skipped"}},
+      {"type": "print", "line": 9, "value": "B", "explanation": {"what": "Print grade", "why": "Branch selected B", "change": "output <- B", "intent": "Verify branch outcome", "misconception": "Output reflects final selected branch only"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "If score = 70 in the same code, what prints?",
+    "options": ["A", "B", "C", "compile error"],
+    "correctIndex": 2,
+    "explanation": "70 fails >= 90 and >= 80, so else branch prints C."
+  },
+
+  "explanation": {
+    "afterDemo": "Clear branch ordering is essential. Start specific checks first, then broader fallbacks.",
+    "keyTakeaways": [
+      "Branch checks run top to bottom.",
+      "First true branch wins.",
+      "else handles all remaining cases."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Set temp = 31. Print \"hot\" if temp >= 30, else print \"ok\".",
+    "starterCode": "temp = 31\n# branch and print",
+    "solutionCode": "temp = 31\nif temp >= 30\n  puts \"hot\"\nelse\n  puts \"ok\"\nend",
+    "hint": "Use a simple if/else block.",
+    "validation": {"type": "output", "expectedOutput": ["hot"]}
+  },
+
+  "feedback": {
+    "successMessage": "Correct. Your branch selected the expected output.",
+    "retryHints": ["Check temp >= 30", "Print hot in true branch", "Use else for fallback"]
+  },
+
+  "summary": {
+    "title": "Control Flow — Complete",
+    "takeaways": [
+      "Crystal branching is explicit and readable.",
+      "Order matters in if/elsif chains.",
+      "Use else as deterministic fallback."
+    ],
+    "nextTopicId": "crystal_loops"
+  }
+}

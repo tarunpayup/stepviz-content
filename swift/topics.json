@@ -1,0 +1,134 @@
+[
+  {
+    "id": "swift_variables_constants",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Variables & Constants",
+    "description": "Use var and let with Swift type inference.",
+    "order": 1,
+    "enabled": true,
+    "concept": {"definition": "Swift uses var for mutable values and let for immutable constants.", "analogy": "var is editable, let is locked after assignment.", "keyPoints": ["Prefer let by default", "Use var when values change", "Type inference is strong"]},
+    "defaultCode": "let app = \"StepViz\"\nvar count = 1\ncount += 1\nprint(app, count)"
+  },
+  {
+    "id": "swift_data_types",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Core Data Types",
+    "description": "Work with Int, Double, String, Bool and basic literals.",
+    "order": 2,
+    "enabled": true,
+    "concept": {"definition": "Swift has strong static types and clear primitive value models.", "analogy": "Types are strict containers for specific value kinds.", "keyPoints": ["Int for whole numbers", "Double for decimals", "String for text", "Bool for true/false"]},
+    "defaultCode": "let age: Int = 20\nlet score: Double = 9.5\nlet name: String = \"Ari\"\nlet active: Bool = true\nprint(age, score, name, active)"
+  },
+  {
+    "id": "swift_functions",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Define typed functions with parameters and return values.",
+    "order": 3,
+    "enabled": true,
+    "concept": {"definition": "Swift functions are strongly typed and support argument labels.", "analogy": "A function is a typed machine that transforms input to output.", "keyPoints": ["func defines function", "-> marks return type", "Use labels for clarity"]},
+    "defaultCode": "func add(_ a: Int, _ b: Int) -> Int {\n    return a + b\n}\nprint(add(3, 4))"
+  },
+  {
+    "id": "swift_control_flow",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Branch logic using if/else and switch.",
+    "order": 4,
+    "enabled": true,
+    "concept": {"definition": "Swift control flow selects execution paths with strict condition handling.", "analogy": "Conditions are route selectors in your program.", "keyPoints": ["if/else for conditional branches", "switch is exhaustive in many cases", "Keep branches explicit"]},
+    "defaultCode": "let score = 82\nlet grade: String\nif score >= 90 {\n    grade = \"A\"\n} else if score >= 80 {\n    grade = \"B\"\n} else {\n    grade = \"C\"\n}\nprint(grade)"
+  },
+  {
+    "id": "swift_loops",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Loops",
+    "description": "Repeat work with for-in and while loops.",
+    "order": 5,
+    "enabled": true,
+    "concept": {"definition": "Swift loops iterate ranges and collections with clear syntax.", "analogy": "Loops are repeat tracks for logic blocks.", "keyPoints": ["for-in is most common", "while checks condition each cycle", "break/continue alter flow"]},
+    "defaultCode": "var total = 0\nfor n in [1, 2, 3] {\n    total += n\n}\nprint(total)"
+  },
+  {
+    "id": "swift_optionals",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Optionals",
+    "description": "Represent missing values safely using optionals and unwrapping.",
+    "order": 6,
+    "enabled": true,
+    "concept": {"definition": "Optionals wrap values that may be absent (nil).", "analogy": "An optional is a box that may or may not contain a value.", "keyPoints": ["Type? means optional", "if let unwraps safely", "?? provides fallback"]},
+    "defaultCode": "var name: String? = nil\nlet safe = name ?? \"Guest\"\nprint(safe)"
+  },
+  {
+    "id": "swift_collections",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Collections",
+    "description": "Use Array, Dictionary, and Set for grouped data.",
+    "order": 7,
+    "enabled": true,
+    "concept": {"definition": "Swift collection types are generic and type-safe.", "analogy": "Collections are typed containers for many values.", "keyPoints": ["Array is ordered", "Dictionary maps keys to values", "Set stores unique values"]},
+    "defaultCode": "let nums = [1, 2, 3, 4]\nlet evens = nums.filter { $0 % 2 == 0 }\nprint(evens)"
+  },
+  {
+    "id": "swift_structs_classes",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Structs & Classes",
+    "description": "Model data with value and reference types.",
+    "order": 8,
+    "enabled": true,
+    "concept": {"definition": "Structs are value types; classes are reference types.", "analogy": "Struct copies are snapshots, class copies are shared links.", "keyPoints": ["struct preferred by default", "class supports inheritance", "Both can have methods"]},
+    "defaultCode": "struct User {\n    var name: String\n    var score: Int\n}\nlet u = User(name: \"Ari\", score: 10)\nprint(u.name)"
+  },
+  {
+    "id": "swift_protocols_extensions",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Protocols & Extensions",
+    "description": "Define contracts and add behavior with extensions.",
+    "order": 9,
+    "enabled": true,
+    "concept": {"definition": "Protocols define required behavior; extensions add implementations and helpers.", "analogy": "Protocols are agreements, extensions are capability add-ons.", "keyPoints": ["protocol defines requirements", "types conform to protocol", "extensions add reusable behavior"]},
+    "defaultCode": "protocol Greeter {\n    func greet() -> String\n}\nstruct Bot: Greeter {\n    func greet() -> String { \"Hello\" }\n}\nprint(Bot().greet())"
+  },
+  {
+    "id": "swift_enums",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Enums",
+    "description": "Model finite states and associated values.",
+    "order": 10,
+    "enabled": true,
+    "concept": {"definition": "Swift enums can represent finite cases and hold associated data.", "analogy": "Enums are safe status sets with optional payloads.", "keyPoints": ["case defines variants", "switch handles enum cases", "associated values enrich states"]},
+    "defaultCode": "enum Status {\n    case pending\n    case done\n}\nlet s = Status.pending\nprint(s)"
+  },
+  {
+    "id": "swift_error_handling",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Throw and catch typed errors with do/try/catch.",
+    "order": 11,
+    "enabled": true,
+    "concept": {"definition": "Swift error handling uses throw and do-catch blocks for recoverable failures.", "analogy": "Errors are controlled exits from risky operations.", "keyPoints": ["Error types conform to Error", "throw raises", "do-catch handles"]},
+    "defaultCode": "enum ParseError: Error { case bad }\nfunc parse(_ s: String) throws -> Int {\n    guard let v = Int(s) else { throw ParseError.bad }\n    return v\n}\ndo {\n    print(try parse(\"12\"))\n} catch {\n    print(\"error\")\n}"
+  },
+  {
+    "id": "swift_async_await",
+    "language": "swift",
+    "domain": "programming",
+    "title": "Async/Await",
+    "description": "Handle asynchronous tasks with modern Swift concurrency.",
+    "order": 12,
+    "enabled": true,
+    "concept": {"definition": "Swift concurrency provides async functions and await for structured asynchronous code.", "analogy": "await pauses one task while keeping app responsive.", "keyPoints": ["async marks asynchronous functions", "await reads async results", "Task starts concurrent work"]},
+    "defaultCode": "func getValue() async -> Int { 42 }\nTask {\n    let v = await getValue()\n    print(v)\n}"
+  }
+]

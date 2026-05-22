@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_loops_ranges",
+  "topicId": "scala_loops_ranges",
+  "language": "scala",
+  "title": "Loops & Ranges",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Scala supports both loop and collection iteration styles.",
+    "explanation": "for loops and ranges are useful for repeated operations.",
+    "syntax": "var total = 0\nfor (n <- List(1, 2, 3)) total += n",
+    "keyPoints": ["for over collections", "Ranges like 1 to 5", "foreach for side effects"]
+  },
+  "demo": {
+    "intro": "Sum values from a list.",
+    "code": "object Main extends App {\n  var total = 0\n  for (n <- List(1, 2, 3)) total += n\n  println(total)\n}",
+    "focusLine": 3,
+    "expectedHighlights": ["three iterations", "total becomes 6"],
+    "steps": [
+      {"type": "declare", "line": 2, "var": "total", "value": "0", "dataType": "Int", "explanation": {"what": "Initialize accumulator", "why": "Start sum", "change": "total=0", "intent": "Prepare loop", "misconception": "Need starting value"}},
+      {"type": "assign", "line": 3, "var": "total", "value": "6", "explanation": {"what": "Add each n", "why": "Aggregate values", "change": "total:0->6", "intent": "Loop accumulation", "misconception": "List iteration preserves order"}},
+      {"type": "print", "line": 4, "value": "6", "explanation": {"what": "Print total", "why": "Verify sum", "change": "output emitted", "intent": "Check result", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "How many values in 1 to 4?", "options": ["3", "4", "5", "2"], "correctIndex": 1, "explanation": "Inclusive range contains 1,2,3,4."},
+  "explanation": {"afterDemo": "Iteration in Scala can be imperative or functional.", "keyTakeaways": ["for is concise", "Ranges are expressive", "Collection ops often replace loops"]},
+  "practice": {
+    "prompt": "Sum List(4,5,6) into total and print it.",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  var total = 0\n  for (n <- List(4, 5, 6)) total += n\n  println(total)\n}",
+    "hint": "Initialize total before loop.",
+    "validation": {"type": "output", "expectedOutput": ["15"]}
+  },
+  "feedback": {"successMessage": "Loop accumulation is correct.", "retryHints": ["Use for (n <- List(...))", "Update total", "Print result"]},
+  "summary": {"title": "Loops & Ranges - Complete", "takeaways": ["Simple iteration", "Range utilities", "Accumulator patterns"], "nextTopicId": "scala_collections"}
+}

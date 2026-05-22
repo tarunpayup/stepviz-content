@@ -1,0 +1,44 @@
+{
+  "id": "lm_dart_control_flow",
+  "topicId": "dart_control_flow",
+  "language": "dart",
+  "title": "Control Flow",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "if/else and switch route logic based on conditions.",
+    "explanation": "Use clear branch ordering for predictable outcomes.",
+    "syntax": "int score = 82;\nString grade;\nif (score >= 90) grade = 'A';\nelse if (score >= 80) grade = 'B';\nelse grade = 'C';\nprint(grade);",
+    "keyPoints": ["Branches run top-to-bottom", "First matched branch executes", "Use else for fallback"]
+  },
+  "demo": {
+    "intro": "Classify score into a grade.",
+    "code": "int score = 82;\nString grade;\nif (score >= 90) {\n  grade = 'A';\n} else if (score >= 80) {\n  grade = 'B';\n} else {\n  grade = 'C';\n}\nprint(grade);",
+    "focusLine": 3,
+    "expectedHighlights": ["first check false", "second check true", "grade B", "prints B"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "score", "value": "82", "dataType": "int", "explanation": {"what": "Set score", "why": "Input for branch", "change": "score=82", "intent": "Drive flow", "misconception": "Check order matters"}},
+      {"type": "condition_check", "line": 3, "expression": "score >= 90", "result": false, "branch": "if", "explanation": {"what": "Evaluate first condition", "why": "82 < 90", "change": "skip first branch", "intent": "Show false branch", "misconception": "False branch body not executed"}},
+      {"type": "condition_check", "line": 5, "expression": "score >= 80", "result": true, "branch": "else-if", "explanation": {"what": "Evaluate second condition", "why": "82 >= 80", "change": "grade='B'", "intent": "Select matching branch", "misconception": "Later branches are ignored after match"}},
+      {"type": "print", "line": 10, "value": "B", "explanation": {"what": "Print grade", "why": "Selected branch set value", "change": "output <- B", "intent": "Verify branch outcome", "misconception": "print does not change grade"}}
+    ]
+  },
+  "prediction": {
+    "question": "If score=70 in same code, output is?",
+    "options": ["A", "B", "C", "error"],
+    "correctIndex": 2,
+    "explanation": "70 fails first two checks, so else gives C."
+  },
+  "explanation": {
+    "afterDemo": "Readable control flow reduces bugs and makes logic easier to debug.",
+    "keyTakeaways": ["Order branches from strict to broad", "Use explicit else fallback", "Branching should stay simple"]
+  },
+  "practice": {
+    "prompt": "If temp >= 30 print 'hot' else print 'ok'. Use temp=31.",
+    "starterCode": "int temp = 31;\n// branch and print",
+    "solutionCode": "int temp = 31;\nif (temp >= 30) {\n  print('hot');\n} else {\n  print('ok');\n}",
+    "hint": "Use simple if/else.",
+    "validation": {"type": "output", "expectedOutput": ["hot"]}
+  },
+  "feedback": {"successMessage": "Control flow is correct.", "retryHints": ["Check temp >= 30", "Print in both branches"]},
+  "summary": {"title": "Control Flow — Complete", "takeaways": ["if/else controls execution paths", "Branch order impacts results", "Keep conditions explicit"], "nextTopicId": "dart_loops"}
+}

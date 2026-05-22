@@ -1,0 +1,145 @@
+{
+  "id": "lm_kotlin_coroutines",
+  "topicId": "kotlin_coroutines",
+  "language": "kotlin",
+  "title": "Coroutines Basics",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Coroutines are lightweight suspendable computations. suspend functions pause without blocking a thread. launch starts a coroutine. runBlocking bridges regular code and the coroutine world.",
+    "explanation": "A coroutine is like a very lightweight thread — it can be suspended (paused) and resumed later without occupying an OS thread. suspend marks a function that can pause execution. launch { } starts a new coroutine concurrently. runBlocking { } starts a coroutine scope and blocks the current thread until it finishes — used in main() and tests to bridge the blocking world. delay(ms) suspends the current coroutine without blocking the thread.",
+    "syntax": "import kotlinx.coroutines.*\n\n// runBlocking creates a coroutine scope\nfun main() = runBlocking {\n    launch {          // start a new coroutine\n        delay(100L)   // suspend (non-blocking pause)\n        println(\"World\")\n    }\n    println(\"Hello\") // runs immediately, before delay completes\n}\n// Output: Hello  World",
+    "keyPoints": [
+      "suspend fun — can be paused at suspension points (delay, await, etc.)",
+      "launch { } — starts a coroutine concurrently (fire-and-forget)",
+      "runBlocking { } — bridges blocking code to coroutines; blocks until all children finish",
+      "delay(ms) — non-blocking pause; suspends the coroutine, frees the thread"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch how launch starts a concurrent coroutine and how the output order reveals coroutine scheduling.",
+    "code": "import kotlinx.coroutines.*\n\nfun main() = runBlocking {\n    launch {\n        delay(100L)\n        println(\"World\")\n    }\n    println(\"Hello\")\n}",
+    "focusLine": 3,
+    "expectedHighlights": ["runBlocking scope starts", "launch coroutine scheduled", "Hello printed first", "delay suspends", "World printed after"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 3,
+        "name": "runBlocking",
+        "args": [],
+        "returnVar": null,
+        "explanation": {
+          "what": "runBlocking { } — creates a coroutine scope and blocks the main thread until done",
+          "why": "main() is a regular blocking function; runBlocking bridges it into the coroutine world",
+          "change": "a CoroutineScope is established; the lambda body runs as a coroutine",
+          "intent": "Introduce runBlocking as the entry point for coroutines in main()",
+          "misconception": "runBlocking DOES block the underlying thread. It is only acceptable in main() and tests. In production Android/server code you would use other builders (coroutineScope, viewModelScope, etc.)"
+        }
+      },
+      {
+        "type": "call",
+        "line": 4,
+        "name": "launch",
+        "args": ["{ delay(100L); println(\"World\") }"],
+        "returnVar": "job",
+        "explanation": {
+          "what": "launch { } — starts a new coroutine inside the scope",
+          "why": "launch schedules the block for concurrent execution but returns immediately",
+          "change": "a new coroutine is queued; execution continues at the next line in the parent",
+          "intent": "Show launch as concurrent (non-blocking) coroutine start",
+          "misconception": "launch does NOT wait for its block to finish — it is fire-and-forget. The parent coroutine keeps running immediately after launch {}."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "Hello",
+        "explanation": {
+          "what": "println(\"Hello\") runs immediately after launch returns",
+          "why": "launch returns right away; the child coroutine has not started executing yet",
+          "change": "output ← 'Hello'",
+          "intent": "Show that the code after launch continues concurrently",
+          "misconception": "Hello prints BEFORE World — even though launch { } appears earlier in the code. This surprises developers new to coroutines: the launched coroutine is scheduled but hasn't run yet when Hello prints."
+        }
+      },
+      {
+        "type": "call",
+        "line": 5,
+        "name": "delay",
+        "args": ["100L"],
+        "returnVar": null,
+        "explanation": {
+          "what": "delay(100L) — suspends the launched coroutine for 100 milliseconds",
+          "why": "delay is a suspend function — it pauses the coroutine without blocking any thread",
+          "change": "the launched coroutine is suspended; the thread is free to do other work",
+          "intent": "Show non-blocking suspension — the key concept in coroutines",
+          "misconception": "delay does NOT call Thread.sleep(). Thread.sleep blocks the thread. delay just registers a timer and frees the thread to run other coroutines."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "World",
+        "explanation": {
+          "what": "After 100ms delay, the coroutine resumes and prints 'World'",
+          "why": "delay completed — the coroutine is resumed from where it suspended",
+          "change": "output ← 'World'",
+          "intent": "Show coroutine resumption after suspension",
+          "misconception": "The coroutine resumes on the same dispatcher (thread pool). It does not need to restart from the beginning — it continues from the line after delay()."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output order?\n\nimport kotlinx.coroutines.*\nfun main() = runBlocking {\n    launch { println(\"A\") }\n    launch { println(\"B\") }\n    println(\"C\")\n}",
+    "options": [
+      "A B C",
+      "C A B",
+      "A C B",
+      "B A C"
+    ],
+    "correctIndex": 1,
+    "explanation": "println(\"C\") runs immediately after both launch calls return. A and B are scheduled but haven't run yet — they execute after C. So output is: C, then A, then B (in launch order)."
+  },
+
+  "explanation": {
+    "afterDemo": "Coroutines make concurrent code look sequential. delay looks like a blocking call but it is not — it suspends the coroutine and frees the thread. This is the power of structured concurrency: you write code top-to-bottom, the runtime handles the pausing and resuming. runBlocking is your entry point; launch is how you start concurrent work.",
+    "keyTakeaways": [
+      "suspend fun can pause without blocking. delay(ms) is the simplest suspension.",
+      "launch { } starts a concurrent coroutine — returns immediately without waiting.",
+      "runBlocking { } is for main() and tests only — bridges blocking code to coroutines."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a main that uses runBlocking to launch two coroutines: one prints \"First\" after delay(50L) and one prints \"Second\" after delay(100L). Also print \"Start\" before launching. Expected order: Start, First, Second.",
+    "starterCode": "import kotlinx.coroutines.*\n\nfun main() = runBlocking {\n    println(\"Start\")\n    // launch first coroutine\n    // launch second coroutine\n}",
+    "solutionCode": "import kotlinx.coroutines.*\n\nfun main() = runBlocking {\n    println(\"Start\")\n    launch {\n        delay(50L)\n        println(\"First\")\n    }\n    launch {\n        delay(100L)\n        println(\"Second\")\n    }\n}",
+    "hint": "Two launch blocks inside runBlocking. The shorter delay finishes first.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Start", "First", "Second"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Start prints immediately. First prints after 50ms, Second after 100ms. runBlocking waits for all children.",
+    "retryHints": [
+      "println(\"Start\") runs before any launch",
+      "launch { delay(50L); println(\"First\") } — shorter delay fires first",
+      "runBlocking waits for both launched coroutines to complete before exiting"
+    ]
+  },
+
+  "summary": {
+    "title": "Coroutines Basics — Complete",
+    "takeaways": [
+      "Coroutines are lightweight — thousands can run on a few threads. suspend functions pause them without blocking.",
+      "launch { } starts a concurrent coroutine (fire-and-forget). Use await/join to wait for results.",
+      "runBlocking bridges main() to coroutines. In production, prefer structured scopes (viewModelScope, coroutineScope)."
+    ],
+    "nextTopicId": null
+  }
+}

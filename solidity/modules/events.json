@@ -1,0 +1,42 @@
+{
+  "id": "lm_solidity_events",
+  "topicId": "solidity_events",
+  "language": "solidity",
+  "title": "Events & Logging",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Events are off-chain logs emitted from transactions.",
+    "explanation": "Use events to notify indexers/frontends of important state changes.",
+    "syntax": "event Deposited(address indexed user, uint256 amount);\nemit Deposited(msg.sender, msg.value);",
+    "keyPoints": ["indexed fields make filtering easier", "Events are cheaper than storing all history in state", "Events are read from transaction logs"]
+  },
+  "demo": {
+    "intro": "Emit an event during deposit.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Logger {\n  event Deposited(address indexed user, uint256 amount);\n  function deposit() public payable {\n    emit Deposited(msg.sender, msg.value);\n  }\n}",
+    "focusLine": 6,
+    "expectedHighlights": ["event declared", "payable function", "emit called"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "Deposited", "value": "event", "dataType": "Event", "explanation": {"what": "Declare event schema", "why": "Standardize log payload", "change": "Deposited event type available", "intent": "Enable off-chain tracking", "misconception": "Event data is not regular contract storage"}},
+      {"type": "call", "line": 6, "name": "emit Deposited", "args": ["msg.sender", "msg.value"], "returnVar": "log", "explanation": {"what": "Emit deposit log", "why": "Signal transaction details to listeners", "change": "event appended to tx receipt", "intent": "Frontend/indexer integration", "misconception": "emit itself does not transfer Ether"}}
+    ]
+  },
+  "prediction": {
+    "question": "Where are Solidity events primarily consumed?",
+    "options": ["inside same contract storage reads", "off-chain clients/indexers", "compiler only", "EVM stack inspection"],
+    "correctIndex": 1,
+    "explanation": "Events are intended for off-chain subscribers and indexing systems."
+  },
+  "explanation": {
+    "afterDemo": "Events are critical for frontend UX and analytics because they expose transaction activity efficiently.",
+    "keyTakeaways": ["Emit events for key actions", "Use indexed fields for search", "Do not rely on events as on-chain state"]
+  },
+  "practice": {
+    "prompt": "Declare event Set(uint256 value) and emit it inside function set(uint256 x).",
+    "starterCode": "// add event and emit",
+    "solutionCode": "event Set(uint256 value);\n\nfunction set(uint256 x) public {\n  emit Set(x);\n}",
+    "hint": "Emit event inside function body.",
+    "validation": {"type": "step_count", "min": 2}
+  },
+  "feedback": {"successMessage": "Event declaration and emit usage are correct.", "retryHints": ["Define event signature", "Use emit keyword", "Pass function arg into event"]},
+  "summary": {"title": "Events — Complete", "takeaways": ["Events power off-chain observation", "Use indexed fields strategically", "Emit on meaningful state changes"], "nextTopicId": "solidity_error_handling"}
+}

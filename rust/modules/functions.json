@@ -1,0 +1,157 @@
+{
+  "id": "lm_rust_functions",
+  "topicId": "rust_functions",
+  "language": "rust",
+  "title": "Functions",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Functions in Rust are defined with fn, typed explicitly, and return the last expression.",
+    "explanation": "A function packages a reusable block of logic. In Rust, every parameter must have a type annotation and every non-void function must declare its return type after ->. The body is a block of statements and optionally a final expression. That final expression (written without a semicolon) is implicitly returned — no `return` keyword needed.",
+    "syntax": "fn function_name(param: Type) -> ReturnType {\n    // statements...\n    final_expression   // returned implicitly (no semicolon)\n}\n\n// Unit return (no ->)\nfn say_hello(name: &str) {\n    println!(\"Hello, {}!\", name);\n}\n\n// Calling a function\nlet result = add(3, 4);",
+    "keyPoints": [
+      "All parameters require explicit type annotations",
+      "Return type declared with -> after the parameter list",
+      "The last expression without ; is the implicit return value",
+      "Placing ; after the last expression makes it a statement — returns () instead",
+      "Functions with no -> implicitly return the unit type ()"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a function receive two parameters, compute a result, and return it to the caller.",
+    "code": "fn add(a: i32, b: i32) -> i32 {\n    a + b\n}\n\nfn main() {\n    let x = 3;\n    let y = 4;\n    let sum = add(x, y);\n    println!(\"sum = {}\", sum);\n}",
+    "focusLine": 1,
+    "expectedHighlights": ["add called with 3, 4", "a + b evaluated", "result returned", "sum bound to 7", "println"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "x",
+        "value": "3",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Declaring x = 3",
+          "why": "x will be passed as the first argument to add()",
+          "change": "x = 3 (new i32 slot)",
+          "intent": "Prepare a value to use as an argument",
+          "misconception": "Arguments are passed by value for Copy types like i32 — x is copied into the parameter a, not moved"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 7,
+        "var": "y",
+        "value": "4",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Declaring y = 4",
+          "why": "y will be passed as the second argument to add()",
+          "change": "y = 4 (new i32 slot)",
+          "intent": "Prepare the second operand",
+          "misconception": "Same as x — i32 is Copy, so y is not consumed by the function call"
+        }
+      },
+      {
+        "type": "call",
+        "line": 8,
+        "name": "add",
+        "args": ["3", "4"],
+        "returnVar": "sum",
+        "explanation": {
+          "what": "Calling add(3, 4)",
+          "why": "Control flow transfers to the add function; copies of x and y are bound to parameters a and b",
+          "change": "a = 3, b = 4 in add's scope",
+          "intent": "Invoke the reusable computation",
+          "misconception": "A new scope is created for the function — a and b only exist inside add()"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "a+b result",
+        "value": "7",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Evaluating a + b = 7",
+          "why": "The expression a + b (no semicolon) is the last item in the function body — it is the implicit return value",
+          "change": "expression evaluates to 7",
+          "intent": "Compute the sum and return it without an explicit return keyword",
+          "misconception": "If you wrote a + b; (with semicolon) the function would return () — the unit type — and the code would not compile because the signature says -> i32"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 8,
+        "var": "sum",
+        "value": "7",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Binding sum = 7 (return value of add)",
+          "why": "The caller receives the returned value and binds it to sum with let",
+          "change": "sum = 7 (new i32 slot in main's scope)",
+          "intent": "Capture the function result for later use",
+          "misconception": "sum is a new, independent variable — changing it does not affect anything inside add()"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "sum = 7",
+        "explanation": {
+          "what": "Printing sum",
+          "why": "println! formats sum into the template string and outputs to stdout",
+          "change": "output ← 'sum = 7'",
+          "intent": "Verify the function returned the correct result",
+          "misconception": "The string literal 'sum = ' is not a variable — it is concatenated at compile time into the format string"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this function return?\n\nfn double(n: i32) -> i32 {\n    n * 2;\n}",
+    "options": ["n * 2 (the doubled value)", "0", "() — unit type, compile error for -> i32", "n"],
+    "correctIndex": 2,
+    "explanation": "The semicolon after n * 2 turns it into a statement that produces (). The function body then returns () but the signature promises i32 — this is a compile error. Remove the semicolon to fix it."
+  },
+
+  "explanation": {
+    "afterDemo": "The function add received copies of x and y, computed a + b in its own scope, and returned 7 to main. The caller bound that 7 to sum. Notice how the semicolon rule controls what a function returns — it is a deliberate design that makes return values explicit at a glance.",
+    "keyTakeaways": [
+      "The last expression without a semicolon is the implicit return.",
+      "Adding a semicolon makes it a statement — the function returns () instead.",
+      "i32 and other scalar types are Copy — they are duplicated when passed to functions."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function called `square` that takes an i32 and returns its square (n * n). Call it with 6 and print the result.",
+    "starterCode": "fn square(n: i32) -> i32 {\n    // return n * n here\n}\n\nfn main() {\n    // call square(6) and print\n}",
+    "solutionCode": "fn square(n: i32) -> i32 {\n    n * n\n}\n\nfn main() {\n    let result = square(6);\n    println!(\"{}\", result);\n}",
+    "hint": "The body should be just n * n (no semicolon) as the last expression. Call: let result = square(6);",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["36"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Well done! square correctly returns n * n using an implicit return expression.",
+    "retryHints": [
+      "Make sure n * n has no semicolon at the end — otherwise the function returns () and will not compile.",
+      "The return type must be i32 — match the type of n * n.",
+      "Call with square(6) and the expected output is 36."
+    ]
+  },
+
+  "summary": {
+    "title": "Functions — Complete",
+    "takeaways": [
+      "fn name(params) -> ReturnType { } is the full function signature.",
+      "The final expression (no semicolon) is returned implicitly.",
+      "Scalar types like i32 are copied when passed to functions."
+    ],
+    "nextTopicId": "rust_control_flow"
+  }
+}

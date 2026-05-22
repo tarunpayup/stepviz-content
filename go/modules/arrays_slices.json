@@ -1,0 +1,116 @@
+{
+  "id": "lm_go_arrays_slices",
+  "topicId": "go_arrays_slices",
+  "language": "go",
+  "title": "Arrays & Slices",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Arrays are fixed-size; slices are dynamic views.",
+    "explanation": "Go code mostly uses slices because they grow and compose easily.",
+    "syntax": "arr := [3]int{1,2,3}\nnums := []int{1,2}\nnums = append(nums, 3)",
+    "keyPoints": [
+      "Array length is part of its type",
+      "Slices track len and cap",
+      "append can allocate new backing array"
+    ]
+  },
+  "demo": {
+    "intro": "Create array and grow slice.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tarr := [3]int{1, 2, 3}\n\tnums := []int{1, 2}\n\tnums = append(nums, 3)\n\tfmt.Println(arr, nums)\n}",
+    "focusLine": 8,
+    "expectedHighlights": [
+      "array unchanged",
+      "slice appended",
+      "prints [1 2 3] [1 2 3]"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "arr",
+        "value": "[1 2 3]",
+        "dataType": "[3]int",
+        "explanation": {
+          "what": "Declare array",
+          "why": "Fixed-size sequence",
+          "change": "arr created",
+          "intent": "Contrast with slice",
+          "misconception": "Length is part of array type"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 8,
+        "var": "nums",
+        "value": "[1 2 3]",
+        "explanation": {
+          "what": "Append to slice",
+          "why": "Grow dynamic sequence",
+          "change": "nums length increases",
+          "intent": "Show slice flexibility",
+          "misconception": "append returns updated slice"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "[1 2 3] [1 2 3]",
+        "explanation": {
+          "what": "Print both collections",
+          "why": "Compare results",
+          "change": "output emitted",
+          "intent": "Observe behavior",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "Which is typically used for growable collections in Go?",
+    "options": [
+      "array",
+      "slice",
+      "map",
+      "struct"
+    ],
+    "correctIndex": 1,
+    "explanation": "Slices are the growable sequence abstraction."
+  },
+  "explanation": {
+    "afterDemo": "Understanding slice behavior is essential in Go.",
+    "keyTakeaways": [
+      "Arrays are fixed-size values",
+      "Slices are flexible and common",
+      "append may reallocate storage"
+    ]
+  },
+  "practice": {
+    "prompt": "Create slice vals with 1,2 then append 3 and print.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvals := []int{1, 2}\n\tvals = append(vals, 3)\n\tfmt.Println(vals)\n}",
+    "hint": "Remember append returns a slice.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "[1 2 3]"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Array/slice usage is correct.",
+    "retryHints": [
+      "Use []int literal for slice",
+      "Assign append result back",
+      "Print the final slice"
+    ]
+  },
+  "summary": {
+    "title": "Arrays & Slices - Complete",
+    "takeaways": [
+      "Arrays are fixed",
+      "Slices are dynamic",
+      "append drives growth"
+    ],
+    "nextTopicId": "go_maps"
+  }
+}

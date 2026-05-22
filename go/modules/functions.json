@@ -1,0 +1,119 @@
+{
+  "id": "lm_go_functions",
+  "topicId": "go_functions",
+  "language": "go",
+  "title": "Functions",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Go functions have explicit signatures.",
+    "explanation": "Define parameters and return types in the function declaration.",
+    "syntax": "func add(a int, b int) int {\n\treturn a + b\n}",
+    "keyPoints": [
+      "func starts declarations",
+      "Return types are required when returning",
+      "Functions support multiple returns"
+    ]
+  },
+  "demo": {
+    "intro": "Define add and call it from main.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc add(a int, b int) int {\n\treturn a + b\n}\n\nfunc main() {\n\tfmt.Println(add(3, 4))\n}",
+    "focusLine": 5,
+    "expectedHighlights": [
+      "function defined",
+      "call returns 7"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "add",
+        "value": "function",
+        "dataType": "func(int,int) int",
+        "explanation": {
+          "what": "Define add",
+          "why": "Encapsulate sum logic",
+          "change": "add callable available",
+          "intent": "Function reuse",
+          "misconception": "Function body runs only when called"
+        }
+      },
+      {
+        "type": "call",
+        "line": 10,
+        "name": "add",
+        "args": [
+          "3",
+          "4"
+        ],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Invoke add",
+          "why": "Calculate sum",
+          "change": "result=7",
+          "intent": "Demonstrate call flow",
+          "misconception": "Arguments match int params"
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "7",
+        "explanation": {
+          "what": "Print result",
+          "why": "Verify function output",
+          "change": "output emitted",
+          "intent": "Observe return value",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "What does the trailing int in func add(...) int mean?",
+    "options": [
+      "argument count",
+      "return type",
+      "function name",
+      "loop type"
+    ],
+    "correctIndex": 1,
+    "explanation": "It declares the return type."
+  },
+  "explanation": {
+    "afterDemo": "Functions improve structure and testability.",
+    "keyTakeaways": [
+      "Signatures define clear contracts",
+      "Return values compose operations",
+      "Keep function responsibilities small"
+    ]
+  },
+  "practice": {
+    "prompt": "Write mul(a,b) int that returns product, then print mul(3,5).",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc mul(a int, b int) int {\n\treturn a * b\n}\n\nfunc main() {\n\tfmt.Println(mul(3, 5))\n}",
+    "hint": "Declare function above main.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "15"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Function signature and call are correct.",
+    "retryHints": [
+      "Return a*b",
+      "Call mul from main",
+      "Print result with fmt.Println"
+    ]
+  },
+  "summary": {
+    "title": "Functions - Complete",
+    "takeaways": [
+      "Go functions are explicit",
+      "Return types document behavior",
+      "Calls pass typed arguments"
+    ],
+    "nextTopicId": "go_control_flow"
+  }
+}

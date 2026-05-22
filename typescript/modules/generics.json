@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_generics",
+  "topicId": "typescript_generics",
+  "language": "typescript",
+  "title": "Generics",
+  "difficulty": "medium",
+  "concept": {"headline": "Generics preserve concrete types in reusable code.", "explanation": "Use type parameters to write abstractions once while keeping caller type safety.", "syntax": "function first<T>(items: T[]): T | undefined {\n  return items[0];\n}", "keyPoints": ["<T> captures caller type", "Avoids any", "Supports constraints"]},
+  "demo": {"intro": "Call a generic function with string array.", "code": "function first<T>(items: T[]): T | undefined {\n  return items[0];\n}\nconsole.log(first([\"a\", \"b\"]));", "focusLine": 1, "expectedHighlights": ["generic function", "T inferred as string", "prints a"], "steps": [{"type": "declare", "line": 1, "var": "first", "value": "generic function", "dataType": "<T>(T[]) => T|undefined", "explanation": {"what": "Define generic first", "why": "Reusable across element types", "change": "function declared", "intent": "Preserve type info", "misconception": "T is not runtime value"}}, {"type": "call", "line": 4, "name": "first", "args": ["['a','b']"], "returnVar": "v", "explanation": {"what": "Invoke with strings", "why": "Compiler infers T=string", "change": "v='a'", "intent": "Show inference", "misconception": "No need to pass <string> explicitly here"}}, {"type": "print", "line": 4, "value": "a", "explanation": {"what": "Print first element", "why": "Array head returned", "change": "output <- a", "intent": "Verify generic behavior", "misconception": "Return may be undefined for empty array"}}]},
+  "prediction": {"question": "Type of first([1,2,3]) is?", "options": ["string", "number | undefined", "any", "unknown"], "correctIndex": 1, "explanation": "T inferred as number, return is number | undefined."},
+  "explanation": {"afterDemo": "Generics are core to scalable TypeScript APIs because they keep precision without duplication.", "keyTakeaways": ["Generic params preserve caller type", "Inference often removes manual type args", "Use constraints when needed"]},
+  "practice": {"prompt": "Write generic identity<T>(x:T):T and print identity(42).", "starterCode": "// write code", "solutionCode": "function identity<T>(x: T): T {\n  return x;\n}\nconsole.log(identity(42));", "hint": "Return input unchanged.", "validation": {"type": "output", "expectedOutput": ["42"]}},
+  "feedback": {"successMessage": "Generic function is correctly typed.", "retryHints": ["Use <T>", "Return T", "Test with number input"]},
+  "summary": {"title": "Generics — Complete", "takeaways": ["Generics keep abstractions type-safe", "Inference reduces boilerplate", "Avoid any for reusable helpers"], "nextTopicId": "typescript_async_await"}
+}

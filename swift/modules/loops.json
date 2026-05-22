@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_loops",
+  "topicId": "swift_loops",
+  "language": "swift",
+  "title": "Loops",
+  "difficulty": "easy",
+  "concept": {"headline": "for-in and while repeat operations.", "explanation": "Use loops for iteration over ranges, arrays, and conditional repetition.", "syntax": "var total = 0\nfor n in [1, 2, 3] {\n    total += n\n}", "keyPoints": ["for-in iterates collections", "while checks condition each cycle", "break/continue control flow"]},
+  "demo": {"intro": "Accumulate numbers with for-in.", "code": "var total = 0\nfor n in [1, 2, 3] {\n    total += n\n}\nprint(total)", "focusLine": 2, "expectedHighlights": ["3 iterations", "total becomes 6"], "steps": [{"type": "declare", "line": 1, "var": "total", "value": "0", "dataType": "Int", "explanation": {"what": "Initialize accumulator", "why": "Store running sum", "change": "total=0", "intent": "Prepare loop", "misconception": "Need mutable var"}}, {"type": "assign", "line": 3, "var": "total", "value": "6", "explanation": {"what": "Add each item", "why": "Aggregate array", "change": "total:0->6", "intent": "Summation pattern", "misconception": "Iteration preserves order"}}, {"type": "print", "line": 5, "value": "6", "explanation": {"what": "Print total", "why": "Verify loop", "change": "output <- 6", "intent": "Confirm result", "misconception": "None"}}]},
+  "prediction": {"question": "How many iterations in for _ in 1...3?", "options": ["2", "3", "4", "depends"], "correctIndex": 1, "explanation": "Closed range includes 1,2,3."},
+  "explanation": {"afterDemo": "Loops are core for data traversal and aggregation.", "keyTakeaways": ["for-in is common and expressive", "Maintain clear loop invariants", "Avoid hidden side effects"]},
+  "practice": {"prompt": "Sum numbers 4,5,6 and print total.", "starterCode": "// write code", "solutionCode": "var total = 0\nfor n in [4, 5, 6] {\n    total += n\n}\nprint(total)", "hint": "Use mutable total.", "validation": {"type": "output", "expectedOutput": ["15"]}},
+  "feedback": {"successMessage": "Loop accumulation is correct.", "retryHints": ["Initialize total=0", "Update inside loop"]},
+  "summary": {"title": "Loops — Complete", "takeaways": ["for-in handles collections", "Accumulators track state", "Readable loops reduce bugs"], "nextTopicId": "swift_optionals"}
+}

@@ -1,0 +1,250 @@
+[
+  {
+    "id": "rust_variables",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Variables & Mutability",
+    "description": "Understand how Rust binds values to names with let, enforces immutability by default, and how let mut opens a slot for reassignment.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "In Rust, variables are immutable by default — once bound, a value cannot change unless you explicitly mark the binding with `mut`. This design catches accidental mutation at compile time.",
+      "analogy": "An immutable variable is like a sealed envelope: you can read it, but you cannot change its contents without opening a new envelope.",
+      "keyPoints": [
+        "let x = 5; creates an immutable binding",
+        "let mut x = 5; allows reassignment",
+        "const MAX: u32 = 100; is a compile-time constant, not a variable",
+        "Shadowing (re-declaring let x) creates a new binding — the old one is gone"
+      ]
+    },
+    "defaultCode": "fn main() {\n    let x = 5;\n    let mut y = 10;\n    y = 20;\n    println!(\"x = {}, y = {}\", x, y);\n\n    let x = x + 1;  // shadowing\n    println!(\"shadowed x = {}\", x);\n}"
+  },
+  {
+    "id": "rust_data_types",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Data Types",
+    "description": "Explore Rust's scalar types (integers, floats, booleans, chars) and compound types (tuples and fixed-size arrays).",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Rust is statically typed — every value has a type known at compile time. Scalar types hold a single value; compound types group multiple values into one.",
+      "analogy": "Think of scalar types as single digits on a scoreboard, and compound types as a row of digits together.",
+      "keyPoints": [
+        "Integer types: i8/u8 through i128/u128, plus isize/usize",
+        "Float types: f32 and f64 (default is f64)",
+        "bool: true or false",
+        "char: a Unicode scalar value, e.g. 'A'",
+        "Tuple: fixed-length, mixed types — (1, 2.0, 'a')",
+        "Array: fixed-length, same type — [1, 2, 3]"
+      ]
+    },
+    "defaultCode": "fn main() {\n    let age: i32 = 30;\n    let height: f64 = 1.75;\n    let active: bool = true;\n    let grade: char = 'A';\n    let pair: (i32, f64) = (1, 2.5);\n    let scores: [i32; 3] = [90, 85, 95];\n    println!(\"{} {} {} {}\", age, height, active, grade);\n    println!(\"{:?} {:?}\", pair, scores);\n}"
+  },
+  {
+    "id": "rust_functions",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Learn how to define functions with fn, pass parameters, and return values using Rust's expression-based syntax.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Functions are named, reusable blocks of code. In Rust, functions use `fn` and the last expression in the body is implicitly returned (no semicolon). Explicit `return` is available but rarely needed.",
+      "analogy": "A function is a recipe: you give it ingredients (parameters) and it produces a dish (return value).",
+      "keyPoints": [
+        "fn name(param: Type) -> ReturnType { body }",
+        "The final expression (no semicolon) is the return value",
+        "Statements end with ; and do not produce values",
+        "Expressions produce values — e.g. { let x = 5; x + 1 }"
+      ]
+    },
+    "defaultCode": "fn add(a: i32, b: i32) -> i32 {\n    a + b\n}\n\nfn greet(name: &str) {\n    println!(\"Hello, {}!\", name);\n}\n\nfn main() {\n    let result = add(3, 4);\n    println!(\"3 + 4 = {}\", result);\n    greet(\"Alice\");\n}"
+  },
+  {
+    "id": "rust_control_flow",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Branch your program with if/else and match. Discover how Rust's if is an expression that can produce a value.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Rust's if/else evaluates a bool condition and runs one branch. Because if is an expression, it can be used on the right-hand side of a let. The match expression exhaustively covers all cases.",
+      "analogy": "if/else is like a fork in a road; match is like a roundabout with a dedicated exit for every possible direction.",
+      "keyPoints": [
+        "Condition must be bool — no implicit conversion",
+        "if/else is an expression: let x = if cond { 1 } else { 2 };",
+        "match must cover all variants — the compiler enforces this",
+        "_ is the wildcard arm in match"
+      ]
+    },
+    "defaultCode": "fn main() {\n    let score = 75;\n    let grade = if score >= 90 { \"A\" }\n                else if score >= 70 { \"B\" }\n                else { \"C\" };\n    println!(\"Grade: {}\", grade);\n\n    match grade {\n        \"A\" => println!(\"Excellent!\"),\n        \"B\" => println!(\"Good.\"),\n        _   => println!(\"Keep going.\"),\n    }\n}"
+  },
+  {
+    "id": "rust_loops",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Loops",
+    "description": "Master Rust's three loop forms — loop, while, and for — plus break with a return value and the range syntax.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Rust has three loop constructs: `loop` (infinite, break to exit), `while` (condition-checked on each iteration), and `for` (iterates over a range or collection). `break` can carry a value out of a `loop`.",
+      "analogy": "loop is a revolving door that only stops when you push the exit bar; while is a turnstile that checks your ticket each time; for is a conveyor belt that stops automatically.",
+      "keyPoints": [
+        "loop { } runs forever until break",
+        "break value; returns a value from loop",
+        "while condition { }",
+        "for x in 0..5 iterates 0,1,2,3,4 (exclusive end)",
+        "for x in 0..=5 iterates 0,1,2,3,4,5 (inclusive end)"
+      ]
+    },
+    "defaultCode": "fn main() {\n    // for with range\n    for i in 1..=3 {\n        println!(\"i = {}\", i);\n    }\n\n    // while\n    let mut n = 3;\n    while n > 0 {\n        println!(\"n = {}\", n);\n        n -= 1;\n    }\n\n    // loop with break value\n    let result = loop {\n        break 42;\n    };\n    println!(\"result = {}\", result);\n}"
+  },
+  {
+    "id": "rust_ownership",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Ownership",
+    "description": "Rust's ownership system guarantees memory safety without a garbage collector. Learn the three rules and how move semantics work.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Every value in Rust has an owner. When the owner goes out of scope, the value is dropped. Assignment of heap-allocated types (like String) moves ownership — the old binding becomes invalid.",
+      "analogy": "Ownership is like a physical book — only one person can hold it at a time. Handing it to someone else (move) means you no longer have it.",
+      "keyPoints": [
+        "Rule 1: Each value has exactly one owner",
+        "Rule 2: When the owner goes out of scope, the value is dropped",
+        "Rule 3: There can only be one owner at a time",
+        "Scalar types (i32, bool, etc.) are Copy — assignment duplicates them",
+        "String is not Copy — assignment moves the ownership"
+      ]
+    },
+    "defaultCode": "fn main() {\n    let s1 = String::from(\"hello\");\n    let s2 = s1;  // s1 is moved into s2\n    // println!(\"{}\", s1); // compile error: s1 is invalid\n    println!(\"{}\", s2);\n\n    let n1 = 5;\n    let n2 = n1;  // i32 is Copy\n    println!(\"{} {}\", n1, n2); // both valid\n}"
+  },
+  {
+    "id": "rust_borrowing",
+    "language": "rust",
+    "domain": "programming",
+    "title": "References & Borrowing",
+    "description": "Borrow a value by reference (&T) or mutable reference (&mut T) to use it without taking ownership.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "A reference lets you refer to a value without owning it. Immutable borrows (&T) allow multiple concurrent readers. Mutable borrows (&mut T) allow exactly one writer at a time — no other borrows active.",
+      "analogy": "Immutable borrowing is like lending a book to many readers at once (all read-only). Mutable borrowing is like lending it to one person with a pen — no one else can read until it's returned.",
+      "keyPoints": [
+        "&T — shared (immutable) reference; many allowed at once",
+        "&mut T — exclusive (mutable) reference; only one at a time",
+        "You cannot have &mut T and any &T at the same time",
+        "References must always be valid — no dangling pointers"
+      ]
+    },
+    "defaultCode": "fn length(s: &String) -> usize {\n    s.len()\n}\n\nfn append(s: &mut String) {\n    s.push_str(\" world\");\n}\n\nfn main() {\n    let s = String::from(\"hello\");\n    let len = length(&s);\n    println!(\"len = {}\", len);\n\n    let mut s2 = String::from(\"hello\");\n    append(&mut s2);\n    println!(\"{}\", s2);\n}"
+  },
+  {
+    "id": "rust_structs",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Structs",
+    "description": "Group related data into named structs and attach behaviour with impl blocks.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "A struct groups named fields of different types into a single type. Methods and associated functions are defined in an `impl` block. `&self` gives read access; `&mut self` gives write access.",
+      "analogy": "A struct is like a form with labelled fields — name, age, score. impl adds the operations you can do with that form.",
+      "keyPoints": [
+        "struct Name { field: Type, ... }",
+        "Instantiate: Name { field: value, ... }",
+        "Access fields with dot notation: point.x",
+        "impl Name { fn method(&self) { } }",
+        "Associated function (no self): Name::new()"
+      ]
+    },
+    "defaultCode": "struct Rectangle {\n    width: f64,\n    height: f64,\n}\n\nimpl Rectangle {\n    fn area(&self) -> f64 {\n        self.width * self.height\n    }\n    fn new(w: f64, h: f64) -> Rectangle {\n        Rectangle { width: w, height: h }\n    }\n}\n\nfn main() {\n    let r = Rectangle::new(4.0, 3.0);\n    println!(\"Area = {}\", r.area());\n}"
+  },
+  {
+    "id": "rust_enums",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Enums",
+    "description": "Define a type that can be one of several variants. Enums in Rust can carry data and are combined with match for exhaustive handling.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "An enum lists all possible variants of a type. Each variant can optionally carry data. Rust's Option<T> is a built-in enum: Some(value) or None — the safe replacement for null.",
+      "analogy": "An enum is like a traffic light: it can only ever be Red, Yellow, or Green — and each state might carry extra info (like countdown seconds).",
+      "keyPoints": [
+        "enum Color { Red, Green, Blue }",
+        "Variants can hold data: enum Message { Move { x: i32, y: i32 }, Quit }",
+        "Option<T> = Some(T) | None — no null in safe Rust",
+        "match is idiomatic for handling enum variants"
+      ]
+    },
+    "defaultCode": "enum Direction {\n    North,\n    South,\n    East,\n    West,\n}\n\nfn describe(d: Direction) {\n    match d {\n        Direction::North => println!(\"Going north\"),\n        Direction::South => println!(\"Going south\"),\n        Direction::East  => println!(\"Going east\"),\n        Direction::West  => println!(\"Going west\"),\n    }\n}\n\nfn main() {\n    describe(Direction::North);\n    let maybe: Option<i32> = Some(42);\n    if let Some(v) = maybe {\n        println!(\"Got {}\", v);\n    }\n}"
+  },
+  {
+    "id": "rust_pattern_matching",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Pattern Matching",
+    "description": "Use match, if let, and while let to destructure enums, tuples, and structs and act on their contents.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "Pattern matching tests a value against a series of patterns and executes the matching arm. Patterns can destructure complex types, bind names to parts of values, and include guards (extra conditions).",
+      "analogy": "Pattern matching is like sorting mail by shape and label: each slot is a pattern, and the letter falls into the first one that fits.",
+      "keyPoints": [
+        "match value { pattern => expr, ... } — exhaustive",
+        "if let Some(x) = opt { } — match one variant, ignore rest",
+        "while let Some(x) = iter.next() { } — loop until no match",
+        "Guard: pattern if condition => expr",
+        ".. ignores remaining fields in a struct or tuple pattern"
+      ]
+    },
+    "defaultCode": "fn categorise(n: i32) -> &'static str {\n    match n {\n        i32::MIN..=-1 => \"negative\",\n        0             => \"zero\",\n        1..=9         => \"single digit\",\n        _             => \"large\",\n    }\n}\n\nfn main() {\n    for n in [-5, 0, 7, 42] {\n        println!(\"{} is {}\", n, categorise(n));\n    }\n\n    let pair = (1, -1);\n    match pair {\n        (x, y) if x == y => println!(\"equal\"),\n        (x, y) if x + y == 0 => println!(\"opposites\"),\n        _ => println!(\"other\"),\n    }\n}"
+  },
+  {
+    "id": "rust_vectors",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Vectors & Collections",
+    "description": "Use Vec<T> — Rust's growable array — to store, access, and iterate over lists of values.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Vec<T> is a heap-allocated, growable list of values of a single type. Elements can be pushed, popped, indexed, and iterated. Accessing out-of-bounds with [] panics; use .get(i) for safe Option access.",
+      "analogy": "A Vec is like a whiteboard list: you can add items to the bottom, erase the last one, or read any entry by its number.",
+      "keyPoints": [
+        "Vec::new() or vec![1, 2, 3] macro",
+        "v.push(x) appends; v.pop() removes and returns last",
+        "v[i] panics on out-of-bounds; v.get(i) returns Option<&T>",
+        "for x in &v iterates by reference (no move)",
+        "v.len() returns the count"
+      ]
+    },
+    "defaultCode": "fn main() {\n    let mut scores: Vec<i32> = Vec::new();\n    scores.push(85);\n    scores.push(92);\n    scores.push(78);\n\n    println!(\"Count: {}\", scores.len());\n    println!(\"First: {}\", scores[0]);\n\n    let total: i32 = scores.iter().sum();\n    println!(\"Total: {}\", total);\n\n    for s in &scores {\n        println!(\"Score: {}\", s);\n    }\n}"
+  },
+  {
+    "id": "rust_error_handling",
+    "language": "rust",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Handle failures explicitly with Result<T, E> and Option<T>. Use the ? operator for clean propagation.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Rust has no exceptions. Recoverable errors use Result<T, E> (Ok(T) on success, Err(E) on failure). Missing values use Option<T> (Some(T) or None). The ? operator propagates errors to the caller automatically.",
+      "analogy": "Result is like a delivery box: it either contains your package (Ok) or a note explaining the failure (Err). The ? operator is an automatic forwarding slip.",
+      "keyPoints": [
+        "Result<T, E>: Ok(value) | Err(error)",
+        "Option<T>: Some(value) | None",
+        "unwrap() panics on Err/None — only use in prototypes",
+        "? in a fn returning Result/Option propagates the error",
+        "match and if let give explicit control over Ok/Err branches"
+      ]
+    },
+    "defaultCode": "use std::num::ParseIntError;\n\nfn parse_age(s: &str) -> Result<u32, ParseIntError> {\n    let n: u32 = s.trim().parse()?;\n    Ok(n)\n}\n\nfn main() {\n    match parse_age(\"25\") {\n        Ok(age) => println!(\"Age: {}\", age),\n        Err(e)  => println!(\"Error: {}\", e),\n    }\n    match parse_age(\"abc\") {\n        Ok(age) => println!(\"Age: {}\", age),\n        Err(e)  => println!(\"Error: {}\", e),\n    }\n}"
+  }
+]

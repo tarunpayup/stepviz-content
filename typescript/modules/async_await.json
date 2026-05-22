@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_async_await",
+  "topicId": "typescript_async_await",
+  "language": "typescript",
+  "title": "Async/Await",
+  "difficulty": "medium",
+  "concept": {"headline": "async functions return Promise values.", "explanation": "Use await to read resolved Promise values and try/catch for rejection handling.", "syntax": "async function getValue(): Promise<number> {\n  return 42;\n}\ngetValue().then(console.log);", "keyPoints": ["async => Promise<T>", "await unwraps resolved value", "Use try/catch for errors"]},
+  "demo": {"intro": "Create and consume a typed async function.", "code": "async function getValue(): Promise<number> {\n  return 42;\n}\ngetValue().then(console.log);", "focusLine": 1, "expectedHighlights": ["Promise<number> return", "resolved value 42", "prints 42"], "steps": [{"type": "declare", "line": 1, "var": "getValue", "value": "async function", "dataType": "() => Promise<number>", "explanation": {"what": "Define async function", "why": "Represent asynchronous result", "change": "getValue available", "intent": "Typed async API", "misconception": "async function never returns raw number directly"}}, {"type": "call", "line": 4, "name": "getValue", "args": [], "returnVar": "promise", "explanation": {"what": "Invoke function", "why": "Returns Promise<number>", "change": "promise pending then fulfilled", "intent": "Model async flow", "misconception": "Need await or then to access value"}}, {"type": "print", "line": 4, "value": "42", "explanation": {"what": "Log resolved value", "why": "then receives fulfillment result", "change": "output <- 42", "intent": "Confirm async success", "misconception": "Execution order may differ from sync code"}}]},
+  "prediction": {"question": "Return type of async function f(){ return 'ok'; } is?", "options": ["string", "Promise<string>", "any", "void"], "correctIndex": 1, "explanation": "async wraps returned value into Promise<string>."},
+  "explanation": {"afterDemo": "Typed promises make asynchronous boundaries explicit and safer to compose.", "keyTakeaways": ["Always think in Promise<T>", "await only in async scope", "Handle rejection paths"]},
+  "practice": {"prompt": "Write async function fetchCount returning Promise<number> with value 5, then print it using then.", "starterCode": "// write code", "solutionCode": "async function fetchCount(): Promise<number> {\n  return 5;\n}\nfetchCount().then(console.log);", "hint": "Return number from async fn.", "validation": {"type": "output", "expectedOutput": ["5"]}},
+  "feedback": {"successMessage": "Async typing and consumption are correct.", "retryHints": ["Use Promise<number>", "Consume with then or await"]},
+  "summary": {"title": "Async/Await — Complete", "takeaways": ["async returns Promise", "await/then consume results", "Type promises explicitly"], "nextTopicId": "typescript_error_handling"}
+}

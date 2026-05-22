@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_optionals",
+  "topicId": "swift_optionals",
+  "language": "swift",
+  "title": "Optionals",
+  "difficulty": "medium",
+  "concept": {"headline": "Optionals represent absent values safely.", "explanation": "Use type? and unwrap with if let, guard let, or ?? fallback.", "syntax": "var name: String? = nil\nlet safe = name ?? \"Guest\"", "keyPoints": ["Optional may be nil", "Unwrap safely", "Avoid force unwrap unless guaranteed"]},
+  "demo": {"intro": "Use nil-coalescing to provide default.", "code": "var name: String? = nil\nlet safe = name ?? \"Guest\"\nprint(safe)", "focusLine": 2, "expectedHighlights": ["name is nil", "fallback used", "prints Guest"], "steps": [{"type": "declare", "line": 1, "var": "name", "value": "nil", "dataType": "String?", "explanation": {"what": "Declare optional", "why": "Value may be missing", "change": "name=nil", "intent": "Model absence", "misconception": "Optional wraps underlying type"}}, {"type": "assign", "line": 2, "var": "safe", "value": "Guest", "explanation": {"what": "Apply fallback", "why": "Avoid nil handling downstream", "change": "safe gets default", "intent": "Safe value", "misconception": "?? uses right side only if left nil"}}, {"type": "print", "line": 3, "value": "Guest", "explanation": {"what": "Print resolved value", "why": "Validate fallback", "change": "output <- Guest", "intent": "Observe optional handling", "misconception": "None"}}]},
+  "prediction": {"question": "What does String? mean?", "options": ["Array of strings", "Optional string", "Mutable string", "Raw string"], "correctIndex": 1, "explanation": "It is a string that can be nil."},
+  "explanation": {"afterDemo": "Optionals are central to Swift safety guarantees.", "keyTakeaways": ["Model missing values explicitly", "Unwrap safely", "Use defaults where appropriate"]},
+  "practice": {"prompt": "Set age: Int? = nil and print age ?? 18.", "starterCode": "// write code", "solutionCode": "var age: Int? = nil\nprint(age ?? 18)", "hint": "Use nil-coalescing operator.", "validation": {"type": "output", "expectedOutput": ["18"]}},
+  "feedback": {"successMessage": "Optional handling is correct.", "retryHints": ["Declare Int?", "Use ?? fallback"]},
+  "summary": {"title": "Optionals — Complete", "takeaways": ["Optionals encode absence", "Safe unwrapping prevents crashes", "Fallbacks simplify flows"], "nextTopicId": "swift_collections"}
+}

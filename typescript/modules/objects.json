@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_objects",
+  "topicId": "typescript_objects",
+  "language": "typescript",
+  "title": "Object Types",
+  "difficulty": "easy",
+  "concept": {"headline": "Object annotations enforce field presence and field types.", "explanation": "TypeScript validates object shape during assignment and property access.", "syntax": "const user: { name: string; age?: number } = { name: \"Mira\" };", "keyPoints": ["Required vs optional fields", "readonly prevents mutation", "Object literals are shape-checked"]},
+  "demo": {"intro": "Create a typed object with optional field.", "code": "const user: { name: string; age?: number } = { name: \"Mira\" };\nconsole.log(user.name);", "focusLine": 1, "expectedHighlights": ["name required", "age optional", "prints Mira"], "steps": [{"type": "declare", "line": 1, "var": "user", "value": "{name:'Mira'}", "dataType": "{name:string;age?:number}", "explanation": {"what": "Declare object shape", "why": "Constrain allowed fields", "change": "user created", "intent": "Introduce object typing", "misconception": "Optional field can be omitted safely"}}, {"type": "print", "line": 2, "value": "Mira", "explanation": {"what": "Read name", "why": "Required field exists", "change": "output <- Mira", "intent": "Confirm typed access", "misconception": "Missing required fields fail compile"}}]},
+  "prediction": {"question": "Is this valid? const p:{name:string}= {name:'x', age:2};", "options": ["yes", "no"], "correctIndex": 1, "explanation": "Object literal has extra property age not in target type."},
+  "explanation": {"afterDemo": "Good object modeling catches API mismatches early.", "keyTakeaways": ["Use explicit object shapes", "Mark optional fields clearly", "Access typed props confidently"]},
+  "practice": {"prompt": "Define const item:{id:string; stock:number} and print id and stock.", "starterCode": "// write code", "solutionCode": "const item: { id: string; stock: number } = { id: \"p1\", stock: 9 };\nconsole.log(item.id, item.stock);", "hint": "Both fields are required.", "validation": {"type": "output", "expectedOutput": ["p1 9"]}},
+  "feedback": {"successMessage": "Object shape and access are correct.", "retryHints": ["Provide all required fields", "Match property types", "Print both values"]},
+  "summary": {"title": "Object Types — Complete", "takeaways": ["Object types act as data contracts", "Optional fields are explicit", "Shape checks prevent accidental mismatch"], "nextTopicId": "typescript_interfaces"}
+}

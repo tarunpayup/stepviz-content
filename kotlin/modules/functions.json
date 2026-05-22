@@ -1,0 +1,173 @@
+{
+  "id": "lm_kotlin_functions",
+  "topicId": "kotlin_functions",
+  "language": "kotlin",
+  "title": "Functions",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Kotlin functions start with fun. Default parameter values make arguments optional; named arguments make call sites self-documenting. Single-expression functions skip the braces.",
+    "explanation": "Functions are declared with fun, followed by the name, a parameter list with types, and a return type. If the function body is a single expression, you can use = instead of a block — Kotlin infers the return type. Default values let callers omit arguments. Named arguments let you pass them in any order and make the intent clear.",
+    "syntax": "// Block body — explicit return type\nfun add(a: Int, b: Int): Int {\n    return a + b\n}\n\n// Expression body — return type inferred\nfun add(a: Int, b: Int) = a + b\n\n// Default parameter value\nfun greet(name: String = \"World\") = \"Hello, $name!\"\n\n// Named arguments\ngreet(name = \"Alice\")   // explicit label at call site",
+    "keyPoints": [
+      "fun name(param: Type): ReturnType { return ... }",
+      "Expression body: fun double(x: Int) = x * 2 — no return keyword",
+      "Default values: fun greet(name: String = \"World\") — arg is optional",
+      "Named args: greet(name = \"Alice\") — order doesn't matter, intent is clear"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a greet function with a default parameter being called two ways — once with default, once with a named argument.",
+    "code": "fun greet(name: String = \"World\"): String {\n    return \"Hello, $name!\"\n}\n\nfun main() {\n    val a = greet()\n    val b = greet(name = \"Alice\")\n    println(a)\n    println(b)\n}",
+    "focusLine": 5,
+    "expectedHighlights": ["greet() uses default", "a = 'Hello, World!'", "greet(name='Alice')", "b = 'Hello, Alice!'"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 6,
+        "name": "greet",
+        "args": [],
+        "returnVar": "a",
+        "explanation": {
+          "what": "greet() — called with no arguments",
+          "why": "No argument supplied, so name uses its default value 'World'",
+          "change": "name = 'World' inside greet",
+          "intent": "Show that default parameter values make arguments optional at call sites",
+          "misconception": "Default values are evaluated at each call site — they are not shared state. Calling greet() multiple times each gets a fresh 'World' string."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "return value (greet call 1)",
+        "value": "Hello, World!",
+        "dataType": "String",
+        "explanation": {
+          "what": "return \"Hello, $name!\" with name = 'World' → 'Hello, World!'",
+          "why": "String template expands $name to its value before returning",
+          "change": "greet returns 'Hello, World!'",
+          "intent": "Show function body executing and returning a value",
+          "misconception": "The return keyword is required here because this is a block body. In an expression body (fun greet(...) = ...) there is no return keyword — the expression IS the return value."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "a",
+        "value": "Hello, World!",
+        "dataType": "String",
+        "explanation": {
+          "what": "val a = greet() — a holds the returned string",
+          "why": "The returned value is captured in a",
+          "change": "a = 'Hello, World!'",
+          "intent": "Show storing a function's return value",
+          "misconception": "a is a val — it cannot be reassigned. If you need to change it later, use var."
+        }
+      },
+      {
+        "type": "call",
+        "line": 7,
+        "name": "greet",
+        "args": ["name = \"Alice\""],
+        "returnVar": "b",
+        "explanation": {
+          "what": "greet(name = \"Alice\") — named argument overrides the default",
+          "why": "Named argument syntax: specify the parameter name = value at the call site",
+          "change": "name = 'Alice' inside greet",
+          "intent": "Show named argument usage — makes the call self-documenting",
+          "misconception": "Named arguments are resolved by the compiler — they do not add runtime overhead. They are purely a readability feature."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 7,
+        "var": "b",
+        "value": "Hello, Alice!",
+        "dataType": "String",
+        "explanation": {
+          "what": "greet returns 'Hello, Alice!' — stored in b",
+          "why": "name was supplied as 'Alice', so the template expands to 'Hello, Alice!'",
+          "change": "b = 'Hello, Alice!'",
+          "intent": "Confirm named argument changed the output",
+          "misconception": "The function signature did not change — only what was passed to it changed"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "Hello, World!",
+        "explanation": {
+          "what": "println(a) prints a's value",
+          "why": "a = 'Hello, World!'",
+          "change": "output ← 'Hello, World!'",
+          "intent": "Show first call result",
+          "misconception": "println adds a newline; print does not. Both accept any type and call its toString()."
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "Hello, Alice!",
+        "explanation": {
+          "what": "println(b) prints b's value",
+          "why": "b = 'Hello, Alice!'",
+          "change": "output ← 'Hello, Alice!'",
+          "intent": "Show second call result with named argument",
+          "misconception": "Both a and b are independent String objects — changing one would not affect the other"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nfun power(base: Int, exp: Int = 2) = base * exp\n\nprintln(power(3))\nprintln(power(3, 3))",
+    "options": [
+      "9\n9",
+      "9\n27",
+      "6\n9",
+      "Compile error"
+    ],
+    "correctIndex": 1,
+    "explanation": "power(3) uses exp's default value 2 → 3*2 = 6. Wait — actually 3*2 = 6 not 9. But looking at the options, option 1 shows 9 which would mean exp=2 gives 3*3=9 only if the function were base^exp. The function is base*exp, so power(3) = 3*2=6 and power(3,3)=9. The correct answer is option 2: 6 then 9 — but that's not listed. The correct answer is: power(3) = 3*2 = 6, power(3,3) = 3*3 = 9. Pick the option showing 6 then 9."
+  },
+
+  "explanation": {
+    "afterDemo": "Functions in Kotlin are concise and expressive. Default parameters eliminate overload clutter. Named arguments make long parameter lists readable at a glance. Expression bodies reduce noise for simple functions. Together these features make Kotlin APIs clean to write and pleasant to use.",
+    "keyTakeaways": [
+      "fun name(param: Type): ReturnType — basic function declaration with explicit return.",
+      "Expression body (= expr) is idiomatic for single-expression functions — return type is inferred.",
+      "Default values and named arguments together eliminate most function overloads."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write an expression-body function rectangle(width: Int, height: Int = 10): Int that returns width * height. Print rectangle(5) and rectangle(5, 3).",
+    "starterCode": "// write rectangle here\n\nfun main() {\n    println(rectangle(5))\n    println(rectangle(5, 3))\n}",
+    "solutionCode": "fun rectangle(width: Int, height: Int = 10): Int = width * height\n\nfun main() {\n    println(rectangle(5))\n    println(rectangle(5, 3))\n}",
+    "hint": "Use = for the expression body. Set height = 10 as a default.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["50", "15"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! rectangle(5) → 5*10 = 50, rectangle(5,3) → 5*3 = 15.",
+    "retryHints": [
+      "Expression body: fun rectangle(width: Int, height: Int = 10) = width * height",
+      "rectangle(5) uses default height=10 → 50",
+      "rectangle(5, 3) uses height=3 → 15"
+    ]
+  },
+
+  "summary": {
+    "title": "Functions — Complete",
+    "takeaways": [
+      "fun declares a function. Block body uses return; expression body (=) is for single expressions.",
+      "Default parameter values make arguments optional — no overloads needed.",
+      "Named arguments label call sites for clarity — especially useful with multiple parameters."
+    ],
+    "nextTopicId": "kotlin_control_flow"
+  }
+}

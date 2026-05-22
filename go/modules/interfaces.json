@@ -1,0 +1,116 @@
+{
+  "id": "lm_go_interfaces",
+  "topicId": "go_interfaces",
+  "language": "go",
+  "title": "Interfaces",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Interfaces define behavior contracts in Go.",
+    "explanation": "Types satisfy interfaces implicitly by implementing method sets.",
+    "syntax": "type Greeter interface {\n\tGreet() string\n}\n\nfunc (Bot) Greet() string { return \"Hello\" }",
+    "keyPoints": [
+      "No explicit implements keyword",
+      "Small interfaces are idiomatic",
+      "Interfaces help decouple components"
+    ]
+  },
+  "demo": {
+    "intro": "Assign concrete type to interface variable.",
+    "code": "package main\n\nimport \"fmt\"\n\ntype Greeter interface {\n\tGreet() string\n}\n\ntype Bot struct{}\n\nfunc (Bot) Greet() string { return \"Hello\" }\n\nfunc main() {\n\tvar g Greeter = Bot{}\n\tfmt.Println(g.Greet())\n}",
+    "focusLine": 14,
+    "expectedHighlights": [
+      "Bot satisfies Greeter",
+      "interface variable holds Bot",
+      "prints Hello"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "Greeter",
+        "value": "interface",
+        "dataType": "interface",
+        "explanation": {
+          "what": "Declare interface",
+          "why": "Describe required behavior",
+          "change": "Greeter contract defined",
+          "intent": "Abstraction",
+          "misconception": "Method signature must match exactly"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 14,
+        "var": "g",
+        "value": "Bot{}",
+        "explanation": {
+          "what": "Assign Bot to interface",
+          "why": "Bot implements Greet",
+          "change": "g stores concrete value",
+          "intent": "Polymorphism",
+          "misconception": "Conformance is implicit"
+        }
+      },
+      {
+        "type": "print",
+        "line": 15,
+        "value": "Hello",
+        "explanation": {
+          "what": "Call interface method",
+          "why": "Invoke behavior via contract",
+          "change": "output emitted",
+          "intent": "Show dynamic dispatch",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "How does a type implement an interface in Go?",
+    "options": [
+      "implements keyword",
+      "extends keyword",
+      "by having required methods",
+      "compiler flag"
+    ],
+    "correctIndex": 2,
+    "explanation": "Implementation is implicit through method sets."
+  },
+  "explanation": {
+    "afterDemo": "Interfaces support flexible and testable architecture.",
+    "keyTakeaways": [
+      "Program to behavior contracts",
+      "Keep interfaces focused",
+      "Implicit implementation reduces boilerplate"
+    ]
+  },
+  "practice": {
+    "prompt": "Define interface Named{ Name() string }, struct User, implement Name() and print it.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\ntype Named interface {\n\tName() string\n}\n\ntype User struct{}\n\nfunc (User) Name() string { return \"Ari\" }\n\nfunc main() {\n\tvar n Named = User{}\n\tfmt.Println(n.Name())\n}",
+    "hint": "Create method with exact signature.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "Ari"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Interface conformance is correct.",
+    "retryHints": [
+      "Match method signature",
+      "Assign struct to interface variable",
+      "Print method output"
+    ]
+  },
+  "summary": {
+    "title": "Interfaces - Complete",
+    "takeaways": [
+      "Interfaces express behavior",
+      "Conformance is implicit",
+      "Small contracts improve design"
+    ],
+    "nextTopicId": "go_error_handling"
+  }
+}

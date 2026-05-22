@@ -1,0 +1,43 @@
+{
+  "id": "lm_solidity_inheritance",
+  "topicId": "solidity_inheritance",
+  "language": "solidity",
+  "title": "Inheritance & Interfaces",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Inheritance and interfaces support modular smart contract design.",
+    "explanation": "Use interfaces for external contracts and inheritance for reusable implementation logic.",
+    "syntax": "interface IGreeter { function greet() external pure returns (string memory); }",
+    "keyPoints": ["Interfaces declare signatures only", "override required for implemented methods", "Multiple inheritance needs careful design"]
+  },
+  "demo": {
+    "intro": "Implement a simple interface in a contract.",
+    "code": "pragma solidity ^0.8.20;\n\ninterface IGreeter { function greet() external pure returns (string memory); }\ncontract Greeter is IGreeter {\n  function greet() external pure override returns (string memory) {\n    return 'hello';\n  }\n}",
+    "focusLine": 5,
+    "expectedHighlights": ["interface declared", "contract implements interface", "override present"],
+    "steps": [
+      {"type": "declare", "line": 3, "var": "IGreeter", "value": "interface", "dataType": "Interface", "explanation": {"what": "Define contract API shape", "why": "Enable standardized external interactions", "change": "IGreeter available", "intent": "Contract composability", "misconception": "Interfaces cannot contain function bodies"}},
+      {"type": "declare", "line": 4, "var": "Greeter", "value": "is IGreeter", "dataType": "Contract", "explanation": {"what": "Implement interface", "why": "Provide concrete behavior", "change": "Greeter conforms to IGreeter", "intent": "Demonstrate implementation", "misconception": "Missing required interface methods causes compile error"}},
+      {"type": "return", "line": 6, "value": "hello", "explanation": {"what": "Return greeting", "why": "Concrete implementation of interface method", "change": "greet output defined", "intent": "Complete interface contract", "misconception": "override keyword is mandatory here"}}
+    ]
+  },
+  "prediction": {
+    "question": "If contract implements interface but omits one function, result is?",
+    "options": ["deploy warning only", "compile error", "runtime error", "function becomes optional"],
+    "correctIndex": 1,
+    "explanation": "All interface functions must be implemented or contract must be abstract."
+  },
+  "explanation": {
+    "afterDemo": "Interface-driven design improves interoperability across contracts and tooling.",
+    "keyTakeaways": ["Interfaces define callable shape", "Implement all required methods", "Use override correctly"]
+  },
+  "practice": {
+    "prompt": "Define interface IVal with get() external view returns(uint256), and contract V implementing get() to return 7.",
+    "starterCode": "// add interface + contract",
+    "solutionCode": "interface IVal {\n  function get() external view returns (uint256);\n}\n\ncontract V is IVal {\n  function get() external pure override returns (uint256) {\n    return 7;\n  }\n}",
+    "hint": "Remember override on implemented function.",
+    "validation": {"type": "step_count", "min": 2}
+  },
+  "feedback": {"successMessage": "Interface implementation is correct.", "retryHints": ["Match exact signature", "Include override", "Return declared type"]},
+  "summary": {"title": "Inheritance & Interfaces — Complete", "takeaways": ["Interfaces enable standard APIs", "Inheritance reuses logic", "override resolves implementation details"], "nextTopicId": "solidity_events"}
+}

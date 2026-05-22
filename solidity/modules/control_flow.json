@@ -1,0 +1,43 @@
+{
+  "id": "lm_solidity_control_flow",
+  "topicId": "solidity_control_flow",
+  "language": "solidity",
+  "title": "Control Flow",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Solidity control flow often starts with require guards.",
+    "explanation": "Use require to validate preconditions before branching into core logic.",
+    "syntax": "require(msg.sender == owner, 'Not owner');",
+    "keyPoints": ["require validates inputs/state", "Failed require reverts", "Guards should be early"]
+  },
+  "demo": {
+    "intro": "Protect a function with owner check.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Vault {\n  address public owner;\n  constructor() { owner = msg.sender; }\n\n  function onlyOwnerAction() public view returns (bool) {\n    require(msg.sender == owner, 'Not owner');\n    return true;\n  }\n}",
+    "focusLine": 8,
+    "expectedHighlights": ["owner stored", "require guard", "returns true for owner"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "owner", "value": "msg.sender", "dataType": "address", "explanation": {"what": "Store owner", "why": "Establish admin identity", "change": "owner set", "intent": "Access control basis", "misconception": "constructor runs once at deploy"}},
+      {"type": "condition_check", "line": 8, "expression": "msg.sender == owner", "result": true, "branch": "require", "explanation": {"what": "Evaluate ownership", "why": "Gate function access", "change": "continue or revert", "intent": "Prevent unauthorized calls", "misconception": "Failed require reverts all state changes"}},
+      {"type": "return", "line": 9, "value": "true", "explanation": {"what": "Return success", "why": "Guard passed", "change": "output true", "intent": "Signal allowed path", "misconception": "view function reads state without modifying"}}
+    ]
+  },
+  "prediction": {
+    "question": "If require fails, what happens?",
+    "options": ["state partially updates", "transaction reverts", "returns false", "continues execution"],
+    "correctIndex": 1,
+    "explanation": "require failure reverts and undoes state changes in the transaction."
+  },
+  "explanation": {
+    "afterDemo": "Early guard clauses reduce vulnerabilities and simplify contract logic.",
+    "keyTakeaways": ["Put require checks early", "Reverts roll back state", "Access checks are mandatory for admin actions"]
+  },
+  "practice": {
+    "prompt": "Add require(x > 0, 'x must be positive') before returning x in a pure function.",
+    "starterCode": "function pos(uint256 x) public pure returns (uint256) {\n  // guard\n  return x;\n}",
+    "solutionCode": "function pos(uint256 x) public pure returns (uint256) {\n  require(x > 0, 'x must be positive');\n  return x;\n}",
+    "hint": "Insert require before return.",
+    "validation": {"type": "step_count", "min": 1}
+  },
+  "feedback": {"successMessage": "Guarded control flow is correct.", "retryHints": ["Use require(condition, message)", "Place guard before main logic"]},
+  "summary": {"title": "Control Flow — Complete", "takeaways": ["require is core guard tool", "Failed checks revert", "Early checks improve safety"], "nextTopicId": "solidity_loops"}
+}

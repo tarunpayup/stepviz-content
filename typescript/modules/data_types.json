@@ -1,0 +1,40 @@
+{
+  "id": "lm_typescript_data_types",
+  "topicId": "typescript_data_types",
+  "language": "typescript",
+  "title": "Core Types",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "TypeScript type annotations make value intent explicit.",
+    "explanation": "Primitive and union types help prevent invalid operations before runtime.",
+    "syntax": "let age: number = 20;\nlet name: string = \"Ari\";\nlet active: boolean = true;\nlet id: string | number = \"u1\";",
+    "keyPoints": ["Use precise primitive types", "Use unions for alternatives", "Avoid any when possible"]
+  },
+  "demo": {
+    "intro": "Declare typed values and a union id.",
+    "code": "let age: number = 20;\nlet name: string = \"Ari\";\nlet active: boolean = true;\nlet id: string | number = \"u1\";\nconsole.log(age, name, active, id);",
+    "focusLine": 4,
+    "expectedHighlights": ["typed primitives", "union id", "logs values"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "age", "value": "20", "dataType": "number", "explanation": {"what": "Declare number", "why": "Age is numeric", "change": "age=20", "intent": "Typed primitive", "misconception": "number includes ints/floats in JS runtime"}},
+      {"type": "declare", "line": 4, "var": "id", "value": "u1", "dataType": "string | number", "explanation": {"what": "Declare union id", "why": "Accepts string or number", "change": "id='u1'", "intent": "Model flexible input", "misconception": "Union still restricts to listed options only"}},
+      {"type": "print", "line": 5, "value": "20 Ari true u1", "explanation": {"what": "Print typed values", "why": "Observe final declared state", "change": "output <- values", "intent": "Confirm declarations", "misconception": "Runtime output does not include TS type metadata"}}
+    ]
+  },
+  "prediction": {
+    "question": "Is this valid?\n\nlet id: string | number = true;",
+    "options": ["yes", "no"],
+    "correctIndex": 1,
+    "explanation": "boolean is not part of string | number union."
+  },
+  "explanation": {"afterDemo": "Good type modeling catches wrong assignments early.", "keyTakeaways": ["Primitive types are clear contracts", "Unions model controlled flexibility", "Type errors appear before runtime"]},
+  "practice": {
+    "prompt": "Create typed values title:string, count:number, done:boolean and print them.",
+    "starterCode": "// write code",
+    "solutionCode": "const title: string = \"StepViz\";\nconst count: number = 3;\nconst done: boolean = false;\nconsole.log(title, count, done);",
+    "hint": "Annotate each variable explicitly.",
+    "validation": {"type": "output", "expectedOutput": ["StepViz 3 false"]}
+  },
+  "feedback": {"successMessage": "Typed declarations look correct.", "retryHints": ["Use string/number/boolean", "Print all values in one line"]},
+  "summary": {"title": "Core Types — Complete", "takeaways": ["Primitive types guide correctness", "Unions are safer than any", "Types improve maintainability"], "nextTopicId": "typescript_functions"}
+}

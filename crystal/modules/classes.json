@@ -1,0 +1,70 @@
+{
+  "id": "lm_crystal_classes",
+  "topicId": "crystal_classes",
+  "language": "crystal",
+  "title": "Classes & Objects",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Classes package data and behavior into reusable object types.",
+    "explanation": "Crystal classes use initialize to construct instances. Instance variables store object-specific state, and methods expose behavior.",
+    "syntax": "class User\n  def initialize(@name : String, @score : Int32)\n  end\n\n  def label\n    \"#{@name}: #{@score}\"\n  end\nend\n\nu = User.new(\"Ari\", 10)\nputs u.label",
+    "keyPoints": [
+      "initialize runs on new",
+      "@vars belong to each instance",
+      "Methods read/change instance state",
+      "Objects are created via ClassName.new"
+    ]
+  },
+
+  "demo": {
+    "intro": "Build a User object and call its method.",
+    "code": "class User\n  def initialize(@name : String, @score : Int32)\n  end\n\n  def label\n    \"#{@name}: #{@score}\"\n  end\nend\n\nu = User.new(\"Ari\", 10)\nputs u.label",
+    "focusLine": 1,
+    "expectedHighlights": ["class defined", "object created", "method returns formatted label"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "User", "value": "class", "dataType": "Class", "explanation": {"what": "Define User class", "why": "Model user-related data/behavior", "change": "User type available", "intent": "Introduce OOP structure", "misconception": "Class definition does not create instances"}},
+      {"type": "call", "line": 10, "name": "User.new", "args": ["Ari", "10"], "returnVar": "u", "explanation": {"what": "Instantiate User", "why": "new calls initialize", "change": "u holds User instance", "intent": "Create object", "misconception": "initialize is invoked automatically by new"}},
+      {"type": "print", "line": 11, "value": "Ari: 10", "explanation": {"what": "Call label and print", "why": "Method interpolates instance vars", "change": "output <- 'Ari: 10'", "intent": "Observe object behavior", "misconception": "Method call uses instance state via @vars"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "What prints?\n\nclass Box\n  def initialize(@n : Int32)\n  end\n  def double\n    @n * 2\n  end\nend\nputs Box.new(4).double",
+    "options": ["2", "4", "8", "compile error"],
+    "correctIndex": 2,
+    "explanation": "double returns @n * 2. With @n = 4, output is 8."
+  },
+
+  "explanation": {
+    "afterDemo": "Classes help organize growing codebases by grouping data with related methods.",
+    "keyTakeaways": [
+      "initialize seeds instance state.",
+      "Methods operate on @instance variables.",
+      "Objects are concrete runtime values of class types."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create class Counter with initialize(@value : Int32) and method inc returning @value + 1. Print Counter.new(9).inc.",
+    "starterCode": "# define Counter\n# print incremented value",
+    "solutionCode": "class Counter\n  def initialize(@value : Int32)\n  end\n\n  def inc\n    @value + 1\n  end\nend\n\nputs Counter.new(9).inc",
+    "hint": "Method inc should return expression @value + 1.",
+    "validation": {"type": "output", "expectedOutput": ["10"]}
+  },
+
+  "feedback": {
+    "successMessage": "Great class design and method usage.",
+    "retryHints": ["Use initialize with @value", "Return @value + 1", "Print result from new instance"]
+  },
+
+  "summary": {
+    "title": "Classes — Complete",
+    "takeaways": [
+      "Classes model state and behavior together.",
+      "initialize sets per-instance values.",
+      "Methods expose reusable object logic."
+    ],
+    "nextTopicId": "crystal_modules"
+  }
+}

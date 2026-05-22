@@ -1,0 +1,228 @@
+{
+  "id": "lm_rust_vectors",
+  "topicId": "rust_vectors",
+  "language": "rust",
+  "title": "Vectors & Collections",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Vec<T> is Rust's growable list — heap-allocated, dynamically sized, single type.",
+    "explanation": "A Vec<T> stores a sequence of T values on the heap. Unlike arrays (fixed at compile time), Vecs can grow and shrink at runtime. Common operations: push to append, pop to remove the last, [] to index (panics out-of-bounds), and .get(i) for safe Option access. Iterating with for x in &v borrows each element immutably.",
+    "syntax": "// Create\nlet mut v: Vec<i32> = Vec::new();\nlet v = vec![1, 2, 3];    // macro shorthand\n\n// Modify\nv.push(4);                // append\nv.pop();                  // remove last → Option<i32>\n\n// Read\nlet first = v[0];         // panics if out of bounds\nlet first = v.get(0);     // returns Option<&i32>\n\n// Iterate\nfor x in &v {\n    println!(\"{}\", x);\n}",
+    "keyPoints": [
+      "Vec stores all elements of the same type T",
+      "push/pop operate at the end — O(1) amortised",
+      "v[i] panics if i >= v.len(); v.get(i) returns Option<&T>",
+      "for x in &v borrows (read-only); for x in &mut v borrows mutably; for x in v consumes",
+      "v.iter().map().filter().sum() — iterator adapters work on Vec slices"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a Vec grow with push, then be iterated and summed.",
+    "code": "fn main() {\n    let mut scores: Vec<i32> = Vec::new();\n    scores.push(85);\n    scores.push(92);\n    scores.push(78);\n\n    println!(\"count: {}\", scores.len());\n    println!(\"first: {}\", scores[0]);\n\n    let total: i32 = scores.iter().sum();\n    println!(\"total: {}\", total);\n\n    for s in &scores {\n        println!(\"{}\", s);\n    }\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["Vec created", "85 pushed", "92 pushed", "78 pushed", "len=3", "sum=255", "loop prints each"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "scores",
+        "value": "[]",
+        "dataType": "Vec<i32>",
+        "explanation": {
+          "what": "Creating an empty Vec<i32>",
+          "why": "Vec::new() allocates a heap buffer with zero length and some initial capacity",
+          "change": "scores = [] (empty Vec on heap)",
+          "intent": "Prepare a growable list for collecting scores",
+          "misconception": "Vec::new() does NOT allocate heap memory immediately — it creates a zero-capacity handle. Heap allocation occurs on the first push."
+        }
+      },
+      {
+        "type": "assign",
+        "line": 3,
+        "var": "scores",
+        "value": "[85]",
+        "explanation": {
+          "what": "scores.push(85) — appending 85",
+          "why": "push moves the value onto the heap buffer; if capacity is exceeded, Rust reallocates with doubled capacity",
+          "change": "scores: [] → [85]",
+          "intent": "Add the first score to the list",
+          "misconception": "push takes ownership of the value (here i32 is Copy, so it copies). For non-Copy types, the Vec owns them after push."
+        }
+      },
+      {
+        "type": "assign",
+        "line": 4,
+        "var": "scores",
+        "value": "[85, 92]",
+        "explanation": {
+          "what": "scores.push(92) — appending 92",
+          "why": "Each push appends to the end of the buffer",
+          "change": "scores: [85] → [85, 92]",
+          "intent": "Grow the list with a second element",
+          "misconception": "push always appends to the end — there is no insert at beginning in O(1)"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 5,
+        "var": "scores",
+        "value": "[85, 92, 78]",
+        "explanation": {
+          "what": "scores.push(78) — appending 78",
+          "why": "Third push; now the Vec has 3 elements",
+          "change": "scores: [85, 92] → [85, 92, 78]",
+          "intent": "Complete the sample dataset",
+          "misconception": "The indices are 0, 1, 2 — the last valid index is scores.len() - 1 = 2"
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "count: 3",
+        "explanation": {
+          "what": "Printing scores.len() = 3",
+          "why": "len() returns the number of elements currently stored",
+          "change": "output ← 'count: 3'",
+          "intent": "Confirm the Vec has grown to 3 elements",
+          "misconception": "len() is O(1) — the Vec stores its length as metadata, not by counting elements"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "first: 85",
+        "explanation": {
+          "what": "Printing scores[0] = 85",
+          "why": "Index 0 accesses the first element; i32 is Copy so it is copied out",
+          "change": "output ← 'first: 85'",
+          "intent": "Show direct element access by index",
+          "misconception": "scores[0] would panic if scores were empty — len() checked above confirms it is not"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 10,
+        "var": "total",
+        "value": "255",
+        "dataType": "i32",
+        "explanation": {
+          "what": "scores.iter().sum() = 255",
+          "why": "iter() creates a borrowing iterator over &i32 elements; sum() accumulates them into an i32",
+          "change": "total = 255 (85 + 92 + 78)",
+          "intent": "Demonstrate iterator chaining on a Vec",
+          "misconception": "iter() does not consume the Vec — it borrows. You can use scores again after this line."
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "total: 255",
+        "explanation": {
+          "what": "Printing total",
+          "why": "total holds the sum 255",
+          "change": "output ← 'total: 255'",
+          "intent": "Show aggregate result from iterator",
+          "misconception": "The type annotation `let total: i32` is required because sum() is generic and needs to know what type to accumulate into"
+        }
+      },
+      {
+        "type": "loop_start",
+        "line": 13,
+        "kind": "for",
+        "condition": "s in &scores",
+        "var": "s",
+        "explanation": {
+          "what": "for s in &scores — immutable borrow iteration",
+          "why": "&scores creates a borrowing iterator; s is a &i32 reference to each element",
+          "change": "loop begins over [85, 92, 78]",
+          "intent": "Print each element without consuming the Vec",
+          "misconception": "for s in scores (without &) would move the Vec into the loop — scores would be unusable afterward"
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "85",
+        "explanation": {
+          "what": "Printing first element 85",
+          "why": "s dereferences to 85 automatically; {} auto-derefs the &i32",
+          "change": "output ← '85'",
+          "intent": "First loop iteration",
+          "misconception": "println!(\"{}\", s) auto-derefs the &i32 reference — you do not need to write *s"
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "92",
+        "explanation": {
+          "what": "Printing second element 92",
+          "why": "Iterator advances to index 1",
+          "change": "output ← '92'",
+          "intent": "Second loop iteration",
+          "misconception": "The iterator is lazy — each call to next() yields the next element"
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "78",
+        "explanation": {
+          "what": "Printing third element 78",
+          "why": "Iterator reaches index 2 — the last element",
+          "change": "output ← '78'",
+          "intent": "Last loop iteration",
+          "misconception": "After yielding 78, the iterator returns None and the for loop exits naturally"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\nlet v = vec![10, 20, 30];\nprintln!(\"{}\", v[v.len() - 1]);",
+    "options": ["10", "20", "30", "index out of bounds panic"],
+    "correctIndex": 2,
+    "explanation": "v.len() is 3. v.len() - 1 = 2. v[2] is the last element, 30. No panic — 2 is a valid index."
+  },
+
+  "explanation": {
+    "afterDemo": "The Vec started empty, grew with three push calls, then we read from it by length, by index, via sum(), and by iteration — all without consuming it (we used &scores throughout). The Vec was dropped automatically when main exited.",
+    "keyTakeaways": [
+      "Vec<T> grows dynamically on the heap; push appends, pop removes the last.",
+      "Use v.get(i) instead of v[i] when the index might be out of bounds — get returns Option.",
+      "for x in &v borrows each element; for x in v consumes the Vec."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create a Vec<i32> with values 2, 4, 6, 8. Print only the elements greater than 4 (one per line) using iter().filter().",
+    "starterCode": "fn main() {\n    let v = vec![2, 4, 6, 8];\n    // filter and print\n}",
+    "solutionCode": "fn main() {\n    let v = vec![2, 4, 6, 8];\n    for x in v.iter().filter(|&&n| n > 4) {\n        println!(\"{}\", x);\n    }\n}",
+    "hint": "v.iter().filter(|&&n| n > 4) produces references to elements where the value > 4.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["6", "8"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! filter keeps only elements where n > 4, yielding 6 and 8.",
+    "retryHints": [
+      "v.iter() yields &&i32 in the filter closure because iter() yields &i32 and filter passes &&T.",
+      "Pattern |&&n| destructures both layers of reference to get the i32 n.",
+      "Expected output: two lines — 6 and 8."
+    ]
+  },
+
+  "summary": {
+    "title": "Vectors — Complete",
+    "takeaways": [
+      "Vec<T> is the go-to growable collection in Rust.",
+      "Use v.get(i) for safe indexed access; v[i] panics on out-of-bounds.",
+      "Iterator adapters (.map(), .filter(), .sum()) work directly on Vec slices."
+    ],
+    "nextTopicId": "rust_error_handling"
+  }
+}

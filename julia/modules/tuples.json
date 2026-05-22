@@ -1,0 +1,181 @@
+{
+  "id": "lm_julia_tuples",
+  "topicId": "julia_tuples",
+  "language": "julia",
+  "title": "Tuples & Named Tuples",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Julia tuples are immutable, fixed-length collections. Named tuples add field names accessed with .fieldname. Both are created with parentheses.",
+    "explanation": "A Julia tuple is created with (a, b, c) — it is immutable (no push!, no assignment to indices). Named tuples add field names: (x=3, y=4). Access named tuple fields with .fieldname. Tuples are zero-overhead — they are used for returning multiple values from functions and for small heterogeneous fixed-size data. Tuple elements can be different types.",
+    "syntax": "# Positional tuple\npt = (3, 4)         # Tuple{Int64, Int64}\npt[1]               # 3 — 1-indexed\npt[2]               # 4\n\n# Named tuple\nnamed = (x=3, y=4)  # NamedTuple\nnamed.x             # 3 — field access\nnamed.y             # 4\n\n# Heterogeneous tuple\nrecord = (\"Alice\", 30, true)\nrecord[1]           # \"Alice\"\n\n# Multiple return values\nfunction minmax(arr)\n    minimum(arr), maximum(arr)\nend\nlo, hi = minmax([3,1,4,1,5])",
+    "keyPoints": [
+      "(a, b, c) — positional tuple, 1-indexed access via [i]",
+      "(x=1, y=2) — named tuple, field access via .fieldname",
+      "Immutable — you cannot push! or reassign indices",
+      "Functions can return multiple values as a tuple: return a, b"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a positional tuple and a named tuple being created and accessed.",
+    "code": "pt = (3, 4)\nprintln(pt[1])\nprintln(pt[2])\n\nnamed = (x=3, y=4)\nprintln(named.x)\nprintln(named.y)\n\ndist = sqrt(named.x^2 + named.y^2)\nprintln(dist)",
+    "focusLine": 1,
+    "expectedHighlights": ["pt[1]=3", "pt[2]=4", "named.x=3", "named.y=4", "dist=5.0"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "pt",
+        "value": "(3, 4)",
+        "dataType": "Tuple{Int64, Int64}",
+        "explanation": {
+          "what": "pt = (3, 4) — creates a 2-element positional tuple",
+          "why": "Parentheses with comma-separated values create a tuple",
+          "change": "pt = (3, 4)",
+          "intent": "Show tuple creation syntax",
+          "misconception": "A tuple with a SINGLE element requires a trailing comma: (42,). Without it, (42) is just a parenthesized expression — the parentheses have no effect."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "3",
+        "explanation": {
+          "what": "pt[1] → 3 — first element via 1-based indexing",
+          "why": "Positional tuples are accessed by integer index like arrays",
+          "change": "output ← '3'",
+          "intent": "Show 1-indexed access for positional tuples",
+          "misconception": "Tuples use the same 1-based indexing as arrays in Julia. pt[0] throws a BoundsError."
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "4",
+        "explanation": {
+          "what": "pt[2] → 4 — second element",
+          "why": "Index 2 for the second element",
+          "change": "output ← '4'",
+          "intent": "Confirm second element access",
+          "misconception": "Unlike arrays, you CANNOT do pt[1] = 99 — tuples are immutable. Assignment to a tuple index throws a MethodError."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "named",
+        "value": "(x=3, y=4)",
+        "dataType": "NamedTuple{(:x, :y), Tuple{Int64, Int64}}",
+        "explanation": {
+          "what": "named = (x=3, y=4) — named tuple with fields x and y",
+          "why": "key=value syntax inside () creates a NamedTuple",
+          "change": "named.x = 3, named.y = 4",
+          "intent": "Show named tuple creation",
+          "misconception": "Named tuples are still immutable — you cannot do named.x = 10. The 'named' in 'named tuple' refers to named fields, not mutability."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "3",
+        "explanation": {
+          "what": "named.x → 3 — dot-field access",
+          "why": ".fieldname is the idiomatic accessor for named tuples",
+          "change": "output ← '3'",
+          "intent": "Show .fieldname syntax",
+          "misconception": "You can also access named tuple fields by index: named[1] == named.x. But .fieldname is more readable and preferred."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "4",
+        "explanation": {
+          "what": "named.y → 4",
+          "why": "Field y holds 4",
+          "change": "output ← '4'",
+          "intent": "Confirm .y field access",
+          "misconception": "Field names in NamedTuples are Symbols internally (:x, :y) but you access them with dot notation, not the colon syntax"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 9,
+        "var": "dist",
+        "value": "5.0",
+        "dataType": "Float64",
+        "explanation": {
+          "what": "dist = sqrt(named.x^2 + named.y^2) = sqrt(9+16) = sqrt(25) = 5.0",
+          "why": "Euclidean distance for point (3,4) from origin",
+          "change": "dist = 5.0",
+          "intent": "Show named tuples used for structured data (a 2D point)",
+          "misconception": "sqrt() returns Float64 in Julia — even sqrt(25) gives 5.0, not 5. Use isqrt() for integer square root."
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "5.0",
+        "explanation": {
+          "what": "println(dist) → 5.0",
+          "why": "The 3-4-5 right triangle",
+          "change": "output ← '5.0'",
+          "intent": "Confirm named tuple field access in arithmetic",
+          "misconception": "Named tuples excel at returning structured data from functions — cleaner than returning a plain tuple (3,4) when the caller needs to know which is x and which is y"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\ndata = (name=\"Bob\", age=25)\nprintln(data.name)\nprintln(data[2])",
+    "options": [
+      "Bob\n25",
+      "Bob\nBob",
+      "Error",
+      "name\n25"
+    ],
+    "correctIndex": 0,
+    "explanation": "data.name → 'Bob' (named field). data[2] → 25 (second element by index — named tuples support both .field and [i] access). Output: Bob then 25."
+  },
+
+  "explanation": {
+    "afterDemo": "Named tuples are Julia's lightweight alternative to structs for simple data grouping. They are immutable (zero-cost), human-readable (.x instead of [1]), and interoperable with positional tuple indexing. They are especially common as function return values and as ad-hoc records in data pipelines.",
+    "keyTakeaways": [
+      "Positional tuple: (a,b,c) — access via [i], 1-indexed, immutable.",
+      "Named tuple: (x=1,y=2) — access via .fieldname or [i], immutable.",
+      "Return multiple values: return a, b — caller unpacks with a, b = f()"
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create a named tuple circle = (radius=7, color=\"red\"). Print circle.radius and circle.color on separate lines.",
+    "starterCode": "circle = # your named tuple here\nprintln(circle.radius)\nprintln(circle.color)",
+    "solutionCode": "circle = (radius=7, color=\"red\")\nprintln(circle.radius)\nprintln(circle.color)",
+    "hint": "(radius=7, color=\"red\") — use field=value syntax inside parentheses.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["7", "red"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! circle.radius=7, circle.color=red.",
+    "retryHints": [
+      "circle = (radius=7, color=\"red\")",
+      "Access: circle.radius and circle.color",
+      "Expected: 7 then red"
+    ]
+  },
+
+  "summary": {
+    "title": "Tuples & Named Tuples — Complete",
+    "takeaways": [
+      "Positional tuple (a,b): [i] access, immutable, 1-indexed.",
+      "Named tuple (x=a, y=b): .fieldname access, also supports [i], immutable.",
+      "Single-element tuple needs trailing comma: (42,). Without it, (42) is just parentheses."
+    ],
+    "nextTopicId": "julia_dictionaries"
+  }
+}

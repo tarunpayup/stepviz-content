@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_variables",
+  "topicId": "python_variables",
+  "language": "python",
+  "title": "Variables",
+  "difficulty": "easy",
+  "concept": {"headline": "Python variables are name bindings.", "explanation": "Assignments bind names to objects and names can be rebound.", "syntax": "name = 'StepViz'\ncount = 1\ncount += 1\nprint(name, count)", "keyPoints": ["No declarations needed", "Rebinding is allowed", "Type follows value"]},
+  "demo": {"intro": "Bind and update simple values.", "code": "name = 'StepViz'\ncount = 1\ncount += 1\nprint(name, count)", "focusLine": 2, "expectedHighlights": ["name bound", "count incremented", "prints StepViz 2"], "steps": [{"type": "declare", "line": 1, "var": "name", "value": "StepViz", "dataType": "str", "explanation": {"what": "Bind name", "why": "Store text", "change": "name='StepViz'", "intent": "Create variable", "misconception": "Variable holds reference"}}, {"type": "assign", "line": 3, "var": "count", "value": "2", "explanation": {"what": "Increment count", "why": "Update numeric state", "change": "count:1->2", "intent": "Show mutation", "misconception": "+= rebinds name"}}, {"type": "print", "line": 4, "value": "StepViz 2", "explanation": {"what": "Print values", "why": "Observe final state", "change": "output <- StepViz 2", "intent": "Confirm result", "misconception": "print changes nothing"}}]},
+  "prediction": {"question": "Output?\n\nx = 5\nx = x + 1\nprint(x)", "options": ["5", "6", "51", "error"], "correctIndex": 1, "explanation": "x becomes 6 after reassignment."},
+  "explanation": {"afterDemo": "Variables are flexible bindings in Python, but clarity in naming still matters.", "keyTakeaways": ["Assignments bind names", "Values determine runtime types", "Reassignment is common"]},
+  "practice": {"prompt": "Set title='Py', n=3, then n += 4 and print title and n.", "starterCode": "# write code", "solutionCode": "title = 'Py'\nn = 3\nn += 4\nprint(title, n)", "hint": "Use += for update.", "validation": {"type": "output", "expectedOutput": ["Py 7"]}},
+  "feedback": {"successMessage": "Variable binding and update are correct.", "retryHints": ["Initialize n first", "Apply n += 4", "Print both values"]},
+  "summary": {"title": "Variables — Complete", "takeaways": ["Names bind to objects", "Updates rebind names", "Readable names improve code"], "nextTopicId": "python_data_types"}
+}

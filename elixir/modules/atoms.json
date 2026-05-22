@@ -1,0 +1,191 @@
+{
+  "id": "lm_elixir_atoms",
+  "topicId": "elixir_atoms",
+  "language": "elixir",
+  "title": "Atoms & Booleans",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Atoms are named constants whose value IS their name. true, false, nil are atoms. :ok and :error are the idiomatic success/failure tags used throughout Elixir.",
+    "explanation": "An atom like :ok is a constant — its value is the name :ok itself. Atoms are stored as integers internally, making comparison O(1). true, false, and nil are aliases for :true, :false, :nil. Atoms are used as map keys, function return status tags, and module names. The is_atom/1 predicate checks if a value is an atom.",
+    "syntax": "# Atoms\n:ok\n:error\n:hello_world\n\n# Boolean atoms\ntrue   # same as :true\nfalse  # same as :false\nnil    # same as :nil\n\n# Check\nis_atom(:ok)      # true\nis_atom(true)     # true\nis_nil(nil)       # true\n\n# Atoms are equal to themselves\n:ok == :ok        # true\n:ok == :error     # false",
+    "keyPoints": [
+      ":name — colon prefix creates an atom",
+      "true, false, nil are atoms (aliases for :true, :false, :nil)",
+      "Atoms are compared by identity — extremely fast",
+      ":ok / :error — idiomatic success/failure tags in tuple results"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch atoms being used as status tags and booleans being shown as atom aliases.",
+    "code": "status = :ok\nIO.puts(status)\nIO.puts(is_atom(status))\nIO.puts(is_atom(true))\nIO.puts(true == :true)\nIO.puts(is_nil(nil))\nerr = :error\nIO.puts(err == :ok)\nIO.puts(err == :error)",
+    "focusLine": 1,
+    "expectedHighlights": [":ok atom", "is_atom true", "true==:true", "nil check", ":error comparisons"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "status",
+        "value": ":ok",
+        "dataType": "Atom",
+        "explanation": {
+          "what": "status = :ok — binds the atom :ok to status",
+          "why": "Atoms start with : followed by a lowercase name (or quoted for special characters)",
+          "change": "status = :ok",
+          "intent": "Show atom binding and syntax",
+          "misconception": "Atoms are NOT strings — :ok and 'ok' are completely different types. :ok is an atom (constant), 'ok' does not exist in Elixir (single quotes are charlists), and \"ok\" is a binary string."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "ok",
+        "explanation": {
+          "what": "IO.puts(:ok) → prints 'ok' (without the colon)",
+          "why": "IO.puts converts atoms to their string representation (the name without the colon)",
+          "change": "output ← 'ok'",
+          "intent": "Show how atoms print — without the leading colon",
+          "misconception": "IO.puts prints the atom's name without the colon. The colon is just the literal syntax. Use IO.inspect to see :ok printed with the colon for debugging."
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "true",
+        "explanation": {
+          "what": "is_atom(:ok) → true",
+          "why": ":ok is an atom",
+          "change": "output ← 'true'",
+          "intent": "Confirm is_atom predicate",
+          "misconception": "is_atom works on any value — it returns true only for atoms, not for strings or integers"
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "true",
+        "explanation": {
+          "what": "is_atom(true) → true",
+          "why": "true is the atom :true",
+          "change": "output ← 'true'",
+          "intent": "Show that booleans are atoms",
+          "misconception": "In Elixir, true and false are NOT a primitive boolean type — they are atoms :true and :false. This is why is_atom(true) returns true."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "true",
+        "explanation": {
+          "what": "true == :true → true — they are the same atom",
+          "why": "true is syntactic sugar for :true",
+          "change": "output ← 'true'",
+          "intent": "Demonstrate that true and :true are identical",
+          "misconception": "This equality demonstrates that booleans in Elixir are just conveniently-named atoms. The language could work with only :true and :false — true/false are aliases for readability."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "true",
+        "explanation": {
+          "what": "is_nil(nil) → true",
+          "why": "nil (the atom :nil) represents the absence of a value",
+          "change": "output ← 'true'",
+          "intent": "Show nil as the absence-of-value atom",
+          "misconception": "nil in Elixir is NOT null or null pointer — it is the atom :nil. It has no special memory representation. is_nil(nil) → true; is_nil(false) → false."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 7,
+        "var": "err",
+        "value": ":error",
+        "dataType": "Atom",
+        "explanation": {
+          "what": "err = :error — bind the :error atom",
+          "why": "Setting up comparison demo",
+          "change": "err = :error",
+          "intent": "Show :error as the complementary tag to :ok",
+          "misconception": ":ok and :error are just conventions — they are not keywords. You could use any atom as a tag, but :ok/:error are universally understood in the Elixir ecosystem."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "false",
+        "explanation": {
+          "what": ":error == :ok → false",
+          "why": "Two different atoms are never equal",
+          "change": "output ← 'false'",
+          "intent": "Show atom inequality",
+          "misconception": "Atom comparison is O(1) — they are stored as integers. :ok and :error have different internal integer IDs, so == is a fast integer comparison."
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "true",
+        "explanation": {
+          "what": ":error == :error → true",
+          "why": "Same atom is always equal to itself",
+          "change": "output ← 'true'",
+          "intent": "Confirm atom identity equality",
+          "misconception": "Every use of :error in your program refers to the EXACT same atom. There is only one :error atom in the entire runtime — they are interned constants."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nIO.puts(is_atom(false))\nIO.puts(false == :false)",
+    "options": [
+      "true\ntrue",
+      "false\ntrue",
+      "true\nfalse",
+      "false\nfalse"
+    ],
+    "correctIndex": 0,
+    "explanation": "false is the atom :false — is_atom(false) → true. And false == :false → true (they are the same atom). Output: true then true."
+  },
+
+  "explanation": {
+    "afterDemo": "Atoms are the backbone of Elixir's idioms. The {:ok, value} / {:error, reason} tuple pattern (coming up in Tuples) relies entirely on atoms as discriminators. Pattern matching on atoms lets you write clean, self-documenting code: case result do {:ok, val} -> ... {:error, msg} -> ... end. This pattern replaces exception-based error handling for expected failure cases.",
+    "keyTakeaways": [
+      ":name — atom literal. Value is the name itself.",
+      "true, false, nil are atoms — is_atom(true) returns true.",
+      ":ok / :error — idiomatic result tags. Used in {:ok, val} / {:error, msg} tuples."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create an atom :pending. Print it, then print is_atom(:pending), then check if :pending == :ok.",
+    "starterCode": "status = :pending\nIO.puts(status)\nIO.puts(is_atom(status))\nIO.puts(status == :ok)",
+    "solutionCode": "status = :pending\nIO.puts(status)\nIO.puts(is_atom(status))\nIO.puts(status == :ok)",
+    "hint": ":pending is an atom. is_atom returns true. :pending != :ok so == returns false.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["pending", "true", "false"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! :pending prints as 'pending', is_atom → true, :pending != :ok → false.",
+    "retryHints": [
+      "IO.puts(:pending) prints 'pending' (no colon)",
+      "is_atom(:pending) → true",
+      "Expected: pending then true then false"
+    ]
+  },
+
+  "summary": {
+    "title": "Atoms & Booleans — Complete",
+    "takeaways": [
+      ":name creates an atom. Value is the name. Comparison is O(1).",
+      "true, false, nil are atoms :true, :false, :nil — is_atom(true) returns true.",
+      ":ok / :error are idiomatic result tags — foundation of Elixir's error handling pattern."
+    ],
+    "nextTopicId": "elixir_strings"
+  }
+}

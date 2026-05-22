@@ -1,0 +1,157 @@
+{
+  "id": "lm_julia_variables",
+  "topicId": "julia_variables",
+  "language": "julia",
+  "title": "Variables & Types",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Julia is dynamically typed — variables hold any value. typeof() reveals the type at runtime. Use :: to annotate types for clarity.",
+    "explanation": "In Julia you never have to declare a type — just assign a value and the variable holds it. The type lives on the value, not on the variable. Julia's default integer is Int64; default float is Float64. You can annotate with :: for documentation or to enforce a type in a function signature. typeof(x) returns the type of x at runtime.",
+    "syntax": "x = 42          # Int64 inferred\ny = 3.14        # Float64 inferred\nz = true        # Bool\nc = 'A'         # Char (single quotes)\ns = \"Julia\"     # String (double quotes)\n\nprintln(typeof(x))   # Int64\nprintln(typeof(y))   # Float64\n\n# Optional type annotation\na::Int64 = 10",
+    "keyPoints": [
+      "No type declaration needed — Julia infers from the value",
+      "typeof(x) returns the concrete type at runtime",
+      "Integers default to Int64; floats to Float64",
+      "Chars use single quotes; Strings use double quotes"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch variables of different types being assigned and their types revealed with typeof().",
+    "code": "x = 42\ny = 3.14\nz = \"Julia\"\nprintln(x, \" → \", typeof(x))\nprintln(y, \" → \", typeof(y))\nprintln(z, \" → \", typeof(z))",
+    "focusLine": 1,
+    "expectedHighlights": ["x=42 Int64", "y=3.14 Float64", "z='Julia' String"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "x",
+        "value": "42",
+        "dataType": "Int64",
+        "explanation": {
+          "what": "x = 42 — assigns integer 42 to x",
+          "why": "Julia sees the literal 42 and infers it as Int64 (64-bit integer) automatically",
+          "change": "x = 42 (Int64)",
+          "intent": "Show dynamic type inference for integers",
+          "misconception": "Julia is NOT untyped — every value has a concrete type. The type is on the VALUE, not on the variable. x can later hold a String if you reassign it."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "y",
+        "value": "3.14",
+        "dataType": "Float64",
+        "explanation": {
+          "what": "y = 3.14 — assigns float 3.14 to y",
+          "why": "Decimal literals default to Float64 (64-bit double precision)",
+          "change": "y = 3.14 (Float64)",
+          "intent": "Show float type inference",
+          "misconception": "Julia does NOT have a separate 'double' keyword like Java — Float64 IS the double-precision float. Use Float32 if you need single precision."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "z",
+        "value": "Julia",
+        "dataType": "String",
+        "explanation": {
+          "what": "z = \"Julia\" — assigns a String",
+          "why": "Double-quoted literals are Strings in Julia",
+          "change": "z = 'Julia' (String)",
+          "intent": "Show String type and double-quote syntax",
+          "misconception": "Single quotes create a Char (single character), not a String. 'J' is a Char; \"J\" is a one-character String — they are different types."
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "42 → Int64",
+        "explanation": {
+          "what": "println(x, \" → \", typeof(x)) prints the value and its type",
+          "why": "typeof(x) returns the type object Int64",
+          "change": "output ← '42 → Int64'",
+          "intent": "Show typeof() revealing the runtime type",
+          "misconception": "typeof() returns a Type object (like Int64), not a string. When printed it displays as the type name."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "3.14 → Float64",
+        "explanation": {
+          "what": "typeof(y) → Float64",
+          "why": "y was inferred as Float64 from the decimal literal",
+          "change": "output ← '3.14 → Float64'",
+          "intent": "Confirm float type",
+          "misconception": "3.14 is not an 'approximate' value in display — Julia shows the full precision of the Float64 representation"
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "Julia → String",
+        "explanation": {
+          "what": "typeof(z) → String",
+          "why": "z holds a double-quoted string literal",
+          "change": "output ← 'Julia → String'",
+          "intent": "Confirm String type",
+          "misconception": "Julia's String type is UTF-8 encoded — it handles Unicode characters natively"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does typeof('A') return in Julia?",
+    "options": [
+      "String",
+      "Char",
+      "Int64",
+      "UInt8"
+    ],
+    "correctIndex": 1,
+    "explanation": "Single quotes in Julia create a Char (a single Unicode character), not a String. typeof('A') returns Char. Use double quotes for Strings: \"A\"."
+  },
+
+  "explanation": {
+    "afterDemo": "Julia's type system works quietly behind the scenes. You write x = 42 and Julia knows it's Int64. You write y = 3.14 and it's Float64. This makes interactive work fast while still giving the compiler the type information it needs to generate efficient code. typeof() is your window into this system.",
+    "keyTakeaways": [
+      "Variables have no declared type — values carry types. Julia infers from the assigned value.",
+      "typeof(x) returns the runtime type — useful for debugging and exploration.",
+      "Single quotes = Char. Double quotes = String. They are different types."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Assign x = 100, y = 2.5, and z = false. Print each variable followed by its type, one per line, in the format: \"value → type\".",
+    "starterCode": "# assign x, y, z\n# print each with typeof()",
+    "solutionCode": "x = 100\ny = 2.5\nz = false\nprintln(x, \" → \", typeof(x))\nprintln(y, \" → \", typeof(y))\nprintln(z, \" → \", typeof(z))",
+    "hint": "Use println(val, \" → \", typeof(val)) for each variable.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["100 → Int64", "2.5 → Float64", "false → Bool"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 100 is Int64, 2.5 is Float64, false is Bool.",
+    "retryHints": [
+      "println(x, \" → \", typeof(x))",
+      "100 → Int64, 2.5 → Float64, false → Bool",
+      "Three separate println calls, one per variable"
+    ]
+  },
+
+  "summary": {
+    "title": "Variables & Types — Complete",
+    "takeaways": [
+      "Julia infers types from values — no declarations needed. Int64 for integers, Float64 for floats.",
+      "typeof(x) reveals the type at runtime — essential for debugging.",
+      "Char (single quotes) and String (double quotes) are distinct types."
+    ],
+    "nextTopicId": "julia_strings"
+  }
+}

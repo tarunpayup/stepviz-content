@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_functions",
+  "topicId": "scala_functions",
+  "language": "scala",
+  "title": "Functions",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Functions are concise and expressive in Scala.",
+    "explanation": "Use def to declare methods with typed parameters and return values.",
+    "syntax": "def add(a: Int, b: Int): Int = a + b",
+    "keyPoints": ["def declares methods", "Return type can be inferred", "Expression body is idiomatic"]
+  },
+  "demo": {
+    "intro": "Define and call a simple add function.",
+    "code": "object Main extends App {\n  def add(a: Int, b: Int): Int = a + b\n  println(add(3, 4))\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["function declared", "prints 7"],
+    "steps": [
+      {"type": "declare", "line": 2, "var": "add", "value": "function", "dataType": "(Int,Int)=>Int", "explanation": {"what": "Define function", "why": "Reuse logic", "change": "add available", "intent": "Abstraction", "misconception": "Body runs when called"}},
+      {"type": "call", "line": 3, "name": "add", "args": ["3", "4"], "returnVar": "result", "explanation": {"what": "Invoke function", "why": "Compute sum", "change": "result=7", "intent": "Function call flow", "misconception": "Arguments must match parameter types"}},
+      {"type": "print", "line": 3, "value": "7", "explanation": {"what": "Print result", "why": "Verify behavior", "change": "output emitted", "intent": "Observe return", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does : Int after parameters mean?", "options": ["argument count", "return type", "generic type", "visibility"], "correctIndex": 1, "explanation": "It specifies the function return type."},
+  "explanation": {"afterDemo": "Functions help keep Scala code modular and testable.", "keyTakeaways": ["Explicit signatures clarify intent", "Expression-style returns are concise", "Small functions compose well"]},
+  "practice": {
+    "prompt": "Write mul(a:Int,b:Int):Int and print mul(3,5).",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  def mul(a: Int, b: Int): Int = a * b\n  println(mul(3, 5))\n}",
+    "hint": "Define function before printing.",
+    "validation": {"type": "output", "expectedOutput": ["15"]}
+  },
+  "feedback": {"successMessage": "Function declaration and call are correct.", "retryHints": ["Set return type Int", "Return a*b"]},
+  "summary": {"title": "Functions - Complete", "takeaways": ["def for reusable logic", "Typed parameters", "Concise expression bodies"], "nextTopicId": "scala_control_flow"}
+}

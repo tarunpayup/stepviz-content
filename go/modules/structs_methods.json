@@ -1,0 +1,117 @@
+{
+  "id": "lm_go_structs_methods",
+  "topicId": "go_structs_methods",
+  "language": "go",
+  "title": "Structs & Methods",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Structs model data; methods attach behavior.",
+    "explanation": "Use struct types for domain models and receivers for methods.",
+    "syntax": "type User struct {\n\tName string\n\tScore int\n}\n\nfunc (u User) Label() string {\n\treturn fmt.Sprintf(\"%s: %d\", u.Name, u.Score)\n}",
+    "keyPoints": [
+      "Struct fields hold related data",
+      "Methods use receiver syntax",
+      "Pointer receivers allow in-place updates"
+    ]
+  },
+  "demo": {
+    "intro": "Define a struct and call a receiver method.",
+    "code": "package main\n\nimport \"fmt\"\n\ntype User struct {\n\tName  string\n\tScore int\n}\n\nfunc (u User) Label() string {\n\treturn fmt.Sprintf(\"%s: %d\", u.Name, u.Score)\n}\n\nfunc main() {\n\tu := User{Name: \"Ari\", Score: 10}\n\tfmt.Println(u.Label())\n}",
+    "focusLine": 10,
+    "expectedHighlights": [
+      "struct declared",
+      "method attached",
+      "prints Ari: 10"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "User",
+        "value": "struct",
+        "dataType": "type",
+        "explanation": {
+          "what": "Define User struct",
+          "why": "Group related fields",
+          "change": "User type available",
+          "intent": "Model data",
+          "misconception": "Struct fields are typed"
+        }
+      },
+      {
+        "type": "call",
+        "line": 15,
+        "name": "u.Label",
+        "args": [],
+        "returnVar": "label",
+        "explanation": {
+          "what": "Call receiver method",
+          "why": "Format object state",
+          "change": "label='Ari: 10'",
+          "intent": "Attach behavior",
+          "misconception": "Value receiver reads copy"
+        }
+      },
+      {
+        "type": "print",
+        "line": 15,
+        "value": "Ari: 10",
+        "explanation": {
+          "what": "Print label",
+          "why": "Verify method output",
+          "change": "output emitted",
+          "intent": "Check object behavior",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "Which receiver type is used to mutate struct fields?",
+    "options": [
+      "value receiver",
+      "pointer receiver",
+      "interface receiver",
+      "no receiver"
+    ],
+    "correctIndex": 1,
+    "explanation": "Pointer receivers allow mutation of original value."
+  },
+  "explanation": {
+    "afterDemo": "Structs and methods are core to idiomatic Go design.",
+    "keyTakeaways": [
+      "Model with structs",
+      "Add behavior through methods",
+      "Pick receiver type intentionally"
+    ]
+  },
+  "practice": {
+    "prompt": "Create struct Box{V int} and method Get() int; print Box{5}.Get().",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\ntype Box struct {\n\tV int\n}\n\nfunc (b Box) Get() int {\n\treturn b.V\n}\n\nfunc main() {\n\tfmt.Println(Box{V: 5}.Get())\n}",
+    "hint": "Define type and method above main.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "5"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Struct and method are implemented correctly.",
+    "retryHints": [
+      "Declare struct with field",
+      "Add receiver method",
+      "Print returned value"
+    ]
+  },
+  "summary": {
+    "title": "Structs & Methods - Complete",
+    "takeaways": [
+      "Structs represent domain data",
+      "Methods add behavior",
+      "Receivers define method semantics"
+    ],
+    "nextTopicId": "go_interfaces"
+  }
+}

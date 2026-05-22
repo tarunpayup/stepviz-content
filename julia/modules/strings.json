@@ -1,0 +1,171 @@
+{
+  "id": "lm_julia_strings",
+  "topicId": "julia_strings",
+  "language": "julia",
+  "title": "Strings",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Julia strings use double quotes and support interpolation with $var or $(expr). Concatenate with * and use built-in functions like length, uppercase, split.",
+    "explanation": "Julia strings are UTF-8 encoded sequences of characters. Interpolation embeds variables or arbitrary expressions directly into a string literal. The * operator concatenates strings (not + like in many languages). Common functions: length(), uppercase(), lowercase(), split(), join(), startswith(), endswith(), contains(), strip().",
+    "syntax": "name = \"Julia\"\nversion = 1.9\n\n# Interpolation\nprintln(\"Hello, $name!\")          # Hello, Julia!\nprintln(\"2 + 2 = $(2 + 2)\")       # 2 + 2 = 4\n\n# Concatenation\nfull = \"Hello\" * \", \" * name * \"!\" # Hello, Julia!\n\n# Common functions\nlength(\"hello\")    # 5\nuppercase(\"hi\")    # HI\nsplit(\"a,b,c\", \",\") # [\"a\", \"b\", \"c\"]",
+    "keyPoints": [
+      "Double quotes for strings. Single quotes for Char.",
+      "$var or $(expr) for interpolation",
+      "* concatenates strings (not +)",
+      "length(), uppercase(), split(), join() are common string functions"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch string interpolation build an output sentence and split/join transform a string.",
+    "code": "name = \"Alice\"\nscore = 95\nmsg = \"$name scored $score points!\"\nprintln(msg)\nprintln(length(name))\nwords = split(\"hello world julia\", \" \")\nprintln(words)\nprintln(join(words, \"-\"))",
+    "focusLine": 1,
+    "expectedHighlights": ["msg assembled", "length=5", "words split", "joined with -"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "name",
+        "value": "Alice",
+        "dataType": "String",
+        "explanation": {
+          "what": "name = \"Alice\"",
+          "why": "Assigns a String value using double quotes",
+          "change": "name = 'Alice'",
+          "intent": "Set up variable for interpolation demo",
+          "misconception": "In Julia, strings must use double quotes. 'Alice' would be a syntax error — single quotes are only for single Char values."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "score",
+        "value": "95",
+        "dataType": "Int64",
+        "explanation": {
+          "what": "score = 95 — an Int64 value",
+          "why": "We will embed this non-String value in the interpolated string",
+          "change": "score = 95",
+          "intent": "Show interpolation works on any type, not just strings",
+          "misconception": "You do NOT need to convert score to a string before interpolating — Julia's $score automatically calls string() on the value."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "msg",
+        "value": "Alice scored 95 points!",
+        "dataType": "String",
+        "explanation": {
+          "what": "\"$name scored $score points!\" — interpolation builds the string",
+          "why": "$name embeds 'Alice'; $score embeds '95'",
+          "change": "msg = 'Alice scored 95 points!'",
+          "intent": "Show string interpolation combining String and Int into one string",
+          "misconception": "Interpolation creates a NEW String — name and score are not modified. The original variables remain unchanged."
+        }
+      },
+      {
+        "type": "print",
+        "line": 4,
+        "value": "Alice scored 95 points!",
+        "explanation": {
+          "what": "println(msg) prints the interpolated string",
+          "why": "msg holds the fully assembled string",
+          "change": "output ← 'Alice scored 95 points!'",
+          "intent": "Confirm interpolation result",
+          "misconception": "println adds a newline. print does not. Both accept any type."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "5",
+        "explanation": {
+          "what": "length(name) → 5 — number of characters in 'Alice'",
+          "why": "'Alice' has 5 characters: A-l-i-c-e",
+          "change": "output ← '5'",
+          "intent": "Show length() on a string",
+          "misconception": "For ASCII strings length() counts characters correctly. For UTF-8 with multi-byte characters, length() counts Unicode code points, not bytes."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "words",
+        "value": "[\"hello\", \"world\", \"julia\"]",
+        "dataType": "Vector{SubString{String}}",
+        "explanation": {
+          "what": "split(\"hello world julia\", \" \") splits on spaces",
+          "why": "split divides the string at each delimiter, returning a vector of substrings",
+          "change": "words = ['hello', 'world', 'julia']",
+          "intent": "Show split producing an array of strings",
+          "misconception": "split returns SubString types (views into the original string) — they behave like Strings but don't copy the data. Use String.(words) if you need independent copies."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "hello-world-julia",
+        "explanation": {
+          "what": "join(words, \"-\") reassembles the words with \"-\" separator",
+          "why": "join is the inverse of split — it concatenates elements with a delimiter",
+          "change": "output ← 'hello-world-julia'",
+          "intent": "Show join as the counterpart to split",
+          "misconception": "join works on any iterable, not just string arrays — you can join integers, chars, etc."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nx = 7\nprintln(\"$(x * x) is $x squared\")",
+    "options": [
+      "$(x * x) is 7 squared",
+      "49 is 7 squared",
+      "7 * 7 is 7 squared",
+      "Compile error"
+    ],
+    "correctIndex": 1,
+    "explanation": "$(x * x) evaluates the expression x*x = 49 inside the string. $x embeds the variable value 7. Output: 49 is 7 squared."
+  },
+
+  "explanation": {
+    "afterDemo": "Julia's string interpolation is one of its most ergonomic features. Instead of concatenating pieces with * or calling string(), you embed variables and expressions directly inside double-quoted strings. The $(expr) form handles anything — arithmetic, function calls, even multi-step expressions.",
+    "keyTakeaways": [
+      "String interpolation: $var for variables, $(expr) for arbitrary expressions.",
+      "* concatenates strings in Julia — not + like Python/JavaScript.",
+      "split(s, delim) and join(arr, delim) are inverses of each other."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Given name = \"Julia\" and year = 2012, print: \"Julia was created in 2012 and has 5 letters.\" using only one println with string interpolation (use $(expr) for the letter count).",
+    "starterCode": "name = \"Julia\"\nyear = 2012\n# one println with interpolation",
+    "solutionCode": "name = \"Julia\"\nyear = 2012\nprintln(\"$name was created in $year and has $(length(name)) letters.\")",
+    "hint": "Use $(length(name)) to compute the letter count inside the string.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Julia was created in 2012 and has 5 letters."]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! $(length(name)) evaluates length(\"Julia\") = 5 inline.",
+    "retryHints": [
+      "\"$name was created in $year and has $(length(name)) letters.\"",
+      "$(length(name)) calls the function inside the interpolation",
+      "Expected: Julia was created in 2012 and has 5 letters."
+    ]
+  },
+
+  "summary": {
+    "title": "Strings — Complete",
+    "takeaways": [
+      "Double quotes = String. Single quotes = Char. Interpolate with $var or $(expr).",
+      "Concatenation uses * not +. Join arrays of strings with join(arr, sep).",
+      "length, uppercase, split, startswith are your everyday string functions."
+    ],
+    "nextTopicId": "julia_functions"
+  }
+}

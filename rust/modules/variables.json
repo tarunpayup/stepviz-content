@@ -1,0 +1,131 @@
+{
+  "id": "lm_rust_variables",
+  "topicId": "rust_variables",
+  "language": "rust",
+  "title": "Variables & Mutability",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Rust variables are immutable by default — add mut to allow change.",
+    "explanation": "When you write `let x = 5;`, Rust creates an immutable binding. The value 5 is stored in memory and the name x points to it — but you can never write a new value into that slot. If you need to change a variable, declare it with `let mut`. This default immutability is Rust's first line of defence against bugs: if a value should never change, the compiler guarantees it never does.",
+    "syntax": "let x = 5;          // immutable\nlet mut y = 10;     // mutable\nconst MAX: u32 = 100; // compile-time constant\n\n// Shadowing — new binding, same name\nlet x = x + 1;     // x is now 6",
+    "keyPoints": [
+      "let x = 5 creates an immutable binding — compiler error if you try to reassign",
+      "let mut x = 5 allows x = new_value later in the same scope",
+      "const must have a type annotation and a compile-time-known value",
+      "Shadowing (re-declaring with let) creates a fresh binding — the old one is gone"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch Rust bind an immutable value, then a mutable one, and see what changes in memory at each step.",
+    "code": "fn main() {\n    let x = 5;\n    let mut y = 10;\n    y = 20;\n    println!(\"{} {}\", x, y);\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["x bound to 5", "y bound to 10", "y reassigned to 20", "println reads x and y"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "x",
+        "value": "5",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Binding x = 5 (immutable)",
+          "why": "let without mut creates a read-only slot; the compiler rejects any future write to x",
+          "change": "x = 5 (new immutable slot)",
+          "intent": "Establish a named, stable reference to the value 5",
+          "misconception": "Immutable does not mean the value is stored differently — it means the compiler prevents re-binding the name"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "y",
+        "value": "10",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Binding y = 10 (mutable)",
+          "why": "let mut reserves a writable slot — the value can be overwritten later in this scope",
+          "change": "y = 10 (new mutable slot)",
+          "intent": "Create a variable we plan to update during execution",
+          "misconception": "mut does not change the type — y is still i32; it only changes whether reassignment is allowed"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 4,
+        "var": "y",
+        "value": "20",
+        "explanation": {
+          "what": "Reassigning y from 10 to 20",
+          "why": "y was declared mut, so the compiler allows this write",
+          "change": "y: 10 → 20",
+          "intent": "Update the mutable slot with a new value",
+          "misconception": "This would be a compile error if y was declared without mut — Rust enforces immutability at compile time, not runtime"
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "5 20",
+        "explanation": {
+          "what": "Printing x and y",
+          "why": "println! reads both values out of memory and formats them into a string",
+          "change": "output ← '5 20'",
+          "intent": "Observe the final state of both bindings",
+          "misconception": "println! does not consume the variables — they are still accessible after this line"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this code print?\n\nlet mut x = 3;\nx = x + 2;\nprintln!(\"{}\", x);",
+    "options": ["3", "5", "2", "compile error"],
+    "correctIndex": 1,
+    "explanation": "x starts at 3, then x = x + 2 evaluates 3 + 2 = 5 and stores 5 back into x. println! outputs the current value: 5."
+  },
+
+  "explanation": {
+    "afterDemo": "You saw two slots created in memory: x (read-only) and y (writable). When y = 20 ran, the 10 was overwritten with 20. x never changed — and if you had tried to write to x, the compiler would have stopped you before the program even ran. This is Rust's compile-time safety at work.",
+    "keyTakeaways": [
+      "Immutability is the default — you must opt in to mutability with mut.",
+      "The compiler, not the runtime, enforces immutability.",
+      "Shadowing with let creates a completely new binding, allowing a type change too."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Declare an immutable variable `a` with value 7. Declare a mutable variable `b` with value 3. Add a to b (b = b + a). Print b.",
+    "starterCode": "fn main() {\n    // declare a here\n\n    // declare b here\n\n    // update b\n\n    // print b\n}",
+    "solutionCode": "fn main() {\n    let a = 7;\n    let mut b = 3;\n    b = b + a;\n    println!(\"{}\", b);\n}",
+    "hint": "Use let a = 7; and let mut b = 3; then b = b + a; and println!(\"{}\", b);",
+    "validation": {
+      "type": "composite",
+      "checks": [
+        { "type": "output", "expectedOutput": ["10"] },
+        { "type": "step_count", "min": 3 }
+      ]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Great! You correctly used an immutable binding for a and a mutable one for b, then updated and printed b.",
+    "retryHints": [
+      "Make sure a is declared without mut — it should never change.",
+      "b must be declared with let mut so you can reassign it.",
+      "The expression b = b + a reads a and b, adds them, and stores the result back in b.",
+      "println!(\"{}\", b) prints the current value of b — expected output is 10."
+    ]
+  },
+
+  "summary": {
+    "title": "Variables & Mutability — Complete",
+    "takeaways": [
+      "let creates an immutable binding by default.",
+      "let mut allows reassignment within the same scope.",
+      "Rust enforces immutability at compile time, not at runtime."
+    ],
+    "nextTopicId": "rust_data_types"
+  }
+}

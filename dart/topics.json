@@ -1,0 +1,242 @@
+[
+  {
+    "id": "dart_variables",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Variables: var, final, const",
+    "description": "Learn mutable and immutable bindings in Dart with type inference.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart supports var for mutable variables, final for single-assignment runtime values, and const for compile-time constants.",
+      "analogy": "var is a writable note, final is a one-time ink note, const is a printed label.",
+      "keyPoints": [
+        "Use var for values that change",
+        "Use final for values assigned once",
+        "Use const for compile-time constants",
+        "Type inference works from assigned values"
+      ]
+    },
+    "defaultCode": "const app = 'StepViz';\nvar count = 1;\ncount = count + 1;\nprint('$app $count');"
+  },
+  {
+    "id": "dart_data_types",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Core Data Types",
+    "description": "Use int, double, String, bool, List, and Map in Dart.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart is type-safe and supports both inferred and explicit types for common primitives and collections.",
+      "analogy": "Types are containers with shape rules for stored values.",
+      "keyPoints": [
+        "int and double handle numbers",
+        "String stores text",
+        "bool represents true/false",
+        "List and Map model collections"
+      ]
+    },
+    "defaultCode": "int age = 20;\ndouble score = 9.5;\nString name = 'Ari';\nbool active = true;\nprint('$age $score $name $active');"
+  },
+  {
+    "id": "dart_functions",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Define typed functions, optional parameters, and arrow syntax.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Functions in Dart can use explicit return types, positional/named parameters, defaults, and concise arrow bodies.",
+      "analogy": "A function is a machine with typed inputs and predictable outputs.",
+      "keyPoints": [
+        "Specify return types for clarity",
+        "Use named parameters with braces",
+        "Optional parameters can have defaults",
+        "Arrow syntax suits one-line returns"
+      ]
+    },
+    "defaultCode": "int add(int a, int b) {\n  return a + b;\n}\n\nprint(add(3, 4));"
+  },
+  {
+    "id": "dart_control_flow",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Branch with if/else and switch to direct program execution.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Control flow statements route execution based on conditions and values.",
+      "analogy": "Conditions are traffic lights for code paths.",
+      "keyPoints": [
+        "if/else handles boolean branches",
+        "switch matches values across cases",
+        "Use clear branch ordering",
+        "Prefer exhaustive handling where possible"
+      ]
+    },
+    "defaultCode": "int score = 82;\nString grade;\nif (score >= 90) {\n  grade = 'A';\n} else if (score >= 80) {\n  grade = 'B';\n} else {\n  grade = 'C';\n}\nprint(grade);"
+  },
+  {
+    "id": "dart_loops",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Loops",
+    "description": "Iterate with for, while, and for-in over collections.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart offers multiple loop styles for counted iteration, conditional iteration, and collection traversal.",
+      "analogy": "Loops are repeat tracks with controlled exits.",
+      "keyPoints": [
+        "for is ideal for indexed loops",
+        "while repeats while condition is true",
+        "for-in iterates list values directly",
+        "Keep loop state explicit"
+      ]
+    },
+    "defaultCode": "int sum = 0;\nfor (final n in [1, 2, 3]) {\n  sum += n;\n}\nprint(sum);"
+  },
+  {
+    "id": "dart_collections",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Collections",
+    "description": "Work with List, Set, and Map plus transform methods.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart collections provide typed containers and expressive APIs like map, where, and fold.",
+      "analogy": "Collections are shelves; methods help filter and reshape items.",
+      "keyPoints": [
+        "List is ordered and indexable",
+        "Set stores unique values",
+        "Map stores key-value pairs",
+        "where/map create transformed views"
+      ]
+    },
+    "defaultCode": "final nums = [1, 2, 3, 4];\nfinal evens = nums.where((n) => n.isEven).toList();\nprint(evens);"
+  },
+  {
+    "id": "dart_null_safety",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Null Safety",
+    "description": "Use nullable types, ?, !, and ?? to handle absence safely.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart null safety distinguishes nullable and non-nullable types at compile time.",
+      "analogy": "Nullable types are marked boxes that may be empty.",
+      "keyPoints": [
+        "String is non-nullable by default",
+        "String? allows null",
+        "?? provides fallback values",
+        "! asserts non-null (use carefully)"
+      ]
+    },
+    "defaultCode": "String? name;\nfinal safeName = name ?? 'Guest';\nprint(safeName);"
+  },
+  {
+    "id": "dart_classes",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Classes",
+    "description": "Model data and behavior with class fields and methods.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Classes encapsulate related state and behavior in reusable object blueprints.",
+      "analogy": "A class is a template; objects are created instances.",
+      "keyPoints": [
+        "Fields store instance state",
+        "Methods define behavior",
+        "Constructors initialize values",
+        "Use types on fields and methods"
+      ]
+    },
+    "defaultCode": "class User {\n  String name;\n  int points;\n  User(this.name, this.points);\n\n  String label() => '$name: $points';\n}\n\nprint(User('Ari', 10).label());"
+  },
+  {
+    "id": "dart_constructors",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Constructors",
+    "description": "Use default, named, and factory constructors in Dart.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Constructors create instances and can provide alternate creation paths with named or factory forms.",
+      "analogy": "Constructors are different entry doors to the same class.",
+      "keyPoints": [
+        "Default constructors initialize fields",
+        "Named constructors express intent",
+        "factory constructors can return cached instances",
+        "Initializer lists run before constructor body"
+      ]
+    },
+    "defaultCode": "class Point {\n  final int x;\n  final int y;\n  Point(this.x, this.y);\n  Point.origin() : x = 0, y = 0;\n}\n\nprint(Point.origin().x);"
+  },
+  {
+    "id": "dart_inheritance",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Inheritance & Mixins",
+    "description": "Reuse behavior with extends, implements, and mixins.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart supports single inheritance plus interfaces and mixins for flexible code reuse.",
+      "analogy": "Inheritance is a family tree; mixins are skill add-ons.",
+      "keyPoints": [
+        "extends derives from one superclass",
+        "implements enforces method contracts",
+        "with applies mixins",
+        "override customizes inherited behavior"
+      ]
+    },
+    "defaultCode": "class Animal {\n  String speak() => '...';\n}\n\nclass Dog extends Animal {\n  @override\n  String speak() => 'Woof';\n}\n\nprint(Dog().speak());"
+  },
+  {
+    "id": "dart_async_await",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Async/Await",
+    "description": "Handle asynchronous code with Future, async, and await.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart async code uses Future values and await for readable asynchronous flows.",
+      "analogy": "Future is a promise box that gets filled later.",
+      "keyPoints": [
+        "async functions return Future<T>",
+        "await pauses until completion",
+        "Use try/catch for async errors",
+        "Future chains remain available"
+      ]
+    },
+    "defaultCode": "Future<int> fetchCount() async {\n  return 42;\n}\n\nfetchCount().then(print);"
+  },
+  {
+    "id": "dart_error_handling",
+    "language": "dart",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Use try/catch/finally and throw exceptions safely.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Dart handles failures with exceptions and structured recovery blocks.",
+      "analogy": "try/catch is a safety harness around risky code.",
+      "keyPoints": [
+        "throw signals failures",
+        "catch handles specific exceptions",
+        "finally runs cleanup",
+        "Prefer clear error messages"
+      ]
+    },
+    "defaultCode": "try {\n  throw FormatException('Bad input');\n} catch (e) {\n  print(e);\n}"
+  }
+]

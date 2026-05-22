@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_constructors",
+  "topicId": "dart_constructors",
+  "language": "dart",
+  "title": "Constructors",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Dart supports default, named, and factory constructors.",
+    "explanation": "Use constructors to control object creation and initialization patterns.",
+    "syntax": "class Point {\n  final int x;\n  final int y;\n  Point(this.x, this.y);\n  Point.origin() : x = 0, y = 0;\n}",
+    "keyPoints": ["Default constructor is most common", "Named constructors improve readability", "Initializer list sets finals early"]
+  },
+  "demo": {
+    "intro": "Use a named constructor for origin point.",
+    "code": "class Point {\n  final int x;\n  final int y;\n  Point(this.x, this.y);\n  Point.origin() : x = 0, y = 0;\n}\n\nprint(Point.origin().x);",
+    "focusLine": 5,
+    "expectedHighlights": ["named constructor", "x,y set to 0", "prints 0"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "Point", "value": "class", "dataType": "Class", "explanation": {"what": "Define Point class", "why": "Represent coordinates", "change": "Point type created", "intent": "Prepare constructor examples", "misconception": "Final fields require initialization"}},
+      {"type": "call", "line": 8, "name": "Point.origin", "args": [], "returnVar": "p", "explanation": {"what": "Call named constructor", "why": "Create canonical origin", "change": "p=(0,0)", "intent": "Show alternate construction path", "misconception": "Named constructor can have independent initialization"}},
+      {"type": "print", "line": 8, "value": "0", "explanation": {"what": "Print x", "why": "origin sets x to 0", "change": "output <- 0", "intent": "Verify initializer list", "misconception": "Initializer list runs before constructor body"}}
+    ]
+  },
+  "prediction": {
+    "question": "Point.origin() sets which values?",
+    "options": ["x=1,y=1", "x=0,y=0", "x and y null", "compile error"],
+    "correctIndex": 1,
+    "explanation": "Initializer list explicitly sets both to 0."
+  },
+  "explanation": {
+    "afterDemo": "Constructor variety makes APIs clearer and reduces repetitive setup code.",
+    "keyTakeaways": ["Use named constructors for intent", "Initializer lists are great for final fields", "Constructor design shapes usability"]
+  },
+  "practice": {
+    "prompt": "Create class Counter with final int start and named constructor Counter.zero() setting start=0. Print Counter.zero().start.",
+    "starterCode": "// write code",
+    "solutionCode": "class Counter {\n  final int start;\n  Counter(this.start);\n  Counter.zero() : start = 0;\n}\n\nprint(Counter.zero().start);",
+    "hint": "Use initializer list in named constructor.",
+    "validation": {"type": "output", "expectedOutput": ["0"]}
+  },
+  "feedback": {"successMessage": "Named constructor works correctly.", "retryHints": ["Declare final field", "Set in initializer list"]},
+  "summary": {"title": "Constructors — Complete", "takeaways": ["Constructors define creation pathways", "Named constructors improve readability", "Initializer lists support final fields"], "nextTopicId": "dart_inheritance"}
+}

@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_classes",
+  "topicId": "typescript_classes",
+  "language": "typescript",
+  "title": "Classes",
+  "difficulty": "easy",
+  "concept": {"headline": "Classes combine typed state and methods.", "explanation": "TypeScript classes support visibility modifiers and constructor shorthand for concise definitions.", "syntax": "class Counter {\n  constructor(private value: number) {}\n  inc(): number { return ++this.value; }\n}", "keyPoints": ["Use constructor for initialization", "private/protected/public control access", "Methods can be typed"]},
+  "demo": {"intro": "Instantiate class and call increment method.", "code": "class Counter {\n  constructor(private value: number) {}\n  inc(): number { return ++this.value; }\n}\nconsole.log(new Counter(1).inc());", "focusLine": 2, "expectedHighlights": ["constructor sets value", "inc updates value", "prints 2"], "steps": [{"type": "declare", "line": 1, "var": "Counter", "value": "class", "dataType": "Class", "explanation": {"what": "Define Counter class", "why": "Encapsulate mutable state", "change": "Counter available", "intent": "Model object behavior", "misconception": "Class definition alone creates no instance"}}, {"type": "call", "line": 5, "name": "Counter.inc", "args": ["instance value=1"], "returnVar": "out", "explanation": {"what": "Call inc", "why": "Pre-increment internal value", "change": "value:1->2", "intent": "Show method effect", "misconception": "private still accessible inside methods"}}, {"type": "print", "line": 5, "value": "2", "explanation": {"what": "Print method result", "why": "inc returned updated value", "change": "output <- 2", "intent": "Verify class behavior", "misconception": "Type annotations disappear at runtime"}}]},
+  "prediction": {"question": "What prints? new Counter(3).inc()", "options": ["3", "4", "2", "error"], "correctIndex": 1, "explanation": "inc pre-increments from 3 to 4 and returns it."},
+  "explanation": {"afterDemo": "Classes are best when related state and behavior should travel together.", "keyTakeaways": ["Constructors initialize typed fields", "Methods encapsulate behavior", "Access modifiers improve boundaries"]},
+  "practice": {"prompt": "Create class Box with private n:number and method double():number returning n*2. Print result for new Box(5).", "starterCode": "// write code", "solutionCode": "class Box {\n  constructor(private n: number) {}\n  double(): number {\n    return this.n * 2;\n  }\n}\nconsole.log(new Box(5).double());", "hint": "Store value in private field.", "validation": {"type": "output", "expectedOutput": ["10"]}},
+  "feedback": {"successMessage": "Class encapsulation is correct.", "retryHints": ["Use constructor(private n:number)", "Return this.n*2"]},
+  "summary": {"title": "Classes — Complete", "takeaways": ["Classes package state and behavior", "Modifiers enforce boundaries", "Typed methods improve reliability"], "nextTopicId": "typescript_generics"}
+}

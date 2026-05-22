@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_control_flow",
+  "topicId": "scala_control_flow",
+  "language": "scala",
+  "title": "Control Flow",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "if/else and match expressions drive branching.",
+    "explanation": "Scala treats conditionals as expressions that can return values.",
+    "syntax": "val grade = if (score >= 90) \"A\" else if (score >= 80) \"B\" else \"C\"",
+    "keyPoints": ["if returns values", "Order conditions clearly", "Use match for many cases"]
+  },
+  "demo": {
+    "intro": "Compute grade from score with if/else expression.",
+    "code": "object Main extends App {\n  val score = 82\n  val grade = if (score >= 90) \"A\" else if (score >= 80) \"B\" else \"C\"\n  println(grade)\n}",
+    "focusLine": 3,
+    "expectedHighlights": ["first condition false", "second true", "prints B"],
+    "steps": [
+      {"type": "condition_check", "line": 3, "expression": "score >= 90", "result": false, "branch": "if", "explanation": {"what": "Evaluate first branch", "why": "82 below 90", "change": "move to else-if", "intent": "Ordered branching", "misconception": "False branch skipped"}},
+      {"type": "condition_check", "line": 3, "expression": "score >= 80", "result": true, "branch": "else-if", "explanation": {"what": "Evaluate second branch", "why": "82 meets condition", "change": "grade='B'", "intent": "Select value", "misconception": "Expression returns selected result"}},
+      {"type": "print", "line": 4, "value": "B", "explanation": {"what": "Print grade", "why": "Verify branch result", "change": "output emitted", "intent": "Confirm control flow", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "If score is 70, output?", "options": ["A", "B", "C", "error"], "correctIndex": 2, "explanation": "Falls to final else branch."},
+  "explanation": {"afterDemo": "Expression-oriented branching keeps logic compact.", "keyTakeaways": ["if/else can assign values", "Branch order matters", "Test boundary conditions"]},
+  "practice": {
+    "prompt": "For n=7, print 'odd' else 'even'.",
+    "starterCode": "object Main extends App {\n  val n = 7\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  val n = 7\n  if (n % 2 == 0) println(\"even\") else println(\"odd\")\n}",
+    "hint": "Use remainder operator %.",
+    "validation": {"type": "output", "expectedOutput": ["odd"]}
+  },
+  "feedback": {"successMessage": "Control flow is correct.", "retryHints": ["Check n % 2", "Use if/else with println"]},
+  "summary": {"title": "Control Flow - Complete", "takeaways": ["Branch expressions", "Readable conditions", "Clear fallbacks"], "nextTopicId": "scala_loops_ranges"}
+}

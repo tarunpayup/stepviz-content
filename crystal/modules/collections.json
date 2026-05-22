@@ -1,0 +1,71 @@
+{
+  "id": "lm_crystal_collections",
+  "topicId": "crystal_collections",
+  "language": "crystal",
+  "title": "Collections",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Crystal collections pair strong typing with powerful Enumerable tools.",
+    "explanation": "Arrays and hashes are common data containers. Methods like map, select, and reduce transform and summarize data clearly.",
+    "syntax": "nums = [1, 2, 3, 4]\nevens = nums.select { |n| n.even? }\ndoubled = evens.map { |n| n * 2 }\nputs doubled",
+    "keyPoints": [
+      "Array for ordered values",
+      "Hash for key-value mappings",
+      "map/select/reduce for transformations",
+      "Compile-time type checks on element types"
+    ]
+  },
+
+  "demo": {
+    "intro": "Filter and transform an array step by step.",
+    "code": "nums = [1, 2, 3, 4]\nevens = nums.select { |n| n.even? }\ndoubled = evens.map { |n| n * 2 }\nputs doubled",
+    "focusLine": 2,
+    "expectedHighlights": ["select keeps even numbers", "map doubles values", "prints [4, 8]"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "nums", "value": "[1,2,3,4]", "dataType": "Array(Int32)", "explanation": {"what": "Declare source array", "why": "Input collection", "change": "nums set", "intent": "Start transform pipeline", "misconception": "Array elements share one compile-time type"}},
+      {"type": "assign", "line": 2, "var": "evens", "value": "[2,4]", "explanation": {"what": "Filter evens", "why": "select keeps elements where predicate true", "change": "evens = [2,4]", "intent": "Show predicate filtering", "misconception": "select returns a new array"}},
+      {"type": "assign", "line": 3, "var": "doubled", "value": "[4,8]", "explanation": {"what": "Map values x2", "why": "map transforms each element", "change": "doubled = [4,8]", "intent": "Show non-mutating transform", "misconception": "map keeps original array unchanged"}},
+      {"type": "print", "line": 4, "value": "[4, 8]", "explanation": {"what": "Print transformed array", "why": "puts prints array representation", "change": "output <- [4, 8]", "intent": "Confirm pipeline result", "misconception": "Transformation order matters"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "What is output?\n\nvals = [2, 5, 6]\nputs vals.select { |v| v > 4 }",
+    "options": ["[2, 5, 6]", "[5, 6]", "[2]", "6"],
+    "correctIndex": 1,
+    "explanation": "select keeps only values greater than 4, so result is [5, 6]."
+  },
+
+  "explanation": {
+    "afterDemo": "Collection pipelines are cleaner than manual loops for many tasks and communicate intent directly.",
+    "keyTakeaways": [
+      "Use select to filter.",
+      "Use map to transform.",
+      "Prefer clear pipelines for maintainable code."
+    ]
+  },
+
+  "practice": {
+    "prompt": "From [3,4,5,6], keep numbers >= 5, multiply by 3, print result.",
+    "starterCode": "vals = [3, 4, 5, 6]\n# filter and map\n# print",
+    "solutionCode": "vals = [3, 4, 5, 6]\nout = vals.select { |v| v >= 5 }.map { |v| v * 3 }\nputs out",
+    "hint": "Chain select then map.",
+    "validation": {"type": "output", "expectedOutput": ["[15, 18]"]}
+  },
+
+  "feedback": {
+    "successMessage": "Great pipeline. Filtering and mapping are correct.",
+    "retryHints": ["Filter with >= 5", "Then map * 3", "Print resulting array"]
+  },
+
+  "summary": {
+    "title": "Collections — Complete",
+    "takeaways": [
+      "Collections become powerful with Enumerable methods.",
+      "select and map are core transform tools.",
+      "Prefer declarative pipelines for clarity."
+    ],
+    "nextTopicId": "crystal_error_handling"
+  }
+}

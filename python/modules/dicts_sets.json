@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_dicts_sets",
+  "topicId": "python_dicts_sets",
+  "language": "python",
+  "title": "Dictionaries & Sets",
+  "difficulty": "easy",
+  "concept": {"headline": "dict maps keys; set stores unique items.", "explanation": "Use dict for lookup by key and set for uniqueness operations.", "syntax": "user = {'name': 'Ari', 'age': 20}\nids = {1, 2, 2, 3}", "keyPoints": ["dict uses key:value", "set removes duplicates", "Membership checks are fast"]},
+  "demo": {"intro": "Read dict key and observe set uniqueness.", "code": "user = {'name': 'Ari', 'age': 20}\nids = {1, 2, 2, 3}\nprint(user['name'], ids)", "focusLine": 2, "expectedHighlights": ["duplicate removed in set", "dict lookup by key"], "steps": [{"type": "declare", "line": 1, "var": "user", "value": "{'name':'Ari','age':20}", "dataType": "dict", "explanation": {"what": "Create mapping", "why": "Named fields", "change": "user initialized", "intent": "Key-based access", "misconception": "dict preserves insertion order in modern Python"}}, {"type": "declare", "line": 2, "var": "ids", "value": "{1,2,3}", "dataType": "set", "explanation": {"what": "Create set", "why": "Unique values", "change": "duplicate 2 removed", "intent": "Show uniqueness", "misconception": "set order is not guaranteed"}}, {"type": "print", "line": 3, "value": "Ari {1, 2, 3}", "explanation": {"what": "Print lookup and set", "why": "Verify behavior", "change": "output <- name and ids", "intent": "Observe types", "misconception": "set print order may vary"}}]},
+  "prediction": {"question": "Best type for unique tags?", "options": ["list", "tuple", "set", "str"], "correctIndex": 2, "explanation": "Set enforces uniqueness."},
+  "explanation": {"afterDemo": "dict and set are foundational for real-world data tasks.", "keyTakeaways": ["dict for lookup tables", "set for uniqueness", "Use membership checks efficiently"]},
+  "practice": {"prompt": "Create dict p with key 'x'=1, set s with duplicates, print p['x'] and s.", "starterCode": "# write code", "solutionCode": "p = {'x': 1}\ns = {1, 1, 2}\nprint(p['x'], s)", "hint": "Use braces for both dict and set.", "validation": {"type": "contains", "expectedTokens": ["1", "2"]}},
+  "feedback": {"successMessage": "Dictionary and set behavior is correct.", "retryHints": ["Use key:value for dict", "Set auto-removes duplicates"]},
+  "summary": {"title": "Dictionaries & Sets — Complete", "takeaways": ["dict gives key access", "set handles unique values", "Both are core Python tools"], "nextTopicId": "python_classes_objects"}
+}

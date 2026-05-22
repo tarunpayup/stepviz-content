@@ -1,0 +1,173 @@
+{
+  "id": "lm_kotlin_control_flow",
+  "topicId": "kotlin_control_flow",
+  "language": "kotlin",
+  "title": "Control Flow: if & when",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "In Kotlin, if and when are expressions — they return values. when replaces switch and if-else chains with readable, exhaustive branching.",
+    "explanation": "Kotlin's if is not just a statement — it returns the value of the chosen branch, so you can use it on the right side of a val. when is a powerful multi-branch expression: branches can match exact values, ranges (in 1..10), type checks (is String), or arbitrary boolean conditions (when used without an argument). Kotlin's compiler enforces exhaustiveness when when is used as an expression — you must cover all cases or add else.",
+    "syntax": "// if as expression\nval max = if (a > b) a else b\n\n// when with a value\nwhen (x) {\n    1    -> println(\"one\")\n    2, 3 -> println(\"two or three\")\n    in 4..9 -> println(\"four to nine\")\n    else -> println(\"other\")\n}\n\n// when without argument — cleaner if-else chain\nval grade = when {\n    score >= 90 -> \"A\"\n    score >= 80 -> \"B\"\n    else        -> \"F\"\n}",
+    "keyPoints": [
+      "if (cond) a else b — returns a or b; can replace ternary operator",
+      "when(x) { val -> expr; else -> expr } — matches x against branches",
+      "when branches: exact value, comma list, in range, is Type, else",
+      "when without argument works like a readable if-else chain"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a grade function use when as an expression to return a letter grade from a score.",
+    "code": "fun grade(score: Int): String = when {\n    score >= 90 -> \"A\"\n    score >= 80 -> \"B\"\n    score >= 70 -> \"C\"\n    else        -> \"F\"\n}\n\nfun main() {\n    println(grade(85))\n    println(grade(62))\n}",
+    "focusLine": 8,
+    "expectedHighlights": ["score=85", "score>=80 branch", "returns B", "score=62", "else branch", "returns F"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 9,
+        "name": "grade",
+        "args": ["85"],
+        "returnVar": "result_1",
+        "explanation": {
+          "what": "grade(85) called — score = 85 inside the function",
+          "why": "We test a score in the 80s range",
+          "change": "score = 85 inside grade",
+          "intent": "Show when matching in order from top to bottom",
+          "misconception": "when without an argument evaluates each branch's boolean condition top-to-bottom, stopping at the first true one — just like if-else if chains but more readable."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 2,
+        "expression": "score >= 90",
+        "result": false,
+        "branch": "else",
+        "explanation": {
+          "what": "85 >= 90 → false — first branch skipped",
+          "why": "85 is less than 90",
+          "change": "move to next branch",
+          "intent": "Show sequential evaluation of when branches",
+          "misconception": "when does not evaluate ALL branches — it stops at the first matching one. Branches below a match are never checked."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 3,
+        "expression": "score >= 80",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "85 >= 80 → true — this branch matches",
+          "why": "85 is at least 80",
+          "change": "when returns 'B'",
+          "intent": "Show the matching branch returning its value",
+          "misconception": "There is no break statement needed — unlike C switch, Kotlin's when does not fall through to subsequent branches"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "B",
+        "explanation": {
+          "what": "println(grade(85)) prints 'B'",
+          "why": "grade returned 'B' — the when expression value",
+          "change": "output ← 'B'",
+          "intent": "Confirm when expression returned a value to the caller",
+          "misconception": "grade's return type is String. when is the entire body (expression body) — its result is the function's return value."
+        }
+      },
+      {
+        "type": "call",
+        "line": 10,
+        "name": "grade",
+        "args": ["62"],
+        "returnVar": "result_2",
+        "explanation": {
+          "what": "grade(62) called — score = 62",
+          "why": "Testing a score below all thresholds",
+          "change": "score = 62 inside grade",
+          "intent": "Show the else branch activating",
+          "misconception": "Without an else, when as an expression would be a compile error when score doesn't match any branch — Kotlin requires exhaustiveness"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 5,
+        "expression": "else branch",
+        "result": true,
+        "branch": "else",
+        "explanation": {
+          "what": "62 < 90, 62 < 80, 62 < 70 — all false → else fires",
+          "why": "62 did not satisfy any of the three conditions above",
+          "change": "when returns 'F'",
+          "intent": "Show else as the catch-all branch",
+          "misconception": "else in when is like a default case in switch — it handles everything not matched above"
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "F",
+        "explanation": {
+          "what": "println(grade(62)) prints 'F'",
+          "why": "grade returned 'F' from the else branch",
+          "change": "output ← 'F'",
+          "intent": "Confirm else branch output",
+          "misconception": "F here means no threshold was met — the else is exhaustive and always runs when no other branch matches"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nval x = 3\nval label = if (x % 2 == 0) \"even\" else \"odd\"\nprintln(label)",
+    "options": [
+      "even",
+      "odd",
+      "3",
+      "Compile error — if cannot return a value"
+    ],
+    "correctIndex": 1,
+    "explanation": "3 % 2 = 1, which is not 0, so the else branch returns 'odd'. In Kotlin, if is an expression — it returns the value of the matched branch, just like a ternary operator in other languages."
+  },
+
+  "explanation": {
+    "afterDemo": "Because if and when are expressions, you write less code and avoid intermediate mutable variables. when is especially powerful — it reads like documentation: 'when score is at least 90, grade is A'. The compiler also helps: when used as an expression must be exhaustive, catching missing cases at compile time.",
+    "keyTakeaways": [
+      "if is an expression in Kotlin: val x = if (a > b) a else b replaces the ternary operator.",
+      "when branches top-to-bottom and stops at the first match — no fall-through, no break.",
+      "when as an expression must be exhaustive — add else to cover all remaining cases."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function describe(n: Int): String that uses when to return: \"negative\" if n < 0, \"zero\" if n == 0, \"small\" if n in 1..9, \"large\" otherwise. Print describe(-5), describe(0), describe(7), describe(42).",
+    "starterCode": "fun describe(n: Int): String = when {\n    // fill in branches\n}\n\nfun main() {\n    println(describe(-5))\n    println(describe(0))\n    println(describe(7))\n    println(describe(42))\n}",
+    "solutionCode": "fun describe(n: Int): String = when {\n    n < 0       -> \"negative\"\n    n == 0      -> \"zero\"\n    n in 1..9   -> \"small\"\n    else        -> \"large\"\n}\n\nfun main() {\n    println(describe(-5))\n    println(describe(0))\n    println(describe(7))\n    println(describe(42))\n}",
+    "hint": "Use when { } without an argument. Each branch is a boolean condition. Use in 1..9 for the range check.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["negative", "zero", "small", "large"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Each when branch evaluates its condition and returns the matching string.",
+    "retryHints": [
+      "Use when { n < 0 -> ... } — no argument after when, conditions are boolean",
+      "Range check: n in 1..9",
+      "Expected output (one per line): negative, zero, small, large"
+    ]
+  },
+
+  "summary": {
+    "title": "Control Flow — Complete",
+    "takeaways": [
+      "if is an expression: val x = if (a) b else c — no ternary operator needed.",
+      "when replaces switch and if-else chains. Branches can be values, ranges, or conditions.",
+      "when as an expression is exhaustive — the compiler requires an else if cases are not complete."
+    ],
+    "nextTopicId": "kotlin_loops"
+  }
+}

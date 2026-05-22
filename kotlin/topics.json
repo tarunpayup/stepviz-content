@@ -1,0 +1,182 @@
+[
+  {
+    "id": "kotlin_variables",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Variables: val & var",
+    "description": "Understand Kotlin's two variable keywords: val (immutable) and var (mutable). Learn how type inference works and why Kotlin favors immutability.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "val declares a read-only binding — you can't reassign it after initialization. var declares a mutable variable you can reassign anytime. Kotlin infers types so you rarely need to write them explicitly.",
+      "analogy": "val is like a sealed envelope — once you put a value in, you can't replace it. var is a regular folder — you can swap the content whenever you want.",
+      "keyPoints": ["val = read-only (not reassignable)", "var = mutable (can be reassigned)", "Type is inferred from the initial value", "Prefer val by default; use var only when mutation is needed"]
+    },
+    "defaultCode": "fun main() {\n    val name = \"Alice\"\n    var score = 0\n    score = 10\n    println(\"$name: $score\")\n}"
+  },
+  {
+    "id": "kotlin_data_types",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Data Types",
+    "description": "Explore Kotlin's core types: Int, Long, Double, Boolean, Char, String, and how string templates make formatting easy.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Kotlin has a rich set of built-in types: Int (32-bit integer), Long (64-bit), Double (64-bit float), Boolean (true/false), Char (single character), and String. String templates (${expr}) allow embedding expressions directly in strings.",
+      "analogy": "Types are like labelled containers — an Int container only holds whole numbers, a Double container holds decimals, and a String container holds text.",
+      "keyPoints": ["Int, Long, Double, Float cover numbers", "Boolean is true/false", "Char is a single character in single quotes", "String templates: \"Hello, $name\" or \"${name.length} chars\""]
+    },
+    "defaultCode": "fun main() {\n    val age: Int = 25\n    val height: Double = 1.75\n    val name: String = \"Alice\"\n    println(\"$name is $age years old, ${height}m tall.\")\n}"
+  },
+  {
+    "id": "kotlin_functions",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Write functions with fun, use default parameter values, call with named arguments, and use expression-body functions for concise one-liners.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Kotlin functions start with fun. Parameters can have default values, making them optional at the call site. Named arguments let callers specify which parameter they're passing, improving readability. A function with a single expression can use = instead of a block body.",
+      "analogy": "A function is a recipe. Default parameters are like saying 'use salt unless the cook specifies otherwise'. Named arguments are like ordering 'with extra cheese, no onions' — you name what you're changing.",
+      "keyPoints": ["fun name(param: Type): ReturnType { ... }", "Default values: fun greet(name: String = \"World\")", "Named args: greet(name = \"Alice\")", "Expression body: fun double(x: Int) = x * 2"]
+    },
+    "defaultCode": "fun greet(name: String = \"World\"): String {\n    return \"Hello, $name!\"\n}\n\nfun main() {\n    println(greet())\n    println(greet(name = \"Alice\"))\n}"
+  },
+  {
+    "id": "kotlin_control_flow",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Control Flow: if & when",
+    "description": "Use if as an expression that returns a value, and when as a powerful alternative to switch/match that handles ranges, types, and arbitrary conditions.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "In Kotlin, if is an expression — it returns a value, so you can use it on the right side of an assignment. when is Kotlin's switch on steroids: branches can match constants, ranges, type checks, or boolean conditions.",
+      "analogy": "if-as-expression is like a vending machine — you put in a condition and get a value back. when is like a sorting office that can route packages by weight, shape, or label — all in one block.",
+      "keyPoints": ["val x = if (a > b) a else b — if returns a value", "when replaces if-else chains and switch statements", "when branches: constant, in range, is Type, else", "when can be used without an argument as a cleaner if-else chain"]
+    },
+    "defaultCode": "fun grade(score: Int): String = when {\n    score >= 90 -> \"A\"\n    score >= 80 -> \"B\"\n    score >= 70 -> \"C\"\n    else        -> \"F\"\n}\n\nfun main() {\n    println(grade(85))\n}"
+  },
+  {
+    "id": "kotlin_loops",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Loops: for, while, repeat",
+    "description": "Iterate with for over ranges and collections, use while for condition-based loops, and repeat for simple counted repetition.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Kotlin provides for (range/collection iteration), while (condition-checked before each iteration), do-while (condition-checked after), and repeat(n) (runs a lambda n times). Ranges are created with .. (inclusive) or until (exclusive) and can have a step.",
+      "analogy": "for with a range is like walking numbered steps on a staircase. repeat is like setting a timer for N chimes. while is like waiting at a door — keep waiting as long as it's closed.",
+      "keyPoints": ["for (i in 1..5) — inclusive range 1 to 5", "for (i in 0 until 5) — exclusive: 0,1,2,3,4", "for (i in 10 downTo 1 step 2) — countdown", "repeat(3) { ... } — simplest counted loop"]
+    },
+    "defaultCode": "fun main() {\n    for (i in 1..5) print(\"$i \")\n    println()\n    repeat(3) { println(\"Kotlin!\") }\n}"
+  },
+  {
+    "id": "kotlin_null_safety",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Null Safety",
+    "description": "Understand Kotlin's type system that distinguishes nullable (String?) from non-null (String) types. Use safe call (?.), Elvis operator (?:), and non-null assertion (!!).",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "In Kotlin, regular types (String, Int) can never be null. To allow null you add ?: String?, Int?. Safe call (?.) accesses a member only if the object is non-null. Elvis (?:) provides a fallback value when something is null. !! asserts non-null and throws if it's null.",
+      "analogy": "Think of ? as a safety label: 'this box might be empty'. Safe call is like checking if the box has anything before opening it. Elvis (?:) is saying 'use the value if present, or use this backup instead'.",
+      "keyPoints": ["String — never null; String? — can be null", "val len = text?.length — returns null if text is null", "val len = text?.length ?: 0 — fallback to 0", "!! asserts non-null — avoid unless you're certain"]
+    },
+    "defaultCode": "fun greet(name: String?): String {\n    val safe = name ?: \"stranger\"\n    return \"Hello, $safe!\"\n}\n\nfun main() {\n    println(greet(\"Alice\"))\n    println(greet(null))\n}"
+  },
+  {
+    "id": "kotlin_classes",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Classes & Properties",
+    "description": "Define classes with primary constructors, declare properties directly in the constructor, add member functions, and understand the difference between val and var properties.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Kotlin classes can declare properties right in the primary constructor. Methods are functions inside the class body. By default classes are final (not inheritable) — use open to allow subclassing. Properties with val generate a getter; var generates getter and setter.",
+      "analogy": "A class is a blueprint for creating objects. The primary constructor is the form you fill out when creating a new one — each field in the form becomes a property of every instance.",
+      "keyPoints": ["class Person(val name: String, var age: Int)", "Properties in constructor = automatic get/set", "Methods defined with fun inside the class body", "Classes are final by default — add open to allow inheritance"]
+    },
+    "defaultCode": "class Person(val name: String, var age: Int) {\n    fun greet() = \"Hi, I'm $name and I'm $age.\"\n}\n\nfun main() {\n    val p = Person(\"Alice\", 30)\n    println(p.greet())\n    p.age = 31\n    println(p.age)\n}"
+  },
+  {
+    "id": "kotlin_data_classes",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Data Classes",
+    "description": "Use data class to get equals, hashCode, toString, and copy for free. Learn destructuring declarations to unpack data class instances.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "A data class is a class whose purpose is to hold data. Kotlin auto-generates equals(), hashCode(), toString(), and copy(). copy() lets you create a new instance with some properties changed. You can also destructure a data class: val (a, b) = point.",
+      "analogy": "A data class is like a named tuple with superpowers — Kotlin writes all the boilerplate (equals, toString, copy) so you don't have to.",
+      "keyPoints": ["data class Point(val x: Int, val y: Int)", "toString() auto: \"Point(x=1, y=2)\"", "copy(): val p2 = p.copy(y = 5)", "Destructuring: val (x, y) = point"]
+    },
+    "defaultCode": "data class Point(val x: Int, val y: Int)\n\nfun main() {\n    val p = Point(1, 2)\n    println(p)\n    val p2 = p.copy(y = 5)\n    println(p2)\n    val (x, y) = p2\n    println(\"x=$x y=$y\")\n}"
+  },
+  {
+    "id": "kotlin_collections",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Collections: List, Map, Set",
+    "description": "Create read-only and mutable lists, maps, and sets. Use listOf, mutableListOf, mapOf, and common operations like filter, map, and forEach.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Kotlin separates read-only collections (listOf, mapOf, setOf) from mutable ones (mutableListOf, mutableMapOf). Read-only doesn't mean the data is immutable — it means this reference doesn't expose mutation operations. Common operations: filter, map, forEach, find, any, all.",
+      "analogy": "A read-only list is like a printed menu — you can read it, but you can't add items to it. A mutable list is a whiteboard menu — you can add and erase items.",
+      "keyPoints": ["listOf(1,2,3) — read-only list", "mutableListOf(1,2,3) — add/remove allowed", "mapOf(\"a\" to 1) — read-only map with to infix", "filter, map, forEach work on all collections"]
+    },
+    "defaultCode": "fun main() {\n    val nums = listOf(1, 2, 3, 4, 5)\n    val evens = nums.filter { it % 2 == 0 }\n    val doubled = evens.map { it * 2 }\n    println(doubled)\n}"
+  },
+  {
+    "id": "kotlin_lambdas",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Lambdas & Higher-Order Functions",
+    "description": "Write lambdas as function values, pass them to higher-order functions, use it for single-parameter lambdas, and understand trailing lambda syntax.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "A lambda is an anonymous function: { x: Int -> x * 2 }. Higher-order functions accept or return functions. Kotlin's standard library is full of them: forEach, filter, map, let, run, apply. When a lambda is the last argument, it can be placed outside the parentheses (trailing lambda syntax).",
+      "analogy": "A lambda is like a sticky note with instructions — you can hand it to someone else to execute later. Higher-order functions are people who accept those sticky notes and act on them.",
+      "keyPoints": ["val double = { x: Int -> x * 2 }", "it refers to the single parameter of a lambda", "Trailing lambda: list.forEach { println(it) }", "Function type: (Int) -> Int"]
+    },
+    "defaultCode": "fun applyTwice(x: Int, f: (Int) -> Int): Int = f(f(x))\n\nfun main() {\n    val result = applyTwice(3) { it * 2 }\n    println(result)\n}"
+  },
+  {
+    "id": "kotlin_extension_functions",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Extension Functions",
+    "description": "Add new functions to existing classes without modifying them or using inheritance. Understand receiver types and how extensions are resolved at compile time.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "An extension function lets you add a function to any class — even classes you don't own (like String or Int) — without subclassing. Inside the extension, this refers to the receiver object. They are resolved statically (at compile time), not polymorphically.",
+      "analogy": "Extension functions are like clipping a custom tool to someone else's toolbox — the toolbox owner didn't design it, but you can use it as if they did.",
+      "keyPoints": ["fun String.shout() = this.uppercase() + \"!\"", "this inside an extension = the receiver instance", "Extensions don't modify the original class", "Cannot access private members of the receiver"]
+    },
+    "defaultCode": "fun String.shout(): String = this.uppercase() + \"!\"\nfun Int.square(): Int = this * this\n\nfun main() {\n    println(\"hello\".shout())\n    println(4.square())\n}"
+  },
+  {
+    "id": "kotlin_coroutines",
+    "language": "kotlin",
+    "domain": "programming",
+    "title": "Coroutines Basics",
+    "description": "Understand coroutines as lightweight concurrent units. Use runBlocking, launch, and suspend functions to write sequential-looking async code.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "A coroutine is a suspendable computation — it can pause (suspend) without blocking the underlying thread, then resume later. launch starts a coroutine that runs concurrently. suspend functions can only be called from a coroutine or another suspend function. runBlocking bridges regular code and coroutines.",
+      "analogy": "A coroutine is like a task on a to-do list that you can pause and pick up later — unlike threads which occupy a worker completely, coroutines share workers efficiently.",
+      "keyPoints": ["suspend fun — can be paused without blocking a thread", "launch { } — starts a coroutine (fire-and-forget)", "runBlocking { } — bridges blocking world to coroutines", "delay(ms) — suspends without blocking the thread"]
+    },
+    "defaultCode": "import kotlinx.coroutines.*\n\nfun main() = runBlocking {\n    launch {\n        delay(100L)\n        println(\"World\")\n    }\n    println(\"Hello\")\n}"
+  }
+]

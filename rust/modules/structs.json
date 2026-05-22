@@ -1,0 +1,143 @@
+{
+  "id": "lm_rust_structs",
+  "topicId": "rust_structs",
+  "language": "rust",
+  "title": "Structs",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Structs group named fields into a custom type; impl adds methods to it.",
+    "explanation": "A struct is a named collection of fields, each with its own type. You define the shape with `struct Name { field: Type }` and create instances by naming every field. Methods are defined in an `impl` block — they receive `self` (or `&self` / `&mut self`) as the first parameter. Associated functions (no self) serve as constructors.",
+    "syntax": "struct Point {\n    x: f64,\n    y: f64,\n}\n\nimpl Point {\n    // Associated function (constructor)\n    fn new(x: f64, y: f64) -> Point {\n        Point { x, y }    // shorthand if field name == variable\n    }\n\n    // Method — immutable access\n    fn distance_from_origin(&self) -> f64 {\n        (self.x * self.x + self.y * self.y).sqrt()\n    }\n\n    // Method — mutable access\n    fn translate(&mut self, dx: f64, dy: f64) {\n        self.x += dx;\n        self.y += dy;\n    }\n}",
+    "keyPoints": [
+      "All fields must be provided when instantiating a struct (unless Default is derived)",
+      "struct update syntax: Point { x: 1.0, ..other } copies remaining fields from other",
+      "&self methods borrow the instance immutably; &mut self borrow mutably",
+      "Point::new() is an associated function (called on the type, not an instance)",
+      "Derive macros like #[derive(Debug)] auto-generate trait implementations"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a Rectangle struct get created, then have its area method called.",
+    "code": "struct Rectangle {\n    width: f64,\n    height: f64,\n}\n\nimpl Rectangle {\n    fn new(w: f64, h: f64) -> Rectangle {\n        Rectangle { width: w, height: h }\n    }\n    fn area(&self) -> f64 {\n        self.width * self.height\n    }\n}\n\nfn main() {\n    let r = Rectangle::new(4.0, 3.0);\n    println!(\"Area = {}\", r.area());\n}",
+    "focusLine": 15,
+    "expectedHighlights": ["Rectangle::new called", "struct fields set", "area() called", "self.width * self.height = 12"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 15,
+        "name": "Rectangle::new",
+        "args": ["4.0", "3.0"],
+        "returnVar": "r",
+        "explanation": {
+          "what": "Calling the associated function Rectangle::new(4.0, 3.0)",
+          "why": "new is an associated function — called on the type, not an instance — that constructs and returns a Rectangle",
+          "change": "Rectangle instance created with width=4.0, height=3.0",
+          "intent": "Use a constructor function to build a struct with valid initial state",
+          "misconception": "new is not a keyword in Rust — it is just a convention for associated constructor functions. You can name it anything."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 15,
+        "var": "r",
+        "value": "Rectangle { width: 4.0, height: 3.0 }",
+        "dataType": "Rectangle",
+        "explanation": {
+          "what": "Binding r to the new Rectangle instance",
+          "why": "r owns the Rectangle value — its fields width and height are stored on the stack",
+          "change": "r = Rectangle { width: 4.0, height: 3.0 }",
+          "intent": "Hold a rectangle in a named variable for further operations",
+          "misconception": "Simple structs with only Copy fields (like f64) are themselves stored on the stack, not the heap"
+        }
+      },
+      {
+        "type": "call",
+        "line": 16,
+        "name": "r.area",
+        "args": ["&r"],
+        "returnVar": "area_result",
+        "explanation": {
+          "what": "Calling r.area() — Rust auto-borrows r as &Rectangle",
+          "why": "area takes &self (immutable borrow) — Rust automatically passes &r; no need to write r.area(&r)",
+          "change": "area() receives &Rectangle pointing to r's fields",
+          "intent": "Read the struct's data to compute a derived value",
+          "misconception": "Methods look like r.area() but internally Rust passes self. For &self methods, this is equivalent to Rectangle::area(&r)."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 16,
+        "var": "self.width * self.height",
+        "value": "12.0",
+        "dataType": "f64",
+        "explanation": {
+          "what": "Evaluating self.width * self.height = 4.0 × 3.0 = 12.0",
+          "why": "The method body reads the two fields via &self and multiplies them",
+          "change": "expression evaluates to 12.0",
+          "intent": "Compute area from struct fields without copying them out first",
+          "misconception": "self.width does not move the field — &self gives read-only access to all fields without transferring ownership"
+        }
+      },
+      {
+        "type": "print",
+        "line": 16,
+        "value": "Area = 12",
+        "explanation": {
+          "what": "Printing the area result",
+          "why": "r.area() returned 12.0, which is formatted into 'Area = 12' by println!",
+          "change": "output ← 'Area = 12'",
+          "intent": "Display the computed property of the struct instance",
+          "misconception": "12.0 prints as 12 with the default {} formatter — use {:?} or :.2 for decimal places"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this code print?\n\nstruct Counter { count: i32 }\nimpl Counter {\n    fn increment(&mut self) { self.count += 1; }\n}\nlet mut c = Counter { count: 0 };\nc.increment();\nc.increment();\nprintln!(\"{}\", c.count);",
+    "options": ["0", "1", "2", "compile error"],
+    "correctIndex": 2,
+    "explanation": "c is declared mut, and increment takes &mut self — allowed. Each call adds 1 to count. After two calls count is 2."
+  },
+
+  "explanation": {
+    "afterDemo": "Rectangle::new created a struct instance with named fields. r.area() borrowed r immutably via &self to read width and height. Neither call moved r — it remained fully owned by main. The impl block cleanly separates data definition (struct) from behaviour (methods).",
+    "keyTakeaways": [
+      "struct defines named fields; impl defines methods and associated functions.",
+      "&self borrows immutably; &mut self borrows mutably; self consumes (moves) the instance.",
+      "Associated functions (no self) are called with Type::function_name() — not on an instance."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Define a struct `Circle` with a field `radius: f64`. Add an impl with a method `circumference(&self) -> f64` that returns 2.0 * 3.14159 * self.radius. Create a Circle with radius 5.0 and print its circumference.",
+    "starterCode": "struct Circle {\n    // add radius field\n}\n\nimpl Circle {\n    fn circumference(&self) -> f64 {\n        // 2 * pi * r\n    }\n}\n\nfn main() {\n    let c = Circle { radius: 5.0 };\n    println!(\"{:.4}\", c.circumference());\n}",
+    "solutionCode": "struct Circle {\n    radius: f64,\n}\n\nimpl Circle {\n    fn circumference(&self) -> f64 {\n        2.0 * 3.14159 * self.radius\n    }\n}\n\nfn main() {\n    let c = Circle { radius: 5.0 };\n    println!(\"{:.4}\", c.circumference());\n}",
+    "hint": "2.0 * 3.14159 * self.radius — use self.radius to access the field.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["31.4159"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 2 × π × 5 = 31.4159 (to 4 decimal places).",
+    "retryHints": [
+      "Add radius: f64 inside the struct body.",
+      "Return 2.0 * 3.14159 * self.radius from circumference — remember no semicolon for implicit return.",
+      "Expected output: 31.4159 (formatted to 4 decimal places with {:.4})."
+    ]
+  },
+
+  "summary": {
+    "title": "Structs — Complete",
+    "takeaways": [
+      "struct groups named, typed fields into a single custom type.",
+      "impl adds methods (&self, &mut self) and associated functions (no self).",
+      "Use ::new() by convention for constructors; there is no built-in new keyword."
+    ],
+    "nextTopicId": "rust_enums"
+  }
+}

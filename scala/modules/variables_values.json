@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_variables_values",
+  "topicId": "scala_variables_values",
+  "language": "scala",
+  "title": "Variables & Values",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Use val for immutable and var for mutable bindings.",
+    "explanation": "Scala encourages immutability, so prefer val unless state must change.",
+    "syntax": "val name = \"StepViz\"\nvar count = 1\ncount += 1",
+    "keyPoints": ["Prefer val by default", "Use var sparingly", "Type is inferred"]
+  },
+  "demo": {
+    "intro": "Declare one val and one var, then update var.",
+    "code": "object Main extends App {\n  val name = \"StepViz\"\n  var count = 1\n  count += 1\n  println(s\"$name $count\")\n}",
+    "focusLine": 3,
+    "expectedHighlights": ["name immutable", "count updated", "prints StepViz 2"],
+    "steps": [
+      {"type": "declare", "line": 2, "var": "name", "value": "StepViz", "dataType": "String", "explanation": {"what": "Create immutable binding", "why": "Name never changes", "change": "name set", "intent": "Show val", "misconception": "val cannot be reassigned"}},
+      {"type": "assign", "line": 4, "var": "count", "value": "2", "explanation": {"what": "Increment var", "why": "Mutate counter", "change": "count:1->2", "intent": "Show mutable state", "misconception": "Only var supports reassignment"}},
+      {"type": "print", "line": 5, "value": "StepViz 2", "explanation": {"what": "Print values", "why": "Verify outcome", "change": "output emitted", "intent": "Confirm binding behavior", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Which is immutable?", "options": ["var", "val", "both", "neither"], "correctIndex": 1, "explanation": "val creates immutable binding."},
+  "explanation": {"afterDemo": "Defaulting to immutable data makes programs easier to reason about.", "keyTakeaways": ["val is preferred", "var is for true mutation", "Inference keeps code concise"]},
+  "practice": {
+    "prompt": "Create val lang='Scala', var n=2, increment n by 3, print both.",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  val lang = \"Scala\"\n  var n = 2\n  n += 3\n  println(s\"$lang $n\")\n}",
+    "hint": "Use val for lang and var for n.",
+    "validation": {"type": "output", "expectedOutput": ["Scala 5"]}
+  },
+  "feedback": {"successMessage": "val/var usage is correct.", "retryHints": ["Keep lang as val", "Increment n", "Print both values"]},
+  "summary": {"title": "Variables & Values - Complete", "takeaways": ["Immutability first", "Explicit mutation", "Type inference"], "nextTopicId": "scala_data_types"}
+}

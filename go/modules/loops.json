@@ -1,0 +1,115 @@
+{
+  "id": "lm_go_loops",
+  "topicId": "go_loops",
+  "language": "go",
+  "title": "Loops",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Go uses for for all loop patterns.",
+    "explanation": "Use for with range or classic form for repeated execution.",
+    "syntax": "total := 0\nfor _, n := range []int{1, 2, 3} {\n\ttotal += n\n}",
+    "keyPoints": [
+      "range iterates collections",
+      "Classic for has init/cond/post",
+      "break and continue alter loop control"
+    ]
+  },
+  "demo": {
+    "intro": "Sum values using for-range.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ttotal := 0\n\tfor _, n := range []int{1, 2, 3} {\n\t\ttotal += n\n\t}\n\tfmt.Println(total)\n}",
+    "focusLine": 7,
+    "expectedHighlights": [
+      "loop runs 3 times",
+      "total becomes 6"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "total",
+        "value": "0",
+        "dataType": "int",
+        "explanation": {
+          "what": "Initialize accumulator",
+          "why": "Track running sum",
+          "change": "total set",
+          "intent": "Prepare loop",
+          "misconception": "Need initial value before +="
+        }
+      },
+      {
+        "type": "assign",
+        "line": 8,
+        "var": "total",
+        "value": "6",
+        "explanation": {
+          "what": "Add each element",
+          "why": "Aggregate collection",
+          "change": "total:0->6",
+          "intent": "Demonstrate accumulation",
+          "misconception": "_ ignores index from range"
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "6",
+        "explanation": {
+          "what": "Print total",
+          "why": "Validate loop output",
+          "change": "output emitted",
+          "intent": "Check final state",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "How many iterations in for i := 0; i < 4; i++ ?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "depends"
+    ],
+    "correctIndex": 1,
+    "explanation": "i takes values 0,1,2,3 so four iterations."
+  },
+  "explanation": {
+    "afterDemo": "for-range is expressive and common in Go code.",
+    "keyTakeaways": [
+      "Use range for slices and maps",
+      "Keep loop invariants clear",
+      "Prefer readable loop boundaries"
+    ]
+  },
+  "practice": {
+    "prompt": "Sum []int{4,5,6} into total and print it.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ttotal := 0\n\tfor _, n := range []int{4, 5, 6} {\n\t\ttotal += n\n\t}\n\tfmt.Println(total)\n}",
+    "hint": "Initialize total before the loop.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "15"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Loop and accumulation are correct.",
+    "retryHints": [
+      "Use range over the slice",
+      "Update total with +=",
+      "Print total after loop"
+    ]
+  },
+  "summary": {
+    "title": "Loops - Complete",
+    "takeaways": [
+      "Go relies on for",
+      "Range simplifies iteration",
+      "Accumulator patterns are common"
+    ],
+    "nextTopicId": "go_arrays_slices"
+  }
+}

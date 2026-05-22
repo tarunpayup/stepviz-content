@@ -1,0 +1,119 @@
+{
+  "id": "lm_go_packages",
+  "topicId": "go_packages",
+  "language": "go",
+  "title": "Packages",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Packages organize reusable Go code.",
+    "explanation": "Use package declarations and imports to structure applications.",
+    "syntax": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)",
+    "keyPoints": [
+      "Each file starts with package",
+      "Import paths reference modules/packages",
+      "Uppercase names are exported"
+    ]
+  },
+  "demo": {
+    "intro": "Import standard library packages and call a function.",
+    "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc main() {\n\tfmt.Println(math.Sqrt(16))\n}",
+    "focusLine": 9,
+    "expectedHighlights": [
+      "imports fmt and math",
+      "calls math.Sqrt",
+      "prints 4"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "imports",
+        "value": "fmt, math",
+        "dataType": "package references",
+        "explanation": {
+          "what": "Import packages",
+          "why": "Reuse standard library APIs",
+          "change": "namespaces available",
+          "intent": "Modular code",
+          "misconception": "Unused imports cause compile errors"
+        }
+      },
+      {
+        "type": "call",
+        "line": 9,
+        "name": "math.Sqrt",
+        "args": [
+          "16"
+        ],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Call package function",
+          "why": "Compute square root",
+          "change": "result=4",
+          "intent": "Use imported API",
+          "misconception": "Exported function starts uppercase"
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "4",
+        "explanation": {
+          "what": "Print result",
+          "why": "Confirm package call",
+          "change": "output emitted",
+          "intent": "Validate import usage",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "Which names are exported from a Go package?",
+    "options": [
+      "lowercase only",
+      "uppercase only",
+      "all names",
+      "none"
+    ],
+    "correctIndex": 1,
+    "explanation": "Names starting with uppercase are exported."
+  },
+  "explanation": {
+    "afterDemo": "Package boundaries keep Go code maintainable.",
+    "keyTakeaways": [
+      "Imports expose reusable APIs",
+      "Package names scope symbols",
+      "Export rules control visibility"
+    ]
+  },
+  "practice": {
+    "prompt": "Import fmt and strings, then print strings.ToUpper('go').",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tfmt.Println(strings.ToUpper(\"go\"))\n}",
+    "hint": "Use strings.ToUpper and fmt.Println.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "GO"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Package import and usage are correct.",
+    "retryHints": [
+      "Import strings package",
+      "Call exported ToUpper",
+      "Print transformed text"
+    ]
+  },
+  "summary": {
+    "title": "Packages - Complete",
+    "takeaways": [
+      "Packages modularize Go projects",
+      "Imports bring APIs into scope",
+      "Exported names are uppercase"
+    ],
+    "nextTopicId": "go_goroutines_channels"
+  }
+}

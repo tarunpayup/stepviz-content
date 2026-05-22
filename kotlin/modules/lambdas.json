@@ -1,0 +1,173 @@
+{
+  "id": "lm_kotlin_lambdas",
+  "topicId": "kotlin_lambdas",
+  "language": "kotlin",
+  "title": "Lambdas & Higher-Order Functions",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Lambdas are anonymous functions you can store and pass around. Higher-order functions accept or return them. it names the single parameter by default.",
+    "explanation": "A lambda expression is { parameters -> body }. When a lambda has one parameter you can use it instead of naming it. Higher-order functions take function types as parameters (e.g. (Int) -> Int). When a lambda is the last argument to a function, it can be written outside the parentheses (trailing lambda). Kotlin's standard library — filter, map, forEach, let, apply, run — is built entirely on this mechanism.",
+    "syntax": "// Lambda expression\nval double: (Int) -> Int = { x -> x * 2 }\nprintln(double(5))   // 10\n\n// Single param: use 'it'\nval square: (Int) -> Int = { it * it }\n\n// Higher-order function\nfun applyTwice(x: Int, f: (Int) -> Int): Int = f(f(x))\napplyTwice(3, double)    // 12\n\n// Trailing lambda\napplyTwice(3) { it + 10 }  // 23",
+    "keyPoints": [
+      "Lambda: { params -> body }. Single param uses it implicitly.",
+      "Function type: (InputType) -> ReturnType",
+      "Trailing lambda: last parameter can be moved outside ()",
+      "Standard library (filter, map) takes lambdas — that is why { } appears after them"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a higher-order function applyTwice run a lambda twice on an input value.",
+    "code": "fun applyTwice(x: Int, f: (Int) -> Int): Int = f(f(x))\n\nfun main() {\n    val result = applyTwice(3) { it * 2 }\n    println(result)\n    val addTen = { n: Int -> n + 10 }\n    println(applyTwice(5, addTen))\n}",
+    "focusLine": 4,
+    "expectedHighlights": ["x=3", "lambda: it*2", "f(3)=6", "f(6)=12", "result=12", "addTen lambda", "f(5)=15, f(15)=25"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 4,
+        "name": "applyTwice",
+        "args": ["3", "{ it * 2 }"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "applyTwice(3) { it * 2 } — trailing lambda syntax",
+          "why": "The lambda { it * 2 } is the f parameter. Trailing lambda syntax moves it outside the ().",
+          "change": "x = 3, f = { it * 2 } inside applyTwice",
+          "intent": "Show trailing lambda: last function argument outside parentheses",
+          "misconception": "{ it * 2 } is NOT a block of code after the function call — it IS an argument to applyTwice. The trailing lambda syntax is purely syntactic sugar."
+        }
+      },
+      {
+        "type": "call",
+        "line": 1,
+        "name": "f (first call)",
+        "args": ["3"],
+        "returnVar": "inner_1",
+        "explanation": {
+          "what": "f(x) = f(3) — calling the lambda with x = 3",
+          "why": "applyTwice calls f first on x",
+          "change": "it = 3 → it * 2 = 6",
+          "intent": "Show lambda being invoked — it becomes the argument value",
+          "misconception": "it is the implicit name for a lambda with one parameter. Inside { it * 2 }, it holds the value passed to the lambda (3 here)."
+        }
+      },
+      {
+        "type": "call",
+        "line": 1,
+        "name": "f (second call)",
+        "args": ["6"],
+        "returnVar": "inner_2",
+        "explanation": {
+          "what": "f(f(x)) = f(6) — applying the lambda again on the first result",
+          "why": "applyTwice applies f twice — the second time on the first result",
+          "change": "it = 6 → it * 2 = 12",
+          "intent": "Show higher-order function applying f a second time",
+          "misconception": "The lambda itself does not change — the same { it * 2 } is called again, just with a different value (6 instead of 3)"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "result",
+        "value": "12",
+        "dataType": "Int",
+        "explanation": {
+          "what": "applyTwice returns 12 — stored in result",
+          "why": "3 * 2 = 6, 6 * 2 = 12",
+          "change": "result = 12",
+          "intent": "Confirm higher-order function result",
+          "misconception": "applyTwice did not know about doubling — it only knew to call f twice. The behaviour was injected via the lambda."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "12",
+        "explanation": {
+          "what": "println(result) → 12",
+          "why": "result = 12",
+          "change": "output ← '12'",
+          "intent": "Show higher-order function result printed",
+          "misconception": "No special syntax needed to print an Int returned from a higher-order function"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "addTen",
+        "value": "{ n: Int -> n + 10 }",
+        "dataType": "(Int) -> Int",
+        "explanation": {
+          "what": "val addTen = { n: Int -> n + 10 } — storing a lambda in a variable",
+          "why": "Lambdas are values — they can be stored just like Int or String",
+          "change": "addTen = function that adds 10",
+          "intent": "Show lambda stored as a val with explicit parameter name",
+          "misconception": "When a lambda has a single param and you name it explicitly (n: Int ->), you cannot also use it. Choose one or the other."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "25",
+        "explanation": {
+          "what": "applyTwice(5, addTen) → 5+10=15, 15+10=25",
+          "why": "addTen applied twice: 5 → 15 → 25",
+          "change": "output ← '25'",
+          "intent": "Show a named lambda passed as a function argument",
+          "misconception": "Passing addTen vs { it + 10 } is equivalent — named lambdas and inline lambdas are interchangeable when the type matches"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\nval ops = listOf<(Int) -> Int>({ it + 1 }, { it * 3 })\nprintln(ops[0](ops[1](2)))",
+    "options": [
+      "6",
+      "7",
+      "9",
+      "Compile error"
+    ],
+    "correctIndex": 1,
+    "explanation": "ops[1](2) = 2*3 = 6. ops[0](6) = 6+1 = 7. Output: 7."
+  },
+
+  "explanation": {
+    "afterDemo": "Higher-order functions and lambdas are the foundation of Kotlin's expressive style. Every time you write .filter { } or .map { } you are passing a lambda to a higher-order function. Understanding that lambdas are values — storeable, passable, returnable — unlocks the entire standard library and makes your own APIs composable.",
+    "keyTakeaways": [
+      "Lambda: { param -> body }. Single param: use it. Store as val with type (T) -> R.",
+      "Higher-order function: takes (T) -> R as a parameter — lets callers inject behaviour.",
+      "Trailing lambda: last-argument lambda moves outside () — this is why filter { } looks clean."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function transform(nums: List<Int>, f: (Int) -> Int): List<Int> that returns a new list with f applied to each element. Call it with listOf(1,2,3) and { it * it }, print the result.",
+    "starterCode": "fun transform(nums: List<Int>, f: (Int) -> Int): List<Int> {\n    // apply f to each element\n}\n\nfun main() {\n    println(transform(listOf(1, 2, 3)) { it * it })\n}",
+    "solutionCode": "fun transform(nums: List<Int>, f: (Int) -> Int): List<Int> {\n    return nums.map(f)\n}\n\nfun main() {\n    println(transform(listOf(1, 2, 3)) { it * it })\n}",
+    "hint": "Use nums.map(f) — map accepts a function reference directly.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["[1, 4, 9]"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! map(f) applies f to each element: 1*1=1, 2*2=4, 3*3=9.",
+    "retryHints": [
+      "nums.map(f) or nums.map { f(it) } both work",
+      "{ it * it } squares each element",
+      "Expected: [1, 4, 9]"
+    ]
+  },
+
+  "summary": {
+    "title": "Lambdas & Higher-Order Functions — Complete",
+    "takeaways": [
+      "Lambdas are values: { param -> body }. Single-param lambdas use it.",
+      "Higher-order functions take (T) -> R parameters — filter, map, forEach all do this.",
+      "Trailing lambda syntax places the last lambda argument outside () for readability."
+    ],
+    "nextTopicId": "kotlin_extension_functions"
+  }
+}

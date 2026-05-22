@@ -1,0 +1,157 @@
+{
+  "id": "lm_kotlin_data_classes",
+  "topicId": "kotlin_data_classes",
+  "language": "kotlin",
+  "title": "Data Classes",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "data class auto-generates equals, hashCode, toString, and copy — turning boilerplate model objects into a one-liner.",
+    "explanation": "Adding the data modifier to a class tells Kotlin to generate equals() (compares all constructor properties), hashCode() (consistent with equals), toString() (readable format), and copy() (clone with optional overrides). Destructuring declarations let you unpack a data class into multiple variables: val (x, y) = point.",
+    "syntax": "data class Point(val x: Int, val y: Int)\n\nval p1 = Point(1, 2)\nprintln(p1)            // Point(x=1, y=2)\n\nval p2 = p1.copy(y = 5)\nprintln(p2)            // Point(x=1, y=5)\n\nprintln(p1 == Point(1, 2))  // true — structural equality\n\n// Destructuring\nval (x, y) = p2\nprintln(\"x=$x y=$y\")   // x=1 y=5",
+    "keyPoints": [
+      "data class auto-generates: toString, equals, hashCode, copy",
+      "copy() clones with overrides: p.copy(y = 99)",
+      "== on data classes compares content, not reference",
+      "Destructuring: val (a, b) = dataClassInstance"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a data class instance being printed, copied with a change, and destructured.",
+    "code": "data class Point(val x: Int, val y: Int)\n\nfun main() {\n    val p = Point(1, 2)\n    println(p)\n    val p2 = p.copy(y = 5)\n    println(p2)\n    val (x, y) = p2\n    println(\"x=$x y=$y\")\n}",
+    "focusLine": 4,
+    "expectedHighlights": ["p=Point(1,2)", "toString output", "p2=Point(1,5)", "x=1 y=5"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "p",
+        "value": "Point(x=1, y=2)",
+        "dataType": "Point",
+        "explanation": {
+          "what": "val p = Point(1, 2) — create a data class instance",
+          "why": "Primary constructor sets x=1, y=2",
+          "change": "p = Point(x=1, y=2)",
+          "intent": "Show data class construction — identical to a regular class",
+          "misconception": "data class is still a regular class — it just has auto-generated methods. You can add your own methods and the generated ones don't interfere."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "Point(x=1, y=2)",
+        "explanation": {
+          "what": "println(p) calls the auto-generated toString()",
+          "why": "data class generates toString() as ClassName(prop=value, ...) automatically",
+          "change": "output ← 'Point(x=1, y=2)'",
+          "intent": "Show auto-generated toString — no manual implementation needed",
+          "misconception": "A regular (non-data) class would print something like 'Point@3764951d' — the memory address. data class generates a human-readable representation."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "p2",
+        "value": "Point(x=1, y=5)",
+        "dataType": "Point",
+        "explanation": {
+          "what": "p.copy(y = 5) — creates a new Point with x kept from p and y changed to 5",
+          "why": "copy() clones all properties and lets you override specific ones by name",
+          "change": "p2 = Point(x=1, y=5)",
+          "intent": "Show copy with selective override — the immutable update pattern",
+          "misconception": "p is not modified — copy() returns a NEW object. p still equals Point(x=1, y=2). This is the idiomatic way to 'update' an immutable data object."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "Point(x=1, y=5)",
+        "explanation": {
+          "what": "println(p2) shows the copied-and-modified instance",
+          "why": "p2 has x=1 (copied from p) and y=5 (overridden)",
+          "change": "output ← 'Point(x=1, y=5)'",
+          "intent": "Confirm copy produced a new object with the override applied",
+          "misconception": "p2 is a completely separate object from p — modifying a var property of p2 (if it had any) would not affect p"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 8,
+        "var": "x, y",
+        "value": "1, 5",
+        "dataType": "Int, Int",
+        "explanation": {
+          "what": "val (x, y) = p2 — destructuring declaration",
+          "why": "data class generates componentN() functions; val (x, y) = ... calls component1() and component2()",
+          "change": "x = 1, y = 5 as separate local variables",
+          "intent": "Show destructuring as a concise way to extract properties",
+          "misconception": "Destructuring follows position order of constructor parameters — (x, y) maps to x first, y second. If you swap them you get the wrong values."
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "x=1 y=5",
+        "explanation": {
+          "what": "println(\"x=$x y=$y\") uses the destructured local variables",
+          "why": "x = 1, y = 5 from the destructuring above",
+          "change": "output ← 'x=1 y=5'",
+          "intent": "Show destructured variables used in a string template",
+          "misconception": "x and y here are new local variables, not references to p2.x and p2.y — they are copies of the values"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\ndata class User(val name: String, val age: Int)\nval u1 = User(\"Alice\", 30)\nval u2 = User(\"Alice\", 30)\nprintln(u1 == u2)",
+    "options": [
+      "false — different objects in memory",
+      "true — data class compares by content",
+      "Compile error",
+      "null"
+    ],
+    "correctIndex": 1,
+    "explanation": "data class generates equals() that compares all constructor properties. u1 and u2 have identical name and age, so u1 == u2 is true — even though they are different objects in memory."
+  },
+
+  "explanation": {
+    "afterDemo": "data class is one of Kotlin's most-used features. It replaces the Java ceremony of manually writing equals/hashCode/toString for model objects. The copy() function enables the immutable update pattern — create a modified clone instead of mutating the original. Destructuring makes extracting values from data objects clean and readable.",
+    "keyTakeaways": [
+      "data class generates toString, equals, hashCode, copy — no boilerplate.",
+      "== compares content (structural equality), not reference identity.",
+      "copy(prop = newValue) creates a modified clone — the safe way to 'update' immutable data."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create a data class Config(val host: String, val port: Int). Make an instance Config(\"localhost\", 8080), copy it changing port to 9090, and print both.",
+    "starterCode": "data class Config(/* ... */)\n\nfun main() {\n    val c1 = Config(\"localhost\", 8080)\n    // copy with port=9090\n    println(c1)\n    // println second\n}",
+    "solutionCode": "data class Config(val host: String, val port: Int)\n\nfun main() {\n    val c1 = Config(\"localhost\", 8080)\n    val c2 = c1.copy(port = 9090)\n    println(c1)\n    println(c2)\n}",
+    "hint": "Use c1.copy(port = 9090) to create c2. println will use the auto-generated toString.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Config(host=localhost, port=8080)", "Config(host=localhost, port=9090)"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! copy() preserved host and changed only port. toString() formatted both automatically.",
+    "retryHints": [
+      "c1.copy(port = 9090) — named argument overrides only port",
+      "println uses auto-generated toString: Config(host=..., port=...)",
+      "Expected: Config(host=localhost, port=8080) then Config(host=localhost, port=9090)"
+    ]
+  },
+
+  "summary": {
+    "title": "Data Classes — Complete",
+    "takeaways": [
+      "data class auto-generates toString, equals, hashCode, copy — use it for model/value objects.",
+      "copy(prop = val) is the idiomatic immutable update — returns a new instance.",
+      "Destructuring: val (a, b) = dataObj unpacks by constructor order."
+    ],
+    "nextTopicId": "kotlin_collections"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "id": "lm_crystal_concurrency",
+  "topicId": "crystal_concurrency",
+  "language": "crystal",
+  "title": "Fibers & Channels",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Crystal concurrency uses lightweight fibers and typed channels.",
+    "explanation": "spawn starts concurrent fibers. Channel(T) provides safe message passing, avoiding shared mutable-state complexity.",
+    "syntax": "ch = Channel(String).new\nspawn do\n  ch.send(\"done\")\nend\nputs ch.receive",
+    "keyPoints": [
+      "spawn launches a new fiber",
+      "Channel(T) carries typed messages",
+      "send/receive synchronize work",
+      "Message passing simplifies coordination"
+    ]
+  },
+
+  "demo": {
+    "intro": "Observe one fiber sending a message and main fiber receiving it.",
+    "code": "ch = Channel(String).new\nspawn do\n  ch.send(\"done\")\nend\nputs ch.receive",
+    "focusLine": 2,
+    "expectedHighlights": ["channel created", "fiber spawned", "message sent", "main receives done"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "ch", "value": "Channel(String)", "dataType": "Channel(String)", "explanation": {"what": "Create typed channel", "why": "Communication lane between fibers", "change": "ch ready", "intent": "Set up synchronization", "misconception": "Channel enforces message type at compile time"}},
+      {"type": "call", "line": 2, "name": "spawn", "args": ["fiber block"], "returnVar": "fiber", "explanation": {"what": "Spawn concurrent fiber", "why": "Run send operation asynchronously", "change": "new fiber scheduled", "intent": "Introduce concurrency primitive", "misconception": "spawn is lightweight compared to threads"}},
+      {"type": "call", "line": 3, "name": "ch.send", "args": ["done"], "returnVar": "sent", "explanation": {"what": "Send message through channel", "why": "Signal completion", "change": "channel buffer/handshake updated", "intent": "Pass data safely", "misconception": "send may block depending on channel state"}},
+      {"type": "print", "line": 5, "value": "done", "explanation": {"what": "Receive and print message", "why": "main fiber waits for incoming value", "change": "output <- done", "intent": "Confirm fiber communication", "misconception": "receive blocks until message arrives"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "What happens if main calls ch.receive before any fiber sends?",
+    "options": ["returns nil", "raises immediately", "blocks until send", "prints empty string"],
+    "correctIndex": 2,
+    "explanation": "receive blocks until a message is available."
+  },
+
+  "explanation": {
+    "afterDemo": "Fibers plus channels are a practical way to build concurrent pipelines with less shared-state risk.",
+    "keyTakeaways": [
+      "spawn runs concurrent tasks as fibers.",
+      "Channels coordinate and move typed data safely.",
+      "receive is blocking synchronization by default."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Create Channel(Int32). Spawn a fiber sending 21, receive it in main, print value * 2.",
+    "starterCode": "# create channel\n# spawn sender\n# receive and print doubled",
+    "solutionCode": "ch = Channel(Int32).new\nspawn do\n  ch.send(21)\nend\nvalue = ch.receive\nputs value * 2",
+    "hint": "Receive into value, then multiply by 2.",
+    "validation": {"type": "output", "expectedOutput": ["42"]}
+  },
+
+  "feedback": {
+    "successMessage": "Excellent concurrency flow: spawn, send, receive, process.",
+    "retryHints": ["Use Channel(Int32)", "spawn a sender fiber", "Receive before printing doubled value"]
+  },
+
+  "summary": {
+    "title": "Fibers & Channels — Complete",
+    "takeaways": [
+      "Fibers are lightweight concurrent units.",
+      "Channels provide safe typed communication.",
+      "Message-passing concurrency scales cleanly."
+    ],
+    "nextTopicId": null
+  }
+}

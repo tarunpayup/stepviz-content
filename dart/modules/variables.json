@@ -1,0 +1,44 @@
+{
+  "id": "lm_dart_variables",
+  "topicId": "dart_variables",
+  "language": "dart",
+  "title": "Variables: var, final, const",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Dart provides var, final, and const for different mutability needs.",
+    "explanation": "Use var for mutable values, final for single-assignment runtime values, and const for compile-time constants.",
+    "syntax": "const app = 'StepViz';\nvar count = 1;\ncount = count + 1;\nprint('$app $count');",
+    "keyPoints": ["Prefer final when possible", "Use const for true constants", "var values can change"]
+  },
+  "demo": {
+    "intro": "Declare values with different mutability and print output.",
+    "code": "const app = 'StepViz';\nvar count = 1;\ncount = count + 1;\nprint('$app $count');",
+    "focusLine": 1,
+    "expectedHighlights": ["const app", "var count", "count updates", "prints StepViz 2"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "app", "value": "StepViz", "dataType": "String", "explanation": {"what": "Declare compile-time constant", "why": "App name should not change", "change": "app='StepViz'", "intent": "Show const", "misconception": "const is stronger than final (compile-time)"}},
+      {"type": "declare", "line": 2, "var": "count", "value": "1", "dataType": "int", "explanation": {"what": "Declare mutable counter", "why": "Count will change", "change": "count=1", "intent": "Show var mutability", "misconception": "var still has inferred static type"}},
+      {"type": "assign", "line": 3, "var": "count", "value": "2", "explanation": {"what": "Increment count", "why": "Valid on var", "change": "count:1->2", "intent": "Demonstrate reassignment", "misconception": "Same operation on final would fail"}},
+      {"type": "print", "line": 4, "value": "StepViz 2", "explanation": {"what": "Print final values", "why": "Observe mutation + constant", "change": "output <- StepViz 2", "intent": "Verify behavior", "misconception": "print does not alter state"}}
+    ]
+  },
+  "prediction": {
+    "question": "What happens?\n\nfinal x = 1;\nx = 2;",
+    "options": ["x becomes 2", "runtime error", "compile error", "prints 1"],
+    "correctIndex": 2,
+    "explanation": "final variables cannot be reassigned after initialization."
+  },
+  "explanation": {
+    "afterDemo": "Good variable choices make intent clearer and reduce accidental mutation bugs.",
+    "keyTakeaways": ["Use const for compile-time constants", "Use final for single assignment", "Use var when updates are required"]
+  },
+  "practice": {
+    "prompt": "Declare const title='Dart', var n=3, update n by +4, then print 'Dart 7'.",
+    "starterCode": "// write code",
+    "solutionCode": "const title = 'Dart';\nvar n = 3;\nn += 4;\nprint('$title $n');",
+    "hint": "Use n += 4 and interpolation.",
+    "validation": {"type": "output", "expectedOutput": ["Dart 7"]}
+  },
+  "feedback": {"successMessage": "Correct mutability choices.", "retryHints": ["Keep title const", "Update only var n", "Print both values"]},
+  "summary": {"title": "Variables — Complete", "takeaways": ["const: compile-time", "final: assign once", "var: mutable with inferred type"], "nextTopicId": "dart_data_types"}
+}

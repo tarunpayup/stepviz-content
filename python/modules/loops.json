@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_loops",
+  "topicId": "python_loops",
+  "language": "python",
+  "title": "Loops",
+  "difficulty": "easy",
+  "concept": {"headline": "for and while repeat logic blocks.", "explanation": "Use for on iterables and while for condition-based repetition.", "syntax": "total = 0\nfor n in [1, 2, 3]:\n    total += n\nprint(total)", "keyPoints": ["for is iterable-driven", "while is condition-driven", "Use break/continue carefully"]},
+  "demo": {"intro": "Sum list values with for loop.", "code": "total = 0\nfor n in [1, 2, 3]:\n    total += n\nprint(total)", "focusLine": 2, "expectedHighlights": ["loop runs 3 times", "total updates", "prints 6"], "steps": [{"type": "declare", "line": 1, "var": "total", "value": "0", "dataType": "int", "explanation": {"what": "Initialize accumulator", "why": "Starting value", "change": "total=0", "intent": "Prepare loop", "misconception": "Must initialize before addition"}}, {"type": "assign", "line": 3, "var": "total", "value": "6", "explanation": {"what": "Add each n", "why": "Aggregate list values", "change": "total:0->6", "intent": "Compute sum", "misconception": "for iterates in list order"}}, {"type": "print", "line": 4, "value": "6", "explanation": {"what": "Print total", "why": "Show final result", "change": "output <- 6", "intent": "Verify loop", "misconception": "Loop variable leaks in Python scope"}}]},
+  "prediction": {"question": "Output?\n\nc = 0\nfor _ in range(4):\n    c += 1\nprint(c)", "options": ["3", "4", "5", "0"], "correctIndex": 1, "explanation": "range(4) iterates four times."},
+  "explanation": {"afterDemo": "Loop clarity improves correctness and readability.", "keyTakeaways": ["Prefer for on collections", "Track state explicitly", "Use range for counted loops"]},
+  "practice": {"prompt": "Sum [4,5,6] in variable total and print it.", "starterCode": "# write code", "solutionCode": "total = 0\nfor n in [4, 5, 6]:\n    total += n\nprint(total)", "hint": "Accumulate with +=.", "validation": {"type": "output", "expectedOutput": ["15"]}},
+  "feedback": {"successMessage": "Loop and accumulation are correct.", "retryHints": ["Initialize total", "Use for n in ...", "Print after loop"]},
+  "summary": {"title": "Loops — Complete", "takeaways": ["for loops over sequences", "while loops over conditions", "Readable loops reduce errors"], "nextTopicId": "python_lists_tuples"}
+}

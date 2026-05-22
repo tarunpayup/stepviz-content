@@ -1,0 +1,14 @@
+{
+  "id": "lm_typescript_interfaces",
+  "topicId": "typescript_interfaces",
+  "language": "typescript",
+  "title": "Interfaces",
+  "difficulty": "easy",
+  "concept": {"headline": "Interfaces define reusable structural contracts.", "explanation": "Use interfaces to avoid repeating object types and to standardize API boundaries.", "syntax": "interface User { id: string; name: string }\nconst u: User = { id: 'u1', name: 'Lina' };", "keyPoints": ["Interfaces are reusable", "Can extend other interfaces", "Implemented by classes"]},
+  "demo": {"intro": "Define and use a simple interface.", "code": "interface User {\n  id: string;\n  name: string;\n}\nconst u: User = { id: \"u1\", name: \"Lina\" };\nconsole.log(u.name);", "focusLine": 1, "expectedHighlights": ["interface declared", "object matches contract", "prints Lina"], "steps": [{"type": "declare", "line": 1, "var": "User", "value": "interface", "dataType": "Interface", "explanation": {"what": "Declare User interface", "why": "Reusable shape contract", "change": "User type available", "intent": "Standardize data model", "misconception": "Interfaces are compile-time only"}}, {"type": "declare", "line": 5, "var": "u", "value": "{id:'u1',name:'Lina'}", "dataType": "User", "explanation": {"what": "Create User object", "why": "Must satisfy interface fields", "change": "u assigned", "intent": "Enforce contract", "misconception": "Missing any required field causes error"}}, {"type": "print", "line": 6, "value": "Lina", "explanation": {"what": "Print name", "why": "Typed property access", "change": "output <- Lina", "intent": "Confirm usage", "misconception": "Runtime has plain JS object"}}]},
+  "prediction": {"question": "If interface User requires id and name, is {id:'u1'} valid?", "options": ["yes", "no"], "correctIndex": 1, "explanation": "name is missing, so assignment fails."},
+  "explanation": {"afterDemo": "Interfaces keep larger codebases consistent and easier to refactor.", "keyTakeaways": ["Use interfaces for shared contracts", "Enforce required fields", "Improve readability across modules"]},
+  "practice": {"prompt": "Create interface Product {sku:string; price:number} and object p, then print sku.", "starterCode": "// write code", "solutionCode": "interface Product { sku: string; price: number }\nconst p: Product = { sku: \"S1\", price: 19 };\nconsole.log(p.sku);", "hint": "Provide both fields.", "validation": {"type": "output", "expectedOutput": ["S1"]}},
+  "feedback": {"successMessage": "Interface contract is correctly applied.", "retryHints": ["Define both fields", "Object must match interface"]},
+  "summary": {"title": "Interfaces — Complete", "takeaways": ["Interfaces are reusable shape definitions", "Contracts improve safety", "Great for API boundaries"], "nextTopicId": "typescript_classes"}
+}

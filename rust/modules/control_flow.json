@@ -1,0 +1,169 @@
+{
+  "id": "lm_rust_control_flow",
+  "topicId": "rust_control_flow",
+  "language": "rust",
+  "title": "Control Flow",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "if is an expression in Rust — it produces a value you can bind to a variable.",
+    "explanation": "Rust's if checks a bool condition and runs one branch. Because if is an expression (not just a statement), you can use it where a value is expected — like the right side of a let. The match expression pattern-matches a value against a set of arms and must cover every possible case; the compiler rejects non-exhaustive matches.",
+    "syntax": "// Standard if/else\nif score >= 60 {\n    println!(\"Pass\");\n} else {\n    println!(\"Fail\");\n}\n\n// if as expression\nlet label = if score >= 60 { \"Pass\" } else { \"Fail\" };\n\n// match\nmatch grade {\n    'A' => println!(\"Excellent\"),\n    'B' | 'C' => println!(\"Good\"),\n    _ => println!(\"Keep going\"),\n}",
+    "keyPoints": [
+      "Condition must be bool — no implicit integer conversion",
+      "Both branches of an if expression must produce the same type",
+      "match arms are evaluated top to bottom; only the first match runs",
+      "_ is the wildcard arm — must appear last if present",
+      "match must be exhaustive — all possible values must be covered"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch how Rust evaluates a condition and selects a branch — then uses match for multi-way dispatch.",
+    "code": "fn main() {\n    let score = 75;\n    let grade = if score >= 90 { \"A\" }\n                else if score >= 70 { \"B\" }\n                else { \"C\" };\n    println!(\"Grade: {}\", grade);\n    match grade {\n        \"A\" => println!(\"Excellent!\"),\n        \"B\" => println!(\"Good.\"),\n        _   => println!(\"Keep going.\"),\n    }\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["score = 75", "score >= 90 false", "score >= 70 true", "grade = B", "match arm B fires"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "score",
+        "value": "75",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Declaring score = 75",
+          "why": "score is the value we will branch on — it drives both the if chain and the match",
+          "change": "score = 75 (new i32 slot)",
+          "intent": "Establish the input for conditional logic",
+          "misconception": "score is immutable — the branches read it but do not change it"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 3,
+        "expression": "score >= 90",
+        "result": false,
+        "branch": "if",
+        "explanation": {
+          "what": "Evaluating score >= 90 → false",
+          "why": "75 is not ≥ 90, so this branch is skipped",
+          "change": "condition false — skip to else if",
+          "intent": "Test the first (highest) threshold first",
+          "misconception": "Rust evaluates each branch's condition in order — if the first is false it moves to the next, not to all of them"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 4,
+        "expression": "score >= 70",
+        "result": true,
+        "branch": "else_if",
+        "explanation": {
+          "what": "Evaluating score >= 70 → true",
+          "why": "75 ≥ 70, so this branch runs and produces the value 'B'",
+          "change": "condition true — this arm executes",
+          "intent": "Select the correct grade tier",
+          "misconception": "Once a true branch is found, Rust does not evaluate the remaining else if conditions — short-circuit evaluation"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "grade",
+        "value": "B",
+        "dataType": "&str",
+        "explanation": {
+          "what": "Binding grade = \"B\" (result of the if expression)",
+          "why": "The if expression evaluated to the &str \"B\" from the matching branch",
+          "change": "grade = 'B' (new &str slot)",
+          "intent": "Capture the result of conditional logic into a variable",
+          "misconception": "Both the if and else branches must produce the same type — mixing &str with i32 would be a compile error"
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "Grade: B",
+        "explanation": {
+          "what": "Printing grade",
+          "why": "grade holds 'B', which is formatted into the template string",
+          "change": "output ← 'Grade: B'",
+          "intent": "Display the computed grade",
+          "misconception": "println! borrows grade — it is still usable after this line"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 7,
+        "expression": "match grade",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "match selects arm \"B\"",
+          "why": "grade is 'B', which matches the second arm exactly",
+          "change": "arm 'B' executes",
+          "intent": "Dispatch behaviour based on the grade value using pattern matching",
+          "misconception": "match is not a loop — it runs exactly one arm and exits"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "Good.",
+        "explanation": {
+          "what": "Printing 'Good.' from the B arm",
+          "why": "The match arm for 'B' was selected and its expression executed",
+          "change": "output ← 'Good.'",
+          "intent": "Show the student feedback matching the grade",
+          "misconception": "The _ wildcard arm would have fired if grade were anything other than 'A' or 'B' — it is a catch-all, not a fallback for errors"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this code print?\n\nlet x = 5;\nlet msg = if x % 2 == 0 { \"even\" } else { \"odd\" };\nprintln!(\"{}\", msg);",
+    "options": ["even", "odd", "5", "compile error"],
+    "correctIndex": 1,
+    "explanation": "5 % 2 == 1, not 0, so the condition is false and the else branch runs, producing 'odd'. println! then prints odd."
+  },
+
+  "explanation": {
+    "afterDemo": "The if chain evaluated each condition in order until score >= 70 matched, and bound 'B' to grade. Then match dispatched to the correct arm. Neither construct required a default break — match is exhaustive by design and if short-circuits at the first true condition.",
+    "keyTakeaways": [
+      "if is an expression — it produces a value that can be assigned.",
+      "All arms of an if expression must return the same type.",
+      "match must cover every possible value — the compiler checks this."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write code that checks if a number `n` (set to 17) is divisible by 3 using if/else, and prints \"divisible\" or \"not divisible\".",
+    "starterCode": "fn main() {\n    let n = 17;\n    // check divisibility here\n}",
+    "solutionCode": "fn main() {\n    let n = 17;\n    if n % 3 == 0 {\n        println!(\"divisible\");\n    } else {\n        println!(\"not divisible\");\n    }\n}",
+    "hint": "Use n % 3 == 0 as the condition.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["not divisible"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 17 % 3 = 2, which is not 0, so the else branch runs.",
+    "retryHints": [
+      "The modulo operator is % in Rust — n % 3 gives the remainder when n is divided by 3.",
+      "== 0 checks if the remainder is zero (divisible).",
+      "Expected output for n = 17 is 'not divisible'."
+    ]
+  },
+
+  "summary": {
+    "title": "Control Flow — Complete",
+    "takeaways": [
+      "if/else is an expression — assign its result directly to a variable.",
+      "Condition must be a bool — no implicit integer-to-bool conversion.",
+      "match is exhaustive — the compiler rejects unhandled cases."
+    ],
+    "nextTopicId": "rust_loops"
+  }
+}

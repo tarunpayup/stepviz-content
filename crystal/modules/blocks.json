@@ -1,0 +1,70 @@
+{
+  "id": "lm_crystal_blocks",
+  "topicId": "crystal_blocks",
+  "language": "crystal",
+  "title": "Blocks & Yield",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Blocks are anonymous code chunks passed into methods.",
+    "explanation": "Methods can accept blocks and execute them using yield. This enables elegant iteration and wrapper APIs.",
+    "syntax": "def with_value\n  yield 42\nend\n\nwith_value do |n|\n  puts n * 2\nend",
+    "keyPoints": [
+      "do |x| ... end defines a block",
+      "yield invokes the block",
+      "Blocks can receive parameters",
+      "Widely used in Crystal APIs"
+    ]
+  },
+
+  "demo": {
+    "intro": "See a method call a passed block with yield.",
+    "code": "def with_value\n  yield 42\nend\n\nwith_value do |n|\n  puts n * 2\nend",
+    "focusLine": 2,
+    "expectedHighlights": ["yield sends 42", "block receives n", "prints 84"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "with_value", "value": "method", "dataType": "Method with block", "explanation": {"what": "Define block-accepting method", "why": "Allow caller customization", "change": "with_value available", "intent": "Introduce block pattern", "misconception": "Block is supplied by caller, not inside method"}},
+      {"type": "call", "line": 2, "name": "yield", "args": ["42"], "returnVar": "block_result", "explanation": {"what": "Invoke block with 42", "why": "yield forwards control to block", "change": "n receives 42", "intent": "Pass value into callback", "misconception": "yield fails if no block is provided unless guarded"}},
+      {"type": "print", "line": 6, "value": "84", "explanation": {"what": "Print n * 2", "why": "Block computed 42 * 2", "change": "output <- 84", "intent": "Validate block execution", "misconception": "Block runs at call site context"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "What prints?\n\ndef wrap\n  yield 5\nend\nwrap { |x| puts x + 3 }",
+    "options": ["5", "8", "53", "compile error"],
+    "correctIndex": 1,
+    "explanation": "yield passes 5 to block, block prints 5 + 3 = 8."
+  },
+
+  "explanation": {
+    "afterDemo": "Blocks are foundational for readable Crystal APIs because they keep business logic near invocation.",
+    "keyTakeaways": [
+      "yield executes caller-provided behavior.",
+      "Block parameters receive values from method.",
+      "Blocks enable concise custom pipelines."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Define repeat_twice method that yields 2 and 3, then call it with a block printing n * 10.",
+    "starterCode": "# define repeat_twice\n# call with block",
+    "solutionCode": "def repeat_twice\n  yield 2\n  yield 3\nend\n\nrepeat_twice do |n|\n  puts n * 10\nend",
+    "hint": "Yield twice and multiply inside block.",
+    "validation": {"type": "output", "expectedOutput": ["20", "30"]}
+  },
+
+  "feedback": {
+    "successMessage": "Great use of blocks and yield.",
+    "retryHints": ["Call yield twice", "Accept block parameter n", "Print n * 10"]
+  },
+
+  "summary": {
+    "title": "Blocks — Complete",
+    "takeaways": [
+      "Blocks pass behavior into methods.",
+      "yield triggers block execution.",
+      "This pattern powers expressive APIs."
+    ],
+    "nextTopicId": "crystal_collections"
+  }
+}

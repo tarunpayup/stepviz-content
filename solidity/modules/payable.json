@@ -1,0 +1,42 @@
+{
+  "id": "lm_solidity_payable",
+  "topicId": "solidity_payable",
+  "language": "solidity",
+  "title": "Payable & Ether Transfer",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Payable functions can receive ETH and read msg.value.",
+    "explanation": "Use payable entry points and explicit transfer patterns with checks-effects-interactions.",
+    "syntax": "receive() external payable {}\nfunction balance() public view returns (uint256) { return address(this).balance; }",
+    "keyPoints": ["msg.value is in wei", "address(this).balance reads contract ETH", "Use call pattern carefully"]
+  },
+  "demo": {
+    "intro": "Accept Ether and expose contract balance.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Wallet {\n  receive() external payable {}\n  function balance() public view returns (uint256) { return address(this).balance; }\n}",
+    "focusLine": 4,
+    "expectedHighlights": ["receive payable", "balance view function"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "receive", "value": "payable handler", "dataType": "Function", "explanation": {"what": "Define ETH receiver", "why": "Allow plain ETH transfers", "change": "contract can accept value", "intent": "Handle incoming ETH", "misconception": "receive triggers on empty calldata payments"}},
+      {"type": "return", "line": 5, "value": "address(this).balance", "explanation": {"what": "Return contract balance", "why": "Expose stored ETH amount", "change": "read-only output", "intent": "Inspect funds", "misconception": "balance is denominated in wei"}}
+    ]
+  },
+  "prediction": {
+    "question": "msg.value represents what?",
+    "options": ["gas used", "ether sent with tx in wei", "token balance", "block reward"],
+    "correctIndex": 1,
+    "explanation": "msg.value is the amount of wei sent in the call."
+  },
+  "explanation": {
+    "afterDemo": "Handling value transfer correctly is central to secure financial contract design.",
+    "keyTakeaways": ["Use payable where needed", "Read msg.value and contract balance carefully", "Follow CEI pattern"]
+  },
+  "practice": {
+    "prompt": "Add payable function donate() that does nothing except accept ETH.",
+    "starterCode": "// add function",
+    "solutionCode": "function donate() public payable {\n  // ETH accepted\n}",
+    "hint": "Function must be marked payable.",
+    "validation": {"type": "step_count", "min": 1}
+  },
+  "feedback": {"successMessage": "Payable function is correctly declared.", "retryHints": ["Mark function payable", "No extra logic needed for acceptance"]},
+  "summary": {"title": "Payable — Complete", "takeaways": ["Payable allows ETH reception", "msg.value captures sent wei", "Balance introspection is read-only"] , "nextTopicId": "solidity_security_basics"}
+}

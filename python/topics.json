@@ -1,0 +1,134 @@
+[
+  {
+    "id": "python_variables",
+    "language": "python",
+    "domain": "programming",
+    "title": "Variables",
+    "description": "Bind names to values and update them safely.",
+    "order": 1,
+    "enabled": true,
+    "concept": {"definition": "Python variables are references to objects.", "analogy": "A variable is a sticky label pointing to a value box.", "keyPoints": ["No type declaration needed", "Names can be rebound", "Use clear naming"]},
+    "defaultCode": "name = 'StepViz'\ncount = 1\ncount += 1\nprint(name, count)"
+  },
+  {
+    "id": "python_data_types",
+    "language": "python",
+    "domain": "programming",
+    "title": "Core Data Types",
+    "description": "Use int, float, str, bool and basic containers.",
+    "order": 2,
+    "enabled": true,
+    "concept": {"definition": "Python provides built-in types for numbers, text, logic, and collections.", "analogy": "Types are value families with shared behavior.", "keyPoints": ["int/float for numbers", "str for text", "bool for truth values"]},
+    "defaultCode": "age = 20\nscore = 9.5\nname = 'Ari'\nactive = True\nprint(age, score, name, active)"
+  },
+  {
+    "id": "python_functions",
+    "language": "python",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Define reusable logic with parameters and return values.",
+    "order": 3,
+    "enabled": true,
+    "concept": {"definition": "Functions package repeatable logic into callable blocks.", "analogy": "A function is a recipe you can run many times.", "keyPoints": ["def starts function definition", "return sends value back", "Use small focused functions"]},
+    "defaultCode": "def add(a, b):\n    return a + b\n\nprint(add(3, 4))"
+  },
+  {
+    "id": "python_control_flow",
+    "language": "python",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Branch behavior with if/elif/else.",
+    "order": 4,
+    "enabled": true,
+    "concept": {"definition": "Conditional statements choose which code path runs.", "analogy": "Conditions are decision gates in a flowchart.", "keyPoints": ["if checks first condition", "elif handles alternatives", "else is fallback"]},
+    "defaultCode": "score = 82\nif score >= 90:\n    grade = 'A'\nelif score >= 80:\n    grade = 'B'\nelse:\n    grade = 'C'\nprint(grade)"
+  },
+  {
+    "id": "python_loops",
+    "language": "python",
+    "domain": "programming",
+    "title": "Loops",
+    "description": "Repeat logic with for and while loops.",
+    "order": 5,
+    "enabled": true,
+    "concept": {"definition": "Loops run code repeatedly over ranges or while conditions hold.", "analogy": "A loop is a conveyor repeating a task.", "keyPoints": ["for loops over sequences", "while loops over conditions", "break/continue control iteration"]},
+    "defaultCode": "total = 0\nfor n in [1, 2, 3]:\n    total += n\nprint(total)"
+  },
+  {
+    "id": "python_lists_tuples",
+    "language": "python",
+    "domain": "programming",
+    "title": "Lists & Tuples",
+    "description": "Store ordered data with mutable and immutable sequences.",
+    "order": 6,
+    "enabled": true,
+    "concept": {"definition": "Lists are mutable ordered sequences; tuples are immutable ordered sequences.", "analogy": "Lists are editable checklists, tuples are locked records.", "keyPoints": ["list can append/remove", "tuple cannot be modified", "indexing starts at 0"]},
+    "defaultCode": "nums = [1, 2, 3]\npoint = (10, 20)\nnums.append(4)\nprint(nums, point)"
+  },
+  {
+    "id": "python_dicts_sets",
+    "language": "python",
+    "domain": "programming",
+    "title": "Dictionaries & Sets",
+    "description": "Use key-value mappings and unique-value collections.",
+    "order": 7,
+    "enabled": true,
+    "concept": {"definition": "Dictionaries map keys to values; sets store unique unordered values.", "analogy": "dict is a lookup table, set is a uniqueness filter.", "keyPoints": ["dict access by key", "set removes duplicates", "both are common in data tasks"]},
+    "defaultCode": "user = {'name': 'Ari', 'age': 20}\nids = {1, 2, 2, 3}\nprint(user['name'], ids)"
+  },
+  {
+    "id": "python_classes_objects",
+    "language": "python",
+    "domain": "programming",
+    "title": "Classes & Objects",
+    "description": "Model state and behavior with classes.",
+    "order": 8,
+    "enabled": true,
+    "concept": {"definition": "Classes define object structure and methods; instances are runtime objects.", "analogy": "Class is blueprint, object is built unit.", "keyPoints": ["__init__ initializes instance", "self refers to current object", "methods implement behavior"]},
+    "defaultCode": "class User:\n    def __init__(self, name, score):\n        self.name = name\n        self.score = score\n\n    def label(self):\n        return f'{self.name}: {self.score}'\n\nprint(User('Ari', 10).label())"
+  },
+  {
+    "id": "python_exceptions",
+    "language": "python",
+    "domain": "programming",
+    "title": "Exceptions",
+    "description": "Handle runtime errors with try/except/finally.",
+    "order": 9,
+    "enabled": true,
+    "concept": {"definition": "Exceptions represent runtime failures and can be caught for graceful recovery.", "analogy": "try/except is a safety net around risky code.", "keyPoints": ["try wraps risky code", "except handles failures", "finally always runs"]},
+    "defaultCode": "try:\n    int('x')\nexcept ValueError:\n    print('bad input')"
+  },
+  {
+    "id": "python_modules_packages",
+    "language": "python",
+    "domain": "programming",
+    "title": "Modules & Packages",
+    "description": "Organize code and import reusable functionality.",
+    "order": 10,
+    "enabled": true,
+    "concept": {"definition": "Modules are single Python files; packages group modules into directories.", "analogy": "Modules are chapters, packages are bookshelves.", "keyPoints": ["import loads module code", "from x import y imports names", "packages use __init__.py in many setups"]},
+    "defaultCode": "import math\nprint(math.sqrt(16))"
+  },
+  {
+    "id": "python_file_io",
+    "language": "python",
+    "domain": "programming",
+    "title": "File I/O",
+    "description": "Read and write files safely using context managers.",
+    "order": 11,
+    "enabled": true,
+    "concept": {"definition": "Use with-open blocks to handle file resources automatically.", "analogy": "with is auto-close mode for file handles.", "keyPoints": ["open with mode", "with closes automatically", "read/write text safely"]},
+    "defaultCode": "with open('note.txt', 'w') as f:\n    f.write('hello')\nwith open('note.txt', 'r') as f:\n    print(f.read())"
+  },
+  {
+    "id": "python_comprehensions",
+    "language": "python",
+    "domain": "programming",
+    "title": "Comprehensions",
+    "description": "Build lists, sets, and dicts concisely with expressions.",
+    "order": 12,
+    "enabled": true,
+    "concept": {"definition": "Comprehensions create collections from iterable expressions in one compact form.", "analogy": "Comprehensions are mini data pipelines in a single line.", "keyPoints": ["list comprehensions are common", "optional if filters elements", "readability matters over cleverness"]},
+    "defaultCode": "nums = [1, 2, 3, 4]\nsquares = [n * n for n in nums if n % 2 == 0]\nprint(squares)"
+  }
+]

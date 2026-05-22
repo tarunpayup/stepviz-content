@@ -1,0 +1,242 @@
+[
+  {
+    "id": "crystal_variables",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Variables & Type Inference",
+    "description": "Learn how Crystal infers types from assignments, how reassignment narrows union types, and why explicit annotations are optional in most code.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal infers variable types at compile time from assigned values. You can reassign variables, and Crystal tracks possible types as unions when needed.",
+      "analogy": "Think of Crystal as a strict librarian who reads your notes and deduces category labels automatically.",
+      "keyPoints": [
+        "Type inference is static (compile-time), not dynamic",
+        "Variables can be reassigned",
+        "Union types appear when a variable may hold multiple types",
+        "Optional annotations improve readability in APIs"
+      ]
+    },
+    "defaultCode": "name = \"Crystal\"\ncount = 1\ncount = count + 2\nputs \"#{name}: #{count}\""
+  },
+  {
+    "id": "crystal_data_types",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Data Types",
+    "description": "Explore Crystal primitives and core types: Int32/Int64, Float64, Bool, Char, String, Nil, and unions.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal has rich static types with ergonomic literals. Numeric literal suffixes and constructors help you choose exact widths.",
+      "analogy": "Data types are precision tools; choosing the right one avoids surprises and improves performance.",
+      "keyPoints": [
+        "Integers default to Int32 in many contexts",
+        "Floats are typically Float64",
+        "Char uses single quotes; String uses double quotes",
+        "Nil participates in unions like String?"
+      ]
+    },
+    "defaultCode": "age = 30\nprice = 19.99\nactive = true\ngrade = 'A'\nlabel = \"StepViz\"\nputs \"#{age}, #{price}, #{active}, #{grade}, #{label}\""
+  },
+  {
+    "id": "crystal_functions",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Functions & Return Types",
+    "description": "Define methods with def, pass typed parameters, and understand implicit return of the last expression.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal methods are defined with def. The final expression is returned implicitly, and type restrictions can be added to parameters and return values.",
+      "analogy": "A method is a mini machine: inputs go in, final expression comes out.",
+      "keyPoints": [
+        "def name(args) ... end",
+        "Last expression is the return value",
+        "Parameter type restrictions are optional but useful",
+        "Methods can be overloaded by restrictions"
+      ]
+    },
+    "defaultCode": "def add(a : Int32, b : Int32) : Int32\n  a + b\nend\n\nputs add(3, 4)"
+  },
+  {
+    "id": "crystal_control_flow",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Use if/unless and case/when to branch program behavior with clean, expression-oriented style.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal supports if/unless for conditionals and case/when for pattern-like branching. if is expression-friendly and keeps logic concise.",
+      "analogy": "Control flow is your program's traffic system: signals decide which road execution follows.",
+      "keyPoints": [
+        "if/unless for binary branching",
+        "case/when for multi-branch checks",
+        "Boolean conditions are explicit",
+        "Readable branches reduce logic bugs"
+      ]
+    },
+    "defaultCode": "score = 82\ngrade = if score >= 90\n  \"A\"\nelsif score >= 80\n  \"B\"\nelse\n  \"C\"\nend\nputs grade"
+  },
+  {
+    "id": "crystal_loops",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Loops & Iteration",
+    "description": "Iterate with times, each, while, and ranges to process sequences idiomatically.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal favors iterator methods like each and times, but also supports while and until for explicit loop control.",
+      "analogy": "Iterators are conveyor belts; while loops are manual steering.",
+      "keyPoints": [
+        "times repeats by count",
+        "each iterates collections",
+        "while loops until a condition flips",
+        "Ranges like 1..5 are common iterables"
+      ]
+    },
+    "defaultCode": "sum = 0\n(1..5).each do |n|\n  sum += n\nend\nputs sum"
+  },
+  {
+    "id": "crystal_classes",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Classes & Objects",
+    "description": "Create classes with initialize, instance variables, and methods to model real entities.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Classes encapsulate state and behavior. initialize constructs instances, and @instance_vars store per-object data.",
+      "analogy": "A class is a blueprint; objects are built copies with their own state.",
+      "keyPoints": [
+        "class Name ... end",
+        "initialize sets initial state",
+        "@var is per-instance state",
+        "Methods define behavior"
+      ]
+    },
+    "defaultCode": "class User\n  def initialize(@name : String, @score : Int32)\n  end\n\n  def label\n    \"#{@name}: #{@score}\"\n  end\nend\n\nu = User.new(\"Ari\", 10)\nputs u.label"
+  },
+  {
+    "id": "crystal_modules",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Modules & Mixins",
+    "description": "Use modules to group constants/methods and mix shared behavior into classes.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Modules provide namespaces and reusable behavior. include injects instance methods; extend adds class-level methods.",
+      "analogy": "A module is a toolbox you can mount onto many classes.",
+      "keyPoints": [
+        "module for namespacing",
+        "include mixes in instance methods",
+        "extend adds class methods",
+        "Keeps shared logic DRY"
+      ]
+    },
+    "defaultCode": "module Greeter\n  def greet\n    \"Hello!\"\n  end\nend\n\nclass Bot\n  include Greeter\nend\n\nputs Bot.new.greet"
+  },
+  {
+    "id": "crystal_blocks",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Blocks & Yield",
+    "description": "Understand Crystal blocks, block parameters, and yield for custom iteration helpers.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Blocks are anonymous chunks passed to methods. Methods can call yield to execute the block with values.",
+      "analogy": "A block is like a callback ticket handed to a method to run later.",
+      "keyPoints": [
+        "do |x| ... end passes a block",
+        "yield executes the passed block",
+        "Useful for iteration and wrappers",
+        "Blocks are central to Crystal style"
+      ]
+    },
+    "defaultCode": "def with_value\n  yield 42\nend\n\nwith_value do |n|\n  puts n * 2\nend"
+  },
+  {
+    "id": "crystal_collections",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Collections",
+    "description": "Work with Array, Hash, Tuple, and common enumerable transforms like map/select/reduce.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal collections are strongly typed and leverage Enumerable methods for transformation and querying.",
+      "analogy": "Collections are data shelves; Enumerable tools help filter, rearrange, and summarize items.",
+      "keyPoints": [
+        "Array and Hash are most common",
+        "map/select/reduce for transforms",
+        "Types are tracked at compile time",
+        "Tuple has fixed length and types"
+      ]
+    },
+    "defaultCode": "nums = [1, 2, 3, 4]\nevens = nums.select { |n| n.even? }\ndoubled = evens.map { |n| n * 2 }\nputs doubled"
+  },
+  {
+    "id": "crystal_error_handling",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Handle failures with begin/rescue/ensure and raise custom exceptions when needed.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal uses exceptions for error handling. begin/rescue captures runtime failures; ensure always runs cleanup logic.",
+      "analogy": "Think of rescue as a safety net and ensure as your final checklist.",
+      "keyPoints": [
+        "raise to signal errors",
+        "rescue catches specific exception classes",
+        "ensure always executes",
+        "Prefer clear error messages"
+      ]
+    },
+    "defaultCode": "begin\n  n = \"12x\".to_i\n  puts n\nrescue ex\n  puts \"parse failed: #{ex.message}\"\nensure\n  puts \"done\"\nend"
+  },
+  {
+    "id": "crystal_macros",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Macros Basics",
+    "description": "Discover Crystal macros for compile-time code generation and boilerplate reduction.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Macros run at compile time, manipulating AST nodes to generate Crystal code before runtime.",
+      "analogy": "Macros are code factories that build repetitive code for you during compilation.",
+      "keyPoints": [
+        "macro ... end defines compile-time generator",
+        "{{ }} injects AST/interpolated fragments",
+        "Reduces repetitive code",
+        "Should be used carefully for readability"
+      ]
+    },
+    "defaultCode": "macro say(name)\n  puts \"Hello, {{name}}\"\nend\n\nsay \"Crystal\""
+  },
+  {
+    "id": "crystal_concurrency",
+    "language": "crystal",
+    "domain": "programming",
+    "title": "Fibers & Channels",
+    "description": "Use lightweight fibers and channels to write concurrent Crystal programs with message passing.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Crystal concurrency is built on fibers and channels. spawn runs work concurrently, and Channel coordinates communication safely.",
+      "analogy": "Fibers are lightweight workers; channels are inboxes they use to exchange messages.",
+      "keyPoints": [
+        "spawn starts a new fiber",
+        "Channel(T) sends typed messages",
+        "receive blocks until message arrives",
+        "Great for pipeline-style tasks"
+      ]
+    },
+    "defaultCode": "ch = Channel(String).new\nspawn do\n  ch.send(\"done\")\nend\nputs ch.receive"
+  }
+]

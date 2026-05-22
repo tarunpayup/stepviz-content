@@ -1,0 +1,43 @@
+{
+  "id": "lm_solidity_modifiers",
+  "topicId": "solidity_modifiers",
+  "language": "solidity",
+  "title": "Modifiers",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Modifiers wrap function logic with reusable checks.",
+    "explanation": "Use modifiers to centralize repeated guards like ownership checks.",
+    "syntax": "modifier onlyOwner() { require(msg.sender == owner, 'Not owner'); _; }",
+    "keyPoints": ["_ marks function body insertion", "Modifiers improve DRY access control", "Keep modifier logic concise"]
+  },
+  "demo": {
+    "intro": "Create and apply an ownership modifier.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Owned {\n  address public owner = msg.sender;\n  modifier onlyOwner() {\n    require(msg.sender == owner, 'Not owner');\n    _;\n  }\n}",
+    "focusLine": 5,
+    "expectedHighlights": ["owner set", "modifier guard", "_ placeholder"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "owner", "value": "msg.sender", "dataType": "address", "explanation": {"what": "Store owner", "why": "Reference account for access checks", "change": "owner initialized", "intent": "Access control setup", "misconception": "msg.sender in constructor is deployer"}},
+      {"type": "declare", "line": 5, "var": "onlyOwner", "value": "modifier", "dataType": "Modifier", "explanation": {"what": "Define reusable guard", "why": "Avoid repeating require in each function", "change": "modifier available", "intent": "Centralize checks", "misconception": "Modifier code runs before function body unless _ position changed"}},
+      {"type": "condition_check", "line": 6, "expression": "msg.sender == owner", "result": true, "branch": "require", "explanation": {"what": "Validate caller", "why": "Permit owner-only actions", "change": "pass or revert", "intent": "Protect privileged calls", "misconception": "Failed require reverts transaction"}}
+    ]
+  },
+  "prediction": {
+    "question": "What does _ do inside a modifier?",
+    "options": ["Ends execution", "Inserts function body", "Returns bool", "Creates event"],
+    "correctIndex": 1,
+    "explanation": "_ is the insertion point for the modified function body."
+  },
+  "explanation": {
+    "afterDemo": "Modifiers make contracts cleaner and reduce copy-paste security mistakes.",
+    "keyTakeaways": ["Use modifiers for repeated guards", "Keep modifier logic auditable", "Understand execution order around _"]
+  },
+  "practice": {
+    "prompt": "Create modifier nonZero(uint256 x) requiring x>0 and apply it to function set(uint256 x).",
+    "starterCode": "// add modifier and function",
+    "solutionCode": "modifier nonZero(uint256 x) {\n  require(x > 0, 'zero');\n  _;\n}\n\nfunction set(uint256 x) public nonZero(x) {\n  // body\n}",
+    "hint": "Pass function arg into modifier call.",
+    "validation": {"type": "step_count", "min": 2}
+  },
+  "feedback": {"successMessage": "Modifier creation and usage are correct.", "retryHints": ["Add require in modifier", "Use _ placeholder", "Attach modifier in function signature"]},
+  "summary": {"title": "Modifiers — Complete", "takeaways": ["Modifiers enforce reusable checks", "_ controls body placement", "Great for access and input guards"], "nextTopicId": "solidity_inheritance"}
+}

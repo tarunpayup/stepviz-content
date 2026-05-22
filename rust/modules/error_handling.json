@@ -1,0 +1,188 @@
+{
+  "id": "lm_rust_error_handling",
+  "topicId": "rust_error_handling",
+  "language": "rust",
+  "title": "Error Handling",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Rust has no exceptions — errors are values. Result<T,E> and Option<T> make failures explicit.",
+    "explanation": "Rust separates unrecoverable errors (panic!) from recoverable ones (Result). A function that might fail returns Result<T, E>: Ok(value) on success or Err(error) on failure. The ? operator inside a function returning Result automatically propagates an Err to the caller — replacing verbose match blocks. Option<T> (Some/None) is for values that might simply be absent.",
+    "syntax": "// Return type signals fallibility\nfn parse(s: &str) -> Result<i32, ParseIntError> {\n    let n = s.trim().parse::<i32>()?;   // ? propagates Err\n    Ok(n)                                // wrap success in Ok\n}\n\n// Handle at call site\nmatch parse(\"42\") {\n    Ok(n)  => println!(\"got {}\", n),\n    Err(e) => println!(\"failed: {}\", e),\n}\n\n// unwrap/expect — only in prototypes\nlet n = parse(\"42\").unwrap();        // panics if Err\nlet n = parse(\"42\").expect(\"msg\");   // panics with message",
+    "keyPoints": [
+      "Result<T, E> = Ok(T) | Err(E) — the function signature tells you it can fail",
+      "? in a fn returning Result propagates Err automatically — like an early return",
+      "unwrap() panics on Err; only use it in tests or throwaway scripts",
+      "Option<T> is for absence, not errors — use when None is normal, not exceptional",
+      "The ? operator also works on Option in functions returning Option"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a fallible parse function handle a good input and a bad input with Result.",
+    "code": "use std::num::ParseIntError;\n\nfn parse_age(s: &str) -> Result<u32, ParseIntError> {\n    let n: u32 = s.trim().parse()?;\n    Ok(n)\n}\n\nfn main() {\n    match parse_age(\"25\") {\n        Ok(age) => println!(\"age = {}\", age),\n        Err(e)  => println!(\"error: {}\", e),\n    }\n    match parse_age(\"abc\") {\n        Ok(age) => println!(\"age = {}\", age),\n        Err(e)  => println!(\"error: {}\", e),\n    }\n}",
+    "focusLine": 8,
+    "expectedHighlights": ["parse_age('25') → Ok(25)", "Ok arm fires", "parse_age('abc') → Err", "Err arm fires"],
+    "steps": [
+      {
+        "type": "call",
+        "line": 9,
+        "name": "parse_age",
+        "args": ["\"25\""],
+        "returnVar": "result_1",
+        "explanation": {
+          "what": "Calling parse_age(\"25\")",
+          "why": "We test the happy path — '25' is a valid u32 string",
+          "change": "parse_age called with s = '25'",
+          "intent": "Demonstrate the Ok branch of Result",
+          "misconception": "parse() on a str does NOT panic on bad input — it returns a Result. The ? inside parse_age turns an Err result into an early return."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "n (inside parse_age)",
+        "value": "25",
+        "dataType": "u32",
+        "explanation": {
+          "what": "s.trim().parse()? succeeds — n = 25",
+          "why": "'25' is a valid u32 — parse returns Ok(25), ? unwraps to 25",
+          "change": "n = 25; function continues",
+          "intent": "Show ? unwrapping a success value",
+          "misconception": "If parse() had returned Err, the ? would have immediately returned that Err from parse_age — we would never reach Ok(n) on the next line"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 9,
+        "expression": "match Ok(25) — Ok arm",
+        "result": true,
+        "branch": "if",
+        "explanation": {
+          "what": "match on Ok(25) — the Ok(age) arm matches",
+          "why": "parse_age returned Ok(25); pattern Ok(age) binds age = 25",
+          "change": "age = 25 in this arm's scope",
+          "intent": "Handle the success case",
+          "misconception": "The Err arm is never entered here — match evaluates the variant and runs exactly one arm"
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "age = 25",
+        "explanation": {
+          "what": "Printing age = 25",
+          "why": "The Ok arm ran and printed the parsed age",
+          "change": "output ← 'age = 25'",
+          "intent": "Show successful error-handled output",
+          "misconception": "We did not call unwrap() — match is the safe way to extract Ok values"
+        }
+      },
+      {
+        "type": "call",
+        "line": 13,
+        "name": "parse_age",
+        "args": ["\"abc\""],
+        "returnVar": "result_2",
+        "explanation": {
+          "what": "Calling parse_age(\"abc\")",
+          "why": "'abc' is not a valid u32 — this tests the error path",
+          "change": "parse_age called with s = 'abc'",
+          "intent": "Demonstrate the Err branch and ? propagation",
+          "misconception": "The program does NOT crash — parse() returns Err, ? propagates it, and main handles it with match"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "? early return",
+        "value": "Err(invalid digit found in string)",
+        "dataType": "Result<u32, ParseIntError>",
+        "explanation": {
+          "what": "s.trim().parse()? — parse fails, ? returns Err early",
+          "why": "'abc' cannot be parsed as u32 — parse returns Err(ParseIntError). ? converts it into an immediate return from parse_age.",
+          "change": "parse_age returns Err(ParseIntError) without reaching Ok(n)",
+          "intent": "Show how ? short-circuits on failure",
+          "misconception": "? does not swallow the error — it passes it to the caller intact. The caller (main) receives the full Err value."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 13,
+        "expression": "match Err(..) — Err arm",
+        "result": true,
+        "branch": "else",
+        "explanation": {
+          "what": "match on Err(..) — the Err(e) arm matches",
+          "why": "parse_age returned Err; pattern Err(e) binds e to the ParseIntError",
+          "change": "e = ParseIntError in this arm's scope",
+          "intent": "Handle the failure case by displaying the error",
+          "misconception": "e is a ParseIntError value — its Display impl formats as 'invalid digit found in string'"
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "error: invalid digit found in string",
+        "explanation": {
+          "what": "Printing the error message",
+          "why": "The Err arm ran and formatted e with {}, which uses ParseIntError's Display impl",
+          "change": "output ← 'error: invalid digit found in string'",
+          "intent": "Show user-friendly error reporting without panicking",
+          "misconception": "This message came from the standard library's error type — you did not have to write it yourself"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does calling .unwrap() on Err(\"oops\") do?",
+    "options": [
+      "Returns None",
+      "Panics with a message containing 'oops'",
+      "Returns the string 'oops'",
+      "Silently ignores the error"
+    ],
+    "correctIndex": 1,
+    "explanation": "unwrap() on an Err value panics and includes the Debug representation of the error in the panic message. Use match or expect (with a custom message) in production code."
+  },
+
+  "explanation": {
+    "afterDemo": "parse_age's return type Result<u32, ParseIntError> advertises that it can fail. The ? on the parse call propagated any error to the caller without boilerplate. main then handled both outcomes with match — no unchecked failures, no crashes. This is Rust's philosophy: make every failure visible in the type system.",
+    "keyTakeaways": [
+      "Result<T, E> makes fallibility part of the function signature — callers must handle both Ok and Err.",
+      "? propagates Err to the caller automatically — use it to eliminate nested match chains.",
+      "Avoid unwrap() in production — use match, if let, or unwrap_or/unwrap_or_else for safe fallbacks."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write a function `safe_divide(a: f64, b: f64) -> Result<f64, String>` that returns Err(\"division by zero\") if b == 0.0, otherwise Ok(a / b). Call it with (10.0, 2.0) and print the result.",
+    "starterCode": "fn safe_divide(a: f64, b: f64) -> Result<f64, String> {\n    // check b == 0.0 and return Err or Ok\n}\n\nfn main() {\n    match safe_divide(10.0, 2.0) {\n        Ok(v)  => println!(\"{}\", v),\n        Err(e) => println!(\"Error: {}\", e),\n    }\n}",
+    "solutionCode": "fn safe_divide(a: f64, b: f64) -> Result<f64, String> {\n    if b == 0.0 {\n        Err(String::from(\"division by zero\"))\n    } else {\n        Ok(a / b)\n    }\n}\n\nfn main() {\n    match safe_divide(10.0, 2.0) {\n        Ok(v)  => println!(\"{}\", v),\n        Err(e) => println!(\"Error: {}\", e),\n    }\n}",
+    "hint": "Return Err(String::from(\"division by zero\")) when b == 0.0, else return Ok(a / b).",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["5"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 10.0 / 2.0 = 5.0 → the Ok arm prints 5.",
+    "retryHints": [
+      "Return Err(String::from(\"...\")) for the zero case and Ok(a / b) otherwise.",
+      "10.0 / 2.0 = 5.0 — Rust's {} formatter prints 5 (no trailing .0 for round floats in default format).",
+      "Expected output: 5"
+    ]
+  },
+
+  "summary": {
+    "title": "Error Handling — Complete",
+    "takeaways": [
+      "Result<T, E> is Rust's way to express fallible operations — no hidden exceptions.",
+      "? propagates Err to the caller; it is shorthand for an early return on failure.",
+      "Handle Result with match, if let, or combinators like unwrap_or — never silently swallow errors."
+    ],
+    "nextTopicId": null
+  }
+}

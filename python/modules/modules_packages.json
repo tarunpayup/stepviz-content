@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_modules_packages",
+  "topicId": "python_modules_packages",
+  "language": "python",
+  "title": "Modules & Packages",
+  "difficulty": "easy",
+  "concept": {"headline": "Split code into modules and packages.", "explanation": "Imports let you reuse functionality from standard and custom modules.", "syntax": "import math\nprint(math.sqrt(16))", "keyPoints": ["import module", "from x import y", "Package groups modules"]},
+  "demo": {"intro": "Import standard library math and call sqrt.", "code": "import math\nprint(math.sqrt(16))", "focusLine": 1, "expectedHighlights": ["module imported", "prints 4.0"], "steps": [{"type": "declare", "line": 1, "var": "math", "value": "module", "dataType": "module", "explanation": {"what": "Import module", "why": "Use existing functions", "change": "math namespace available", "intent": "Reuse code", "misconception": "Import executes module top-level code"}}, {"type": "call", "line": 2, "name": "math.sqrt", "args": ["16"], "returnVar": "value", "explanation": {"what": "Call sqrt", "why": "Square root calculation", "change": "value=4.0", "intent": "Use imported API", "misconception": "Result type is float"}}, {"type": "print", "line": 2, "value": "4.0", "explanation": {"what": "Print value", "why": "Verify call", "change": "output <- 4.0", "intent": "Confirm import worked", "misconception": "None"}}]},
+  "prediction": {"question": "Which statement imports only sqrt from math?", "options": ["import sqrt", "from math import sqrt", "import math.sqrt", "using math"], "correctIndex": 1, "explanation": "from module import name imports selected symbols."},
+  "explanation": {"afterDemo": "Module organization keeps projects maintainable.", "keyTakeaways": ["Imports promote reuse", "Namespaces prevent collisions", "Packages scale project structure"]},
+  "practice": {"prompt": "Import math and print math.ceil(2.1).", "starterCode": "# write code", "solutionCode": "import math\nprint(math.ceil(2.1))", "hint": "Use math.ceil.", "validation": {"type": "output", "expectedOutput": ["3"]}},
+  "feedback": {"successMessage": "Import and usage are correct.", "retryHints": ["Import module first", "Call function with module prefix"]},
+  "summary": {"title": "Modules & Packages — Complete", "takeaways": ["Import enables reuse", "module namespace organizes APIs", "Packages group modules"], "nextTopicId": "python_file_io"}
+}

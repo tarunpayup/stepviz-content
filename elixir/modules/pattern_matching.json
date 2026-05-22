@@ -1,0 +1,221 @@
+{
+  "id": "lm_elixir_pattern_matching",
+  "topicId": "elixir_pattern_matching",
+  "language": "elixir",
+  "title": "Pattern Matching",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "The = operator is a match operator. It matches shapes and binds named variables. Destructure tuples, lists, and maps. _ ignores. ^ pins to the current value.",
+    "explanation": "In Elixir, = checks if the left side MATCHES the structure of the right side. If variables appear on the left, they are bound to the corresponding positions. {a, b} = {1, 2} binds a=1, b=2. [h | t] = [1,2,3] binds h=1, t=[2,3]. If the shape does not match, a MatchError is raised. _ (underscore) explicitly ignores a position. ^ (pin) prevents rebinding — ^x = 5 requires x's current value to be 5.",
+    "syntax": "# Tuple destructure\n{a, b} = {1, 2}   # a=1, b=2\n\n# Tagged tuple\n{:ok, val} = {:ok, 42}    # val=42\n\n# List head/tail\n[h | t] = [1, 2, 3]      # h=1, t=[2,3]\n\n# Ignore with _\n{_, b} = {1, 99}  # b=99, first ignored\n\n# Pin operator\nx = 5\n^x = 5   # OK — current x is 5\n^x = 6   # MatchError — 6 != 5\n\n# Map pattern\n%{name: n} = %{name: \"Alice\", age: 30}  # n='Alice'",
+    "keyPoints": [
+      "= matches structure — raises MatchError if shapes differ",
+      "{:ok, val} = result — tests :ok AND binds val in one step",
+      "[h | t] = list — binds head to h, rest of list to t",
+      "^ pins to current value — match without rebinding"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch = match and destructure tuples and lists, then see a MatchError when shapes differ.",
+    "code": "{status, value} = {:ok, 42}\nIO.puts(status)\nIO.puts(value)\n\n[first | rest] = [10, 20, 30]\nIO.puts(first)\nIO.inspect(rest)\n\n{_, second} = {\"ignore\", \"keep\"}\nIO.puts(second)\n\nx = 7\n^x = 7\nIO.puts(\"pin matched\")",
+    "focusLine": 1,
+    "expectedHighlights": ["tuple destructure", "list head|tail", "_ ignore", "^ pin"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "{status, value}",
+        "value": "{:ok, 42}",
+        "dataType": "Tuple match",
+        "explanation": {
+          "what": "{status, value} = {:ok, 42} — match a 2-tuple, bind status=:ok, value=42",
+          "why": "Left side is a tuple pattern with two variable positions",
+          "change": "status = :ok, value = 42",
+          "intent": "Show tuple destructuring — binding multiple variables in one match",
+          "misconception": "This is NOT Python tuple unpacking even though the syntax looks similar. It is pattern MATCHING — if the right side were {:ok, 42, 'extra'} it would fail with MatchError because the shapes differ (2-tuple vs 3-tuple)."
+        }
+      },
+      {
+        "type": "print",
+        "line": 2,
+        "value": "ok",
+        "explanation": {
+          "what": "IO.puts(status) → ok (the atom :ok printed without colon)",
+          "why": "status was bound to :ok by the pattern match",
+          "change": "output ← 'ok'",
+          "intent": "Show first destructured value",
+          "misconception": "status is an atom :ok. IO.puts prints it as 'ok' without the colon."
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "42",
+        "explanation": {
+          "what": "IO.puts(value) → 42",
+          "why": "value was bound to 42 by the pattern match",
+          "change": "output ← '42'",
+          "intent": "Show second destructured value",
+          "misconception": "The {:ok, val} pattern is SO common in Elixir that it is the standard way to check for success. File.read('path') returns {:ok, contents} on success or {:error, reason} on failure."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "[first | rest]",
+        "value": "[10, 20, 30]",
+        "dataType": "List match",
+        "explanation": {
+          "what": "[first | rest] = [10, 20, 30] — head/tail list destructure",
+          "why": "[h | t] pattern splits a list into its first element (h) and remaining elements (t)",
+          "change": "first = 10, rest = [20, 30]",
+          "intent": "Show | (cons) pattern for list head/tail splitting",
+          "misconception": "rest is a LIST [20, 30] — not the single element 20. The | splits ONE element from the front; everything else is the tail list. [first | rest] on a single-element list [10] gives first=10, rest=[]."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "10",
+        "explanation": {
+          "what": "IO.puts(first) → 10",
+          "why": "first was bound to the head element 10",
+          "change": "output ← '10'",
+          "intent": "Confirm head binding",
+          "misconception": "The head is always ONE element — not a list. first=10 is an integer, not [10]."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "[20, 30]",
+        "explanation": {
+          "what": "IO.inspect(rest) → [20, 30]",
+          "why": "rest was bound to the tail [20, 30]",
+          "change": "output ← '[20, 30]'",
+          "intent": "Confirm tail binding is a list",
+          "misconception": "IO.inspect is used here to show the list representation. IO.puts on a list of integers would fail — IO.inspect handles any data type."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 9,
+        "var": "{_, second}",
+        "value": "{\"ignore\", \"keep\"}",
+        "dataType": "Tuple match with ignore",
+        "explanation": {
+          "what": "{_, second} = {\"ignore\", \"keep\"} — _ discards first element, second='keep'",
+          "why": "_ matches anything but does NOT bind the value",
+          "change": "second = 'keep'; first element discarded",
+          "intent": "Show _ as an explicit 'I don't care' marker",
+          "misconception": "Using _ (single underscore) is a SIGNAL to other programmers that you intentionally do not need this value. Using a real variable name (like x) but never using it is less clear."
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "keep",
+        "explanation": {
+          "what": "IO.puts(second) → keep",
+          "why": "second captured 'keep', first was ignored",
+          "change": "output ← 'keep'",
+          "intent": "Confirm _ ignore in destructuring",
+          "misconception": "You can use multiple _ in one pattern: {_, _, third} = {1, 2, 3} binds only third. You cannot use _ as a variable — IO.puts(_) would be an error."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 12,
+        "var": "x",
+        "value": "7",
+        "dataType": "Integer",
+        "explanation": {
+          "what": "x = 7 — binding x for the pin demonstration",
+          "why": "x needs a current value before pinning",
+          "change": "x = 7",
+          "intent": "Set up pin operator demo",
+          "misconception": "After x = 7, x is bound to 7. The next line ^x = 7 will TEST whether 7 == 7 — not rebind x."
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 13,
+        "expression": "^x = 7 (pin match)",
+        "result": true,
+        "branch": "match success",
+        "explanation": {
+          "what": "^x = 7 — pin operator: use x's CURRENT value (7) in the match. 7 == 7 → success.",
+          "why": "^ prevents rebinding — it forces the match to test against the current binding",
+          "change": "x is NOT rebound. Match succeeds.",
+          "intent": "Show pin operator preventing rebinding",
+          "misconception": "Without ^, x = 7 would REBIND x (even if x was already 7 — it would create a new binding). With ^x = 7, Elixir uses x's current value (7) as a literal to match against. ^x = 6 would raise MatchError because 6 != 7."
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "pin matched",
+        "explanation": {
+          "what": "IO.puts('pin matched') — pin match succeeded",
+          "why": "^x = 7 matched because x's current value is 7",
+          "change": "output ← 'pin matched'",
+          "intent": "Confirm successful pin match",
+          "misconception": "The pin operator is commonly used in case clauses and function heads when you need to match against a runtime variable value, not just a literal."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\n[a, b | _] = [1, 2, 3, 4, 5]\nIO.puts(a)\nIO.puts(b)",
+    "options": [
+      "1\n2",
+      "1\n[2,3,4,5]",
+      "Error",
+      "1\n2\n[3,4,5]"
+    ],
+    "correctIndex": 0,
+    "explanation": "[a, b | _] matches: a=1, b=2, rest=[3,4,5] (discarded by _). Output: 1 then 2."
+  },
+
+  "explanation": {
+    "afterDemo": "Pattern matching is the single most important concept in Elixir. It appears everywhere: = operator, case clauses, function heads, with expressions, receive blocks. Mastering pattern matching means being able to write concise, declarative code that simultaneously validates structure and extracts data. {:ok, val} = result is more expressive than if result.status == :ok; val = result.value — it tests and extracts in one step.",
+    "keyTakeaways": [
+      "= matches shapes. Variables bind. Fixed values (atoms, literals) must match exactly.",
+      "[h | t] splits a list into head and tail. _ explicitly ignores a position.",
+      "^var pins to the current binding — tests without rebinding."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Pattern match {:error, code, msg} = {:error, 404, \"not found\"}. Print code and msg on separate lines.",
+    "starterCode": "{:error, code, msg} = {:error, 404, \"not found\"}\nIO.puts(code)\nIO.puts(msg)",
+    "solutionCode": "{:error, code, msg} = {:error, 404, \"not found\"}\nIO.puts(code)\nIO.puts(msg)",
+    "hint": "3-element tuple — :error must match exactly, code and msg are bound.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["404", "not found"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! code=404, msg='not found' extracted from the tuple.",
+    "retryHints": [
+      "{:error, code, msg} = {:error, 404, \"not found\"}",
+      ":error must match :error; code=404; msg='not found'",
+      "Expected: 404 then not found"
+    ]
+  },
+
+  "summary": {
+    "title": "Pattern Matching — Complete",
+    "takeaways": [
+      "= matches structure. Mismatch → MatchError. Variables bind to positions.",
+      "[h | t] — head/tail destructure. _ ignores. ^var pins to current value.",
+      "{:ok, val} — idiomatic result destructure. Tests shape AND extracts data simultaneously."
+    ],
+    "nextTopicId": "elixir_lists"
+  }
+}

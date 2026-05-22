@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_collections",
+  "topicId": "scala_collections",
+  "language": "scala",
+  "title": "Collections",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Scala collections provide rich transformation APIs.",
+    "explanation": "Use immutable collections with map/filter/fold for clear data flows.",
+    "syntax": "val nums = List(1,2,3,4)\nval evens = nums.filter(_ % 2 == 0)",
+    "keyPoints": ["Immutable by default", "Higher-order methods", "Composable pipelines"]
+  },
+  "demo": {
+    "intro": "Filter a list to even numbers.",
+    "code": "object Main extends App {\n  val nums = List(1, 2, 3, 4)\n  val evens = nums.filter(_ % 2 == 0)\n  println(evens)\n}",
+    "focusLine": 3,
+    "expectedHighlights": ["filter applied", "prints List(2, 4)"],
+    "steps": [
+      {"type": "declare", "line": 2, "var": "nums", "value": "List(1,2,3,4)", "dataType": "List[Int]", "explanation": {"what": "Create source list", "why": "Input collection", "change": "nums set", "intent": "Data pipeline source", "misconception": "Immutable list"}},
+      {"type": "assign", "line": 3, "var": "evens", "value": "List(2,4)", "explanation": {"what": "Filter by predicate", "why": "Keep even values", "change": "evens created", "intent": "Declarative transform", "misconception": "Original list unchanged"}},
+      {"type": "print", "line": 4, "value": "List(2, 4)", "explanation": {"what": "Print result", "why": "Verify filtering", "change": "output emitted", "intent": "Observe collection op", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does map do on a collection?", "options": ["filters values", "transforms each element", "sorts values", "removes duplicates"], "correctIndex": 1, "explanation": "map applies a function to every element."},
+  "explanation": {"afterDemo": "Collection transforms are central to idiomatic Scala.", "keyTakeaways": ["Immutable transforms", "Readable data pipelines", "Composable operations"]},
+  "practice": {
+    "prompt": "From List(3,4,5), build doubled values and print.",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  val nums = List(3, 4, 5)\n  val doubled = nums.map(_ * 2)\n  println(doubled)\n}",
+    "hint": "Use map with _ * 2.",
+    "validation": {"type": "output", "expectedOutput": ["List(6, 8, 10)"]}
+  },
+  "feedback": {"successMessage": "Collection transformation is correct.", "retryHints": ["Use map", "Print transformed list"]},
+  "summary": {"title": "Collections - Complete", "takeaways": ["Functional style collections", "Immutable defaults", "Clear transforms"], "nextTopicId": "scala_case_classes"}
+}

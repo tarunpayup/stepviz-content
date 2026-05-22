@@ -1,0 +1,44 @@
+{
+  "id": "lm_solidity_loops",
+  "topicId": "solidity_loops",
+  "language": "solidity",
+  "title": "Loops & Gas Awareness",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Loops are valid but must be gas-aware.",
+    "explanation": "Each iteration costs gas, so avoid unbounded loops on growing storage collections.",
+    "syntax": "for (uint256 i = 1; i <= n; i++) { s += i; }",
+    "keyPoints": ["Bound loops tightly", "Large loops can hit block gas limits", "Prefer off-chain iteration for big datasets"]
+  },
+  "demo": {
+    "intro": "Compute bounded arithmetic sum with for-loop.",
+    "code": "pragma solidity ^0.8.20;\n\ncontract Sum {\n  function sumUpTo(uint256 n) public pure returns (uint256 s) {\n    for (uint256 i = 1; i <= n; i++) {\n      s += i;\n    }\n  }\n}",
+    "focusLine": 5,
+    "expectedHighlights": ["loop enters", "s accumulates", "bounded by n"],
+    "steps": [
+      {"type": "declare", "line": 4, "var": "s", "value": "0", "dataType": "uint256", "explanation": {"what": "Initialize accumulator", "why": "Start total at zero", "change": "s=0", "intent": "Prepare loop computation", "misconception": "returns named variable initializes automatically to 0"}},
+      {"type": "loop_start", "line": 5, "kind": "for", "condition": "i <= n", "var": "i", "explanation": {"what": "Start bounded loop", "why": "Iterate 1..n", "change": "loop active", "intent": "Controlled repetition", "misconception": "Gas cost grows with n"}},
+      {"type": "assign", "line": 6, "var": "s", "value": "s+i", "explanation": {"what": "Accumulate sum", "why": "Add each i", "change": "s updated each iteration", "intent": "Compute total", "misconception": "Too-large n can make tx fail due to gas"}},
+      {"type": "loop_end", "line": 7, "explanation": {"what": "Loop exit", "why": "Condition failed", "change": "loop completes", "intent": "Finalize result", "misconception": "No iterations when n=0"}}
+    ]
+  },
+  "prediction": {
+    "question": "Main risk of looping over very large on-chain arrays?",
+    "options": ["integer truncation", "gas limit failure", "compiler warning only", "timestamp drift"],
+    "correctIndex": 1,
+    "explanation": "Large loops may exceed gas limits and revert the transaction."
+  },
+  "explanation": {
+    "afterDemo": "Loop logic must always be designed with gas limits in mind for production contracts.",
+    "keyTakeaways": ["Keep loops bounded", "Avoid unbounded storage scans", "Design for predictable gas"]
+  },
+  "practice": {
+    "prompt": "Write pure function sum3() returning sum of 1..3 using a for loop.",
+    "starterCode": "function sum3() public pure returns (uint256 s) {\n  // loop\n}",
+    "solutionCode": "function sum3() public pure returns (uint256 s) {\n  for (uint256 i = 1; i <= 3; i++) {\n    s += i;\n  }\n}",
+    "hint": "Use i from 1 to 3 inclusive.",
+    "validation": {"type": "step_count", "min": 2}
+  },
+  "feedback": {"successMessage": "Bounded loop is correct.", "retryHints": ["Initialize loop at 1", "Stop at <= 3", "Accumulate in s"]},
+  "summary": {"title": "Loops — Complete", "takeaways": ["Loops cost gas", "Bound loops tightly", "Prefer off-chain iteration for large data"], "nextTopicId": "solidity_arrays_mappings"}
+}

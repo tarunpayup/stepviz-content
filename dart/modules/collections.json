@@ -1,0 +1,43 @@
+{
+  "id": "lm_dart_collections",
+  "topicId": "dart_collections",
+  "language": "dart",
+  "title": "Collections",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Dart collections combine strong typing with expressive transforms.",
+    "explanation": "List, Set, and Map support idiomatic filtering and mapping workflows.",
+    "syntax": "final nums = [1, 2, 3, 4];\nfinal evens = nums.where((n) => n.isEven).toList();\nprint(evens);",
+    "keyPoints": ["List is ordered", "Set is unique", "Map stores key-value pairs", "where/map transform data"]
+  },
+  "demo": {
+    "intro": "Filter even values from a list.",
+    "code": "final nums = [1, 2, 3, 4];\nfinal evens = nums.where((n) => n.isEven).toList();\nprint(evens);",
+    "focusLine": 2,
+    "expectedHighlights": ["source list", "filtered list", "prints [2, 4]"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "nums", "value": "[1,2,3,4]", "dataType": "List<int>", "explanation": {"what": "Create list", "why": "Input data", "change": "nums set", "intent": "Start pipeline", "misconception": "List keeps insertion order"}},
+      {"type": "assign", "line": 2, "var": "evens", "value": "[2,4]", "explanation": {"what": "Filter even numbers", "why": "where keeps matching values", "change": "evens=[2,4]", "intent": "Show selection transform", "misconception": "where returns iterable, toList materializes list"}},
+      {"type": "print", "line": 3, "value": "[2, 4]", "explanation": {"what": "Print result", "why": "Filtered values retained", "change": "output <- [2, 4]", "intent": "Verify transform", "misconception": "Original list remains unchanged"}}
+    ]
+  },
+  "prediction": {
+    "question": "Output?\n\nfinal xs = [3,4,5];\nprint(xs.where((x) => x > 3).toList());",
+    "options": ["[3]", "[4, 5]", "[3, 4, 5]", "[]"],
+    "correctIndex": 1,
+    "explanation": "Only values greater than 3 are kept: 4 and 5."
+  },
+  "explanation": {
+    "afterDemo": "Collection methods are often clearer than manual loops for data transformations.",
+    "keyTakeaways": ["Use where to filter", "Use map to transform", "Convert iterables with toList when needed"]
+  },
+  "practice": {
+    "prompt": "From [2,3,4,5], keep >=4, multiply by 10 using map, print final list.",
+    "starterCode": "// write code",
+    "solutionCode": "final out = [2, 3, 4, 5]\n    .where((n) => n >= 4)\n    .map((n) => n * 10)\n    .toList();\nprint(out);",
+    "hint": "Chain where then map then toList.",
+    "validation": {"type": "output", "expectedOutput": ["[40, 50]"]}
+  },
+  "feedback": {"successMessage": "Collection pipeline is correct.", "retryHints": ["Filter first", "Map second", "Call toList before printing"]},
+  "summary": {"title": "Collections — Complete", "takeaways": ["Collections are strongly typed", "where/map are core transforms", "Pipelines improve readability"], "nextTopicId": "dart_null_safety"}
+}

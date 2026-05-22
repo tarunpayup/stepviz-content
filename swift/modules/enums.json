@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_enums",
+  "topicId": "swift_enums",
+  "language": "swift",
+  "title": "Enums",
+  "difficulty": "easy",
+  "concept": {"headline": "Enums model finite states clearly.", "explanation": "Use enum cases to represent constrained sets of values.", "syntax": "enum Status {\n    case pending\n    case done\n}", "keyPoints": ["Cases define valid states", "switch handles cases", "Can include associated values"]},
+  "demo": {"intro": "Define status enum and print a case.", "code": "enum Status {\n    case pending\n    case done\n}\nlet s = Status.pending\nprint(s)", "focusLine": 1, "expectedHighlights": ["enum declaration", "case assignment", "prints pending"], "steps": [{"type": "declare", "line": 1, "var": "Status", "value": "enum", "dataType": "enum", "explanation": {"what": "Define finite states", "why": "Restrict invalid values", "change": "Status type available", "intent": "State safety", "misconception": "Enums can carry methods too"}}, {"type": "assign", "line": 5, "var": "s", "value": "pending", "explanation": {"what": "Assign enum case", "why": "Set current state", "change": "s=.pending", "intent": "State representation", "misconception": "Only listed cases valid"}}, {"type": "print", "line": 6, "value": "pending", "explanation": {"what": "Print enum case", "why": "Observe current state", "change": "output <- pending", "intent": "Validate enum usage", "misconception": "Formatting may include type context"}}]},
+  "prediction": {"question": "Best use of enum?", "options": ["Unbounded text", "Finite states", "File IO", "Random numbers"], "correctIndex": 1, "explanation": "Enums are for constrained state sets."},
+  "explanation": {"afterDemo": "Enums improve domain modeling and exhaustive branching.", "keyTakeaways": ["Model states safely", "Use switch for exhaustive handling", "Associated values add context"]},
+  "practice": {"prompt": "Create enum Light with cases red, green; assign green and print it.", "starterCode": "// write code", "solutionCode": "enum Light {\n    case red\n    case green\n}\nlet l = Light.green\nprint(l)", "hint": "Use enum and case syntax.", "validation": {"type": "contains", "expectedTokens": ["green"]}},
+  "feedback": {"successMessage": "Enum definition and usage are correct.", "retryHints": ["Declare cases in enum", "Assign using Type.case"]},
+  "summary": {"title": "Enums — Complete", "takeaways": ["Enums encode finite states", "Cases improve safety", "Great with switch"] , "nextTopicId": "swift_error_handling"}
+}

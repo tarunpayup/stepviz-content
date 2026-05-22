@@ -1,0 +1,147 @@
+{
+  "id": "lm_kotlin_data_types",
+  "topicId": "kotlin_data_types",
+  "language": "kotlin",
+  "title": "Data Types",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Kotlin's core types — Int, Double, Boolean, Char, String — are all objects. String templates let you embed values directly inside strings.",
+    "explanation": "Unlike Java, Kotlin has no primitive types at the language level — everything is an object, though the compiler optimizes them to JVM primitives under the hood. The main numeric types are Int (32-bit), Long (64-bit), Double (64-bit float), and Float (32-bit float). String templates ($name or ${expr}) avoid messy concatenation.",
+    "syntax": "val age: Int     = 25\nval height: Double = 1.75\nval active: Boolean = true\nval initial: Char   = 'A'\nval name: String    = \"Alice\"\n\n// String templates\nprintln(\"$name is $age\")          // simple var\nprintln(\"${name.length} letters\") // expression inside ${}",
+    "keyPoints": [
+      "Int (32-bit), Long (64-bit), Double (64-bit), Float (32-bit)",
+      "Boolean: true or false — no integers used as booleans",
+      "Char uses single quotes: 'A'. String uses double quotes: \"hello\"",
+      "String templates: $varName or ${expression} — no concatenation needed"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch how different types are stored and how a string template assembles them into one output line.",
+    "code": "fun main() {\n    val name: String  = \"Alice\"\n    val age: Int      = 25\n    val height: Double = 1.75\n    val active: Boolean = true\n    println(\"$name | age=$age | height=$height | active=$active\")\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["name = 'Alice'", "age = 25", "height = 1.75", "active = true", "output assembled"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "name",
+        "value": "Alice",
+        "dataType": "String",
+        "explanation": {
+          "what": "val name: String = \"Alice\"",
+          "why": "Stores the player's name as a String — sequence of characters in double quotes",
+          "change": "name = 'Alice'",
+          "intent": "Introduce String type — text data",
+          "misconception": "String in Kotlin is not a char array — it is an immutable object. You cannot change individual characters of a String."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "age",
+        "value": "25",
+        "dataType": "Int",
+        "explanation": {
+          "what": "val age: Int = 25",
+          "why": "Stores a whole number. Int covers -2,147,483,648 to 2,147,483,647",
+          "change": "age = 25",
+          "intent": "Introduce Int — the most common integer type",
+          "misconception": "Do not use Long unless the value exceeds Int's range. Using Long everywhere wastes memory and is not idiomatic Kotlin."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "height",
+        "value": "1.75",
+        "dataType": "Double",
+        "explanation": {
+          "what": "val height: Double = 1.75",
+          "why": "Stores a decimal number. Kotlin defaults floating-point literals to Double",
+          "change": "height = 1.75",
+          "intent": "Introduce Double — the default fractional type",
+          "misconception": "A plain decimal literal like 1.75 is a Double by default. To make it a Float you'd write 1.75f. Mixing Float and Double in an expression requires explicit conversion."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "active",
+        "value": "true",
+        "dataType": "Boolean",
+        "explanation": {
+          "what": "val active: Boolean = true",
+          "why": "Stores a yes/no flag — Boolean holds only true or false",
+          "change": "active = true",
+          "intent": "Introduce Boolean — the type for logical values",
+          "misconception": "Unlike C/C++, you cannot use 1/0 as Booleans in Kotlin. Only true and false are valid — the compiler rejects anything else."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "Alice | age=25 | height=1.75 | active=true",
+        "explanation": {
+          "what": "println with a string template inserts all four variables",
+          "why": "String templates read $name, $age, $height, $active and embed their string representations",
+          "change": "output ← 'Alice | age=25 | height=1.75 | active=true'",
+          "intent": "Show how string templates unify all types into one readable output",
+          "misconception": "You do not need to call .toString() on each variable — string template handles it automatically by calling each value's toString() implementation"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nval x = 5\nval y = 2.0\nprintln(x + y)",
+    "options": [
+      "Compile error — cannot add Int and Double",
+      "7",
+      "7.0",
+      "5 + 2.0"
+    ],
+    "correctIndex": 0,
+    "explanation": "Kotlin does NOT automatically widen Int to Double in arithmetic. You must convert explicitly: x.toDouble() + y. This is intentional — implicit numeric conversion is a common source of bugs in other languages."
+  },
+
+  "explanation": {
+    "afterDemo": "Every variable in Kotlin has a type — even when you don't write it. The compiler infers it from the value. Kotlin's strict type system catches type mismatches at compile time, not at runtime, which eliminates a whole class of bugs. String templates are idiomatic and much cleaner than concatenation.",
+    "keyTakeaways": [
+      "Core types: Int, Long, Double, Float, Boolean, Char, String — all objects under the hood.",
+      "No implicit numeric conversion — use .toInt(), .toDouble() etc. when mixing types.",
+      "String templates ($var or ${expr}) are the idiomatic way to build strings in Kotlin."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Declare val product = \"Laptop\", val price: Double = 999.99, val inStock: Boolean = true. Print: \"Laptop costs $999.99, in stock: true\".",
+    "starterCode": "fun main() {\n    // declare product, price, inStock\n    // print: \"Laptop costs $999.99, in stock: true\"\n}",
+    "solutionCode": "fun main() {\n    val product = \"Laptop\"\n    val price: Double = 999.99\n    val inStock: Boolean = true\n    println(\"$product costs $$price, in stock: $inStock\")\n}",
+    "hint": "Use $$ to print a literal dollar sign inside a string template.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["Laptop costs $999.99, in stock: true"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Note the $$ trick to print a literal $ character inside a string template.",
+    "retryHints": [
+      "Declare: val product = \"Laptop\", val price: Double = 999.99, val inStock: Boolean = true",
+      "To print a literal dollar sign inside a string template write $$",
+      "Expected: Laptop costs $999.99, in stock: true"
+    ]
+  },
+
+  "summary": {
+    "title": "Data Types — Complete",
+    "takeaways": [
+      "Int, Double, Boolean, Char, String are the core everyday types.",
+      "Kotlin has no implicit numeric conversion — be explicit when mixing types.",
+      "String templates ($var or ${expr}) are the idiomatic way to embed values in strings."
+    ],
+    "nextTopicId": "kotlin_functions"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_async_await",
+  "topicId": "swift_async_await",
+  "language": "swift",
+  "title": "Async/Await",
+  "difficulty": "medium",
+  "concept": {"headline": "Async/await enables structured concurrency.", "explanation": "Mark asynchronous functions with async and call them using await.", "syntax": "func getValue() async -> Int { 42 }\nTask {\n    let v = await getValue()\n    print(v)\n}", "keyPoints": ["async marks async functions", "await waits for result", "Task launches async work"]},
+  "demo": {"intro": "Run async function in a Task.", "code": "func getValue() async -> Int { 42 }\nTask {\n    let v = await getValue()\n    print(v)\n}", "focusLine": 1, "expectedHighlights": ["async function", "await call", "prints 42"], "steps": [{"type": "declare", "line": 1, "var": "getValue", "value": "async function", "dataType": "() async -> Int", "explanation": {"what": "Declare async function", "why": "Represent delayed work", "change": "async API available", "intent": "Concurrency model", "misconception": "async alone does not create parallelism"}}, {"type": "call", "line": 3, "name": "getValue", "args": [], "returnVar": "v", "explanation": {"what": "Await result", "why": "Suspend until completed", "change": "v=42", "intent": "Non-blocking style", "misconception": "await valid only in async context"}}, {"type": "print", "line": 4, "value": "42", "explanation": {"what": "Print value", "why": "Verify async result", "change": "output <- 42", "intent": "Observe completion", "misconception": "Task schedules work concurrently"}}]},
+  "prediction": {"question": "Where can await be used?", "options": ["Anywhere", "Only in async context", "Only in class", "Never with Task"], "correctIndex": 1, "explanation": "await requires an async context."},
+  "explanation": {"afterDemo": "Structured concurrency makes async logic easier to reason about.", "keyTakeaways": ["Model async boundaries explicitly", "Use Task for launching work", "Await preserves readable flow"]},
+  "practice": {"prompt": "Write async function value() returning 7 and print it inside Task.", "starterCode": "// write code", "solutionCode": "func value() async -> Int { 7 }\nTask {\n    let x = await value()\n    print(x)\n}", "hint": "Call await inside Task block.", "validation": {"type": "output", "expectedOutput": ["7"]}},
+  "feedback": {"successMessage": "Async/await flow is correct.", "retryHints": ["Mark function async", "Use await in Task"]},
+  "summary": {"title": "Async/Await — Complete", "takeaways": ["async defines asynchronous APIs", "await reads async results", "Task provides execution context"], "nextTopicId": null}
+}

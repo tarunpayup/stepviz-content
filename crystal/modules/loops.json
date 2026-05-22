@@ -1,0 +1,72 @@
+{
+  "id": "lm_crystal_loops",
+  "topicId": "crystal_loops",
+  "language": "crystal",
+  "title": "Loops & Iteration",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Crystal encourages iterators like each and times.",
+    "explanation": "Use collection iterators for readability and safety. while is still available when manual control is needed.",
+    "syntax": "sum = 0\n(1..5).each do |n|\n  sum += n\nend\nputs sum",
+    "keyPoints": [
+      "each iterates ranges and collections",
+      "times repeats fixed count",
+      "while handles manual conditions",
+      "Ranges are common loop inputs"
+    ]
+  },
+
+  "demo": {
+    "intro": "Walk through a range loop accumulating a sum.",
+    "code": "sum = 0\n(1..5).each do |n|\n  sum += n\nend\nputs sum",
+    "focusLine": 2,
+    "expectedHighlights": ["loop starts", "sum updates each step", "loop ends", "prints 15"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "sum", "value": "0", "dataType": "Int32", "explanation": {"what": "Initialize accumulator", "why": "Start total from zero", "change": "sum = 0", "intent": "Prepare aggregation", "misconception": "Accumulator must be initialized before loop"}},
+      {"type": "loop_start", "line": 2, "kind": "forEach", "condition": "n in 1..5", "var": "n", "explanation": {"what": "Begin iteration", "why": "each runs block for each value", "change": "active loop over range", "intent": "Enter deterministic loop", "misconception": "Range 1..5 includes both ends"}},
+      {"type": "assign", "line": 3, "var": "sum", "value": "15", "explanation": {"what": "Accumulate values", "why": "sum += n on each pass", "change": "sum progresses to 15", "intent": "Build total", "misconception": "Updates happen per iteration, not all at once"}},
+      {"type": "loop_end", "line": 4, "explanation": {"what": "Loop completes", "why": "Range exhausted", "change": "loop scope closes", "intent": "Finish iteration", "misconception": "No extra pass happens after last value"}},
+      {"type": "print", "line": 5, "value": "15", "explanation": {"what": "Print total", "why": "sum now contains range total", "change": "output <- 15", "intent": "Verify accumulation", "misconception": "puts does not modify sum"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "What prints?\n\ncount = 0\n3.times do\n  count += 2\nend\nputs count",
+    "options": ["2", "3", "6", "8"],
+    "correctIndex": 2,
+    "explanation": "count increases by 2 three times: 0 -> 2 -> 4 -> 6."
+  },
+
+  "explanation": {
+    "afterDemo": "Iterator-driven loops are idiomatic Crystal and often easier to reason about than manual index loops.",
+    "keyTakeaways": [
+      "Use each for collections and ranges.",
+      "Use times for fixed repetition.",
+      "Track state with explicit accumulators."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Compute total of numbers 1..4 using each and print result.",
+    "starterCode": "total = 0\n# iterate 1..4\n# print total",
+    "solutionCode": "total = 0\n(1..4).each do |n|\n  total += n\nend\nputs total",
+    "hint": "Add each n into total.",
+    "validation": {"type": "output", "expectedOutput": ["10"]}
+  },
+
+  "feedback": {
+    "successMessage": "Nice. Your loop correctly summed the range.",
+    "retryHints": ["Use (1..4).each", "Update total with +=", "Print after loop"]
+  },
+
+  "summary": {
+    "title": "Loops — Complete",
+    "takeaways": [
+      "Crystal iteration is concise with each/times.",
+      "Ranges are inclusive with ..",
+      "Accumulators make loop intent explicit."
+    ],
+    "nextTopicId": "crystal_classes"
+  }
+}

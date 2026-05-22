@@ -1,0 +1,119 @@
+{
+  "id": "lm_go_error_handling",
+  "topicId": "go_error_handling",
+  "language": "go",
+  "title": "Error Handling",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Go handles failures with error return values.",
+    "explanation": "Functions often return value, err and callers handle err explicitly.",
+    "syntax": "v, err := strconv.Atoi(\"12\")\nif err != nil {\n\treturn\n}",
+    "keyPoints": [
+      "Check err immediately",
+      "Return early on failure",
+      "Wrap context when propagating"
+    ]
+  },
+  "demo": {
+    "intro": "Parse string safely and handle parse errors.",
+    "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"strconv\"\n)\n\nfunc main() {\n\tv, err := strconv.Atoi(\"12\")\n\tif err != nil {\n\t\tfmt.Println(\"bad input\")\n\t\treturn\n\t}\n\tfmt.Println(v)\n}",
+    "focusLine": 9,
+    "expectedHighlights": [
+      "Atoi returns value+error",
+      "err checked before use",
+      "prints 12"
+    ],
+    "steps": [
+      {
+        "type": "call",
+        "line": 9,
+        "name": "strconv.Atoi",
+        "args": [
+          "12"
+        ],
+        "returnVar": "v,err",
+        "explanation": {
+          "what": "Parse string",
+          "why": "Convert text to number",
+          "change": "v=12 err=nil",
+          "intent": "Error-aware API usage",
+          "misconception": "Go returns error instead of exceptions"
+        }
+      },
+      {
+        "type": "condition_check",
+        "line": 10,
+        "expression": "err != nil",
+        "result": false,
+        "branch": "if",
+        "explanation": {
+          "what": "Check error",
+          "why": "Guard failure path",
+          "change": "continue success path",
+          "intent": "Safe flow",
+          "misconception": "Always check err before using value"
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "12",
+        "explanation": {
+          "what": "Print parsed value",
+          "why": "Confirm conversion",
+          "change": "output emitted",
+          "intent": "Observe success case",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "What should you do right after a function returns err?",
+    "options": [
+      "ignore err",
+      "check if err != nil",
+      "panic always",
+      "retry blindly"
+    ],
+    "correctIndex": 1,
+    "explanation": "Immediate error checks are idiomatic and safe."
+  },
+  "explanation": {
+    "afterDemo": "Explicit error flow keeps behavior predictable.",
+    "keyTakeaways": [
+      "Errors are values",
+      "Branch on err early",
+      "Avoid hidden failure paths"
+    ]
+  },
+  "practice": {
+    "prompt": "Parse '7' with strconv.Atoi, check err, print parsed int.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport (\n\t\"fmt\"\n\t\"strconv\"\n)\n\nfunc main() {\n\tv, err := strconv.Atoi(\"7\")\n\tif err != nil {\n\t\tfmt.Println(\"bad\")\n\t\treturn\n\t}\n\tfmt.Println(v)\n}",
+    "hint": "Use value, err := ... and if err != nil.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "7"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Error handling flow is correct.",
+    "retryHints": [
+      "Import strconv",
+      "Check err before printing value",
+      "Return on error"
+    ]
+  },
+  "summary": {
+    "title": "Error Handling - Complete",
+    "takeaways": [
+      "Go handles errors explicitly",
+      "Early returns simplify control flow",
+      "Err checks should be immediate"
+    ],
+    "nextTopicId": "go_packages"
+  }
+}

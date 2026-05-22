@@ -1,0 +1,72 @@
+{
+  "id": "lm_crystal_data_types",
+  "topicId": "crystal_data_types",
+  "language": "crystal",
+  "title": "Data Types",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Crystal has expressive static types with familiar literals.",
+    "explanation": "Crystal supports numeric, text, boolean, and nil values with strong compile-time checking. You can model optional values with union types like String?.",
+    "syntax": "age = 30\nprice = 19.99\nactive = true\ngrade = 'A'\nname = \"Crystal\"\noptional_name : String? = nil",
+    "keyPoints": [
+      "Int and Float represent numbers",
+      "Char and String are distinct",
+      "Bool is true/false",
+      "Nil combines with unions for optional data"
+    ]
+  },
+
+  "demo": {
+    "intro": "See common Crystal types and their values in action.",
+    "code": "age = 30\nprice = 19.99\nactive = true\ngrade = 'A'\nname = \"Crystal\"\nputs \"#{age}, #{price}, #{active}, #{grade}, #{name}\"",
+    "focusLine": 1,
+    "expectedHighlights": ["Int value", "Float value", "Bool value", "Char and String output"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "age", "value": "30", "dataType": "Int32", "explanation": {"what": "Declare integer", "why": "Literal 30 is numeric", "change": "age = 30", "intent": "Show integer type", "misconception": "Integers and floats are not interchangeable without conversion"}},
+      {"type": "declare", "line": 2, "var": "price", "value": "19.99", "dataType": "Float64", "explanation": {"what": "Declare float", "why": "Decimal literal infers float", "change": "price = 19.99", "intent": "Show decimal type", "misconception": "Float is approximate representation"}},
+      {"type": "declare", "line": 3, "var": "active", "value": "true", "dataType": "Bool", "explanation": {"what": "Declare boolean", "why": "Boolean literal", "change": "active = true", "intent": "Show logical type", "misconception": "Only true/false are valid Bool values"}},
+      {"type": "declare", "line": 4, "var": "grade", "value": "A", "dataType": "Char", "explanation": {"what": "Declare char", "why": "Single quotes indicate Char", "change": "grade = 'A'", "intent": "Distinguish Char from String", "misconception": "'A' and \"A\" are different types"}},
+      {"type": "print", "line": 6, "value": "30, 19.99, true, A, Crystal", "explanation": {"what": "Print all values", "why": "Interpolation converts each for output", "change": "output <- combined line", "intent": "Observe mixed typed values", "misconception": "Printing does not alter stored types"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "Which declaration creates a Char in Crystal?",
+    "options": ["ch = \"A\"", "ch = 'A'", "ch = :A", "ch = 65"],
+    "correctIndex": 1,
+    "explanation": "Single quotes represent Char literals in Crystal."
+  },
+
+  "explanation": {
+    "afterDemo": "Understanding data types helps you avoid subtle bugs and read compiler messages quickly.",
+    "keyTakeaways": [
+      "Char uses single quotes, String uses double quotes.",
+      "Booleans are explicit true/false.",
+      "Optional values are modeled with unions including Nil."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Declare title as String, score as Int, pass as Bool, then print: \"StepViz 100 true\".",
+    "starterCode": "# declare values\n# print final line",
+    "solutionCode": "title = \"StepViz\"\nscore = 100\npass = true\nputs \"#{title} #{score} #{pass}\"",
+    "hint": "Use interpolation for final output.",
+    "validation": {"type": "output", "expectedOutput": ["StepViz 100 true"]}
+  },
+
+  "feedback": {
+    "successMessage": "Great. Your declarations and output are correct.",
+    "retryHints": ["Use correct quote types", "Keep score numeric", "Print all three values in one line"]
+  },
+
+  "summary": {
+    "title": "Data Types — Complete",
+    "takeaways": [
+      "Crystal types are static and expressive.",
+      "Literal style determines many inferred types.",
+      "Optional fields commonly use T? unions."
+    ],
+    "nextTopicId": "crystal_functions"
+  }
+}

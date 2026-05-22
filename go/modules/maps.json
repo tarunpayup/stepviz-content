@@ -1,0 +1,116 @@
+{
+  "id": "lm_go_maps",
+  "topicId": "go_maps",
+  "language": "go",
+  "title": "Maps",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Maps provide key-value lookup in Go.",
+    "explanation": "Use maps for dictionary-style storage and retrieval.",
+    "syntax": "user := map[string]int{\"age\": 20}\nuser[\"age\"] = 21",
+    "keyPoints": [
+      "Map keys are unique",
+      "Read missing key returns zero value",
+      "Use comma-ok to test key presence"
+    ]
+  },
+  "demo": {
+    "intro": "Create, update, and read a map value.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tuser := map[string]int{\"age\": 20}\n\tuser[\"age\"] = 21\n\tfmt.Println(user[\"age\"])\n}",
+    "focusLine": 7,
+    "expectedHighlights": [
+      "map literal created",
+      "value updated",
+      "prints 21"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "user",
+        "value": "map[age:20]",
+        "dataType": "map[string]int",
+        "explanation": {
+          "what": "Create map literal",
+          "why": "Store keyed data",
+          "change": "map initialized",
+          "intent": "Introduce map type",
+          "misconception": "Keys must match declared key type"
+        }
+      },
+      {
+        "type": "assign",
+        "line": 7,
+        "var": "user[age]",
+        "value": "21",
+        "explanation": {
+          "what": "Update key value",
+          "why": "Modify mapped data",
+          "change": "age:20->21",
+          "intent": "Show mutability",
+          "misconception": "Map entries are mutable"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "21",
+        "explanation": {
+          "what": "Print key value",
+          "why": "Verify update",
+          "change": "output emitted",
+          "intent": "Observe lookup",
+          "misconception": "None"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "How to safely detect if key k exists in map m?",
+    "options": [
+      "if m[k] != nil",
+      "v, ok := m[k]",
+      "exists(m, k)",
+      "keyin(m, k)"
+    ],
+    "correctIndex": 1,
+    "explanation": "Comma-ok returns value and presence flag."
+  },
+  "explanation": {
+    "afterDemo": "Maps are essential for fast keyed access.",
+    "keyTakeaways": [
+      "Use map for lookups",
+      "Updates are straightforward",
+      "Presence checks use comma-ok"
+    ]
+  },
+  "practice": {
+    "prompt": "Create map scores with key 'a'=1, update to 2, print value.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tscores := map[string]int{\"a\": 1}\n\tscores[\"a\"] = 2\n\tfmt.Println(scores[\"a\"])\n}",
+    "hint": "Use map literal syntax with key and value types.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "2"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Map creation and update are correct.",
+    "retryHints": [
+      "Use map[string]int",
+      "Update value with key indexing",
+      "Print the final value"
+    ]
+  },
+  "summary": {
+    "title": "Maps - Complete",
+    "takeaways": [
+      "Maps enable fast key lookup",
+      "Keys are unique",
+      "Use comma-ok for existence checks"
+    ],
+    "nextTopicId": "go_structs_methods"
+  }
+}

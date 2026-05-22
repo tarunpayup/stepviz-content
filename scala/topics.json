@@ -1,0 +1,230 @@
+[
+  {
+    "id": "scala_variables_values",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Variables & Values",
+    "description": "Use val for immutable data and var for mutable state.",
+    "order": 1,
+    "enabled": true,
+    "concept": {
+      "definition": "Scala uses val for immutable bindings and var for reassignable bindings.",
+      "analogy": "val is a sealed label; var is an editable label.",
+      "keyPoints": [
+        "Prefer val by default",
+        "Use var only when mutation is needed",
+        "Type inference is strong"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  val name = \"StepViz\"\n  var count = 1\n  count += 1\n  println(s\"$name $count\")\n}"
+  },
+  {
+    "id": "scala_data_types",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Core Data Types",
+    "description": "Work with Int, Double, String, and Boolean values.",
+    "order": 2,
+    "enabled": true,
+    "concept": {
+      "definition": "Scala has strong static typing with concise type inference.",
+      "analogy": "Types are strict categories for valid values.",
+      "keyPoints": [
+        "Int for whole numbers",
+        "Double for decimal numbers",
+        "Boolean for logic"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  val age = 20\n  val score = 9.5\n  val name = \"Ari\"\n  val active = true\n  println(age + \" \" + score + \" \" + name + \" \" + active)\n}"
+  },
+  {
+    "id": "scala_functions",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Define reusable behavior with def and return values.",
+    "order": 3,
+    "enabled": true,
+    "concept": {
+      "definition": "Functions in Scala can be concise expressions or block-based.",
+      "analogy": "A function is a reusable transformation rule.",
+      "keyPoints": [
+        "def defines methods",
+        "Return type can be inferred",
+        "Expression style is idiomatic"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  def add(a: Int, b: Int): Int = a + b\n  println(add(3, 4))\n}"
+  },
+  {
+    "id": "scala_control_flow",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Branch logic with if/else expressions and pattern matching.",
+    "order": 4,
+    "enabled": true,
+    "concept": {
+      "definition": "if/else can produce values, and match handles multiple cases elegantly.",
+      "analogy": "Control flow routes your program through decision branches.",
+      "keyPoints": [
+        "if can return a value",
+        "match is expressive for many branches",
+        "Keep branch logic readable"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  val score = 82\n  val grade = if (score >= 90) \"A\" else if (score >= 80) \"B\" else \"C\"\n  println(grade)\n}"
+  },
+  {
+    "id": "scala_loops_ranges",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Loops & Ranges",
+    "description": "Iterate using for loops, ranges, and collection operations.",
+    "order": 5,
+    "enabled": true,
+    "concept": {
+      "definition": "Scala supports imperative loops and functional iteration patterns.",
+      "analogy": "A loop is a repeated pass over a sequence of values.",
+      "keyPoints": [
+        "for over ranges and collections",
+        "Yield builds new collections",
+        "foreach is common for side effects"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  var total = 0\n  for (n <- List(1, 2, 3)) total += n\n  println(total)\n}"
+  },
+  {
+    "id": "scala_collections",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Collections",
+    "description": "Use List, Vector, Set, and Map effectively.",
+    "order": 6,
+    "enabled": true,
+    "concept": {
+      "definition": "Scala collections provide rich immutable and mutable APIs.",
+      "analogy": "Collections are specialized containers for grouped data.",
+      "keyPoints": [
+        "Immutable collections are default",
+        "map/filter reduce data cleanly",
+        "Choose type by access pattern"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  val nums = List(1, 2, 3, 4)\n  val evens = nums.filter(_ % 2 == 0)\n  println(evens)\n}"
+  },
+  {
+    "id": "scala_case_classes",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Case Classes",
+    "description": "Model immutable data with concise boilerplate-free classes.",
+    "order": 7,
+    "enabled": true,
+    "concept": {
+      "definition": "Case classes auto-generate useful methods like equals, toString, and copy.",
+      "analogy": "Case classes are compact blueprints for immutable records.",
+      "keyPoints": [
+        "Great for domain modeling",
+        "Works naturally with pattern matching",
+        "copy makes modified clones"
+      ]
+    },
+    "defaultCode": "case class User(name: String, score: Int)\nobject Main extends App {\n  val u = User(\"Ari\", 10)\n  println(u)\n}"
+  },
+  {
+    "id": "scala_pattern_matching",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Pattern Matching",
+    "description": "Destructure values and branch with match expressions.",
+    "order": 8,
+    "enabled": true,
+    "concept": {
+      "definition": "Pattern matching checks value shape and extracts data in one step.",
+      "analogy": "Patterns are templates that values either fit or reject.",
+      "keyPoints": [
+        "match is exhaustive with good design",
+        "Case order matters",
+        "Pattern + guard gives precise control"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  val n = 2\n  val label = n match {\n    case 1 => \"one\"\n    case 2 => \"two\"\n    case _ => \"other\"\n  }\n  println(label)\n}"
+  },
+  {
+    "id": "scala_traits_objects",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Traits & Objects",
+    "description": "Compose behavior with traits and singleton objects.",
+    "order": 9,
+    "enabled": true,
+    "concept": {
+      "definition": "Traits define reusable behavior contracts; objects define singletons.",
+      "analogy": "Traits are capability packs; objects are one shared instance.",
+      "keyPoints": [
+        "Mix in traits for reuse",
+        "Objects hold global utilities",
+        "Trait methods can be concrete or abstract"
+      ]
+    },
+    "defaultCode": "trait Greeter { def greet: String }\nobject Bot extends Greeter { def greet: String = \"Hello\" }\nobject Main extends App {\n  println(Bot.greet)\n}"
+  },
+  {
+    "id": "scala_error_handling",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Handle errors with Try/Option and controlled exceptions.",
+    "order": 10,
+    "enabled": true,
+    "concept": {
+      "definition": "Scala supports exception handling and functional error wrappers.",
+      "analogy": "Try is a success/failure box around risky code.",
+      "keyPoints": [
+        "Use Try for recoverable operations",
+        "Option models missing values",
+        "Avoid unchecked exception sprawl"
+      ]
+    },
+    "defaultCode": "import scala.util.Try\nobject Main extends App {\n  val result = Try(\"12\".toInt)\n  println(result.getOrElse(-1))\n}"
+  },
+  {
+    "id": "scala_options_either",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Option & Either",
+    "description": "Represent absence and typed failures explicitly.",
+    "order": 11,
+    "enabled": true,
+    "concept": {
+      "definition": "Option models optional values; Either models success/failure with details.",
+      "analogy": "Option is maybe-a-value; Either is value-or-error.",
+      "keyPoints": [
+        "Use map/flatMap to compose",
+        "Prefer explicit error types",
+        "Avoid null in Scala code"
+      ]
+    },
+    "defaultCode": "object Main extends App {\n  val maybeName: Option[String] = Some(\"Ari\")\n  println(maybeName.getOrElse(\"Guest\"))\n}"
+  },
+  {
+    "id": "scala_futures",
+    "language": "scala",
+    "domain": "programming",
+    "title": "Futures",
+    "description": "Run asynchronous work using Future and ExecutionContext.",
+    "order": 12,
+    "enabled": true,
+    "concept": {
+      "definition": "Future represents an asynchronous computation that completes later.",
+      "analogy": "A Future is a placeholder for a result not ready yet.",
+      "keyPoints": [
+        "Requires ExecutionContext",
+        "Use map/flatMap for chaining",
+        "Handle failures explicitly"
+      ]
+    },
+    "defaultCode": "import scala.concurrent.{ExecutionContext, Future}\nimport scala.util.{Failure, Success}\n\nobject Main extends App {\n  implicit val ec: ExecutionContext = ExecutionContext.global\n  val f = Future(42)\n  f.onComplete {\n    case Success(v) => println(v)\n    case Failure(_) => println(\"error\")\n  }\n  Thread.sleep(100)\n}"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "id": "lm_swift_protocols_extensions",
+  "topicId": "swift_protocols_extensions",
+  "language": "swift",
+  "title": "Protocols & Extensions",
+  "difficulty": "medium",
+  "concept": {"headline": "Protocols define contracts; extensions add reusable behavior.", "explanation": "Use protocols for abstraction and extensions for shared APIs.", "syntax": "protocol Greeter {\n    func greet() -> String\n}\nstruct Bot: Greeter {\n    func greet() -> String { \"Hello\" }\n}", "keyPoints": ["Protocol lists requirements", "Types conform explicitly", "Extensions add functionality"]},
+  "demo": {"intro": "Conform a struct to a protocol.", "code": "protocol Greeter {\n    func greet() -> String\n}\nstruct Bot: Greeter {\n    func greet() -> String { \"Hello\" }\n}\nprint(Bot().greet())", "focusLine": 1, "expectedHighlights": ["protocol contract", "conformance", "prints Hello"], "steps": [{"type": "declare", "line": 1, "var": "Greeter", "value": "protocol", "dataType": "protocol", "explanation": {"what": "Define contract", "why": "Abstract behavior", "change": "greet requirement set", "intent": "Decouple implementation", "misconception": "Protocols can define required signatures"}}, {"type": "declare", "line": 4, "var": "Bot", "value": "conforms Greeter", "dataType": "struct", "explanation": {"what": "Implement contract", "why": "Provide concrete behavior", "change": "Bot valid Greeter", "intent": "Polymorphism", "misconception": "Missing methods cause compile error"}}, {"type": "print", "line": 7, "value": "Hello", "explanation": {"what": "Call greet", "why": "Verify conformance", "change": "output <- Hello", "intent": "Demonstrate abstraction", "misconception": "None"}}]},
+  "prediction": {"question": "What happens if required protocol method is missing?", "options": ["Runtime warning", "Compile error", "Ignored", "nil return"], "correctIndex": 1, "explanation": "Swift enforces protocol conformance at compile time."},
+  "explanation": {"afterDemo": "Protocols and extensions scale API design cleanly.", "keyTakeaways": ["Protocols express capability", "Conformance enables polymorphism", "Extensions reduce repetition"]},
+  "practice": {"prompt": "Create protocol Named with var name:String { get }, struct User conforming, print user.name.", "starterCode": "// write code", "solutionCode": "protocol Named {\n    var name: String { get }\n}\nstruct User: Named {\n    let name: String\n}\nprint(User(name: \"Ari\").name)", "hint": "Conform using stored property.", "validation": {"type": "output", "expectedOutput": ["Ari"]}},
+  "feedback": {"successMessage": "Protocol conformance is correct.", "retryHints": ["Implement all requirements", "Use correct property signature"]},
+  "summary": {"title": "Protocols & Extensions — Complete", "takeaways": ["Contracts improve architecture", "Compile-time conformance is safe", "Extensions enhance reuse"], "nextTopicId": "swift_enums"}
+}

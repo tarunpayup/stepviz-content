@@ -1,0 +1,197 @@
+{
+  "id": "lm_elixir_lists",
+  "topicId": "elixir_lists",
+  "language": "elixir",
+  "title": "Lists & Enum",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Elixir lists are singly-linked lists. Prepend with [h | t]. The Enum module — map, filter, reduce — works on any enumerable including lists and ranges.",
+    "explanation": "Lists in Elixir are linked lists — prepending is O(1), random access is O(n). Create with [] literal. [0 | list] prepends 0. [h | t] destructures. The Enum module provides functional transformations: Enum.map transforms each element, Enum.filter selects elements, Enum.reduce accumulates a single value. Enum works on any enumerable (list, range, map, stream).",
+    "syntax": "# Create\nnums = [1, 2, 3, 4, 5]\n\n# Prepend\nnew = [0 | nums]     # [0, 1, 2, 3, 4, 5]\n\n# length\nlength(nums)         # 5\n\n# Enum operations\nEnum.map(nums, fn x -> x * 2 end)    # [2,4,6,8,10]\nEnum.filter(nums, fn x -> rem(x,2)==0 end)  # [2,4]\nEnum.reduce(nums, 0, fn x, acc -> acc + x end)  # 15\n\n# With & shorthand\nEnum.map(nums, &(&1 * 3))   # [3,6,9,12,15]\nEnum.sum(nums)   # 15\nEnum.min(nums)   # 1\nEnum.max(nums)   # 5",
+    "keyPoints": [
+      "[1, 2, 3] — list literal. Linked list internally.",
+      "[h | t] — prepend h to list t (O(1))",
+      "Enum.map(list, fn) — transform. Enum.filter(list, fn) — select.",
+      "Enum.reduce(list, acc, fn) — accumulate to a single value"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch map, filter, and reduce transform a list of numbers.",
+    "code": "nums = [1, 2, 3, 4, 5]\ndoubled = Enum.map(nums, fn x -> x * 2 end)\nIO.inspect(doubled)\nevens = Enum.filter(nums, fn x -> rem(x, 2) == 0 end)\nIO.inspect(evens)\ntotal = Enum.reduce(nums, 0, fn x, acc -> acc + x end)\nIO.puts(total)\nbig = [0 | nums]\nIO.inspect(big)",
+    "focusLine": 1,
+    "expectedHighlights": ["nums=[1..5]", "doubled=[2,4,6,8,10]", "evens=[2,4]", "total=15", "prepend 0"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "nums",
+        "value": "[1, 2, 3, 4, 5]",
+        "dataType": "List (Integer)",
+        "explanation": {
+          "what": "nums = [1, 2, 3, 4, 5] — a list of 5 integers",
+          "why": "[] literal creates a linked list",
+          "change": "nums = [1, 2, 3, 4, 5]",
+          "intent": "Create the base list for transformations",
+          "misconception": "Elixir lists are LINKED lists — not arrays. length(nums) is O(n). hd(nums) (head) and tl(nums) (tail) are O(1). For array-like random access, use tuples or Erlang's :array."
+        }
+      },
+      {
+        "type": "call",
+        "line": 2,
+        "name": "Enum.map",
+        "args": ["nums", "fn x -> x * 2 end"],
+        "returnVar": "doubled",
+        "explanation": {
+          "what": "Enum.map(nums, fn x -> x * 2 end) — applies x*2 to each element",
+          "why": "map transforms each element using the provided function",
+          "change": "doubled = [2, 4, 6, 8, 10]",
+          "intent": "Show Enum.map as element-wise transformation",
+          "misconception": "Enum.map always returns a NEW list — nums is unchanged. Elixir values are immutable, so all Enum operations produce new data structures."
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "[2, 4, 6, 8, 10]",
+        "explanation": {
+          "what": "IO.inspect(doubled) → [2, 4, 6, 8, 10]",
+          "why": "Each element was doubled: 1→2, 2→4, 3→6, 4→8, 5→10",
+          "change": "output ← '[2, 4, 6, 8, 10]'",
+          "intent": "Confirm Enum.map result",
+          "misconception": "Enum.map returns a list in the same ORDER as the input — transformation preserves order"
+        }
+      },
+      {
+        "type": "call",
+        "line": 4,
+        "name": "Enum.filter",
+        "args": ["nums", "fn x -> rem(x, 2) == 0 end"],
+        "returnVar": "evens",
+        "explanation": {
+          "what": "Enum.filter keeps only elements where the function returns true",
+          "why": "rem(x, 2) == 0 checks for even numbers",
+          "change": "evens = [2, 4]",
+          "intent": "Show Enum.filter as element selection",
+          "misconception": "rem/2 is Elixir's remainder function (like % in other languages). rem(x, 2) == 0 means x is even. Note: use rem() not % in Elixir guard clauses."
+        }
+      },
+      {
+        "type": "print",
+        "line": 5,
+        "value": "[2, 4]",
+        "explanation": {
+          "what": "IO.inspect(evens) → [2, 4]",
+          "why": "Only 2 and 4 satisfy rem(x, 2) == 0 from [1,2,3,4,5]",
+          "change": "output ← '[2, 4]'",
+          "intent": "Confirm Enum.filter result",
+          "misconception": "Enum.filter preserves the original ORDER of the list — it does not sort or reorder elements."
+        }
+      },
+      {
+        "type": "call",
+        "line": 6,
+        "name": "Enum.reduce",
+        "args": ["nums", "0", "fn x, acc -> acc + x end"],
+        "returnVar": "total",
+        "explanation": {
+          "what": "Enum.reduce(nums, 0, fn x, acc -> acc + x end) — accumulates sum",
+          "why": "Starts with acc=0, adds each element: 0+1=1, 1+2=3, 3+3=6, 6+4=10, 10+5=15",
+          "change": "total = 15",
+          "intent": "Show Enum.reduce as the general accumulation pattern",
+          "misconception": "reduce takes an INITIAL accumulator value (0 here). The function receives each element (x) and the current accumulator (acc), returns the new accumulator. The final accumulator is the result."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "15",
+        "explanation": {
+          "what": "IO.puts(total) → 15",
+          "why": "1+2+3+4+5 = 15",
+          "change": "output ← '15'",
+          "intent": "Confirm Enum.reduce sum",
+          "misconception": "Enum.sum(nums) is a convenient shorthand for summing — but Enum.reduce generalizes to any accumulation: products, building strings, building maps, etc."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 8,
+        "var": "big",
+        "value": "[0, 1, 2, 3, 4, 5]",
+        "dataType": "List",
+        "explanation": {
+          "what": "[0 | nums] — prepend 0 to the front of nums",
+          "why": "| is the cons operator — [head | tail] constructs a new list",
+          "change": "big = [0, 1, 2, 3, 4, 5]",
+          "intent": "Show O(1) prepend with | operator",
+          "misconception": "Prepending is O(1) — instantly creates a new list node pointing to the existing list. Appending to the END (nums ++ [6]) is O(n) — it must traverse the whole list. Always prefer prepend in Elixir."
+        }
+      },
+      {
+        "type": "print",
+        "line": 9,
+        "value": "[0, 1, 2, 3, 4, 5]",
+        "explanation": {
+          "what": "IO.inspect(big) → [0, 1, 2, 3, 4, 5]",
+          "why": "0 was prepended to [1,2,3,4,5]",
+          "change": "output ← '[0, 1, 2, 3, 4, 5]'",
+          "intent": "Confirm prepend result",
+          "misconception": "nums is still [1,2,3,4,5] — [0 | nums] created a NEW list. Elixir never modifies existing data."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What is the output?\n\nwords = [\"hi\", \"hello\", \"hey\"]\nlong = Enum.filter(words, fn w -> String.length(w) > 2 end)\nIO.puts(length(long))",
+    "options": [
+      "2",
+      "3",
+      "1",
+      "0"
+    ],
+    "correctIndex": 0,
+    "explanation": "String.length: 'hi'=2 (not > 2, excluded), 'hello'=5 (included), 'hey'=3 (included). long=[\"hello\",\"hey\"]. length(long)=2."
+  },
+
+  "explanation": {
+    "afterDemo": "Enum.map, filter, and reduce are the functional triad that replaces most imperative loops in Elixir. They are chainable with the pipe operator |> (coming up). map+filter+reduce thinking is a shift from 'how to iterate' to 'what transformation to apply' — a more declarative and composable style.",
+    "keyTakeaways": [
+      "Enum.map transforms each element. Enum.filter selects elements. Enum.reduce accumulates.",
+      "[h | t] prepends in O(1). Appending ++ is O(n) — prefer prepend.",
+      "All Enum functions return new values — original list is unchanged."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Given nums = [1,2,3,4,5,6,7,8,9,10], use Enum.filter to get even numbers, then Enum.map to square them. Print the result with IO.inspect.",
+    "starterCode": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nevens = Enum.filter(nums, fn x -> rem(x, 2) == 0 end)\nsquared = Enum.map(evens, fn x -> x * x end)\nIO.inspect(squared)",
+    "solutionCode": "nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nevens = Enum.filter(nums, fn x -> rem(x, 2) == 0 end)\nsquared = Enum.map(evens, fn x -> x * x end)\nIO.inspect(squared)",
+    "hint": "Even numbers from 1-10: 2,4,6,8,10. Squared: 4,16,36,64,100.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["[4, 16, 36, 64, 100]"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! Evens [2,4,6,8,10] squared = [4,16,36,64,100].",
+    "retryHints": [
+      "Enum.filter with rem(x,2)==0 picks evens",
+      "Enum.map with x*x squares each",
+      "Expected: [4, 16, 36, 64, 100]"
+    ]
+  },
+
+  "summary": {
+    "title": "Lists & Enum — Complete",
+    "takeaways": [
+      "Lists are linked lists — O(1) prepend, O(n) length/access.",
+      "Enum.map, Enum.filter, Enum.reduce — the functional triad for list transformations.",
+      "All Enum operations return new lists. Original list is immutable and unchanged."
+    ],
+    "nextTopicId": "elixir_tuples"
+  }
+}

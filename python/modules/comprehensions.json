@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_comprehensions",
+  "topicId": "python_comprehensions",
+  "language": "python",
+  "title": "Comprehensions",
+  "difficulty": "medium",
+  "concept": {"headline": "Comprehensions build collections concisely.", "explanation": "Use expression + for + optional if to transform/filter iterables.", "syntax": "squares = [n * n for n in nums if n % 2 == 0]", "keyPoints": ["Readable one-line transforms", "Optional filtering", "Prefer clarity over cleverness"]},
+  "demo": {"intro": "Create squares of even numbers.", "code": "nums = [1, 2, 3, 4]\nsquares = [n * n for n in nums if n % 2 == 0]\nprint(squares)", "focusLine": 2, "expectedHighlights": ["filters evens", "maps to squares", "prints [4, 16]"], "steps": [{"type": "declare", "line": 1, "var": "nums", "value": "[1,2,3,4]", "dataType": "list", "explanation": {"what": "Create source list", "why": "Input iterable", "change": "nums initialized", "intent": "Feed comprehension", "misconception": "Order preserved through comprehension"}}, {"type": "assign", "line": 2, "var": "squares", "value": "[4,16]", "explanation": {"what": "Filter + transform", "why": "Keep evens and square", "change": "squares created", "intent": "Compact pipeline", "misconception": "if here filters, not ternary"}}, {"type": "print", "line": 3, "value": "[4, 16]", "explanation": {"what": "Print result", "why": "Verify comprehension", "change": "output <- [4, 16]", "intent": "Observe transformed data", "misconception": "None"}}]},
+  "prediction": {"question": "Result of [x for x in [1,2,3] if x>1]?", "options": ["[1,2,3]", "[2,3]", "[1]", "[]"], "correctIndex": 1, "explanation": "Filter keeps values greater than 1."},
+  "explanation": {"afterDemo": "Comprehensions are expressive when kept simple.", "keyTakeaways": ["Combine iteration/filtering succinctly", "Use for straightforward transforms", "Refactor complex logic into loops/functions"]},
+  "practice": {"prompt": "From [2,3,4], build list of cubes.", "starterCode": "# write code", "solutionCode": "nums = [2, 3, 4]\ncubes = [n ** 3 for n in nums]\nprint(cubes)", "hint": "Use exponent operator **.", "validation": {"type": "output", "expectedOutput": ["[8, 27, 64]"]}},
+  "feedback": {"successMessage": "Comprehension usage is correct.", "retryHints": ["Use expression before for", "Print computed list"]},
+  "summary": {"title": "Comprehensions — Complete", "takeaways": ["Great for concise transforms", "Optional filters are powerful", "Prefer readable expressions"], "nextTopicId": null}
+}

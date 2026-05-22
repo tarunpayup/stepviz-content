@@ -1,0 +1,253 @@
+{
+  "id": "lm_elixir_modules",
+  "topicId": "elixir_modules",
+  "language": "elixir",
+  "title": "Modules & Named Functions",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "defmodule groups named functions. def for public, defp for private. Multiple function clauses are matched top-to-bottom by pattern. Module.function() is the call syntax.",
+    "explanation": "Elixir code is organized into modules with defmodule. Named functions are defined with def (public) or defp (private). A function can have MULTIPLE clauses — Elixir matches top-to-bottom and executes the first matching clause. This replaces most if/case logic at the function level. The catch-all general clause (with a named variable) goes LAST. Call: ModuleName.function_name(args).",
+    "syntax": "defmodule Greeter do\n  # Multiple clauses — matched top to bottom\n  def greet(\"Alice\") do\n    \"Special greeting for Alice!\"\n  end\n\n  def greet(name) do\n    \"Hello, #{name}!\"\n  end\n\n  # Private — only callable inside Greeter\n  defp secret, do: \"internal only\"\nend\n\nGreeter.greet(\"Alice\")  # \"Special greeting for Alice!\"\nGreeter.greet(\"Bob\")    # \"Hello, Bob!\"",
+    "keyPoints": [
+      "defmodule Name do ... end — module definition",
+      "def name(args) do ... end — public function",
+      "defp — private (only callable within the same module)",
+      "Multiple clauses — matched top-to-bottom; first match wins"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch multiple function clauses match based on pattern — specific clause first, general clause last.",
+    "code": "defmodule Calculator do\n  def describe(0), do: \"zero\"\n  def describe(n) when n > 0, do: \"positive\"\n  def describe(n), do: \"negative\"\n\n  def double(x), do: x * 2\n\n  defp internal_note, do: \"private\"\nend\n\nIO.puts(Calculator.describe(0))\nIO.puts(Calculator.describe(5))\nIO.puts(Calculator.describe(-3))\nIO.puts(Calculator.double(7))",
+    "focusLine": 1,
+    "expectedHighlights": ["defmodule", "clause (0)", "clause when>0", "catch-all", "defp private", "call results"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "Calculator",
+        "value": "defmodule Calculator do",
+        "dataType": "Module",
+        "explanation": {
+          "what": "defmodule Calculator do — opens a module named Calculator",
+          "why": "Modules are the top-level organization unit in Elixir",
+          "change": "Calculator module is defined",
+          "intent": "Show module definition syntax",
+          "misconception": "Module names in Elixir are atoms — Calculator is actually the atom :'Elixir.Calculator'. Module names must start with an uppercase letter by convention."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "describe/1 clause 1",
+        "value": "def describe(0), do: \"zero\"",
+        "dataType": "Function clause",
+        "explanation": {
+          "what": "def describe(0), do: 'zero' — first clause: matches ONLY when argument is exactly 0",
+          "why": "Literal 0 in a function head acts as a pattern constraint",
+          "change": "describe/1 has a clause for literal 0",
+          "intent": "Show specific literal pattern in function head",
+          "misconception": "0 in the function head is a PATTERN — it means 'only match if the argument equals 0'. This is more expressive than if n == 0 do inside the body."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "describe/1 clause 2",
+        "value": "def describe(n) when n > 0, do: \"positive\"",
+        "dataType": "Function clause with guard",
+        "explanation": {
+          "what": "def describe(n) when n > 0 — guard clause: matches when n > 0",
+          "why": "when adds a boolean condition to a clause beyond pattern shape",
+          "change": "describe/1 has a guarded clause for positive numbers",
+          "intent": "Show guard clause syntax with when",
+          "misconception": "Guards in Elixir are limited to a safe subset of expressions (comparison, arithmetic, type checks, rem, etc.) — you cannot call arbitrary functions in a guard. This is intentional for VM pattern-matching optimization."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "describe/1 clause 3",
+        "value": "def describe(n), do: \"negative\"",
+        "dataType": "Function clause (catch-all)",
+        "explanation": {
+          "what": "def describe(n) — catch-all: matches ANYTHING that didn't match above",
+          "why": "n is just a variable — matches any argument without constraint",
+          "change": "describe/1 has a catch-all clause for negatives (and any other cases)",
+          "intent": "Show catch-all clause placed LAST",
+          "misconception": "ORDERING matters! If you placed def describe(n) FIRST, it would ALWAYS match and the specific clauses would never be reached. The Elixir compiler warns about this. Always put specific clauses before general ones."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "double/1",
+        "value": "def double(x), do: x * 2",
+        "dataType": "Function",
+        "explanation": {
+          "what": "def double(x), do: x * 2 — one-line function with comma + do:",
+          "why": "Short functions use compact do: form instead of do...end block",
+          "change": "double/1 defined",
+          "intent": "Show compact single-line function syntax",
+          "misconception": "def f(x), do: body is IDENTICAL to def f(x) do\\n  body\\nend — just more concise for single-expression functions."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 8,
+        "var": "internal_note/0",
+        "value": "defp internal_note, do: \"private\"",
+        "dataType": "Private function",
+        "explanation": {
+          "what": "defp internal_note — private function, only callable within Calculator module",
+          "why": "defp restricts the function to internal use",
+          "change": "internal_note/0 defined as private",
+          "intent": "Show defp for private functions",
+          "misconception": "Calculator.internal_note() from outside the module raises UndefinedFunctionError. defp is how you hide implementation details in Elixir — there is no class-level access control, only module-level pub/priv."
+        }
+      },
+      {
+        "type": "call",
+        "line": 11,
+        "name": "Calculator.describe",
+        "args": ["0"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Calculator.describe(0) — Elixir tries clause 1: describe(0) matches literal 0",
+          "why": "First clause matches, returns 'zero'",
+          "change": "returns 'zero'",
+          "intent": "Show clause 1 matching",
+          "misconception": "Elixir runtime checks clauses IN ORDER. Clause 1: (0) matches? YES — execute immediately, skip clauses 2 and 3."
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "zero",
+        "explanation": {
+          "what": "IO.puts(Calculator.describe(0)) → zero",
+          "why": "Clause 1 matched literal 0",
+          "change": "output ← 'zero'",
+          "intent": "Confirm first clause result",
+          "misconception": "The clause matching happens at CALL TIME, not compile time. Elixir generates efficient dispatch code, but logically it evaluates clauses top-to-bottom."
+        }
+      },
+      {
+        "type": "call",
+        "line": 12,
+        "name": "Calculator.describe",
+        "args": ["5"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Calculator.describe(5) — clause 1: 5 != 0, skip. Clause 2: n=5, 5>0? YES",
+          "why": "Guard n > 0 is true for 5",
+          "change": "returns 'positive'",
+          "intent": "Show clause 2 guard matching",
+          "misconception": "Clause 1 (literal 0) is skipped first. THEN clause 2's guard is evaluated: 5 > 0 is true."
+        }
+      },
+      {
+        "type": "print",
+        "line": 12,
+        "value": "positive",
+        "explanation": {
+          "what": "IO.puts(Calculator.describe(5)) → positive",
+          "why": "Clause 2 guard matched n > 0 for n=5",
+          "change": "output ← 'positive'",
+          "intent": "Confirm guarded clause result",
+          "misconception": "All integers > 0 will match clause 2 — 1, 100, 9999, etc."
+        }
+      },
+      {
+        "type": "call",
+        "line": 13,
+        "name": "Calculator.describe",
+        "args": ["-3"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Calculator.describe(-3) — clause 1: skip. Clause 2: -3>0? NO — skip. Clause 3: catch-all matches.",
+          "why": "Neither specific clause matched; catch-all clause 3 fires",
+          "change": "returns 'negative'",
+          "intent": "Show catch-all clause firing",
+          "misconception": "If clause 3 did NOT exist and -3 was passed, Elixir would raise FunctionClauseError — no matching clause. Elixir requires all inputs to be handled."
+        }
+      },
+      {
+        "type": "print",
+        "line": 13,
+        "value": "negative",
+        "explanation": {
+          "what": "IO.puts(Calculator.describe(-3)) → negative",
+          "why": "Catch-all clause matched",
+          "change": "output ← 'negative'",
+          "intent": "Confirm catch-all result",
+          "misconception": "The catch-all (n without guard) actually matches zero too if we removed clause 1 — it's truly 'any n'. The ordering of clauses is what makes the logic correct."
+        }
+      },
+      {
+        "type": "print",
+        "line": 14,
+        "value": "14",
+        "explanation": {
+          "what": "IO.puts(Calculator.double(7)) → 14",
+          "why": "double(7) = 7 * 2 = 14",
+          "change": "output ← '14'",
+          "intent": "Show single-clause function call",
+          "misconception": "Calculator.double calls a PUBLIC function from outside the module. Calculator.internal_note() would fail with UndefinedFunctionError."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "Which clause fires?\n\ndefmodule Greeter do\n  def greet(\"Alice\"), do: \"Hi Alice!\"\n  def greet(name),    do: \"Hello, #{name}!\"\nend\n\nGreeter.greet(\"Bob\")",
+    "options": [
+      "Second clause: Hello, Bob!",
+      "First clause: Hi Alice!",
+      "Both clauses fire",
+      "FunctionClauseError"
+    ],
+    "correctIndex": 0,
+    "explanation": "Clause 1 checks: 'Bob' == 'Alice'? No — skip. Clause 2: name='Bob', matches. Returns 'Hello, Bob!'."
+  },
+
+  "explanation": {
+    "afterDemo": "Multiple function clauses are the Elixir way of writing conditional logic at the function boundary rather than inside the function body. This leads to smaller, clearer functions — each clause handles one specific case. Combined with pattern matching in function heads, this is one of the most expressive and readable patterns in Elixir.",
+    "keyTakeaways": [
+      "defmodule / def / defp — module, public function, private function.",
+      "Multiple clauses matched top-to-bottom. Specific first, general last.",
+      "when guards add boolean conditions. FunctionClauseError if no clause matches."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Define defmodule Shape with def area({:circle, r}) returning 3.14159 * r * r and def area({:square, s}) returning s * s. Call both.",
+    "starterCode": "defmodule Shape do\n  def area({:circle, r}), do: 3.14159 * r * r\n  def area({:square, s}), do: s * s\nend\n\nIO.puts(Shape.area({:circle, 5}))\nIO.puts(Shape.area({:square, 4}))",
+    "solutionCode": "defmodule Shape do\n  def area({:circle, r}), do: 3.14159 * r * r\n  def area({:square, s}), do: s * s\nend\n\nIO.puts(Shape.area({:circle, 5}))\nIO.puts(Shape.area({:square, 4}))",
+    "hint": "Function head patterns {:circle, r} and {:square, s} dispatch to different area formulas.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["78.53975", "16"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! {:circle, 5} → 78.53975, {:square, 4} → 16.",
+    "retryHints": [
+      "def area({:circle, r}) dispatches on the :circle atom",
+      "3.14159 * 5 * 5 = 78.53975",
+      "4 * 4 = 16"
+    ]
+  },
+
+  "summary": {
+    "title": "Modules & Named Functions — Complete",
+    "takeaways": [
+      "defmodule groups functions. def public, defp private.",
+      "Multiple clauses match top-to-bottom. Specific clauses before catch-all.",
+      "when guards add boolean conditions to match beyond shape."
+    ],
+    "nextTopicId": "elixir_recursion"
+  }
+}

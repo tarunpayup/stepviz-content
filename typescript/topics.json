@@ -1,0 +1,134 @@
+[
+  {
+    "id": "typescript_variables",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Variables: let, const",
+    "description": "Use let and const correctly and understand reassignment rules.",
+    "order": 1,
+    "enabled": true,
+    "concept": {"definition": "TypeScript uses let for mutable bindings and const for non-reassignable bindings.", "analogy": "const is a locked label; let is a writable label.", "keyPoints": ["Prefer const by default", "Use let for values that change", "Type inference works automatically", "Reassigning const causes compile error"]},
+    "defaultCode": "const app = \"StepViz\";\nlet count = 1;\ncount = count + 1;\nconsole.log(app, count);"
+  },
+  {
+    "id": "typescript_data_types",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Core Types",
+    "description": "Understand string, number, boolean, null, undefined, and unions.",
+    "order": 2,
+    "enabled": true,
+    "concept": {"definition": "TypeScript adds static types over JavaScript values.", "analogy": "Types are contracts that catch misuse before runtime.", "keyPoints": ["Primitive types are explicit", "Union types model alternatives", "any bypasses safety", "unknown is safer than any"]},
+    "defaultCode": "let age: number = 20;\nlet name: string = \"Ari\";\nlet active: boolean = true;\nlet id: string | number = \"u1\";\nconsole.log(age, name, active, id);"
+  },
+  {
+    "id": "typescript_functions",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Functions",
+    "description": "Type function parameters/returns and use optional/default params.",
+    "order": 3,
+    "enabled": true,
+    "concept": {"definition": "Function signatures document inputs and outputs and enable compile-time checks.", "analogy": "A function type is a strict API form.", "keyPoints": ["Annotate parameters", "Annotate returns when useful", "Optional params use ?", "Default params reduce call-site boilerplate"]},
+    "defaultCode": "function add(a: number, b: number): number {\n  return a + b;\n}\nconsole.log(add(3, 4));"
+  },
+  {
+    "id": "typescript_control_flow",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Control Flow",
+    "description": "Branch with if/switch and leverage narrowing in conditions.",
+    "order": 4,
+    "enabled": true,
+    "concept": {"definition": "TypeScript narrows union types based on runtime checks.", "analogy": "Checks act like filters that shrink possible types.", "keyPoints": ["if/else and switch drive logic", "typeof checks narrow unions", "strict equality helps precise branches", "exhaustive handling improves safety"]},
+    "defaultCode": "function label(value: string | number): string {\n  if (typeof value === \"string\") return value.toUpperCase();\n  return `#${value}`;\n}\nconsole.log(label(7));"
+  },
+  {
+    "id": "typescript_loops",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Loops",
+    "description": "Use for, for...of, and array iteration methods effectively.",
+    "order": 5,
+    "enabled": true,
+    "concept": {"definition": "TypeScript supports standard JS loops with typed collections.", "analogy": "Loops are controlled paths through a list of values.", "keyPoints": ["for for index control", "for...of for values", "forEach/map for declarative loops", "Prefer readable iteration style"]},
+    "defaultCode": "const nums: number[] = [1, 2, 3];\nlet sum = 0;\nfor (const n of nums) sum += n;\nconsole.log(sum);"
+  },
+  {
+    "id": "typescript_arrays",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Arrays & Tuples",
+    "description": "Type arrays and fixed-shape tuples for safer indexed data.",
+    "order": 6,
+    "enabled": true,
+    "concept": {"definition": "Arrays hold variable-length same-type items; tuples hold fixed positions and types.", "analogy": "Arrays are baskets; tuples are labeled slots.", "keyPoints": ["number[] and Array<number> are equivalent", "Tuples preserve positional meaning", "Readonly arrays prevent mutation", "Use methods with typed callbacks"]},
+    "defaultCode": "const scores: number[] = [90, 80, 85];\nconst point: [number, number] = [10, 20];\nconsole.log(scores[0], point[1]);"
+  },
+  {
+    "id": "typescript_objects",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Object Types",
+    "description": "Define object shapes inline and use optional/readonly fields.",
+    "order": 7,
+    "enabled": true,
+    "concept": {"definition": "Object type annotations constrain required fields and value types.", "analogy": "Object types are blueprints for JSON-like data.", "keyPoints": ["Inline object typing is common", "Optional fields use ?", "readonly prevents writes", "Extra fields can be restricted"]},
+    "defaultCode": "const user: { name: string; age?: number } = { name: \"Mira\" };\nconsole.log(user.name);"
+  },
+  {
+    "id": "typescript_interfaces",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Interfaces",
+    "description": "Use interfaces for reusable object and function contracts.",
+    "order": 8,
+    "enabled": true,
+    "concept": {"definition": "Interfaces describe structural contracts that values must satisfy.", "analogy": "An interface is a checklist for compatible shapes.", "keyPoints": ["Reusable across files", "Supports extension", "Works with classes and objects", "Great for API contracts"]},
+    "defaultCode": "interface User {\n  id: string;\n  name: string;\n}\nconst u: User = { id: \"u1\", name: \"Lina\" };\nconsole.log(u.name);"
+  },
+  {
+    "id": "typescript_classes",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Classes",
+    "description": "Create typed classes with access modifiers and methods.",
+    "order": 9,
+    "enabled": true,
+    "concept": {"definition": "TypeScript classes add typed properties, constructors, and visibility modifiers.", "analogy": "Classes are templates for object instances with behavior.", "keyPoints": ["public/private/protected modifiers", "constructor sets initial state", "methods can be typed", "implements enforces contracts"]},
+    "defaultCode": "class Counter {\n  constructor(private value: number) {}\n  inc(): number { return ++this.value; }\n}\nconsole.log(new Counter(1).inc());"
+  },
+  {
+    "id": "typescript_generics",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Generics",
+    "description": "Write reusable, type-safe functions and containers with type parameters.",
+    "order": 10,
+    "enabled": true,
+    "concept": {"definition": "Generics preserve type information across reusable abstractions.", "analogy": "Generics are templates that lock in concrete types per use.", "keyPoints": ["<T> captures caller type", "Avoids any", "Works for functions/classes/interfaces", "Can add constraints with extends"]},
+    "defaultCode": "function first<T>(items: T[]): T | undefined {\n  return items[0];\n}\nconsole.log(first([\"a\", \"b\"]));"
+  },
+  {
+    "id": "typescript_async_await",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Async/Await",
+    "description": "Handle asynchronous flows with Promise types and await.",
+    "order": 11,
+    "enabled": true,
+    "concept": {"definition": "async functions return Promise values; await unwraps fulfilled results.", "analogy": "await pauses one function path until async work finishes.", "keyPoints": ["async returns Promise<T>", "await only inside async", "try/catch handles rejected promises", "Type Promise results explicitly"]},
+    "defaultCode": "async function getValue(): Promise<number> {\n  return 42;\n}\ngetValue().then(console.log);"
+  },
+  {
+    "id": "typescript_error_handling",
+    "language": "typescript",
+    "domain": "programming",
+    "title": "Error Handling",
+    "description": "Use try/catch safely and narrow unknown errors before reading properties.",
+    "order": 12,
+    "enabled": true,
+    "concept": {"definition": "TypeScript encourages safe error handling by treating caught errors as unknown in strict mode.", "analogy": "Catch gives you an unlabeled box; narrow it before using contents.", "keyPoints": ["Use try/catch for sync and async", "Narrow unknown with instanceof", "Throw Error objects", "Return typed failure states when useful"]},
+    "defaultCode": "try {\n  throw new Error(\"Oops\");\n} catch (err) {\n  if (err instanceof Error) console.log(err.message);\n}"
+  }
+]

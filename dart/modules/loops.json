@@ -1,0 +1,45 @@
+{
+  "id": "lm_dart_loops",
+  "topicId": "dart_loops",
+  "language": "dart",
+  "title": "Loops",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Dart loops support indexed and collection-based iteration.",
+    "explanation": "Use for-in when you need values directly and for when you need index control.",
+    "syntax": "int sum = 0;\nfor (final n in [1, 2, 3]) {\n  sum += n;\n}\nprint(sum);",
+    "keyPoints": ["for-in iterates values", "for handles indexes", "Initialize accumulators before loop"]
+  },
+  "demo": {
+    "intro": "Sum list values using for-in.",
+    "code": "int sum = 0;\nfor (final n in [1, 2, 3]) {\n  sum += n;\n}\nprint(sum);",
+    "focusLine": 2,
+    "expectedHighlights": ["loop enters", "sum updates", "prints 6"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "sum", "value": "0", "dataType": "int", "explanation": {"what": "Initialize total", "why": "Accumulator base", "change": "sum=0", "intent": "Prepare aggregation", "misconception": "Must initialize before loop"}},
+      {"type": "loop_start", "line": 2, "kind": "forEach", "condition": "n in [1,2,3]", "var": "n", "explanation": {"what": "Start iteration", "why": "Loop through each value", "change": "loop active", "intent": "Process sequence", "misconception": "for-in gives values, not indexes"}},
+      {"type": "assign", "line": 3, "var": "sum", "value": "6", "explanation": {"what": "Add each n", "why": "sum += n per step", "change": "sum:0->6", "intent": "Compute total", "misconception": "Updates occur each iteration"}},
+      {"type": "loop_end", "line": 4, "explanation": {"what": "Loop completes", "why": "Sequence exhausted", "change": "loop closed", "intent": "End iteration", "misconception": "No extra iteration after last value"}},
+      {"type": "print", "line": 5, "value": "6", "explanation": {"what": "Print total", "why": "Final sum calculated", "change": "output <- 6", "intent": "Verify result", "misconception": "print does not alter loop state"}}
+    ]
+  },
+  "prediction": {
+    "question": "Output?\n\nint c = 0;\nfor (int i = 0; i < 4; i++) c++;\nprint(c);",
+    "options": ["3", "4", "5", "0"],
+    "correctIndex": 1,
+    "explanation": "Loop runs four times: i = 0,1,2,3 so c becomes 4."
+  },
+  "explanation": {
+    "afterDemo": "Choosing the right loop form keeps code readable and less error-prone.",
+    "keyTakeaways": ["Use for-in for list values", "Use for for index-based loops", "Track accumulators explicitly"]
+  },
+  "practice": {
+    "prompt": "Sum [4,5,6] with for-in and print result.",
+    "starterCode": "// write code",
+    "solutionCode": "int total = 0;\nfor (final n in [4, 5, 6]) {\n  total += n;\n}\nprint(total);",
+    "hint": "Add each n to total.",
+    "validation": {"type": "output", "expectedOutput": ["15"]}
+  },
+  "feedback": {"successMessage": "Looping and accumulation are correct.", "retryHints": ["Start total at 0", "Use for-in list iteration", "Print after loop"]},
+  "summary": {"title": "Loops — Complete", "takeaways": ["for-in is clean for collections", "for supports index control", "Initialize and update state clearly"], "nextTopicId": "dart_collections"}
+}

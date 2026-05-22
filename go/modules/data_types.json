@@ -1,0 +1,118 @@
+{
+  "id": "lm_go_data_types",
+  "topicId": "go_data_types",
+  "language": "go",
+  "title": "Core Data Types",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Go uses strong static typing for primitives.",
+    "explanation": "Core primitives include int, float64, string, and bool.",
+    "syntax": "age := 20\nscore := 9.5\nname := \"Ari\"\nactive := true",
+    "keyPoints": [
+      "int for whole numbers",
+      "float64 for decimals",
+      "string and bool for text/logic"
+    ]
+  },
+  "demo": {
+    "intro": "Declare and print primitive values.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tage := 20\n\tscore := 9.5\n\tname := \"Ari\"\n\tactive := true\n\tfmt.Println(age, score, name, active)\n}",
+    "focusLine": 6,
+    "expectedHighlights": [
+      "typed values declared",
+      "single print for all primitives"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "age",
+        "value": "20",
+        "dataType": "int",
+        "explanation": {
+          "what": "Declare int",
+          "why": "Store whole number",
+          "change": "age set",
+          "intent": "Show integer type",
+          "misconception": "Type inferred as int"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 7,
+        "var": "score",
+        "value": "9.5",
+        "dataType": "float64",
+        "explanation": {
+          "what": "Declare float",
+          "why": "Store decimal",
+          "change": "score set",
+          "intent": "Show float type",
+          "misconception": "Go uses float64 default for decimal literals"
+        }
+      },
+      {
+        "type": "print",
+        "line": 10,
+        "value": "20 9.5 Ari true",
+        "explanation": {
+          "what": "Print primitives",
+          "why": "Validate values",
+          "change": "output emitted",
+          "intent": "Observe typed data",
+          "misconception": "Print formatting is space-separated"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "Which type fits decimal values?",
+    "options": [
+      "int",
+      "float64",
+      "bool",
+      "string"
+    ],
+    "correctIndex": 1,
+    "explanation": "float64 is used for decimal numbers."
+  },
+  "explanation": {
+    "afterDemo": "Type awareness helps prevent many bugs in Go.",
+    "keyTakeaways": [
+      "Choose the right primitive",
+      "Go catches type mismatches at compile time",
+      "Use explicit conversion when needed"
+    ]
+  },
+  "practice": {
+    "prompt": "Declare city='Pune', temp=31.2, sunny=true and print them.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tcity := \"Pune\"\n\ttemp := 31.2\n\tsunny := true\n\tfmt.Println(city, temp, sunny)\n}",
+    "hint": "Use a string, float literal, and boolean.",
+    "validation": {
+      "type": "contains",
+      "expectedTokens": [
+        "Pune",
+        "31.2",
+        "true"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Primitive types were used correctly.",
+    "retryHints": [
+      "Use fmt.Println",
+      "Keep boolean lowercase true",
+      "Use decimal for temp"
+    ]
+  },
+  "summary": {
+    "title": "Core Data Types - Complete",
+    "takeaways": [
+      "Go primitives are explicit",
+      "Static typing improves safety",
+      "Inferred types remain strict"
+    ],
+    "nextTopicId": "go_functions"
+  }
+}

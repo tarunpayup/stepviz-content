@@ -1,0 +1,199 @@
+{
+  "id": "lm_elixir_recursion",
+  "topicId": "elixir_recursion",
+  "language": "elixir",
+  "title": "Recursion",
+  "difficulty": "medium",
+
+  "concept": {
+    "headline": "Recursion replaces loops in Elixir. Use multiple clauses: the base case clause handles the termination condition; the recursive clause processes one element and calls itself on the rest.",
+    "explanation": "Because Elixir has no mutable loop counters, iteration is expressed as recursion. The pattern: define a base case clause (usually empty list []) that returns the final value, then a recursive clause that does ONE step and calls itself on the remaining input. Elixir optimizes tail-recursive functions — the recursive call is in the 'tail' position — so they run in constant stack space (same as iteration).",
+    "syntax": "defmodule Math do\n  # Base case: empty list → 0\n  def sum([]), do: 0\n\n  # Recursive case: head + sum of tail\n  def sum([h | t]), do: h + sum(t)\nend\n\nMath.sum([1, 2, 3, 4, 5])  # 15\n\n# Tail-recursive with accumulator\ndefmodule Math2 do\n  def sum(list), do: sum(list, 0)   # entry: acc=0\n\n  defp sum([], acc), do: acc        # base: return acc\n  defp sum([h | t], acc), do: sum(t, acc + h)  # tail call\nend",
+    "keyPoints": [
+      "Base case: def f([]) — handles the terminal condition",
+      "Recursive case: def f([h | t]) — process h, recurse on t",
+      "Tail recursion: recursive call is the last operation — O(1) stack space",
+      "Accumulator pattern: carry result through acc parameter"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch a recursive sum trace through [1,2,3,4,5] clause by clause.",
+    "code": "defmodule Math do\n  def sum([]), do: 0\n  def sum([h | t]), do: h + sum(t)\nend\n\nIO.puts(Math.sum([]))\nIO.puts(Math.sum([5]))\nIO.puts(Math.sum([1, 2, 3, 4, 5]))",
+    "focusLine": 1,
+    "expectedHighlights": ["defmodule", "base case []→0", "recursive [h|t]", "sum([])=0", "sum([5])=5", "sum([1..5])=15"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 1,
+        "var": "Math",
+        "value": "defmodule Math",
+        "dataType": "Module",
+        "explanation": {
+          "what": "defmodule Math — defines the Math module with recursive sum function",
+          "why": "Module groups the function clauses together",
+          "change": "Math module defined with sum/1",
+          "intent": "Set up the recursive module",
+          "misconception": "The TWO def sum clauses are matched in ORDER at call time. Elixir uses the pattern in the function head ([]) or ([h | t]) to decide which to execute."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "sum/1 base case",
+        "value": "def sum([]), do: 0",
+        "dataType": "Function clause",
+        "explanation": {
+          "what": "def sum([]) — base case: empty list returns 0",
+          "why": "Every recursive function needs a stopping condition",
+          "change": "sum([]) = 0",
+          "intent": "Show the base case stopping the recursion",
+          "misconception": "WITHOUT the base case, sum would recurse forever until the list is empty... and then crash with FunctionClauseError because no clause matches []. The base case is the EXIT condition."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "sum/1 recursive case",
+        "value": "def sum([h | t]), do: h + sum(t)",
+        "dataType": "Function clause",
+        "explanation": {
+          "what": "def sum([h | t]) — splits head/tail, returns h + sum(t)",
+          "why": "[h | t] pattern matches a non-empty list, binding head and tail",
+          "change": "sum([h|t]) = h + sum(t)",
+          "intent": "Show the recursive case reducing the problem by one element",
+          "misconception": "This is NOT tail-recursive — h + sum(t) means Elixir must wait for sum(t) to return before adding h. For large lists this uses stack space proportional to list length. The accumulator version (defp sum(list, acc)) fixes this."
+        }
+      },
+      {
+        "type": "call",
+        "line": 6,
+        "name": "Math.sum",
+        "args": ["[]"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Math.sum([]) — empty list, clause 1 matches immediately, returns 0",
+          "why": "Base case: [] matches def sum([])",
+          "change": "returns 0",
+          "intent": "Show base case with empty list",
+          "misconception": "The sum of an empty list is 0 (identity element for addition). This is the mathematical convention: summing nothing = 0."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "0",
+        "explanation": {
+          "what": "IO.puts(Math.sum([])) → 0",
+          "why": "Base case returned 0",
+          "change": "output ← '0'",
+          "intent": "Confirm base case output",
+          "misconception": "This is also what Enum.sum([]) returns — the base case is universal."
+        }
+      },
+      {
+        "type": "call",
+        "line": 7,
+        "name": "Math.sum",
+        "args": ["[5]"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Math.sum([5]): [5] = [h|t] → h=5, t=[]. Returns 5 + sum([]) = 5 + 0 = 5",
+          "why": "Clause 2 matches [5] as h=5, t=[]. Then recurse: sum([]) = 0 (base case)",
+          "change": "call stack: sum([5]) → 5 + sum([]) → 5 + 0 = 5",
+          "intent": "Trace 2-step recursion for single-element list",
+          "misconception": "Elixir evaluates sum([]) FIRST (recursion goes deeper), then adds 5. The call unwinds from the deepest point (base case) back up."
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "5",
+        "explanation": {
+          "what": "IO.puts(Math.sum([5])) → 5",
+          "why": "5 + sum([]) = 5 + 0 = 5",
+          "change": "output ← '5'",
+          "intent": "Confirm single-element recursion",
+          "misconception": "Single element [5] takes 2 recursive calls: sum([5]) and sum([])."
+        }
+      },
+      {
+        "type": "call",
+        "line": 8,
+        "name": "Math.sum",
+        "args": ["[1, 2, 3, 4, 5]"],
+        "returnVar": "result",
+        "explanation": {
+          "what": "Math.sum([1,2,3,4,5]) → 1 + sum([2,3,4,5]) → 1+2+sum([3,4,5]) → ... → 1+2+3+4+5+0",
+          "why": "Each recursive call strips the head, recurses on the tail, sums on the way back up",
+          "change": "call trace: sum([1..5]) → 1+sum([2..5]) → 1+2+sum([3..5]) → ... → 15",
+          "intent": "Show full trace of recursive sum",
+          "misconception": "The recursion goes DEEP first (to the base case), then adds on the way BACK UP. It is NOT adding from left to right as you read it — it is adding from right to left as the stack unwinds: 0+5+4+3+2+1=15."
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "15",
+        "explanation": {
+          "what": "IO.puts(Math.sum([1,2,3,4,5])) → 15",
+          "why": "1+2+3+4+5 = 15",
+          "change": "output ← '15'",
+          "intent": "Confirm recursive sum result",
+          "misconception": "This took 6 recursive calls: sum([1..5]), sum([2..5]), sum([3..5]), sum([4,5]), sum([5]), sum([]). Production code uses Enum.sum/1 for this, but understanding the recursion explains HOW Enum.sum works under the hood."
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does Math.sum([1, 2, 3, 4, 5]) return?\n\ndefmodule Math do\n  def sum([]), do: 0\n  def sum([h | t]), do: h + sum(t)\nend",
+    "options": [
+      "15",
+      "0",
+      "1",
+      "Infinite loop"
+    ],
+    "correctIndex": 0,
+    "explanation": "1+2+3+4+5 = 15. Base case sum([])=0 terminates. sum unwinds: 5+0=5, 4+5=9, 3+9=12, 2+12=14, 1+14=15."
+  },
+
+  "explanation": {
+    "afterDemo": "Recursion is how Elixir programs express iteration. The pattern is always: base case clause + recursive clause. The accumulator pattern (tail recursion with defp + acc param) is used for large lists to avoid stack overflow. In practice, Enum.map/filter/reduce handle most iteration — but recursion is the MECHANISM they are built on.",
+    "keyTakeaways": [
+      "Base case: def f([]) — terminates recursion. Recursive case: def f([h|t]) — processes head.",
+      "Tail recursion: recursive call in last position → O(1) stack space.",
+      "Accumulator pattern: defp sum([], acc), do: acc; defp sum([h|t], acc), do: sum(t, acc+h)"
+    ]
+  },
+
+  "practice": {
+    "prompt": "Define defmodule Calc with def product([]) returning 1 (base) and def product([h|t]) returning h * product(t). Test with [2,3,4].",
+    "starterCode": "defmodule Calc do\n  def product([]), do: 1\n  def product([h | t]), do: h * product(t)\nend\n\nIO.puts(Calc.product([2, 3, 4]))",
+    "solutionCode": "defmodule Calc do\n  def product([]), do: 1\n  def product([h | t]), do: h * product(t)\nend\n\nIO.puts(Calc.product([2, 3, 4]))",
+    "hint": "product([]) = 1 (multiplicative identity). product([2,3,4]) = 2 * 3 * 4 = 24.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["24"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! 2 * 3 * 4 = 24.",
+    "retryHints": [
+      "Base case: product([]) = 1",
+      "Recursive: h * product(t)",
+      "2 * product([3,4]) → 2 * 3 * product([4]) → 2 * 3 * 4 * 1 = 24"
+    ]
+  },
+
+  "summary": {
+    "title": "Recursion — Complete",
+    "takeaways": [
+      "Base case ([]) terminates. Recursive case ([h|t]) reduces by one element.",
+      "Tail recursion + accumulator = O(1) stack — as efficient as a loop.",
+      "Enum module is built on recursion — learning recursion teaches how Elixir works."
+    ],
+    "nextTopicId": "elixir_pipe_operator"
+  }
+}

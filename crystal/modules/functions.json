@@ -1,0 +1,70 @@
+{
+  "id": "lm_crystal_functions",
+  "topicId": "crystal_functions",
+  "language": "crystal",
+  "title": "Functions & Return Types",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Crystal methods return the last expression automatically.",
+    "explanation": "Use def to declare methods. You can add type restrictions to parameters and return values for clarity and better compile-time checks.",
+    "syntax": "def add(a : Int32, b : Int32) : Int32\n  a + b\nend\n\nputs add(3, 4)",
+    "keyPoints": [
+      "def starts method definition",
+      "Last expression is return value",
+      "Type restrictions improve API clarity",
+      "Methods can be called like add(3, 4)"
+    ]
+  },
+
+  "demo": {
+    "intro": "Follow a typed method call from declaration to output.",
+    "code": "def add(a : Int32, b : Int32) : Int32\n  a + b\nend\n\nresult = add(3, 4)\nputs result",
+    "focusLine": 1,
+    "expectedHighlights": ["method declared", "call with 3 and 4", "result becomes 7", "prints 7"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "add", "value": "method", "dataType": "Method(Int32, Int32 -> Int32)", "explanation": {"what": "Define add method", "why": "Reusable arithmetic logic", "change": "add available in scope", "intent": "Create typed method", "misconception": "Type restrictions do not slow runtime; they guide compilation"}},
+      {"type": "call", "line": 5, "name": "add", "args": ["3", "4"], "returnVar": "result", "explanation": {"what": "Call add(3, 4)", "why": "Pass two Int32 values", "change": "result = 7", "intent": "Show method invocation", "misconception": "Return comes from last expression a + b"}},
+      {"type": "print", "line": 6, "value": "7", "explanation": {"what": "Print result", "why": "puts outputs integer value", "change": "output <- 7", "intent": "Confirm method output", "misconception": "puts prints and adds newline"}}
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\ndef mul(x : Int32, y : Int32)\n  x * y\nend\nputs mul(2, 5)",
+    "options": ["10", "7", "25", "compile error"],
+    "correctIndex": 0,
+    "explanation": "mul returns x * y, so mul(2, 5) is 10."
+  },
+
+  "explanation": {
+    "afterDemo": "Crystal methods feel lightweight but remain strongly checked. This balance makes code concise and reliable.",
+    "keyTakeaways": [
+      "Method return is usually implicit.",
+      "Type restrictions improve maintainability.",
+      "Calls are direct and readable."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Write method square(n : Int32) returning n * n, call square(6), and print result.",
+    "starterCode": "# define square\n# call and print",
+    "solutionCode": "def square(n : Int32) : Int32\n  n * n\nend\n\nputs square(6)",
+    "hint": "The last expression should be n * n.",
+    "validation": {"type": "output", "expectedOutput": ["36"]}
+  },
+
+  "feedback": {
+    "successMessage": "Perfect. Your method definition and output are correct.",
+    "retryHints": ["Use def square(n : Int32)", "Return n * n", "Print square(6)"]
+  },
+
+  "summary": {
+    "title": "Functions — Complete",
+    "takeaways": [
+      "Crystal methods return the final expression.",
+      "Type restrictions are optional but valuable.",
+      "Small typed methods are easy to test and reuse."
+    ],
+    "nextTopicId": "crystal_control_flow"
+  }
+}

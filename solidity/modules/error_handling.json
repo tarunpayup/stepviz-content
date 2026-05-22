@@ -1,0 +1,43 @@
+{
+  "id": "lm_solidity_error_handling",
+  "topicId": "solidity_error_handling",
+  "language": "solidity",
+  "title": "Error Handling",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Solidity errors revert transactions and protect state integrity.",
+    "explanation": "Use require for guards, revert/custom errors for explicit abort paths, and assert for invariants.",
+    "syntax": "error TooSmall(uint256 sent, uint256 min);\nif (msg.value < 1 ether) revert TooSmall(msg.value, 1 ether);",
+    "keyPoints": ["require for preconditions", "custom errors are gas-efficient", "assert for impossible conditions"]
+  },
+  "demo": {
+    "intro": "Use custom error for insufficient payment.",
+    "code": "pragma solidity ^0.8.20;\n\nerror TooSmall(uint256 sent, uint256 min);\n\ncontract Pay {\n  function buy() public payable {\n    if (msg.value < 1 ether) revert TooSmall(msg.value, 1 ether);\n  }\n}",
+    "focusLine": 7,
+    "expectedHighlights": ["custom error declared", "value check", "revert on invalid payment"],
+    "steps": [
+      {"type": "declare", "line": 3, "var": "TooSmall", "value": "custom error", "dataType": "Error", "explanation": {"what": "Define custom error", "why": "Compact revert data", "change": "error type available", "intent": "Gas-efficient failure reporting", "misconception": "Custom errors are cheaper than long strings"}},
+      {"type": "condition_check", "line": 7, "expression": "msg.value < 1 ether", "result": true, "branch": "if", "explanation": {"what": "Validate payment threshold", "why": "Enforce minimum value", "change": "revert branch chosen", "intent": "Protect business rule", "misconception": "Revert undoes state changes"}},
+      {"type": "return", "line": 7, "value": "revert TooSmall", "explanation": {"what": "Abort transaction", "why": "Payment too low", "change": "tx reverts with error data", "intent": "Fail safely", "misconception": "Revert does not consume all gas like older throw"}}
+    ]
+  },
+  "prediction": {
+    "question": "Best tool for checking user input and reverting on failure?",
+    "options": ["assert", "require", "event", "fallback"],
+    "correctIndex": 1,
+    "explanation": "require is intended for input/precondition validation."
+  },
+  "explanation": {
+    "afterDemo": "Clear failure paths make contracts safer and easier to integrate with wallets and apps.",
+    "keyTakeaways": ["Validate inputs aggressively", "Use custom errors to save gas", "Choose require/assert appropriately"]
+  },
+  "practice": {
+    "prompt": "Write function setAge(uint256 a) with require(a > 0, 'invalid') before assignment.",
+    "starterCode": "uint256 public age;\nfunction setAge(uint256 a) public {\n  // guard and assign\n}",
+    "solutionCode": "uint256 public age;\nfunction setAge(uint256 a) public {\n  require(a > 0, 'invalid');\n  age = a;\n}",
+    "hint": "Place require before state write.",
+    "validation": {"type": "step_count", "min": 2}
+  },
+  "feedback": {"successMessage": "Validation + assignment ordering is correct.", "retryHints": ["Guard first, write second", "Use require with message"]},
+  "summary": {"title": "Error Handling — Complete", "takeaways": ["Reverts preserve state integrity", "Custom errors are efficient", "Guard inputs before writes"], "nextTopicId": "solidity_payable"}
+}

@@ -1,0 +1,117 @@
+{
+  "id": "lm_go_goroutines_channels",
+  "topicId": "go_goroutines_channels",
+  "language": "go",
+  "title": "Goroutines & Channels",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Goroutines run work concurrently; channels communicate safely.",
+    "explanation": "Launch concurrent tasks with go and pass values through channels.",
+    "syntax": "ch := make(chan int)\ngo func() { ch <- 42 }()\nv := <-ch",
+    "keyPoints": [
+      "go launches a goroutine",
+      "Channels are typed",
+      "Send and receive coordinate timing"
+    ]
+  },
+  "demo": {
+    "intro": "Send value from goroutine to main via channel.",
+    "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tch := make(chan int)\n\tgo func() {\n\t\tch <- 42\n\t}()\n\tv := <-ch\n\tfmt.Println(v)\n}",
+    "focusLine": 7,
+    "expectedHighlights": [
+      "channel created",
+      "goroutine sends 42",
+      "main receives and prints 42"
+    ],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "ch",
+        "value": "chan int",
+        "dataType": "channel",
+        "explanation": {
+          "what": "Create channel",
+          "why": "Coordinate goroutines",
+          "change": "ch ready for send/receive",
+          "intent": "Concurrent communication",
+          "misconception": "Unbuffered channels synchronize sender/receiver"
+        }
+      },
+      {
+        "type": "call",
+        "line": 7,
+        "name": "goroutine",
+        "args": [],
+        "returnVar": "async send",
+        "explanation": {
+          "what": "Start goroutine",
+          "why": "Run send concurrently",
+          "change": "42 sent to channel",
+          "intent": "Introduce concurrency",
+          "misconception": "go func runs asynchronously"
+        }
+      },
+      {
+        "type": "print",
+        "line": 11,
+        "value": "42",
+        "explanation": {
+          "what": "Receive and print",
+          "why": "Confirm message passing",
+          "change": "output emitted",
+          "intent": "Show synchronization",
+          "misconception": "Receive blocks until value available"
+        }
+      }
+    ]
+  },
+  "prediction": {
+    "question": "Which operator receives from a channel?",
+    "options": [
+      "<-ch",
+      "ch<-",
+      "=>",
+      "::"
+    ],
+    "correctIndex": 0,
+    "explanation": "Receive syntax is value := <-ch."
+  },
+  "explanation": {
+    "afterDemo": "Channels make concurrency safer than shared mutable state.",
+    "keyTakeaways": [
+      "Goroutines are lightweight",
+      "Channels communicate across goroutines",
+      "Blocking semantics coordinate flow"
+    ]
+  },
+  "practice": {
+    "prompt": "Create channel of string, send 'ok' from goroutine, receive and print.",
+    "starterCode": "package main\n\nfunc main() {\n\t// write code\n}",
+    "solutionCode": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tch := make(chan string)\n\tgo func() {\n\t\tch <- \"ok\"\n\t}()\n\tfmt.Println(<-ch)\n}",
+    "hint": "Use make(chan string) and <-ch for receive.",
+    "validation": {
+      "type": "output",
+      "expectedOutput": [
+        "ok"
+      ]
+    }
+  },
+  "feedback": {
+    "successMessage": "Goroutine and channel usage are correct.",
+    "retryHints": [
+      "Create typed channel",
+      "Send inside goroutine",
+      "Receive before printing"
+    ]
+  },
+  "summary": {
+    "title": "Goroutines & Channels - Complete",
+    "takeaways": [
+      "Go concurrency is lightweight",
+      "Channels coordinate communication",
+      "Blocking receive ensures ordering"
+    ],
+    "nextTopicId": null
+  }
+}

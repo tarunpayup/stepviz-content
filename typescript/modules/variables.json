@@ -1,0 +1,44 @@
+{
+  "id": "lm_typescript_variables",
+  "topicId": "typescript_variables",
+  "language": "typescript",
+  "title": "Variables: let, const",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Use const by default; use let only when values must change.",
+    "explanation": "const prevents reassignment and catches accidental updates at compile time. let allows controlled mutation.",
+    "syntax": "const app = \"StepViz\";\nlet count = 1;\ncount = count + 1;\nconsole.log(app, count);",
+    "keyPoints": ["const is non-reassignable", "let allows reassignment", "Type inference works automatically"]
+  },
+  "demo": {
+    "intro": "See one immutable and one mutable variable in action.",
+    "code": "const app = \"StepViz\";\nlet count = 1;\ncount = count + 1;\nconsole.log(app, count);",
+    "focusLine": 1,
+    "expectedHighlights": ["app fixed", "count increments", "prints StepViz 2"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "app", "value": "StepViz", "dataType": "string", "explanation": {"what": "Declare const app", "why": "Value should not be reassigned", "change": "app = 'StepViz'", "intent": "Show immutable binding", "misconception": "const freezes binding, not necessarily object internals"}},
+      {"type": "declare", "line": 2, "var": "count", "value": "1", "dataType": "number", "explanation": {"what": "Declare mutable counter", "why": "Counter updates over time", "change": "count = 1", "intent": "Set mutable state", "misconception": "let does not mean any type"}},
+      {"type": "assign", "line": 3, "var": "count", "value": "2", "explanation": {"what": "Increment count", "why": "Valid because count is let", "change": "count: 1 -> 2", "intent": "Demonstrate reassignment", "misconception": "Reassigning const would be compile error"}},
+      {"type": "print", "line": 4, "value": "StepViz 2", "explanation": {"what": "Log values", "why": "Observe final state", "change": "output <- StepViz 2", "intent": "Verify mutation and const read", "misconception": "console.log does not mutate variables"}}
+    ]
+  },
+  "prediction": {
+    "question": "What happens?\n\nconst n = 1;\nn = 2;",
+    "options": ["n becomes 2", "runtime error only", "compile error", "prints 1"],
+    "correctIndex": 2,
+    "explanation": "TypeScript rejects reassignment to const at compile time."
+  },
+  "explanation": {
+    "afterDemo": "Choosing const by default reduces bugs and improves code intent clarity.",
+    "keyTakeaways": ["Prefer const", "Use let for true state changes", "Compiler catches const reassignment"]
+  },
+  "practice": {
+    "prompt": "Create const course = \"TS\" and let score = 5; increase score by 3 and print 'TS 8'.",
+    "starterCode": "// write code",
+    "solutionCode": "const course = \"TS\";\nlet score = 5;\nscore += 3;\nconsole.log(course, score);",
+    "hint": "Use += for the update.",
+    "validation": {"type": "output", "expectedOutput": ["TS 8"]}
+  },
+  "feedback": {"successMessage": "Great variable choice and update.", "retryHints": ["Keep course as const", "Update score with let", "Print both values"]},
+  "summary": {"title": "Variables — Complete", "takeaways": ["const for stability", "let for mutation", "Inference keeps code concise"], "nextTopicId": "typescript_data_types"}
+}

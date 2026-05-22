@@ -1,0 +1,251 @@
+{
+  "id": "lm_kotlin_loops",
+  "topicId": "kotlin_loops",
+  "language": "kotlin",
+  "title": "Loops: for, while, repeat",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Kotlin's for iterates over ranges and collections. repeat runs a block N times. while and do-while handle condition-driven loops.",
+    "explanation": "Kotlin's for loop works with anything that is Iterable — ranges, lists, maps, strings. Ranges are created with .. (inclusive), until (exclusive), downTo, and step. repeat(n) { } is a cleaner way to run a block n times without managing an index. while and do-while behave the same as in Java.",
+    "syntax": "// inclusive range: 1,2,3,4,5\nfor (i in 1..5) println(i)\n\n// exclusive: 0,1,2,3,4\nfor (i in 0 until 5) println(i)\n\n// countdown with step\nfor (i in 10 downTo 1 step 2) print(\"$i \") // 10 8 6 4 2\n\n// repeat N times\nrepeat(3) { println(\"hello\") }\n\n// while\nvar x = 0\nwhile (x < 5) { print(x++); print(\" \") }",
+    "keyPoints": [
+      "for (i in 1..5) — inclusive range",
+      "for (i in 0 until 5) — exclusive (stops at 4)",
+      "downTo + step for countdown",
+      "repeat(n) { } — simplest N-times loop, no index variable needed"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch three loop constructs in action: a for range, a repeat, and a while loop.",
+    "code": "fun main() {\n    for (i in 1..3) {\n        println(\"for: $i\")\n    }\n    repeat(2) {\n        println(\"repeat\")\n    }\n    var x = 0\n    while (x < 2) {\n        println(\"while: $x\")\n        x++\n    }\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["i=1", "i=2", "i=3", "repeat 1", "repeat 2", "x=0", "x=1"],
+    "steps": [
+      {
+        "type": "loop_start",
+        "line": 2,
+        "var": "i",
+        "start": "1",
+        "end": "3",
+        "explanation": {
+          "what": "for (i in 1..3) — starting iteration over range 1..3",
+          "why": "1..3 is an IntRange containing 1, 2, 3",
+          "change": "i = 1 for first iteration",
+          "intent": "Show for-range creating a sequence of values",
+          "misconception": "1..3 is inclusive — i will take values 1, 2, AND 3. Use until to exclude the end: 1 until 3 gives 1, 2."
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 2,
+        "var": "i",
+        "value": "1",
+        "result": true,
+        "explanation": {
+          "what": "i = 1, still in range → body executes",
+          "why": "1 is within 1..3",
+          "change": "body runs with i = 1",
+          "intent": "Show first iteration",
+          "misconception": "for over a range doesn't re-evaluate a condition each time like while — the range object produces the next value internally"
+        }
+      },
+      {
+        "type": "print",
+        "line": 3,
+        "value": "for: 1",
+        "explanation": {
+          "what": "println(\"for: $i\") → 'for: 1'",
+          "why": "i = 1 on this iteration",
+          "change": "output ← 'for: 1'",
+          "intent": "Show loop body executing",
+          "misconception": "String template $i embeds the current loop variable — each iteration it holds a different value"
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 2,
+        "var": "i",
+        "value": "2",
+        "result": true,
+        "explanation": {
+          "what": "i advances to 2 → body executes again",
+          "why": "2 is still in range",
+          "change": "output ← 'for: 2'",
+          "intent": "Show second iteration",
+          "misconception": "You do not increment i manually — the for-range loop handles advancement automatically"
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 2,
+        "var": "i",
+        "value": "3",
+        "result": true,
+        "explanation": {
+          "what": "i advances to 3 → last iteration",
+          "why": "3 is the inclusive end of 1..3",
+          "change": "output ← 'for: 3'",
+          "intent": "Show last iteration of inclusive range",
+          "misconception": "After i=3 the range is exhausted and the loop exits — i does not increment to 4"
+        }
+      },
+      {
+        "type": "loop_end",
+        "line": 4,
+        "explanation": {
+          "what": "for loop finished — all three values iterated",
+          "why": "Range 1..3 exhausted",
+          "change": "execution continues after the for block",
+          "intent": "Show loop termination",
+          "misconception": "i is no longer accessible after the loop — it is scoped to the for block"
+        }
+      },
+      {
+        "type": "loop_start",
+        "line": 5,
+        "var": "iteration",
+        "start": "1",
+        "end": "2",
+        "explanation": {
+          "what": "repeat(2) { ... } — runs the block 2 times",
+          "why": "repeat is cleaner than for when you don't need an index variable",
+          "change": "block will execute 2 times",
+          "intent": "Introduce repeat as a simple N-times loop",
+          "misconception": "repeat is a standard library function, not a keyword. The block receives the current index (0-based) as an implicit it parameter, but we can ignore it."
+        }
+      },
+      {
+        "type": "print",
+        "line": 6,
+        "value": "repeat",
+        "explanation": {
+          "what": "println(\"repeat\") runs twice",
+          "why": "repeat(2) runs the block 2 times",
+          "change": "output ← 'repeat' (twice)",
+          "intent": "Show repeat producing identical output each time",
+          "misconception": "repeat(2) is equivalent to for (i in 0 until 2) { ... } but more readable when the index is unneeded"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 8,
+        "var": "x",
+        "value": "0",
+        "dataType": "Int",
+        "explanation": {
+          "what": "var x = 0 — mutable counter for the while loop",
+          "why": "while needs an external variable to track its condition",
+          "change": "x = 0",
+          "intent": "Show while loop requires manual counter management",
+          "misconception": "Unlike for, while does not create a loop variable for you — you must declare and update it yourself"
+        }
+      },
+      {
+        "type": "loop_start",
+        "line": 9,
+        "var": "x",
+        "start": "0",
+        "end": "1",
+        "explanation": {
+          "what": "while (x < 2) — condition-driven loop",
+          "why": "Loop runs as long as x is less than 2",
+          "change": "condition checked: 0 < 2 → true",
+          "intent": "Show while as a condition-checked loop",
+          "misconception": "while checks the condition BEFORE each iteration — if x started at 2, the body would never execute"
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 9,
+        "var": "x",
+        "value": "0",
+        "result": true,
+        "explanation": {
+          "what": "0 < 2 → true — body executes, x++",
+          "why": "x = 0, condition satisfied",
+          "change": "output ← 'while: 0', then x = 1",
+          "intent": "Show first while iteration",
+          "misconception": "x++ increments AFTER the value is used in println — the output shows 0, then x becomes 1"
+        }
+      },
+      {
+        "type": "loop_check",
+        "line": 9,
+        "var": "x",
+        "value": "1",
+        "result": true,
+        "explanation": {
+          "what": "1 < 2 → true — body executes again, x++",
+          "why": "x = 1, condition still satisfied",
+          "change": "output ← 'while: 1', then x = 2",
+          "intent": "Show second while iteration",
+          "misconception": "After this iteration x = 2; the condition 2 < 2 is false, so the loop stops"
+        }
+      },
+      {
+        "type": "loop_end",
+        "line": 11,
+        "explanation": {
+          "what": "x = 2, condition 2 < 2 is false — while loop exits",
+          "why": "Condition no longer holds",
+          "change": "while loop terminated",
+          "intent": "Show loop exit condition",
+          "misconception": "If you forget to update x inside the while body you create an infinite loop — x would stay 0 forever"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this print?\n\nfor (i in 1..5 step 2) print(\"$i \")",
+    "options": [
+      "1 2 3 4 5",
+      "1 3 5",
+      "2 4",
+      "1 3 5 7"
+    ],
+    "correctIndex": 1,
+    "explanation": "step 2 makes the range advance by 2: 1, 3, 5. The range ends at 5 (inclusive), so it prints 1 3 5."
+  },
+
+  "explanation": {
+    "afterDemo": "Kotlin loops are deliberately simple and expressive. The range syntax (1..5, 0 until 5, downTo, step) covers most iteration patterns without verbose for(int i=0; i<n; i++) boilerplate. repeat makes N-times loops intention-revealing. while is there when you genuinely have a condition, not a fixed range.",
+    "keyTakeaways": [
+      "for (i in 1..5) — inclusive; for (i in 0 until 5) — exclusive (0..4).",
+      "downTo and step allow countdown and strided ranges: 10 downTo 1 step 2.",
+      "repeat(n) { } is idiomatic for N-times loops when the index isn't needed."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Print a multiplication table for 3: 3x1=3, 3x2=6, ... 3x5=15. Use a for loop over 1..5.",
+    "starterCode": "fun main() {\n    // for loop over 1..5\n    // print: \"3x$i=${3*i}\" each line\n}",
+    "solutionCode": "fun main() {\n    for (i in 1..5) {\n        println(\"3x$i=${3 * i}\")\n    }\n}",
+    "hint": "for (i in 1..5) — use string template \"3x$i=${3 * i}\"",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["3x1=3", "3x2=6", "3x3=9", "3x4=12", "3x5=15"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! The for loop ran 5 iterations, printing 3x1=3 through 3x5=15.",
+    "retryHints": [
+      "for (i in 1..5) — inclusive range",
+      "Use ${3 * i} for the product (expression template needs curly braces)",
+      "Expected lines: 3x1=3, 3x2=6, 3x3=9, 3x4=12, 3x5=15"
+    ]
+  },
+
+  "summary": {
+    "title": "Loops — Complete",
+    "takeaways": [
+      "for (i in range) iterates over ranges and collections — no manual index management.",
+      "Ranges: 1..5 (inclusive), 0 until 5 (exclusive), 10 downTo 1 step 2 (countdown).",
+      "repeat(n) is idiomatic for counted loops. while for condition-driven loops."
+    ],
+    "nextTopicId": "kotlin_null_safety"
+  }
+}

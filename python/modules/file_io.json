@@ -1,0 +1,14 @@
+{
+  "id": "lm_python_file_io",
+  "topicId": "python_file_io",
+  "language": "python",
+  "title": "File I/O",
+  "difficulty": "medium",
+  "concept": {"headline": "Use with-open for safe file handling.", "explanation": "Context managers automatically close files after read/write.", "syntax": "with open('note.txt', 'w') as f:\n    f.write('hello')", "keyPoints": ["Modes: r, w, a", "with auto-closes handles", "Always handle potential IO errors"]},
+  "demo": {"intro": "Write and read a text file.", "code": "with open('note.txt', 'w') as f:\n    f.write('hello')\nwith open('note.txt', 'r') as f:\n    print(f.read())", "focusLine": 1, "expectedHighlights": ["file written", "file read", "prints hello"], "steps": [{"type": "call", "line": 1, "name": "open", "args": ["note.txt", "w"], "returnVar": "f", "explanation": {"what": "Open file for writing", "why": "Persist text", "change": "file handle acquired", "intent": "Write output", "misconception": "w truncates existing content"}}, {"type": "call", "line": 3, "name": "open", "args": ["note.txt", "r"], "returnVar": "f", "explanation": {"what": "Reopen for reading", "why": "Verify written data", "change": "read handle acquired", "intent": "Check persistence", "misconception": "with closes automatically"}}, {"type": "print", "line": 4, "value": "hello", "explanation": {"what": "Print file content", "why": "Confirm IO", "change": "output <- hello", "intent": "Observe result", "misconception": "Encoding defaults can matter in real apps"}}]},
+  "prediction": {"question": "Best pattern for automatic close?", "options": ["open() only", "with open(...) as f", "global file handle", "manual only"], "correctIndex": 1, "explanation": "with ensures close even on exceptions."},
+  "explanation": {"afterDemo": "Safe file patterns prevent leaked resources and data loss.", "keyTakeaways": ["Use with for file safety", "Choose mode carefully", "Validate IO paths and errors"]},
+  "practice": {"prompt": "Write 'ok' to a.txt then read and print it.", "starterCode": "# write code", "solutionCode": "with open('a.txt', 'w') as f:\n    f.write('ok')\nwith open('a.txt', 'r') as f:\n    print(f.read())", "hint": "Use two with blocks.", "validation": {"type": "output", "expectedOutput": ["ok"]}},
+  "feedback": {"successMessage": "File write/read flow is correct.", "retryHints": ["Use with open(..., 'w')", "Read back with 'r' mode"]},
+  "summary": {"title": "File I/O — Complete", "takeaways": ["with manages file lifecycle", "Modes define behavior", "Read-back verifies writes"], "nextTopicId": "python_comprehensions"}
+}

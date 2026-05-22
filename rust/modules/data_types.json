@@ -1,0 +1,169 @@
+{
+  "id": "lm_rust_data_types",
+  "topicId": "rust_data_types",
+  "language": "rust",
+  "title": "Data Types",
+  "difficulty": "easy",
+
+  "concept": {
+    "headline": "Every value in Rust has a precise type known at compile time.",
+    "explanation": "Rust's type system is static — the compiler knows the exact type of every value before the program runs. Scalar types represent a single value: integers (i32, u8, …), floats (f32, f64), booleans, and chars. Compound types group values: tuples hold a fixed number of mixed-type items; arrays hold a fixed number of same-type items.",
+    "syntax": "// Scalar\nlet age: i32 = 30;\nlet height: f64 = 1.75;\nlet active: bool = true;\nlet grade: char = 'A';\n\n// Compound\nlet pair: (i32, f64) = (1, 2.5);\nlet first = pair.0;           // tuple access by index\n\nlet scores: [i32; 3] = [90, 85, 95];\nlet top = scores[0];          // array access",
+    "keyPoints": [
+      "Default integer type is i32; default float is f64",
+      "bool values are exactly true or false — not 0/1",
+      "char is a Unicode scalar (4 bytes) — not a byte",
+      "Tuple elements accessed with .0, .1, … — no variable index",
+      "Array size is part of the type: [i32; 3] ≠ [i32; 4]"
+    ]
+  },
+
+  "demo": {
+    "intro": "Watch Rust allocate four scalar variables and one tuple, then print them all.",
+    "code": "fn main() {\n    let age: i32 = 30;\n    let pi: f64 = 3.14;\n    let active: bool = true;\n    let grade: char = 'A';\n    let pair = (age, pi);\n    println!(\"{} {} {} {}\", age, pi, active, grade);\n    println!(\"{:?}\", pair);\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["age = 30", "pi = 3.14", "active = true", "grade = A", "pair = (30, 3.14)", "println outputs"],
+    "steps": [
+      {
+        "type": "declare",
+        "line": 2,
+        "var": "age",
+        "value": "30",
+        "dataType": "i32",
+        "explanation": {
+          "what": "Declaring age as i32 = 30",
+          "why": "i32 is a signed 32-bit integer — suitable for whole numbers in the range –2,147,483,648 to 2,147,483,647",
+          "change": "age = 30 (new i32 slot)",
+          "intent": "Store a whole number representing a person's age",
+          "misconception": "i32 and u32 have the same size (4 bytes) but u32 cannot hold negatives — choose based on whether negative values are possible"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 3,
+        "var": "pi",
+        "value": "3.14",
+        "dataType": "f64",
+        "explanation": {
+          "what": "Declaring pi as f64 = 3.14",
+          "why": "f64 is a 64-bit floating-point number — Rust's default float, providing ~15 decimal digits of precision",
+          "change": "pi = 3.14 (new f64 slot)",
+          "intent": "Store a decimal value with high precision",
+          "misconception": "Floats are not exact — 3.14 is stored as the closest representable IEEE 754 value, which is slightly off from the true decimal"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 4,
+        "var": "active",
+        "value": "true",
+        "dataType": "bool",
+        "explanation": {
+          "what": "Declaring active as bool = true",
+          "why": "bool holds exactly two values: true or false. Rust does not coerce integers to bool.",
+          "change": "active = true (new bool slot)",
+          "intent": "Store a flag representing an on/off or yes/no state",
+          "misconception": "Unlike C, you cannot use 0 or 1 in place of false/true in Rust — if conditions must be bool"
+        }
+      },
+      {
+        "type": "declare",
+        "line": 5,
+        "var": "grade",
+        "value": "A",
+        "dataType": "char",
+        "explanation": {
+          "what": "Declaring grade as char = 'A'",
+          "why": "char stores a single Unicode scalar value — it can hold letters, digits, emoji, or any Unicode codepoint",
+          "change": "grade = 'A' (new char slot)",
+          "intent": "Store a single character for display or comparison",
+          "misconception": "A char in Rust is 4 bytes (Unicode), not 1 byte like in C. Use &str or String for text."
+        }
+      },
+      {
+        "type": "declare",
+        "line": 6,
+        "var": "pair",
+        "value": "(30, 3.14)",
+        "dataType": "(i32, f64)",
+        "explanation": {
+          "what": "Creating tuple pair = (30, 3.14)",
+          "why": "Tuples group different types into a single compound value. Type is inferred as (i32, f64) from the elements.",
+          "change": "pair = (30, 3.14) (new (i32, f64) slot)",
+          "intent": "Bundle age and pi together so both can be passed or returned as one unit",
+          "misconception": "Tuples have a fixed length — you cannot push items into a tuple at runtime like you can with a Vec"
+        }
+      },
+      {
+        "type": "print",
+        "line": 7,
+        "value": "30 3.14 true A",
+        "explanation": {
+          "what": "Printing all four scalars",
+          "why": "println! formats each value using its Display implementation",
+          "change": "output ← '30 3.14 true A'",
+          "intent": "Verify the stored values match what was assigned",
+          "misconception": "{} uses Display formatting; {:?} uses Debug formatting — tuples and arrays require {:?}"
+        }
+      },
+      {
+        "type": "print",
+        "line": 8,
+        "value": "(30, 3.14)",
+        "explanation": {
+          "what": "Printing the tuple with debug format",
+          "why": "Tuples do not implement Display, so {:?} (Debug) is required",
+          "change": "output ← '(30, 3.14)'",
+          "intent": "Show the full tuple structure in the console",
+          "misconception": "Using {} instead of {:?} for a tuple would cause a compile error — tuples lack a Display impl by default"
+        }
+      }
+    ]
+  },
+
+  "prediction": {
+    "question": "What does this code print?\n\nlet t = (10, 'z', false);\nprintln!(\"{} {} {}\", t.0, t.1, t.2);",
+    "options": ["10 z false", "(10, 'z', false)", "10 'z' false", "compile error"],
+    "correctIndex": 0,
+    "explanation": "t.0 is 10 (i32), t.1 is 'z' (char — printed without quotes), t.2 is false (bool). {} formats each naturally: 10 z false."
+  },
+
+  "explanation": {
+    "afterDemo": "You saw four scalar slots and one tuple created in memory. Scalars are independent; the tuple groups two of them under a single name. The Debug format {:?} is necessary for compound types like tuples and arrays because they have no default Display.",
+    "keyTakeaways": [
+      "Rust's scalar types are i-integers, f-floats, bool, and char.",
+      "Tuple elements are accessed with .0, .1, … — compile-time indices only.",
+      "Arrays have a fixed size that is part of the type; use Vec<T> for growable lists."
+    ]
+  },
+
+  "practice": {
+    "prompt": "Declare an array of three i32 values: 10, 20, 30. Print the second element (index 1).",
+    "starterCode": "fn main() {\n    // declare the array\n\n    // print index 1\n}",
+    "solutionCode": "fn main() {\n    let nums: [i32; 3] = [10, 20, 30];\n    println!(\"{}\", nums[1]);\n}",
+    "hint": "let nums: [i32; 3] = [10, 20, 30]; then println!(\"{}\", nums[1]);",
+    "validation": {
+      "type": "output",
+      "expectedOutput": ["20"]
+    }
+  },
+
+  "feedback": {
+    "successMessage": "Correct! You declared a fixed-size array and accessed an element by index.",
+    "retryHints": [
+      "Array syntax: [Type; N] — e.g. [i32; 3]",
+      "Index with nums[1] — arrays are zero-indexed, so index 1 is the second element.",
+      "Expected output is exactly 20 (no trailing spaces)."
+    ]
+  },
+
+  "summary": {
+    "title": "Data Types — Complete",
+    "takeaways": [
+      "Rust's type system is static — every binding has a known type at compile time.",
+      "Scalar types: integers, floats, bool, char.",
+      "Compound types: tuples (mixed, fixed-length) and arrays (same type, fixed-length)."
+    ],
+    "nextTopicId": "rust_functions"
+  }
+}
