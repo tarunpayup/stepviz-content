@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_case_classes",
+  "topicId": "scala_case_classes",
+  "language": "scala",
+  "title": "Case Classes",
+  "difficulty": "easy",
+  "concept": {
+    "headline": "Case classes are concise immutable data models.",
+    "explanation": "They auto-generate constructor, equals, toString, and copy.",
+    "syntax": "case class User(name: String, score: Int)",
+    "keyPoints": ["Great for domain models", "Immutable by default", "Works with pattern matching"]
+  },
+  "demo": {
+    "intro": "Create and print a case class instance.",
+    "code": "case class User(name: String, score: Int)\nobject Main extends App {\n  val u = User(\"Ari\", 10)\n  println(u)\n}",
+    "focusLine": 1,
+    "expectedHighlights": ["case class declared", "instance created", "prints User(Ari,10)"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "User", "value": "case class", "dataType": "type", "explanation": {"what": "Declare case class", "why": "Model immutable record", "change": "User type created", "intent": "Boilerplate reduction", "misconception": "Useful methods auto-generated"}},
+      {"type": "declare", "line": 3, "var": "u", "value": "User(Ari,10)", "dataType": "User", "explanation": {"what": "Instantiate model", "why": "Create typed data", "change": "u initialized", "intent": "Use primary constructor", "misconception": "Fields are vals by default"}},
+      {"type": "print", "line": 4, "value": "User(Ari,10)", "explanation": {"what": "Print instance", "why": "Observe generated toString", "change": "output emitted", "intent": "Validate case class behavior", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Which method is auto-generated for case classes?", "options": ["main", "copy", "close", "run"], "correctIndex": 1, "explanation": "copy is generated automatically."},
+  "explanation": {"afterDemo": "Case classes are the default data model choice in Scala.", "keyTakeaways": ["Immutable records", "Built-in utility methods", "Pattern-match friendly"]},
+  "practice": {
+    "prompt": "Create case class Point(x:Int,y:Int), create Point(2,3), print it.",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "case class Point(x: Int, y: Int)\nobject Main extends App {\n  val p = Point(2, 3)\n  println(p)\n}",
+    "hint": "Declare case class above object Main.",
+    "validation": {"type": "contains", "expectedTokens": ["Point", "2", "3"]}
+  },
+  "feedback": {"successMessage": "Case class model is correct.", "retryHints": ["Use case class keyword", "Create instance with constructor syntax"]},
+  "summary": {"title": "Case Classes - Complete", "takeaways": ["Minimal boilerplate", "Immutable data", "Easy printing/comparison"], "nextTopicId": "scala_pattern_matching"}
+}

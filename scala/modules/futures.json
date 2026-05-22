@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_futures",
+  "topicId": "scala_futures",
+  "language": "scala",
+  "title": "Futures",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Future models asynchronous computations.",
+    "explanation": "Use Future with an ExecutionContext to run work concurrently.",
+    "syntax": "implicit val ec = ExecutionContext.global\nval f = Future(42)",
+    "keyPoints": ["Needs implicit ExecutionContext", "Use onComplete/map/flatMap", "Handle failure branch"]
+  },
+  "demo": {
+    "intro": "Compute a value asynchronously and print it.",
+    "code": "import scala.concurrent.{ExecutionContext, Future}\nimport scala.util.{Failure, Success}\n\nobject Main extends App {\n  implicit val ec: ExecutionContext = ExecutionContext.global\n  val f = Future(42)\n  f.onComplete {\n    case Success(v) => println(v)\n    case Failure(_) => println(\"error\")\n  }\n  Thread.sleep(100)\n}",
+    "focusLine": 6,
+    "expectedHighlights": ["future started", "success callback prints 42"],
+    "steps": [
+      {"type": "declare", "line": 5, "var": "ec", "value": "ExecutionContext.global", "dataType": "ExecutionContext", "explanation": {"what": "Set execution context", "why": "Schedule async tasks", "change": "implicit context available", "intent": "Enable Future", "misconception": "Future needs an ExecutionContext"}},
+      {"type": "call", "line": 6, "name": "Future", "args": ["42"], "returnVar": "f", "explanation": {"what": "Create Future", "why": "Run computation asynchronously", "change": "f pending->success", "intent": "Async model", "misconception": "Result arrives later"}},
+      {"type": "print", "line": 8, "value": "42", "explanation": {"what": "Handle success callback", "why": "Observe async result", "change": "output emitted", "intent": "Verify completion", "misconception": "Thread.sleep here keeps app alive briefly"}}
+    ]
+  },
+  "prediction": {"question": "What is required for Future execution?", "options": ["Serializer", "ExecutionContext", "Trait", "Option"], "correctIndex": 1, "explanation": "Future requires an implicit ExecutionContext."},
+  "explanation": {"afterDemo": "Futures let you compose non-blocking workflows.", "keyTakeaways": ["Async computations are first-class", "Always handle failures", "Compose with map/flatMap"]},
+  "practice": {
+    "prompt": "Create Future(7), onComplete print success value, keep app alive briefly.",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "import scala.concurrent.{ExecutionContext, Future}\nimport scala.util.{Failure, Success}\n\nobject Main extends App {\n  implicit val ec: ExecutionContext = ExecutionContext.global\n  val f = Future(7)\n  f.onComplete {\n    case Success(v) => println(v)\n    case Failure(_) => println(\"error\")\n  }\n  Thread.sleep(100)\n}",
+    "hint": "Import scala.concurrent and scala.util helpers.",
+    "validation": {"type": "output", "expectedOutput": ["7"]}
+  },
+  "feedback": {"successMessage": "Future usage is correct.", "retryHints": ["Define implicit ExecutionContext", "Handle both Success and Failure"]},
+  "summary": {"title": "Futures - Complete", "takeaways": ["Asynchronous computation", "Callback handling", "Execution context dependency"], "nextTopicId": null}
+}

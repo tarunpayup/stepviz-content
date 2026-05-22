@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_traits_objects",
+  "topicId": "scala_traits_objects",
+  "language": "scala",
+  "title": "Traits & Objects",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Traits define reusable behavior; objects define singletons.",
+    "explanation": "Traits are contracts/capabilities, and objects provide one shared instance.",
+    "syntax": "trait Greeter { def greet: String }\nobject Bot extends Greeter { def greet = \"Hello\" }",
+    "keyPoints": ["Mix in traits for composition", "Objects are singleton values", "Traits support abstraction"]
+  },
+  "demo": {
+    "intro": "Create a trait and singleton implementation.",
+    "code": "trait Greeter { def greet: String }\nobject Bot extends Greeter { def greet: String = \"Hello\" }\nobject Main extends App {\n  println(Bot.greet)\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["trait contract", "object implements trait", "prints Hello"],
+    "steps": [
+      {"type": "declare", "line": 1, "var": "Greeter", "value": "trait", "dataType": "trait", "explanation": {"what": "Declare trait", "why": "Define behavior contract", "change": "greet required", "intent": "Abstraction", "misconception": "Traits can hold concrete methods too"}},
+      {"type": "declare", "line": 2, "var": "Bot", "value": "object", "dataType": "singleton", "explanation": {"what": "Implement trait in object", "why": "Provide concrete behavior", "change": "Bot.greet available", "intent": "Reuse contract", "misconception": "Only one Bot instance exists"}},
+      {"type": "print", "line": 4, "value": "Hello", "explanation": {"what": "Print greeting", "why": "Validate implementation", "change": "output emitted", "intent": "Confirm trait usage", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What is an object in Scala?", "options": ["class instance", "singleton", "interface", "module import"], "correctIndex": 1, "explanation": "object defines exactly one instance."},
+  "explanation": {"afterDemo": "Traits and objects promote modular design with low boilerplate.", "keyTakeaways": ["Traits compose behavior", "Objects are singletons", "Contracts improve flexibility"]},
+  "practice": {
+    "prompt": "Create trait Named with def name:String, object U implementing it and print U.name.",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "trait Named { def name: String }\nobject U extends Named { def name: String = \"Ari\" }\nobject Main extends App {\n  println(U.name)\n}",
+    "hint": "Define trait method signature and implement in object.",
+    "validation": {"type": "output", "expectedOutput": ["Ari"]}
+  },
+  "feedback": {"successMessage": "Trait and object implementation are correct.", "retryHints": ["Implement required method", "Call singleton method in print"]},
+  "summary": {"title": "Traits & Objects - Complete", "takeaways": ["Behavior composition", "Singleton utility pattern", "Clear contracts"], "nextTopicId": "scala_error_handling"}
+}

@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_error_handling",
+  "topicId": "scala_error_handling",
+  "language": "scala",
+  "title": "Error Handling",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Handle failures with Try and controlled fallback logic.",
+    "explanation": "Try wraps risky operations and captures Success or Failure.",
+    "syntax": "import scala.util.Try\nval result = Try(\"12\".toInt)",
+    "keyPoints": ["Try captures exceptions", "Use getOrElse for fallback", "Prefer explicit error paths"]
+  },
+  "demo": {
+    "intro": "Parse a string into Int safely.",
+    "code": "import scala.util.Try\nobject Main extends App {\n  val result = Try(\"12\".toInt)\n  println(result.getOrElse(-1))\n}",
+    "focusLine": 3,
+    "expectedHighlights": ["Try wraps parse", "prints 12 on success"],
+    "steps": [
+      {"type": "call", "line": 3, "name": "Try(toInt)", "args": ["12"], "returnVar": "result", "explanation": {"what": "Execute risky parse", "why": "Catch possible failure", "change": "result=Success(12)", "intent": "Safe parse", "misconception": "Try converts exceptions to values"}},
+      {"type": "call", "line": 4, "name": "getOrElse", "args": ["-1"], "returnVar": "value", "explanation": {"what": "Extract with fallback", "why": "Handle failure case", "change": "value=12", "intent": "Total function output", "misconception": "Fallback used only on Failure"}},
+      {"type": "print", "line": 4, "value": "12", "explanation": {"what": "Print final value", "why": "Confirm handling", "change": "output emitted", "intent": "Observe success path", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does getOrElse do on Failure?", "options": ["throws", "returns fallback", "returns null", "retries parse"], "correctIndex": 1, "explanation": "It returns the provided fallback value."},
+  "explanation": {"afterDemo": "Functional wrappers keep error paths explicit and composable.", "keyTakeaways": ["Try models risky computations", "Fallbacks avoid crashes", "Explicit handling improves reliability"]},
+  "practice": {
+    "prompt": "Use Try on '7'.toInt and print getOrElse(-1).",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "import scala.util.Try\nobject Main extends App {\n  val v = Try(\"7\".toInt)\n  println(v.getOrElse(-1))\n}",
+    "hint": "Import scala.util.Try first.",
+    "validation": {"type": "output", "expectedOutput": ["7"]}
+  },
+  "feedback": {"successMessage": "Error handling with Try is correct.", "retryHints": ["Wrap toInt in Try", "Use getOrElse to print"]},
+  "summary": {"title": "Error Handling - Complete", "takeaways": ["Try captures failures", "Fallback APIs are simple", "Explicit errors are safer"], "nextTopicId": "scala_options_either"}
+}

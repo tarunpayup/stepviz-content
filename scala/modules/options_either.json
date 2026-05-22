@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_options_either",
+  "topicId": "scala_options_either",
+  "language": "scala",
+  "title": "Option & Either",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Use Option for absence and Either for typed success/failure.",
+    "explanation": "These types avoid null and make error handling explicit.",
+    "syntax": "val maybeName: Option[String] = Some(\"Ari\")\nval out = maybeName.getOrElse(\"Guest\")",
+    "keyPoints": ["Option is Some/None", "Either is Left/Right", "Prefer explicit outcomes over null"]
+  },
+  "demo": {
+    "intro": "Read optional name with default fallback.",
+    "code": "object Main extends App {\n  val maybeName: Option[String] = Some(\"Ari\")\n  println(maybeName.getOrElse(\"Guest\"))\n}",
+    "focusLine": 2,
+    "expectedHighlights": ["Some holds value", "prints Ari"],
+    "steps": [
+      {"type": "declare", "line": 2, "var": "maybeName", "value": "Some(Ari)", "dataType": "Option[String]", "explanation": {"what": "Create optional value", "why": "Model possible absence", "change": "Option initialized", "intent": "Avoid null", "misconception": "None means no value"}},
+      {"type": "call", "line": 3, "name": "getOrElse", "args": ["Guest"], "returnVar": "name", "explanation": {"what": "Extract value safely", "why": "Provide default if missing", "change": "name='Ari'", "intent": "Total value path", "misconception": "Fallback used only when None"}},
+      {"type": "print", "line": 3, "value": "Ari", "explanation": {"what": "Print resolved name", "why": "Confirm optional handling", "change": "output emitted", "intent": "Observe safe extraction", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "Which value indicates absence in Option?", "options": ["Left", "Right", "None", "Nil"], "correctIndex": 2, "explanation": "None represents no value."},
+  "explanation": {"afterDemo": "Option/Either make data and error flows explicit and safer.", "keyTakeaways": ["Avoid nulls", "Use fallback extraction", "Model failures with Either"]},
+  "practice": {
+    "prompt": "Set maybeAge to None and print maybeAge.getOrElse(18).",
+    "starterCode": "object Main extends App {\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  val maybeAge: Option[Int] = None\n  println(maybeAge.getOrElse(18))\n}",
+    "hint": "Declare Option[Int] = None.",
+    "validation": {"type": "output", "expectedOutput": ["18"]}
+  },
+  "feedback": {"successMessage": "Option fallback handling is correct.", "retryHints": ["Use Option type", "Call getOrElse with default"]},
+  "summary": {"title": "Option & Either - Complete", "takeaways": ["Explicit optionality", "No null reliance", "Typed failure modeling"], "nextTopicId": "scala_futures"}
+}

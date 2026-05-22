@@ -162,7 +162,7 @@
           "bgColor": "rgba(220,50,47,0.08)",
           "description": "Functional and object-oriented programming on the JVM",
           "difficulty": "advanced",
-          "status": "coming-soon"
+           "status": "available"
         },
         {
           "id": "haskell",

@@ -1,0 +1,35 @@
+{
+  "id": "lm_scala_pattern_matching",
+  "topicId": "scala_pattern_matching",
+  "language": "scala",
+  "title": "Pattern Matching",
+  "difficulty": "medium",
+  "concept": {
+    "headline": "Pattern matching enables expressive branching and destructuring.",
+    "explanation": "Use match with case patterns to branch by structure and value.",
+    "syntax": "val label = n match { case 1 => \"one\"; case _ => \"other\" }",
+    "keyPoints": ["Pattern order matters", "Use _ as default", "Can extract values while matching"]
+  },
+  "demo": {
+    "intro": "Map an Int to a label using match.",
+    "code": "object Main extends App {\n  val n = 2\n  val label = n match {\n    case 1 => \"one\"\n    case 2 => \"two\"\n    case _ => \"other\"\n  }\n  println(label)\n}",
+    "focusLine": 3,
+    "expectedHighlights": ["match evaluates cases top-down", "prints two"],
+    "steps": [
+      {"type": "condition_check", "line": 4, "expression": "n == 1", "result": false, "branch": "case 1", "explanation": {"what": "Test first case", "why": "n is not 1", "change": "move next case", "intent": "Case ordering", "misconception": "Only first match executes"}},
+      {"type": "condition_check", "line": 5, "expression": "n == 2", "result": true, "branch": "case 2", "explanation": {"what": "Test second case", "why": "n equals 2", "change": "label='two'", "intent": "Pattern selection", "misconception": "Default skipped after match"}},
+      {"type": "print", "line": 8, "value": "two", "explanation": {"what": "Print label", "why": "Verify match result", "change": "output emitted", "intent": "Confirm branching", "misconception": "None"}}
+    ]
+  },
+  "prediction": {"question": "What does _ mean in pattern matching?", "options": ["error", "wildcard/default", "type cast", "loop variable"], "correctIndex": 1, "explanation": "_ matches anything as fallback."},
+  "explanation": {"afterDemo": "Pattern matching keeps complex branching readable.", "keyTakeaways": ["Order cases carefully", "Provide default case", "Match can return values"]},
+  "practice": {
+    "prompt": "Match n=3 and print 'three' for 3 else 'other'.",
+    "starterCode": "object Main extends App {\n  val n = 3\n  // write code\n}",
+    "solutionCode": "object Main extends App {\n  val n = 3\n  val out = n match {\n    case 3 => \"three\"\n    case _ => \"other\"\n  }\n  println(out)\n}",
+    "hint": "Use val out = n match { ... }.",
+    "validation": {"type": "output", "expectedOutput": ["three"]}
+  },
+  "feedback": {"successMessage": "Pattern matching is correct.", "retryHints": ["Use case 3 branch", "Add wildcard default", "Print final value"]},
+  "summary": {"title": "Pattern Matching - Complete", "takeaways": ["Powerful branching", "Safe defaults", "Readable case logic"], "nextTopicId": "scala_traits_objects"}
+}
